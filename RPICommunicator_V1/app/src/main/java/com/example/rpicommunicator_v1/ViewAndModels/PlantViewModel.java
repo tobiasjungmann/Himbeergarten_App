@@ -51,12 +51,12 @@ public class PlantViewModel extends AndroidViewModel {
     /*
     Network communication Methodes
      */
-    public void sendText(String message) {
-        new SendThread(message).start();
+    public void sendText(String message, boolean debug) {
+        new SendThread(message,debug).start();
     }
 
-    public void sendText(String message, String localIP) {
-        new SendThread(message,localIP).start();
+    public void sendText(String message, String localIP, boolean debug) {
+        new SendThread(message,localIP, debug).start();
     }
 
 

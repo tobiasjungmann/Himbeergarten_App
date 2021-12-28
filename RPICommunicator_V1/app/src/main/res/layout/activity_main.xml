@@ -42,12 +42,21 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/linearLayout"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edit_text"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/switch1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <EditText
                             android:id="@+id/inputIP"
@@ -61,11 +70,22 @@
                             android:ems="10"
                             android:hint="Ausgangspunkt"
                             android:inputType="textPersonName"
-                            android:text="192.168.178.90"
+                            android:text="192.168.0.11"
                             android:textColor="@color/light_grey"
                             android:textSize="@dimen/text_size" />
+
                     </LinearLayout>
 
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Switch"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -269,17 +289,74 @@
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_outlet1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight=".50"
+                            android:background="@drawable/custom_button_yellow"
+                            android:text="Steckdose 1"
+                            android:textSize="@dimen/text_size" />
+
+                        <Button
+                            android:id="@+id/button_outlet2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".50"
+                            android:background="@drawable/custom_button_yellow"
+                            android:text="Steckdose 2"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_outlet3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight=".50"
+                            android:background="@drawable/custom_button_yellow"
+                            android:text="Steckdose 3"
+                            android:textSize="@dimen/text_size" />
+
+                        <Button
+                            android:id="@+id/debugSelector"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".50"
+                            android:background="@drawable/custom_button_yellow"
+                            android:text="Debug"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+
                     <Button
                         android:id="@+id/button_songtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp"
                         android:background="@drawable/custom_button_yellow"
                         android:text="Songtitel"
-                        android:textSize="@dimen/text_size"
-                        android:layout_marginTop="8dp"
 
-                        android:layout_marginLeft="8dp"/>
+                        android:textSize="@dimen/text_size" />
 
 
                     <SeekBar

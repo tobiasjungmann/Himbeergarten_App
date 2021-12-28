@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText ipText;
     private PlantViewModel plantViewModel;
     private String localIP = null;
+    boolean debug=false;
 
 
     @Override
@@ -111,6 +114,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button_arduino1).setOnClickListener(this);
         findViewById(R.id.button_arduino2).setOnClickListener(this);
         findViewById(R.id.button_songtitle).setOnClickListener(this);
+        findViewById(R.id.button_outlet1).setOnClickListener(this);
+        findViewById(R.id.button_outlet2).setOnClickListener(this);
+        findViewById(R.id.button_outlet3).setOnClickListener(this);
+        //findViewById(R.id.debugSelector).setOnClickListener(this);
+
+        ((Switch)findViewById(R.id.switch1)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d("Switch Test", "onCheckedChanged: "+isChecked);
+                debug=isChecked;
+            }
+        });
+
         final SeekBar sk = findViewById(R.id.seekBar);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             private int currentProgress = 0;
@@ -149,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.shutdown_button:
                 Log.i("buttonClick", "shutdown was clicked");
-                sendDeaktivate();
+                sendDeactivate();
                 break;
             case R.id.time_button:
                 Log.i("buttonClick", "time_button was clicked");
@@ -175,6 +190,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i("buttonClick", "Arduino 2 was clicked");
                 sendText("arduino2");
                 break;
+            case R.id.button_outlet1:
+                Log.i("buttonClick", "Outlet 1 was clicked");
+                sendText("outlet1");
+                break;
+            case R.id.button_outlet2:
+                Log.i("buttonClick", "Outlet 2 was clicked");
+                sendText("outlet2");
+                break;
+            case R.id.button_outlet3:
+                Log.i("buttonClick", "Outlet 3 was clicked");
+                sendText("outlet3");
+                break;
             case R.id.button_songtitle:
                 Log.i("buttonClick", "songtitle was clicked");
                 sendText("songtitle");
@@ -186,9 +213,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void sendText(String message) {
         if (localIP == null) {
-            plantViewModel.sendText(message);
+            plantViewModel.sendText(message, debug);
         } else {
-            plantViewModel.sendText(message, localIP);
+            plantViewModel.sendText(message, localIP,debug);
         }
     }
 
@@ -206,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendText("Stations;" + startText.getText().toString() + ";" + destText.getText().toString());
     }
 
-    private void sendDeaktivate() {
+    private void sendDeactivate() {
        /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         builder.setMessage("Soll der Raspberry Pi wirklich heruntergefahren werden?")
