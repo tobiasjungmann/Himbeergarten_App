@@ -20,7 +20,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    <style name="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="windowActionBar">false</item>
         <item name="elevation">0dp</item>
 

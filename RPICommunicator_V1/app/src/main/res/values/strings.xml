@@ -11,4 +11,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="doNotWater">Nicht Giessen</string>
     <string name="doWater">Giessen</string>
+    <string name="title_activity_bike">BikeActivity</string>
 </resources>

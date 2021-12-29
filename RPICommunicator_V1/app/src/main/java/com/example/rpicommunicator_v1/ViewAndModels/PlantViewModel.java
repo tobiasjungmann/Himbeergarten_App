@@ -26,9 +26,6 @@ public class PlantViewModel extends AndroidViewModel {
         allPlants=plantRepository.getAllPlants();
     }
 
-    /*public void insert(Plant plant){
-        plantRepository.insert(plant);
-    }*/
 
     public void update(Plant plant){
         plantRepository.update(plant);
@@ -49,7 +46,7 @@ public class PlantViewModel extends AndroidViewModel {
 
 
     /*
-    Network communication Methodes
+    Network communication Methods
      */
     public void sendText(String message, boolean debug) {
         new SendThread(message,debug).start();

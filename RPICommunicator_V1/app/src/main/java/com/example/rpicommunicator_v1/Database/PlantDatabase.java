@@ -28,18 +28,4 @@ public abstract class PlantDatabase extends RoomDatabase {
             super.onCreate(db);
         }
     };
-
-
-  /*  private static class PopulateDBThread extends Thread {
-        private PlantDao plantDao;
-
-        private PopulateDBThread(PlantDatabase db) {
-            plantDao = db.plantDao();
-        }
-
-        @Override
-        public void run() {
-            plantDao.insert(new Plant("---", "---"));
-        }
-    }*/
 }

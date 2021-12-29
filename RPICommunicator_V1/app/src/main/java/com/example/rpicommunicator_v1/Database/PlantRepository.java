@@ -11,7 +11,6 @@ import com.example.rpicommunicator_v1.Communication.NetworkCommunicator;
 
 import java.util.List;
 
-//bstraktionsstufe, die alle Daten anbietet. Enthält zum einen die Datenbank, mümmert sich aber auch um die Anfragen an den Server um die Datenbank zu aktualisieren
 public class PlantRepository {
 public static final String TAG="Repository ";
     private PlantDao plantDao;

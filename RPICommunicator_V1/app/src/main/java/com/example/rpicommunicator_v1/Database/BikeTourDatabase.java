@@ -1,0 +1,32 @@
+package com.example.rpicommunicator_v1.Database;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
+
+@Database(entities = {BikeTour.class}, version = 2)
+public abstract class BikeTourDatabase extends RoomDatabase {
+    private static com.example.rpicommunicator_v1.Database.BikeTourDatabase instance;
+
+    public abstract BikeTourDao bikeTourDao();
+
+    public static synchronized com.example.rpicommunicator_v1.Database.BikeTourDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), com.example.rpicommunicator_v1.Database.BikeTourDatabase.class, "biketour_database").fallbackToDestructiveMigration().addCallback(roomCallback).build();
+        }
+        return instance;
+    }
+
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+        }
+    };
+}
+

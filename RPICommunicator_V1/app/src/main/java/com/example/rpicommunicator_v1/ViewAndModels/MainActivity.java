@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initIO();
         initRecyclerView();
-
-
     }
 
     private void initRecyclerView() {
@@ -117,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button_outlet1).setOnClickListener(this);
         findViewById(R.id.button_outlet2).setOnClickListener(this);
         findViewById(R.id.button_outlet3).setOnClickListener(this);
+        findViewById(R.id.bikeActivity).setOnClickListener(this);
         //findViewById(R.id.debugSelector).setOnClickListener(this);
 
         ((Switch)findViewById(R.id.switch1)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -206,10 +205,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i("buttonClick", "songtitle was clicked");
                 sendText("songtitle");
                 break;
+            case R.id.bikeActivity:
+                Log.i("buttonClick","bike activity was clicked");
+                changeToBike();
             default:
                 break;
         }
     }
+
+
 
     private void sendText(String message) {
         if (localIP == null) {
@@ -245,7 +249,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         sendText("deactivate");
+    }
 
-
+    private void changeToBike() {
+        Intent intent = new Intent(getApplicationContext(), BikeTourActivity.class);
+        startActivity(intent);
     }
 }

@@ -61,9 +61,9 @@ public class PlantView extends AppCompatActivity {
 
         initPlant();
         initViewComponents();
-        if(!plant.getGraphString().equals("")){
-        initChart(plant.getGraphString());}
-        else {
+        if (!plant.getGraphString().equals("")) {
+            initChart(plant.getGraphString());
+        } else {
             findViewById(R.id.chart).setVisibility(View.GONE);
         }
 
@@ -204,7 +204,7 @@ public class PlantView extends AppCompatActivity {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getAxisLeft().setDrawAxisLine(false);
         chart.getAxisRight().setDrawAxisLine(false);
-       // chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
+        // chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
 
         LimitLine limitLine = new LimitLine(200f); // set where the line should be drawn
         limitLine.setLineColor(getResources().getColor(R.color.light_green));
