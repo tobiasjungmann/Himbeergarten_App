@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText startText;
     private EditText ipText;
     private PlantViewModel plantViewModel;
-    private String localIP = null;
-    boolean debug=false;
+    boolean debug = false;
 
 
     @Override
@@ -101,12 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initIO() {
         destText = findViewById(R.id.inputDest);
         startText = findViewById(R.id.inputStart);
-        ipText = findViewById(R.id.inputIP);
 
         findViewById(R.id.button).setOnClickListener(this);
-        findViewById(R.id.shutdown_button).setOnClickListener(this);
-        findViewById(R.id.time_button).setOnClickListener(this);
-        findViewById(R.id.connect_button).setOnClickListener(this);
+
         findViewById(R.id.button_relais1).setOnClickListener(this);
         findViewById(R.id.button_relais2).setOnClickListener(this);
         findViewById(R.id.button_arduino1).setOnClickListener(this);
@@ -118,12 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bikeActivity).setOnClickListener(this);
         //findViewById(R.id.debugSelector).setOnClickListener(this);
 
-        ((Switch)findViewById(R.id.switch1)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("Switch Test", "onCheckedChanged: "+isChecked);
-                debug=isChecked;
-            }
-        });
 
         final SeekBar sk = findViewById(R.id.seekBar);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -153,74 +143,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button:
-                Log.i("buttonClick", "Übernehmen was clicked");
-                sendStations();
-                break;
-            case R.id.shutdown_button:
-                Log.i("buttonClick", "shutdown was clicked");
-                sendDeactivate();
-                break;
-            case R.id.time_button:
-                Log.i("buttonClick", "time_button was clicked");
-                sendTime();
-                break;
-            case R.id.connect_button:
-                Log.i("buttonClick", "Übernehmen was clicked");
-                connectToRPI();
-                break;
-            case R.id.button_relais1:
-                Log.i("buttonClick", "Relais 1 was clicked");
-                sendText("relais1");
-                break;
-            case R.id.button_relais2:
-                Log.i("buttonClick", "Relais 2 was clicked");
-                sendText("relais2");
-                break;
-            case R.id.button_arduino1:
-                Log.i("buttonClick", "Arduino 1 was clicked");
-                sendText("arduino1");
-                break;
-            case R.id.button_arduino2:
-                Log.i("buttonClick", "Arduino 2 was clicked");
-                sendText("arduino2");
-                break;
-            case R.id.button_outlet1:
-                Log.i("buttonClick", "Outlet 1 was clicked");
-                sendText("outlet1");
-                break;
-            case R.id.button_outlet2:
-                Log.i("buttonClick", "Outlet 2 was clicked");
-                sendText("outlet2");
-                break;
-            case R.id.button_outlet3:
-                Log.i("buttonClick", "Outlet 3 was clicked");
-                sendText("outlet3");
-                break;
-            case R.id.button_songtitle:
-                Log.i("buttonClick", "songtitle was clicked");
-                sendText("songtitle");
-                break;
-            case R.id.bikeActivity:
-                Log.i("buttonClick","bike activity was clicked");
-                changeToBike();
-            default:
-                break;
+        if (v.getId() == R.id.button) {
+            Log.i("buttonClick", "Übernehmen was clicked");
+            sendStations();
+        } else if (v.getId() == R.id.time_button) {
+            Log.i("buttonClick", "time_button was clicked");
+            sendTime();
+        } else if (v.getId() == R.id.button_relais1) {
+            Log.i("buttonClick", "Relais 1 was clicked");
+            sendText("relais1");
+        } else if (v.getId() == R.id.button_relais2) {
+            Log.i("buttonClick", "Relais 2 was clicked");
+            sendText("relais2");
+        } else if (v.getId() == R.id.button_arduino1) {
+            Log.i("buttonClick", "Arduino 1 was clicked");
+            sendText("arduino1");
+        } else if (v.getId() == R.id.button_arduino2) {
+            Log.i("buttonClick", "Arduino 2 was clicked");
+            sendText("arduino2");
+        } else if (v.getId() == R.id.button_outlet1) {
+            Log.i("buttonClick", "Outlet 1 was clicked");
+            sendText("outlet1");
+        } else if (v.getId() == R.id.button_outlet2) {
+            Log.i("buttonClick", "Outlet 2 was clicked");
+            sendText("outlet2");
+        } else if (v.getId() == R.id.button_outlet3) {
+            Log.i("buttonClick", "Outlet 3 was clicked");
+            sendText("outlet3");
+        } else if (v.getId() == R.id.button_songtitle) {
+            Log.i("buttonClick", "songtitle was clicked");
+            sendText("songtitle");
+        } else if (v.getId() == R.id.bikeActivity) {
+            Log.i("buttonClick", "bike activity was clicked");
+            changeToBike();
         }
     }
 
 
-
     private void sendText(String message) {
-        if (localIP == null) {
-            plantViewModel.sendText(message, debug);
-        } else {
-            plantViewModel.sendText(message, localIP,debug);
-        }
+        plantViewModel.sendText(message, debug);
     }
 
 
@@ -229,27 +192,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void connectToRPI() {
-        localIP = ipText.getText().toString();
-    }
-
     private void sendStations() {
         sendText("Stations;" + startText.getText().toString() + ";" + destText.getText().toString());
     }
 
-    private void sendDeactivate() {
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-        builder.setMessage("Soll der Raspberry Pi wirklich heruntergefahren werden?")
-                .setTitle("Herunterfahren?");
-        builder.setPositiveButton("Ja", (dialog, id) -> plantViewModel.sendText("shutdown"));
-        builder.setNegativeButton("Nein", (dialog, id) -> {});
-        builder.create();
-        builder.show();*/
-
-
-        sendText("deactivate");
-    }
 
     private void changeToBike() {
         Intent intent = new Intent(getApplicationContext(), BikeTourActivity.class);

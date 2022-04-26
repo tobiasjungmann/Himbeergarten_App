@@ -10,14 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
+            android:name=".ViewAndModels.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewAndModels.BikeTourActivity"
             android:exported="false" />
         <activity
             android:name=".ViewAndModels.PlantView"
+            android:exported="false"
             android:label="@string/title_activity_plant_view"
-            android:theme="@style/Theme.RPICommunicator_V1.NoActionBar"
-            android:exported="false"/>
-        <activity android:name=".ViewAndModels.MainActivity"
+            android:theme="@style/Theme.RPICommunicator_V1.NoActionBar" />
+        <activity
+            android:name=".ViewAndModels.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
