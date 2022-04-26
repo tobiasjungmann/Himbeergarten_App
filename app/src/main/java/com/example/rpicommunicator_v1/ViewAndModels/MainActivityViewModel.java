@@ -15,13 +15,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PlantViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends AndroidViewModel {
 
     private final PlantRepository plantRepository;
     private final LiveData<List<Plant>> allPlants;
-    private String localIP = null;
 
-    public PlantViewModel(@NonNull Application application) {
+
+    public MainActivityViewModel(@NonNull Application application) {
         super(application);
 
         //networkCommunicator=new NetworkCommunicator();
@@ -48,16 +48,7 @@ public class PlantViewModel extends AndroidViewModel {
     }
 
 
-    /*
-    Network communication Methods
-     */
-    public void sendText(String message, boolean debug) {
-        if (localIP != null) {
-            new SendThread(message, localIP, debug).start();
-        } else {
-            new SendThread(message, debug).start();
-        }
-    }
+
 
 
     public void reloadFromFirestore() {
@@ -68,9 +59,5 @@ public class PlantViewModel extends AndroidViewModel {
 
     public Plant getActPlant(int position) {
         return allPlants.getValue().get(position);
-    }
-
-    public void setLocalIP(@NotNull String localIP) {
-        this.localIP = localIP;
     }
 }

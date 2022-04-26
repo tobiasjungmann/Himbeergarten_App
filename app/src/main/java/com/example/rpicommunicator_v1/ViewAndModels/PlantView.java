@@ -13,21 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.rpicommunicator_v1.Database.Plant;
 import com.example.rpicommunicator_v1.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.firebase.firestore.util.Util;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import static com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_GRAPH_STRING;
 import static com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_HUMIDITY;
@@ -42,7 +35,7 @@ import static com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_WATER
 public class PlantView extends AppCompatActivity {
 
 
-    private PlantViewModel plantViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
     private boolean dataWasChanged = false;
     private boolean waterNeededChanged = false;
@@ -56,7 +49,7 @@ public class PlantView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_view);
 
-        plantViewModel = new ViewModelProvider(this).get(PlantViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
 
         initPlant();
@@ -145,8 +138,8 @@ public class PlantView extends AppCompatActivity {
             plant.setNeedsWater(!needsWater);
             Log.d("PlantView", "onstop: data must be saved Plant: " + plant.getNeedsWater());
 
-            plantViewModel.update(plant);
-            plantViewModel.updateWateredInFirebase(plant.getId(), plant.getNeedsWater());
+            mainActivityViewModel.update(plant);
+            mainActivityViewModel.updateWateredInFirebase(plant.getId(), plant.getNeedsWater());
         }
         super.onStop();
     }

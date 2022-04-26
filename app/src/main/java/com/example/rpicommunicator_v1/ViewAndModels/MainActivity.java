@@ -1,14 +1,11 @@
 package com.example.rpicommunicator_v1.ViewAndModels;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,9 +31,8 @@ import static com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_WATER
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText destText;
     private EditText startText;
-    private EditText ipText;
-    private PlantViewModel plantViewModel;
-    boolean debug = false;
+    private MainActivityViewModel mainActivityViewModel;
+    private CommunicationInterface communicationInterface;
 
 
     @Override
@@ -44,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        plantViewModel = new ViewModelProvider(this).get(PlantViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        communicationInterface = new ViewModelProvider(this).get(CommunicationInterface.class);
 
         initIO();
         initRecyclerView();
@@ -59,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final PlantAdapter adapter = new PlantAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.setViewModel(plantViewModel);
-        plantViewModel.getAllPlants().observe(this, adapter::setPlants);
+        adapter.setViewModel(mainActivityViewModel);
+        mainActivityViewModel.getAllPlants().observe(this, adapter::setPlants);
 
         adapter.setOnItemClickListener(this::openPlantView);
 
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
-            plantViewModel.reloadFromFirestore();
+            mainActivityViewModel.reloadFromFirestore();
             swipeContainer.setRefreshing(false);
         });
 
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openPlantView(int position) {
         Intent intent = new Intent(getApplicationContext(), PlantView.class);
-        Plant plant = plantViewModel.getActPlant(position);
+        Plant plant = mainActivityViewModel.getActPlant(position);
         intent.putExtra(EXTRA_NAME, plant.getName());
         intent.putExtra(EXTRA_HUMIDITY, plant.getHumidity());
         intent.putExtra(EXTRA_WATERED, plant.getWatered());
@@ -183,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void sendText(String message) {
-        plantViewModel.sendText(message, debug);
+        communicationInterface.sendText(message);
     }
 
 

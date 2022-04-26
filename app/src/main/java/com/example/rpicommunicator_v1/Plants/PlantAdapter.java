@@ -1,7 +1,5 @@
 package com.example.rpicommunicator_v1.Plants;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rpicommunicator_v1.Database.Plant;
 import com.example.rpicommunicator_v1.R;
-import com.example.rpicommunicator_v1.ViewAndModels.PlantViewModel;
+import com.example.rpicommunicator_v1.ViewAndModels.MainActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +21,11 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder>
     private List<Plant> plants = new ArrayList<>();
     private OnItemClickListener mListener;
     private OnItemLongClickListener mlongListener;
-    private PlantViewModel plantViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
 
-    public void setViewModel(PlantViewModel plantViewModel) {
-        this.plantViewModel=plantViewModel;
+    public void setViewModel(MainActivityViewModel mainActivityViewModel) {
+        this.mainActivityViewModel = mainActivityViewModel;
     }
 
     public interface OnItemClickListener {
@@ -76,7 +74,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder>
             @Override
             public void onClick(View v) {
                 v.setVisibility(View.GONE);
-                plantViewModel.remove(plants.get(position));
+                mainActivityViewModel.remove(plants.get(position));
 
             }
         });
