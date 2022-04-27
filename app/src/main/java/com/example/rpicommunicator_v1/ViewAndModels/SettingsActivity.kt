@@ -11,7 +11,7 @@ import com.example.rpicommunicator_v1.R
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var debug: Boolean = false;
-    private var communicationInterface: CommunicationInterface =
+    private val communicationInterface: CommunicationInterface =
         ViewModelProvider(this).get(CommunicationInterface::class.java)
     private var ipText = findViewById<EditText>(R.id.inputIP)
 

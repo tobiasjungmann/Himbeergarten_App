@@ -33,21 +33,39 @@
                 app:cardCornerRadius="8dp"
                 card_view:cardElevation="5sp">
 
-                <Button
-                    android:id="@+id/bikeActivity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_button_yellow"
-                    android:text="Fahrrad Fahrt hinzufügen"
-                    android:textSize="@dimen/text_size" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <Button
+                        android:id="@+id/button_bikeActivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Fahrrad Fahrt hinzufügen"
+                        android:textSize="@dimen/text_size"
+                        />
 
+                    <Button
+                        android:id="@+id/button_settingsActivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Einstellungen"
+                        android:textSize="@dimen/text_size" />
+                    <Button
+                        android:id="@+id/button_plantoverviewActivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Pflanzen"
+                        android:textSize="@dimen/text_size" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -268,25 +286,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/swipeContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="8dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/plant_view_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-
-                    android:scrollbars="vertical"
-                    tools:listitem="@layout/plant_item" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
     </LinearLayout>

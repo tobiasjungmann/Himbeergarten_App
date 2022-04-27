@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
+            android:name=".ViewAndModels.PlantOverview"
+            android:exported="false" />
+        <activity
             android:name=".ViewAndModels.SettingsActivity"
             android:exported="false" />
         <activity
