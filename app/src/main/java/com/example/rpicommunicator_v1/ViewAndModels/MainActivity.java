@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.button).setOnClickListener(this);
 
+        findViewById(R.id.time_button).setOnClickListener(this);
         findViewById(R.id.button_relais1).setOnClickListener(this);
         findViewById(R.id.button_relais2).setOnClickListener(this);
         findViewById(R.id.button_arduino1).setOnClickListener(this);

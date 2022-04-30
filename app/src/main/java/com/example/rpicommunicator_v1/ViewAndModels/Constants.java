@@ -3,9 +3,8 @@ package com.example.rpicommunicator_v1.ViewAndModels;
 public class Constants {
     public static final int PORT_DEBUG = 15439;
  public static final int PORT_Production = 17109;
-   //public static final int PORT = 8000;
-    //public static final String IP = "192.168.178.90";//Dachau
-    public static final String IP = "192.168.0.11";//München
+
+    public static final String IP = "192.168.0.23";
     //Open PlantView Activity
     public static final String EXTRA_HUMIDITY = "EXTRA_HUMIDITY";
     public static final String EXTRA_NAME = "EXTRA_NAME";

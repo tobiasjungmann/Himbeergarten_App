@@ -1,5 +1,6 @@
 package com.example.rpicommunicator_v1.Communication;
 
+import android.os.StrictMode;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -20,6 +21,11 @@ public class SendThread extends Thread {
     private boolean debug;
 
     public SendThread(String message, String localIP,boolean debug) {
+
+        // todo remove after testing
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         this.message = message;
         Log.d("Communicator","debug in send constructor: "+debug);
         this.debug=debug;
@@ -45,6 +51,7 @@ public class SendThread extends Thread {
         Socket socket = null;
         try {
             int port = PORT_Production;
+            debug=true; //todo remove
             if (debug) {
                 port = PORT_DEBUG;
                 Log.d("Communicator","debug in send: "+debug);
