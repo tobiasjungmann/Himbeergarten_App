@@ -310,10 +310,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/icon_gear" />
+
+    <TextView
+        android:id="@+id/textViewSources"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sources"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
