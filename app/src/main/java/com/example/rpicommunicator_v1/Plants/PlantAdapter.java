@@ -63,7 +63,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder>
             holder.mImageView.setAlpha(alpha);
         } else {
             //holder.blurHelper.setCardBackgroundColor(R.color.dark_yellow);//setBackgroundColor(R.color.dark_yellow);
-            holder.mImageView.setImageResource(R.drawable.pump);
+            holder.mImageView.setImageResource(R.drawable.icon_pump);
             float alpha = (float) 0.1;
             holder.mImageView.setAlpha(alpha);
         }

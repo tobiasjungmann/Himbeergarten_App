@@ -42,7 +42,7 @@
                 android:contentDescription="@string/app_name"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/plant1" />
+                app:srcCompat="@drawable/icon_plant" />
             </androidx.cardview.widget.CardView>
 
 

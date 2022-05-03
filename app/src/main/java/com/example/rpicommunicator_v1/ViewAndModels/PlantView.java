@@ -72,7 +72,7 @@ public class PlantView extends AppCompatActivity {
             float alpha = (float) 1;
             headerView.setAlpha(alpha);
         } else {
-            headerView.setImageResource(R.drawable.pump);
+            headerView.setImageResource(R.drawable.icon_pump);
             float alpha = (float) 0.1;
             headerView.setAlpha(alpha);
         }

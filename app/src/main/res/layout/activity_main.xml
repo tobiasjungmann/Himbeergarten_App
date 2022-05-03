@@ -252,6 +252,17 @@
                         android:text="Songtitel"
                         android:textSize="@dimen/text_size" />
 
+                    <Button
+                        android:id="@+id/button_weather"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Wetter"
+                        android:textSize="@dimen/text_size" />
+
 
                     <SeekBar
                         android:id="@+id/seekBar"
@@ -304,5 +315,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/gearicon" />
+        app:srcCompat="@drawable/icon_gear" />
 </androidx.constraintlayout.widget.ConstraintLayout>

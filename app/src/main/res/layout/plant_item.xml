@@ -36,7 +36,7 @@
                     android:layout_height="140dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/pump" />
+                    app:srcCompat="@drawable/icon_pump" />
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout

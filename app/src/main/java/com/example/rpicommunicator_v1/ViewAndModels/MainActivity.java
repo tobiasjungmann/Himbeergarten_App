@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button).setOnClickListener(this);
 
         findViewById(R.id.time_button).setOnClickListener(this);
+        findViewById(R.id.button_weather).setOnClickListener(this);
         findViewById(R.id.button_relais1).setOnClickListener(this);
         findViewById(R.id.button_relais2).setOnClickListener(this);
         findViewById(R.id.button_arduino1).setOnClickListener(this);
@@ -88,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.button) {
             Log.i("buttonClick", "Übernehmen was clicked");
             communicationInterface.sendText("Stations;" + startText.getText().toString() + ";" + destText.getText().toString());
+
+        } else if (v.getId() == R.id.button_weather) {
+            Log.i("buttonClick", "weather button was clicked");
+            communicationInterface.sendText("weather");
         } else if (v.getId() == R.id.time_button) {
             Log.i("buttonClick", "time_button was clicked");
             communicationInterface.sendText("changetime");
