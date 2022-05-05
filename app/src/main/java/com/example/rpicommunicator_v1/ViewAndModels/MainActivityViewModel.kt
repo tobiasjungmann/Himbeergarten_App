@@ -10,7 +10,7 @@ import com.example.rpicommunicator_v1.Database.Plant
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
-    fun update(plant: Plant?) {
+    fun update(plant: Plant) {
         plantRepository.update(plant)
     }
 
@@ -18,7 +18,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         plantRepository.updateWateredInFirebase(id, needsWater)
     }
 
-    fun remove(plant: Plant?) {
+    fun remove(plant: Plant) {
         plantRepository.remove(plant)
     }
 

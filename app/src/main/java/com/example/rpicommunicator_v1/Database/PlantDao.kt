@@ -1,29 +1,21 @@
-package com.example.rpicommunicator_v1.Database;
+package com.example.rpicommunicator_v1.Database
 
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import java.util.List;
+import com.example.rpicommunicator_v1.Database.Plant
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
-public interface PlantDao {
-
+interface PlantDao {
     @Insert
-    void insert(Plant plant);
+    fun insert(plant: Plant?)
 
     @Update
-    void update(Plant plant);
+    fun update(plant: Plant?)
 
     @Delete
-    void delete(Plant plant);
+    fun delete(plant: Plant?)
 
-    @Query("SELECT * FROM plant_table")
-    LiveData<List<Plant>> getAllPlants();//Wegen den Livedata als returntyp werden werte in der Liste immer automatisch updated
-
-
+    //Wegen den Livedata als returntyp werden werte in der Liste immer automatisch updated
+    @get:Query("SELECT * FROM plant_table")
+    val allPlants: LiveData<List<Plant>>
 }

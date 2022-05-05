@@ -130,7 +130,7 @@ class PlantView : AppCompatActivity() {
             Log.d("PlantView", "onstop: unchange data: " + plant!!.needsWater)
             plant!!.needsWater = !needsWater
             Log.d("PlantView", "onstop: data must be saved Plant: " + plant!!.needsWater)
-            mainActivityViewModel!!.update(plant)
+            mainActivityViewModel!!.update(plant!!)
             mainActivityViewModel!!.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
         }
         super.onStop()

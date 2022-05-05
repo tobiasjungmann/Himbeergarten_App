@@ -1,115 +1,128 @@
-package com.example.rpicommunicator_v1.Database;
+package com.example.rpicommunicator_v1.Database
 
-import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
 
-import com.example.rpicommunicator_v1.R;
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import com.example.rpicommunicator_v1.R
+import com.google.firebase.firestore.SetOptions
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
+import com.google.android.gms.tasks.Task
+import java.lang.NullPointerException
+import java.util.*
 
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.SetOptions;
+class FirebaseAccess(plantRepository: PlantRepository) {
+    private val plantRepository: PlantRepository
+    private val db: FirebaseFirestore
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-public class FirebaseAccess {
-    private static final String TAG = "firebaseAccess";
-    private final PlantRepository plantRepository;
-    private FirebaseFirestore db;
-
-    public FirebaseAccess(PlantRepository plantRepository) {
-        db = FirebaseFirestore.getInstance();
-        this.plantRepository = plantRepository;
-
-    }
-
-    public void getFromFirebase() {
-        db.collection("plants")
+    //plant.setImageID(R.drawable.plant1);
+    //plant.setIconID(R.drawable.plant1);
+    val fromFirebase: Unit
+        get() {
+            db.collection("plants")
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            Plant plant;
+                .addOnCompleteListener { task: Task<QuerySnapshot?> ->
+                    if (task.isSuccessful) {
+                        for (document in Objects.requireNonNull(task.result)!!) {
+                            var plant: Plant
                             try {
-
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                Log.d(TAG, Objects.requireNonNull(document.get("typ")).toString());
-                                String imageID = Objects.requireNonNull(document.get("picture")).toString();
-                                plant = new Plant(document.getId(), Objects.requireNonNull(document.get("typ")).toString(), Objects.requireNonNull(document.get("info")).toString(),
-                                        Objects.requireNonNull(document.get("watered")).toString(), Objects.requireNonNull(document.get("humidity")).toString(), document.getBoolean("needsWater"),
-                                        document.getString("graph"));
-                                switch (imageID) {
-                                    case "1":
-                                        plant.setImageID(R.drawable.icon_plant);
-                                        plant.setIconID(R.drawable.icon_plant);
-                                        break;
-                                    case "2":
-                                        plant.setImageID(R.drawable.icon_plant);
-                                        plant.setIconID(R.drawable.icon_plant);
-                                        break;
-                                    case "3":
-                                        plant.setImageID(R.drawable.plant3);
-                                        plant.setIconID(R.drawable.plant31p);
-                                        break;
-                                    case "4":
-                                        plant.setImageID(R.drawable.plant4);
-                                        plant.setIconID(R.drawable.plant41p);
-                                        break;
-                                    case "5":
-                                        plant.setImageID(R.drawable.plant5);
-                                        plant.setIconID(R.drawable.plant51p);
-                                        break;
-                                    case "6":
-                                        plant.setImageID(R.drawable.plant6);
-                                        plant.setIconID(R.drawable.plant61p);
-                                        break;
-                                    case "7":
-                                        plant.setImageID(R.drawable.plant7);
-                                        plant.setIconID(R.drawable.plant71p);
-                                        break;
-                                    case "8":
-                                        plant.setImageID(R.drawable.plant8);
-                                        plant.setIconID(R.drawable.plant81p);
-                                        break;
-                                    case "9":
-                                        plant.setImageID(R.drawable.plant9);
-                                        plant.setIconID(R.drawable.plant91p);
-                                        break;
-                                    case "10":
-                                        plant.setImageID(R.drawable.plant10);
-                                        plant.setIconID(R.drawable.plant101p);
-                                        break;
-                                    default:
-                                        break;
+                                Log.d(TAG, document.id + " => " + document.data)
+                                Log.d(
+                                    TAG, Objects.requireNonNull(
+                                        document["typ"]
+                                    ).toString()
+                                )
+                                val imageID = Objects.requireNonNull(document["picture"]).toString()
+                                plant = Plant(
+                                    document.id,
+                                    Objects.requireNonNull(
+                                        document["typ"]
+                                    ).toString(),
+                                    Objects.requireNonNull(document["info"]).toString(),
+                                    Objects.requireNonNull(document["watered"]).toString(),
+                                    Objects.requireNonNull(
+                                        document["humidity"]
+                                    ).toString(),
+                                    document.getBoolean("needsWater")!!,
+                                    document.getString("graph")!!
+                                )
+                                when (imageID) {
+                                    "1" -> {
+                                        plant.imageID = R.drawable.icon_plant
+                                        plant.iconID = R.drawable.icon_plant
+                                    }
+                                    "2" -> {
+                                        plant.imageID = R.drawable.icon_plant
+                                        plant.iconID = R.drawable.icon_plant
+                                    }
+                                    "3" -> {
+                                        plant.imageID = R.drawable.plant3
+                                        plant.iconID = R.drawable.plant31p
+                                    }
+                                    "4" -> {
+                                        plant.imageID = R.drawable.plant4
+                                        plant.iconID = R.drawable.plant41p
+                                    }
+                                    "5" -> {
+                                        plant.imageID = R.drawable.plant5
+                                        plant.iconID = R.drawable.plant51p
+                                    }
+                                    "6" -> {
+                                        plant.imageID = R.drawable.plant6
+                                        plant.iconID = R.drawable.plant61p
+                                    }
+                                    "7" -> {
+                                        plant.imageID = R.drawable.plant7
+                                        plant.iconID = R.drawable.plant71p
+                                    }
+                                    "8" -> {
+                                        plant.imageID = R.drawable.plant8
+                                        plant.iconID = R.drawable.plant81p
+                                    }
+                                    "9" -> {
+                                        plant.imageID = R.drawable.plant9
+                                        plant.iconID = R.drawable.plant91p
+                                    }
+                                    "10" -> {
+                                        plant.imageID = R.drawable.plant10
+                                        plant.iconID = R.drawable.plant101p
+                                    }
+                                    else -> {}
                                 }
                                 //plant.setImageID(R.drawable.plant1);
                                 //plant.setIconID(R.drawable.plant1);
-                            } catch (NullPointerException e) {
-                                plant = new Plant("-1", "Error", "NullointerException", "", "-1", false, "");
+                            } catch (e: NullPointerException) {
+                                plant =
+                                    Plant("-1", "Error", "NullointerException", "", "-1", false, "")
                             }
-                            plantRepository.insert(plant);
+                            plantRepository.insert(plant)
                         }
                     } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
+                        Log.w(TAG, "Error getting documents.", task.exception)
                     }
-                });
-
-    }
-
-    public void updateWateredInFirebase(String id, boolean newValue) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("needsWater", newValue);
-        db.collection("plants").document(id)
-                .set(data, SetOptions.merge());
-    }
-
-
-    private void addOrUpdate(Plant plant) {
-        try {
-            plantRepository.insert(plant);
-        } catch (SQLiteConstraintException e) {
-            plantRepository.update(plant);
+                }
         }
+
+    fun updateWateredInFirebase(id: String?, newValue: Boolean) {
+        val data: MutableMap<String, Any> = HashMap()
+        data["needsWater"] = newValue
+        db.collection("plants").document(id!!)[data] = SetOptions.merge()
+    }
+
+    private fun addOrUpdate(plant: Plant) {
+        try {
+            plantRepository.insert(plant)
+        } catch (e: SQLiteConstraintException) {
+            plantRepository.update(plant)
+        }
+    }
+
+    companion object {
+        private const val TAG = "firebaseAccess"
+    }
+
+    init {
+        db = FirebaseFirestore.getInstance()
+        this.plantRepository = plantRepository
     }
 }

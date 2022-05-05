@@ -1,31 +1,42 @@
-package com.example.rpicommunicator_v1.Database;
+package com.example.rpicommunicator_v1.Database
 
-import android.content.Context;
+import android.content.Context
+import androidx.room.Database
+import com.example.rpicommunicator_v1.Database.Plant
+import androidx.room.RoomDatabase
+import com.example.rpicommunicator_v1.Database.PlantDao
+import com.example.rpicommunicator_v1.Database.PlantDatabase
+import androidx.room.Room
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-import androidx.annotation.NonNull;
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
+@Database(
+    entities = [Plant::class],
+    version = 8
+) //mehrere entities in die geschweiften klammern version ändern, wenn tabelle verändert
+abstract class PlantDatabase : RoomDatabase() {
+    abstract fun plantDao(): PlantDao?
 
-@Database(entities = {Plant.class}, version = 8)
-//mehrere entities in die geschweiften klammern version ändern, wenn tabelle verändert
-public abstract class PlantDatabase extends RoomDatabase {
-    private static PlantDatabase instance;
-
-    public abstract PlantDao plantDao();
-
-    public static synchronized PlantDatabase getInstance(Context context) {
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), PlantDatabase.class, "plant_database").fallbackToDestructiveMigration().addCallback(roomCallback).build();
+    companion object {
+        private var instance: PlantDatabase? = null
+        @JvmStatic
+        @Synchronized
+        fun getInstance(context: Context): PlantDatabase? {
+            if (instance == null) {
+                instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    PlantDatabase::class.java,
+                    "plant_database"
+                ).fallbackToDestructiveMigration().addCallback(
+                    roomCallback
+                ).build()
+            }
+            return instance
         }
-        return instance;
+
+        private val roomCallback: Callback = object : Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+            }
+        }
     }
-
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-        }
-    };
 }
