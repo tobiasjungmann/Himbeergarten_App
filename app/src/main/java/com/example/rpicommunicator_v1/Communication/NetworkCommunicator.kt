@@ -1,58 +1,23 @@
-package com.example.rpicommunicator_v1.Communication;
+package com.example.rpicommunicator_v1.Communication
 
+import com.example.rpicommunicator_v1.Database.PlantDao
+import com.example.rpicommunicator_v1.Database.Plant
+import android.database.sqlite.SQLiteConstraintException
 
-import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.rpicommunicator_v1.Database.Plant;
-import com.example.rpicommunicator_v1.Database.PlantDao;
-import com.example.rpicommunicator_v1.Database.PlantDatabase;
-import com.example.rpicommunicator_v1.R;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-
-public class NetworkCommunicator extends Thread {
-
-
-    private PlantDao plantDao;
-
-    @Override
-    public void run() {
-        //requestData();
+class NetworkCommunicator : Thread() {
+    private var plantDao: PlantDao? = null
+    override fun run() {
     }
 
-    /**
-     * Request Data from the server and update the database accordingly
-     */
-   /* private void requestData() {
-        FirebaseAccess firebaseAccess = new FirebaseAccess();
-        for (Plant p : firebaseAccess.getFromFirebase()) {
-            addOrUpdate(p);
-        }
-
-        // plantDao.insert(new Plant(1,"---","wichtiger Text"));
-        /*addOrUpdate(new Plant(0, "Sachsen Gras", "---", R.drawable.plant1));
-        addOrUpdate(new Plant(1, "Pflanze", "---",-1));
-        addOrUpdate(new Plant(2, "---", "toller Text",R.drawable.plant2));
-        addOrUpdate(new Plant(3, "---", "---",-1));
-        addOrUpdate(new Plant(4, "---", "---",-1));*/
-    //}
-
-    private void addOrUpdate(Plant plant) {
+    private fun addOrUpdate(plant: Plant) {
         try {
-            plantDao.insert(plant);
-        } catch (SQLiteConstraintException e) {
-            plantDao.update(plant);
+            plantDao!!.insert(plant)
+        } catch (e: SQLiteConstraintException) {
+            plantDao!!.update(plant)
         }
     }
 
-    public void setPlantDao(PlantDao plantDao) {
-        this.plantDao = plantDao;
+    fun setPlantDao(plantDao: PlantDao?) {
+        this.plantDao = plantDao
     }
 }
-

@@ -9,11 +9,11 @@ import com.example.rpicommunicator_v1.Database.BikeTour
 class BikeTourViewModel(application: Application) : AndroidViewModel(application) {
     private val bikeTourRepository: BikeTourRepository
     val allBikeTours: LiveData<List<BikeTour>>
-    fun remove(bikeTour: BikeTour?) {
+    fun remove(bikeTour: BikeTour) {
         bikeTourRepository.remove(bikeTour)
     }
 
-    fun insert(bikeTour: BikeTour?) {
+    fun insert(bikeTour: BikeTour) {
         bikeTourRepository.insert(bikeTour)
     }
 

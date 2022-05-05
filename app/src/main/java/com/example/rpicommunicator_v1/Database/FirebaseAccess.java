@@ -107,7 +107,6 @@ public class FirebaseAccess {
 
     private void addOrUpdate(Plant plant) {
         try {
-            //  plantRepository.update(plant);
             plantRepository.insert(plant);
         } catch (SQLiteConstraintException e) {
             plantRepository.update(plant);

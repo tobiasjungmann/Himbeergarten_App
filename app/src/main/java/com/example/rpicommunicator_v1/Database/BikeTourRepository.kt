@@ -1,77 +1,49 @@
-package com.example.rpicommunicator_v1.Database;
+package com.example.rpicommunicator_v1.Database
 
-import android.app.Application;
-import android.database.sqlite.SQLiteConstraintException;
+import android.app.Application
+import com.example.rpicommunicator_v1.Database.BikeTourDatabase.Companion.getInstance
+import androidx.lifecycle.LiveData
+import android.database.sqlite.SQLiteConstraintException
 
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
-
-public class BikeTourRepository {
-
-    public static final String TAG="Repository ";
-    private BikeTourDao bikeTourDao;
-    private LiveData<List<BikeTour>> allBikeTours;
-
-    public BikeTourRepository(Application application) {
-        BikeTourDatabase database = BikeTourDatabase.getInstance(application);
-        bikeTourDao = database.bikeTourDao();
-        allBikeTours = bikeTourDao.getAllTours();
+class BikeTourRepository(application: Application?) {
+    private val bikeTourDao: BikeTourDao?
+    val allBikeTours: LiveData<List<BikeTour>>
+    fun insert(bikeTour: BikeTour) {
+        InsertBikeTourThread(bikeTourDao, bikeTour).start()
     }
 
-    public void insert(BikeTour bikeTour) {
-        new BikeTourRepository.InsertBikeTourThread(bikeTourDao, bikeTour).start();
+    fun remove(bikeTour: BikeTour) {
+        RemoveBikeTourThread(bikeTourDao, bikeTour).start()
     }
 
-
-    public LiveData<List<BikeTour>> getAllBikeTours() {
-        return allBikeTours;
-    }
-
-
-
-    public void remove(BikeTour bikeTour) {
-        new BikeTourRepository.RemoveBikeTourThread(bikeTourDao, bikeTour).start();
-    }
-
-
-
-
-    private static class InsertBikeTourThread extends Thread {
-        private BikeTour bikeTour;
-        private BikeTourDao bikeTourDao;
-
-        private InsertBikeTourThread(BikeTourDao bikeTourDao, BikeTour bikeTour) {
-            this.bikeTourDao = bikeTourDao;
-            this.bikeTour=bikeTour;
-        }
-
-        @Override
-        public void run() {
+    private class InsertBikeTourThread(
+        private val bikeTourDao: BikeTourDao?,
+        private val bikeTour: BikeTour
+    ) : Thread() {
+        override fun run() {
             try {
                 //  bikeTourRepository.update(bikeTour);
-                bikeTourDao.insert(bikeTour);
-            } catch (SQLiteConstraintException e) {
-                bikeTourDao.update(bikeTour);
+                bikeTourDao!!.insert(bikeTour)
+            } catch (e: SQLiteConstraintException) {
+                bikeTourDao!!.update(bikeTour)
             }
         }
     }
 
-
-
-
-    private static class RemoveBikeTourThread extends Thread {
-        private BikeTour bikeTour;
-        private BikeTourDao bikeTourDao;
-
-        private RemoveBikeTourThread(BikeTourDao bikeTourDao, BikeTour bikeTour) {
-            this.bikeTourDao = bikeTourDao;
-            this.bikeTour=bikeTour;//bikeTourDao.getAllTours().getValue().get(bikeTourDao.getAllTours().getValue().size());
+    private class RemoveBikeTourThread  //bikeTourDao.getAllTours().getValue().get(bikeTourDao.getAllTours().getValue().size());
+        (private val bikeTourDao: BikeTourDao?, private val bikeTour: BikeTour) : Thread() {
+        override fun run() {
+            bikeTourDao!!.delete(bikeTour)
         }
+    }
 
-        @Override
-        public void run() {
-            bikeTourDao.delete(bikeTour);
-        }
+    companion object {
+        const val TAG = "Repository "
+    }
+
+    init {
+        val database = getInstance(application!!)
+        bikeTourDao = database!!.bikeTourDao()
+        allBikeTours = bikeTourDao!!.allTours
     }
 }

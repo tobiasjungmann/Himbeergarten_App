@@ -1,32 +1,20 @@
-package com.example.rpicommunicator_v1.Database;
+package com.example.rpicommunicator_v1.Database
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import com.example.rpicommunicator_v1.Database.BikeTour
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
-import java.util.List;
+@Dao
+interface BikeTourDao {
+    @Insert
+    fun insert(plant: BikeTour?)
 
+    @Update
+    fun update(plant: BikeTour?)
 
+    @Delete
+    fun delete(plant: BikeTour?)
 
-    @Dao
-    public interface BikeTourDao {
-
-        @Insert
-        void insert(BikeTour plant);
-
-        @Update
-        void update(BikeTour plant);
-
-        @Delete
-        void delete(BikeTour plant);
-
-        @Query("SELECT * FROM biketour_table")
-        LiveData<List<BikeTour>> getAllTours();
-
-
-    }
-
-
+    @get:Query("SELECT * FROM biketour_table")
+    val allTours: LiveData<List<BikeTour>>
+}

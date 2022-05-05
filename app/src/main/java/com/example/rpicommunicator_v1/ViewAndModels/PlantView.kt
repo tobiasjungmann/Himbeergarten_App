@@ -112,7 +112,15 @@ class PlantView : AppCompatActivity() {
         val info = intent.getStringExtra(EXTRA_INFO)
         val id = intent.getStringExtra(EXTRA_ID)
         val graphString = intent.getStringExtra(EXTRA_GRAPH_STRING)
-        plant = Plant(id, name, info, watered, humidity, needsWater, graphString)
+        plant = Plant(
+            id.toString(),
+            name.toString(),
+            info.toString(),
+            watered.toString(),
+            humidity.toString(),
+            needsWater,
+            graphString.toString()
+        )
         plant!!.imageID = imageid
         plant!!.iconID = iconid
     }
