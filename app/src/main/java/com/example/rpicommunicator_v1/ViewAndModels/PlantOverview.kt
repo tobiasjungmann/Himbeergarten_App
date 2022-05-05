@@ -1,3 +1,4 @@
+
 package com.example.rpicommunicator_v1.ViewAndModels
 
 import android.content.Intent
@@ -34,12 +35,16 @@ class PlantOverview : AppCompatActivity() {
         adapter.setViewModel(mainActivityViewModel)
         mainActivityViewModel.allPlants.observe(
             this
-        ) { plants: List<Plant?>? ->
+        ) { plants: List<Plant> ->
             adapter.setPlants(
                 plants
             )
         }
-        adapter.setOnItemClickListener(::openPlantView)
+        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
+            openPlantView(position)
+
+        }
+        adapter.setOnItemClickListener(itemOnClick);
         initSwipeToRefresh()
     }
 
