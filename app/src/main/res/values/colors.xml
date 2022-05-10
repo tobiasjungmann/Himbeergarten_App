@@ -8,9 +8,17 @@
 
 
     <color name="dark_yellow">#FF9800</color>
+
     <color name="light_grey">#676666</color>
     <color name="light_green">#8357950F</color>
     <color name="light_green_old">#BA538F0E</color>
+
+
+    <color name="beige_palette">#e3e7c3</color>
+    <color name="light_yellow_palette">#EBE07B</color>
+    <color name="green_yellow_palette">#b9bd3f</color>
+    <color name="medium_green_palette">#426000</color>
+    <color name="darker_green_palette">#172006</color>
 
     <color name="red">#B00020</color>
 </resources>
