@@ -102,17 +102,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
             if(mainActivityViewModel!!.toggleOutlet1()){
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
+                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
             }else{
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
             }
         } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
             if(mainActivityViewModel!!.toggleOutlet2()){
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
+                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
             }else{
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
             }
         } else if (v.id == R.id.imageoutlet3) {
             Log.i("buttonClick", "Outlet 3 was clicked")

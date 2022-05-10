@@ -125,7 +125,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_button_yellow"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:backgroundTint="@color/dark_yellow"
                         android:text="eintragen"
                         android:textSize="20sp" />
 
@@ -134,7 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_button_red"
+                        android:background="@drawable/custom_rectangle_rounded_corners" android:backgroundTint="@color/red"
                         android:text="vorherigen Eintrag löschen"
                         android:textSize="16sp"
                         app:backgroundTint="@color/red" />
@@ -155,8 +156,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical">
 
                     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
@@ -172,15 +173,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp">
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/add_buttonleft"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="left"
                             android:textSize="20sp" />
 
@@ -188,7 +190,8 @@
                             android:id="@+id/add_buttonMode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Woche"
                             android:textSize="20sp" />
 
@@ -196,7 +199,8 @@
                             android:id="@+id/add_buttonright"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="right"
                             android:textSize="20sp" />
                     </LinearLayout>

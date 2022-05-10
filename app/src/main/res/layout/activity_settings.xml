@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
                     android:layout_weight=".50"
-                    android:background="@drawable/custom_button_red"
+                    android:background="@drawable/custom_rectangle_rounded_corners" android:backgroundTint="@color/red"
                     android:text="Deaktivieren"
                     android:textSize="@dimen/text_size"
                     app:backgroundTint="@color/red" />
@@ -92,7 +92,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".50"
-                    android:background="@drawable/custom_button_red"
+                    android:background="@drawable/custom_rectangle_rounded_corners" android:backgroundTint="@color/red"
                     android:text="Verbinden"
                     android:textSize="@dimen/text_size"
                     app:backgroundTint="@color/red" />

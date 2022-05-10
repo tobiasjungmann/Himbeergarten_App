@@ -48,7 +48,7 @@
                         android:id="@+id/imageoutlet1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/custom_button_green"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
                         android:backgroundTint="@color/beige_palette"
                         android:orientation="horizontal"
                         android:padding="2dp"
@@ -63,14 +63,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:src="@drawable/icon_outlet"  android:contentDescription="outlet1"/>
+                            android:contentDescription="outlet1"
+                            android:src="@drawable/icon_outlet" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/imageoutlet2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/custom_button_green"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
                         android:backgroundTint="@color/beige_palette"
                         android:orientation="horizontal"
                         android:padding="2dp"
@@ -84,15 +85,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:src="@drawable/icon_outlet"
-                            android:contentDescription="outlet2" />
+                            android:contentDescription="outlet2"
+                            android:src="@drawable/icon_outlet" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/imageoutlet3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/custom_button_green"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
                         android:backgroundTint="@color/beige_palette"
                         android:orientation="horizontal"
                         android:padding="2dp"
@@ -106,7 +107,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:src="@drawable/icon_outlet"  android:contentDescription="outlet3"/>
+                            android:contentDescription="outlet3"
+                            android:src="@drawable/icon_outlet" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -199,7 +201,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Uhrzeit"
                             android:textSize="@dimen/text_size" />
 
@@ -208,7 +211,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Bahnanzeige"
                             android:textSize="@dimen/text_size" />
                     </LinearLayout>
@@ -227,7 +231,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Relais 1"
                             android:textSize="@dimen/text_size" />
 
@@ -236,7 +241,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Lichterkette"
                             android:textSize="@dimen/text_size" />
                     </LinearLayout>
@@ -255,7 +261,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Arduino 1"
                             android:textSize="@dimen/text_size" />
 
@@ -264,7 +271,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
                             android:text="Arduino 2"
                             android:textSize="@dimen/text_size" />
                     </LinearLayout>
@@ -278,109 +286,87 @@
                         android:layout_marginRight="8dp"
                         android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/button_outlet1"
-                            android:layout_width="0dp"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
-                            android:text="Steckdose 1"
-                            android:textSize="@dimen/text_size" />
+                            android:orientation="horizontal">
+
+
+                            <Button
+                                android:id="@+id/debugSelector"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".50"
+                                android:background="@drawable/custom_rectangle_rounded_corners"
+                                android:backgroundTint="@color/dark_yellow"
+                                android:text="Debug"
+                                android:textSize="@dimen/text_size" />
+                        </LinearLayout>
+
 
                         <Button
-                            android:id="@+id/button_outlet2"
-                            android:layout_width="0dp"
+                            android:id="@+id/button_songtitle"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
-                            android:text="Steckdose 2"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/button_outlet3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
-                            android:text="Steckdose 3"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
+                            android:drawableLeft="@android:drawable/arrow_up_float"
+                            android:text="Songtitel"
                             android:textSize="@dimen/text_size" />
 
                         <Button
-                            android:id="@+id/debugSelector"
-                            android:layout_width="0dp"
+                            android:id="@+id/button_weather"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_button_yellow"
-                            android:text="Debug"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
+                            android:text="Wetter"
                             android:textSize="@dimen/text_size" />
+
+                        <Button
+                            android:id="@+id/button_standby"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
+                            android:text="Standby"
+                            android:textSize="@dimen/text_size" />
+
+                        <Button
+                            android:id="@+id/button_quit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:backgroundTint="@color/dark_yellow"
+                            android:text="Quit"
+                            android:textSize="@dimen/text_size" />
+
+
+                        <SeekBar
+                            android:id="@+id/seekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:progress="100"
+                            android:thumbTint="@color/dark_yellow" />
                     </LinearLayout>
-
-
-                    <Button
-                        android:id="@+id/button_songtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_button_yellow"
-                        android:drawableLeft="@android:drawable/arrow_up_float"
-                        android:text="Songtitel"
-                        android:textSize="@dimen/text_size" />
-
-                    <Button
-                        android:id="@+id/button_weather"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_button_yellow"
-                        android:text="Wetter"
-                        android:textSize="@dimen/text_size" />
-
-                    <Button
-                        android:id="@+id/button_standby"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_button_yellow"
-                        android:text="Standby"
-                        android:textSize="@dimen/text_size" />
-
-                    <Button
-                        android:id="@+id/button_quit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_button_yellow"
-                        android:text="Quit"
-                        android:textSize="@dimen/text_size" />
-
-
-                    <SeekBar
-                        android:id="@+id/seekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:progress="100"
-                        android:thumbTint="@color/dark_yellow" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -392,7 +378,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/custom_button_green"
+                android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Fahrrad Fahrt hinzufügen"
                 android:textSize="@dimen/text_size"
                 app:backgroundTint="@color/teal_700" />
@@ -405,7 +391,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/custom_button_green"
+                android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Pflanzen"
                 android:textSize="@dimen/text_size"
                 app:backgroundTint="@color/teal_700" />
