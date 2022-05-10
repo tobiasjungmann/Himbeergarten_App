@@ -200,10 +200,11 @@
                             android:padding="2dp"
 
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagetime"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageweather"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imagetime"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.25">
+                            app:layout_constraintWidth_percent="0.20">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -221,10 +222,11 @@
                             android:orientation="horizontal"
                             android:padding="2dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagetrain"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.25">
+                            app:layout_constraintWidth_percent="0.20">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -243,9 +245,10 @@
                             android:padding="2dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imagetime"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imageweather"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.25">
+                            app:layout_constraintWidth_percent="0.20">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -255,7 +258,30 @@
                                 android:src="@drawable/icon_playlist" />
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/imageweather"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagespotify"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imagetrain"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.20">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="weather"
+                                android:src="@drawable/icon_weather" />
+                        </LinearLayout>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <SeekBar
                         android:id="@+id/seekBar"
                         android:layout_width="match_parent"
@@ -264,257 +290,118 @@
                         android:layout_marginBottom="8dp"
                         android:progress="100"
                         android:thumbTint="@color/beige_palette" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/matrix_interface_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginRight="8dp"
-                android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp"
-                card_view:cardElevation="5sp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-
-                    <!--  <LinearLayout
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginLeft="8dp"
-                          android:layout_marginTop="8dp"
-                          android:layout_marginRight="8dp"
-                          android:background="@drawable/custom_edit_text"
-                          android:orientation="vertical">
-
-                          <EditText
-                              android:id="@+id/inputStart"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginLeft="8dp"
-                              android:layout_marginTop="4dp"
-                              android:layout_marginRight="8dp"
-                              android:layout_marginBottom="4dp"
-                              android:backgroundTint="@android:color/white"
-                              android:ems="10"
-                              android:hint="Ausgangspunkt"
-                              android:inputType="textPersonName"
-                              android:text="Josef Wirt Weg"
-                              android:textColor="@color/light_grey"
-                              android:textSize="@dimen/text_size" />
-                      </LinearLayout>
-
-                      <LinearLayout
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginLeft="8dp"
-                          android:layout_marginTop="8dp"
-                          android:layout_marginRight="8dp"
-                          android:background="@drawable/custom_edit_text"
-                          android:orientation="vertical">
-
-                          <EditText
-                              android:id="@+id/inputDest"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginLeft="8dp"
-                              android:layout_marginTop="4dp"
-                              android:layout_marginRight="8dp"
-                              android:layout_marginBottom="4dp"
-                              android:backgroundTint="@android:color/white"
-                              android:ems="10"
-                              android:hint="Ziel"
-                              android:inputType="textPersonName"
-                              android:text="Studentenstadt"
-                              android:textColor="@color/light_grey"
-                              android:textSize="@dimen/text_size" />
-                      </LinearLayout>-->
-
-
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutmatrixmoreoptions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/time_button"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Uhrzeit"
-                            android:textSize="@dimen/text_size" />
-
-                        <Button
-                            android:id="@+id/button"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Bahnanzeige"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/button_relais1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Relais 1"
-                            android:textSize="@dimen/text_size" />
-
-                        <Button
-                            android:id="@+id/button_relais2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Lichterkette"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/button_arduino1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Arduino 1"
-                            android:textSize="@dimen/text_size" />
-
-                        <Button
-                            android:id="@+id/button_arduino2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".50"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Arduino 2"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:visibility="gone">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:id="@+id/imagearduino1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
-                            android:orientation="horizontal">
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
 
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagestandby"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imagearduino2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.20">
 
-                            <Button
-                                android:id="@+id/debugSelector"
-                                android:layout_width="0dp"
+                            <ImageView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".50"
-                                android:background="@drawable/custom_rectangle_rounded_corners"
-                                android:backgroundTint="@color/dark_yellow"
-                                android:text="Debug"
-                                android:textSize="@dimen/text_size" />
+                                android:adjustViewBounds="true"
+                                android:contentDescription="arduino1"
+                                android:src="@drawable/icon_chip" />
                         </LinearLayout>
 
-
-                        <Button
-                            android:id="@+id/button_songtitle"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:id="@+id/imagearduino2"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:drawableLeft="@android:drawable/arrow_up_float"
-                            android:text="Songtitel"
-                            android:textSize="@dimen/text_size" />
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagearduino1"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.20">
 
-                        <Button
-                            android:id="@+id/button_weather"
-                            android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="arduino2"
+                                android:src="@drawable/icon_chip" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/imagequit"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Wetter"
-                            android:textSize="@dimen/text_size" />
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imagestandby"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.20">
 
-                        <Button
-                            android:id="@+id/button_standby"
-                            android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="quit"
+                                android:src="@drawable/icon_power" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/imagestandby"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Standby"
-                            android:textSize="@dimen/text_size" />
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagequit"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imagearduino1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.20">
 
-                        <Button
-                            android:id="@+id/button_quit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
-                            android:text="Quit"
-                            android:textSize="@dimen/text_size" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="standby"
+                                android:src="@drawable/icon_standby" />
+                        </LinearLayout>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/textViewMorematrixOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:textColor="@color/green_yellow_palette"
+                        android:text="More Options" />
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
 
@@ -528,7 +415,7 @@
                 android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Fahrrad Fahrt hinzufügen"
                 android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/teal_700" />
+                app:backgroundTint="@color/light_green_old" />
 
 
             <Button
@@ -541,7 +428,7 @@
                 android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Pflanzen"
                 android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/teal_700" />
+                app:backgroundTint="@color/light_green_old" />
 
 
         </LinearLayout>

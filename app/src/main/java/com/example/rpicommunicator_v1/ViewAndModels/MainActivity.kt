@@ -4,18 +4,20 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface.BOLD
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private var viewMoreOptionsText: TextView? = null
+    private var layoutmatrixmoreoptions: ConstraintLayout? = null
     private var destText: EditText? = null
     private var startText: EditText? = null
     var mainActivityViewModel: MainActivityViewModel? = null
@@ -36,24 +38,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun initIO() {
         destText = findViewById(R.id.inputDest)
         startText = findViewById(R.id.inputStart)
+        layoutmatrixmoreoptions = findViewById(R.id.layoutmatrixmoreoptions)
+        viewMoreOptionsText = findViewById(R.id.textViewMorematrixOptions)
+        viewMoreOptionsText!!.setOnClickListener(this)
+
         findViewById<View>(R.id.imagetrain).setOnClickListener(this)
         findViewById<View>(R.id.imagetime).setOnClickListener(this)
         findViewById<View>(R.id.imagespotify).setOnClickListener(this)
-        findViewById<View>(R.id.button_weather).setOnClickListener(this)
-        findViewById<View>(R.id.button_relais1).setOnClickListener(this)
-        findViewById<View>(R.id.button_relais2).setOnClickListener(this)
-        findViewById<View>(R.id.button_arduino1).setOnClickListener(this)
-        findViewById<View>(R.id.button_arduino2).setOnClickListener(this)
+        findViewById<View>(R.id.imageweather).setOnClickListener(this)
 
         findViewById<View>(R.id.imageoutlet1).setOnClickListener(this)
         findViewById<View>(R.id.imageoutlet2).setOnClickListener(this)
         findViewById<View>(R.id.imageoutlet3).setOnClickListener(this)
+
         findViewById<View>(R.id.button_bikeActivity).setOnClickListener(this)
         findViewById<View>(R.id.button_settingsActivity).setOnClickListener(this)
         findViewById<View>(R.id.button_plantoverviewActivity).setOnClickListener(this)
         findViewById<View>(R.id.textViewSources).setOnClickListener(this)
-        findViewById<View>(R.id.button_quit).setOnClickListener(this)
-        findViewById<View>(R.id.button_standby).setOnClickListener(this)
+
+        findViewById<View>(R.id.imagequit).setOnClickListener(this)
+        findViewById<View>(R.id.imagestandby).setOnClickListener(this)
+        findViewById<View>(R.id.imagearduino1).setOnClickListener(this)
+        findViewById<View>(R.id.imagearduino2).setOnClickListener(this)
 
         val sk = findViewById<SeekBar>(R.id.seekBar)
         sk.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -87,46 +93,63 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imagetime) {
             Log.i("buttonClick", "time_button was clicked")
             communicationInterface!!.sendText("changetime")
-        } else if (v.id == R.id.button_weather) {
+        } else if (v.id == R.id.imageweather) {
             Log.i("buttonClick", "weather button was clicked")
             communicationInterface!!.sendText("weather")
-
-        } else if (v.id == R.id.button_relais1) {
-            Log.i("buttonClick", "Relais 1 was clicked")
-            communicationInterface!!.sendText("relais1")
-        } else if (v.id == R.id.button_relais2) {
-            Log.i("buttonClick", "Relais 2 was clicked")
-            communicationInterface!!.sendText("relais2")
-        } else if (v.id == R.id.button_arduino1) {
+        } else if (v.id == R.id.imagearduino1) {
             Log.i("buttonClick", "Arduino 1 was clicked")
             communicationInterface!!.sendText("arduino1")
-        } else if (v.id == R.id.button_arduino2) {
+        } else if (v.id == R.id.imagearduino2) {
             Log.i("buttonClick", "Arduino 2 was clicked")
             communicationInterface!!.sendText("arduino2")
         } else if (v.id == R.id.imageoutlet1) {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
-            if(mainActivityViewModel!!.toggleOutlet1()){
-                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
-            }else{
-                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            if (mainActivityViewModel!!.toggleOutlet1()) {
+                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.light_yellow_palette
+                    )
+                );
+            } else {
+                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.beige_palette
+                    )
+                );
             }
         } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
-            if(mainActivityViewModel!!.toggleOutlet2()){
-                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
-            }else{
-                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            if (mainActivityViewModel!!.toggleOutlet2()) {
+                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.light_yellow_palette
+                    )
+                );
+            } else {
+                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.beige_palette
+                    )
+                );
             }
         } else if (v.id == R.id.imageoutlet3) {
             Log.i("buttonClick", "Outlet 3 was clicked")
             communicationInterface!!.sendText("outlet3")
 
-            if(mainActivityViewModel!!.toggleOutlet3()){
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
-            }else{
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            if (mainActivityViewModel!!.toggleOutlet3()) {
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.light_yellow_palette
+                    )
+                );
+            } else {
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
+                    getResources().getColorStateList(
+                        R.color.beige_palette
+                    )
+                );
             }
 
         } else if (v.id == R.id.button_bikeActivity) {
@@ -138,16 +161,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.button_plantoverviewActivity) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
-        } else if (v.id == R.id.button_standby) {
+        } else if (v.id == R.id.imagestandby) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("standby")
-        } else if (v.id == R.id.button_quit) {
+        } else if (v.id == R.id.imagequit) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("quit")
         } else if (v.id == R.id.textViewSources) {
             Log.i("buttonClick", "OpenSources activity was clicked")
             openSourcesDialog()
+        } else if (v.id == R.id.textViewMorematrixOptions) {
+            Log.i("buttonClick", "view more options activity was clicked")
+            if (layoutmatrixmoreoptions!!.visibility == View.GONE) {
+                layoutmatrixmoreoptions!!.visibility = View.VISIBLE
+                viewMoreOptionsText!!.text="Less Options"
+            } else {
+                layoutmatrixmoreoptions!!.visibility = View.GONE
+                viewMoreOptionsText!!.text="More Options"
+            }
         }
+
+
     }
 
     private fun openSourcesDialog() {
