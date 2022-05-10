@@ -36,14 +36,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun initIO() {
         destText = findViewById(R.id.inputDest)
         startText = findViewById(R.id.inputStart)
-        findViewById<View>(R.id.button).setOnClickListener(this)
-        findViewById<View>(R.id.time_button).setOnClickListener(this)
+        findViewById<View>(R.id.imagetrain).setOnClickListener(this)
+        findViewById<View>(R.id.imagetime).setOnClickListener(this)
+        findViewById<View>(R.id.imagespotify).setOnClickListener(this)
         findViewById<View>(R.id.button_weather).setOnClickListener(this)
         findViewById<View>(R.id.button_relais1).setOnClickListener(this)
         findViewById<View>(R.id.button_relais2).setOnClickListener(this)
         findViewById<View>(R.id.button_arduino1).setOnClickListener(this)
         findViewById<View>(R.id.button_arduino2).setOnClickListener(this)
-        findViewById<View>(R.id.button_songtitle).setOnClickListener(this)
+
         findViewById<View>(R.id.imageoutlet1).setOnClickListener(this)
         findViewById<View>(R.id.imageoutlet2).setOnClickListener(this)
         findViewById<View>(R.id.imageoutlet3).setOnClickListener(this)
@@ -77,15 +78,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        if (v.id == R.id.button) {
+        if (v.id == R.id.imagetrain) {
             Log.i("buttonClick", "Übernehmen was clicked")
             communicationInterface!!.sendText("Stations;" + startText!!.text.toString() + ";" + destText!!.text.toString())
+        } else if (v.id == R.id.imagespotify) {
+            Log.i("buttonClick", "songtitle was clicked")
+            communicationInterface!!.sendText("songtitle")
+        } else if (v.id == R.id.imagetime) {
+            Log.i("buttonClick", "time_button was clicked")
+            communicationInterface!!.sendText("changetime")
         } else if (v.id == R.id.button_weather) {
             Log.i("buttonClick", "weather button was clicked")
             communicationInterface!!.sendText("weather")
-        } else if (v.id == R.id.time_button) {
-            Log.i("buttonClick", "time_button was clicked")
-            communicationInterface!!.sendText("changetime")
+
         } else if (v.id == R.id.button_relais1) {
             Log.i("buttonClick", "Relais 1 was clicked")
             communicationInterface!!.sendText("relais1")
@@ -123,9 +128,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }else{
                 findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
             }
-        } else if (v.id == R.id.button_songtitle) {
-            Log.i("buttonClick", "songtitle was clicked")
-            communicationInterface!!.sendText("songtitle")
+
         } else if (v.id == R.id.button_bikeActivity) {
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()

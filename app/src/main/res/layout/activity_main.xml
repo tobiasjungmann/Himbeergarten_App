@@ -115,24 +115,21 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/matrix_interface_card"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_matrix"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginRight="8dp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="8dp"
-                card_view:cardElevation="5sp">
-
+                app:cardElevation="5sp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -185,6 +182,163 @@
                             android:textColor="@color/light_grey"
                             android:textSize="@dimen/text_size" />
                     </LinearLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp">
+
+                        <LinearLayout
+                            android:id="@+id/imagetrain"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imagetime"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.25">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="train"
+                                android:src="@drawable/icon_train" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/imagetime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.25">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="time"
+                                android:src="@drawable/icon_time" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/imagespotify"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imagetime"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.25">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="spotify"
+                                android:src="@drawable/icon_playlist" />
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:progress="100"
+                        android:thumbTint="@color/beige_palette" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/matrix_interface_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="8dp"
+                card_view:cardElevation="5sp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <!--  <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="8dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginRight="8dp"
+                          android:background="@drawable/custom_edit_text"
+                          android:orientation="vertical">
+
+                          <EditText
+                              android:id="@+id/inputStart"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginLeft="8dp"
+                              android:layout_marginTop="4dp"
+                              android:layout_marginRight="8dp"
+                              android:layout_marginBottom="4dp"
+                              android:backgroundTint="@android:color/white"
+                              android:ems="10"
+                              android:hint="Ausgangspunkt"
+                              android:inputType="textPersonName"
+                              android:text="Josef Wirt Weg"
+                              android:textColor="@color/light_grey"
+                              android:textSize="@dimen/text_size" />
+                      </LinearLayout>
+
+                      <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="8dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginRight="8dp"
+                          android:background="@drawable/custom_edit_text"
+                          android:orientation="vertical">
+
+                          <EditText
+                              android:id="@+id/inputDest"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginLeft="8dp"
+                              android:layout_marginTop="4dp"
+                              android:layout_marginRight="8dp"
+                              android:layout_marginBottom="4dp"
+                              android:backgroundTint="@android:color/white"
+                              android:ems="10"
+                              android:hint="Ziel"
+                              android:inputType="textPersonName"
+                              android:text="Studentenstadt"
+                              android:textColor="@color/light_grey"
+                              android:textSize="@dimen/text_size" />
+                      </LinearLayout>-->
 
 
                     <LinearLayout
@@ -358,14 +512,7 @@
                             android:textSize="@dimen/text_size" />
 
 
-                        <SeekBar
-                            android:id="@+id/seekBar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:progress="100"
-                            android:thumbTint="@color/dark_yellow" />
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
