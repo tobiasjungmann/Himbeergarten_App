@@ -18,8 +18,9 @@ import com.example.rpicommunicator_v1.R
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var destText: EditText? = null
     private var startText: EditText? = null
-    private var mainActivityViewModel: MainActivityViewModel? = null
-    private var communicationInterface: CommunicationInterface? = null
+    var mainActivityViewModel: MainActivityViewModel? = null
+    var communicationInterface: CommunicationInterface? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<View>(R.id.button_settingsActivity).setOnClickListener(this)
         findViewById<View>(R.id.button_plantoverviewActivity).setOnClickListener(this)
         findViewById<View>(R.id.textViewSources).setOnClickListener(this)
+        findViewById<View>(R.id.button_quit).setOnClickListener(this)
+        findViewById<View>(R.id.button_standby).setOnClickListener(this)
+
         val sk = findViewById<SeekBar>(R.id.seekBar)
         sk.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             private var currentProgress = 0
@@ -115,6 +119,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.button_plantoverviewActivity) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
+        } else if (v.id == R.id.button_standby) {
+            Log.i("buttonClick", "PlantOverview activity was clicked")
+            communicationInterface!!.sendText("standby")
+        } else if (v.id == R.id.button_quit) {
+            Log.i("buttonClick", "PlantOverview activity was clicked")
+            communicationInterface!!.sendText("quit")
         } else if (v.id == R.id.textViewSources) {
             Log.i("buttonClick", "OpenSources activity was clicked")
             openSourcesDialog()

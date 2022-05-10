@@ -263,6 +263,28 @@
                         android:text="Wetter"
                         android:textSize="@dimen/text_size" />
 
+                    <Button
+                        android:id="@+id/button_standby"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Standby"
+                        android:textSize="@dimen/text_size" />
+
+                    <Button
+                        android:id="@+id/button_quit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/custom_button_yellow"
+                        android:text="Quit"
+                        android:textSize="@dimen/text_size" />
+
 
                     <SeekBar
                         android:id="@+id/seekBar"

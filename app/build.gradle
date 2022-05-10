@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -53,8 +54,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
+
     implementation "androidx.room:room-runtime:2.4.2"
-    annotationProcessor "androidx.room:room-compiler:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
 
 
     // ViewModel
@@ -67,7 +69,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:2.4.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     // Annotation processor
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.4.1"
+    annotationProcessor "androidx.lifecycle:lifecycle-common-java8:2.4.1"
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
@@ -82,4 +84,6 @@ dependencies {
 
     //Diagram library
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
+
+
 }

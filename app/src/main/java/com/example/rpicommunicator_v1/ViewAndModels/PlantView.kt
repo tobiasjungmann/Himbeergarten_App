@@ -159,6 +159,7 @@ class PlantView : AppCompatActivity() {
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
     }
 
+    
     private fun styleChart(chart: LineChart) {
         chart.setDrawBorders(true)
         chart.setBorderColor(resources.getColor(R.color.light_grey))
