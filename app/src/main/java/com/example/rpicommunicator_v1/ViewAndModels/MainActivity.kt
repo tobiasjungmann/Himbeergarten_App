@@ -44,9 +44,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<View>(R.id.button_arduino1).setOnClickListener(this)
         findViewById<View>(R.id.button_arduino2).setOnClickListener(this)
         findViewById<View>(R.id.button_songtitle).setOnClickListener(this)
-        findViewById<View>(R.id.button_outlet1).setOnClickListener(this)
-        findViewById<View>(R.id.button_outlet2).setOnClickListener(this)
-        findViewById<View>(R.id.button_outlet3).setOnClickListener(this)
+        findViewById<View>(R.id.imageoutlet1).setOnClickListener(this)
+        findViewById<View>(R.id.imageoutlet2).setOnClickListener(this)
+        findViewById<View>(R.id.imageoutlet3).setOnClickListener(this)
         findViewById<View>(R.id.button_bikeActivity).setOnClickListener(this)
         findViewById<View>(R.id.button_settingsActivity).setOnClickListener(this)
         findViewById<View>(R.id.button_plantoverviewActivity).setOnClickListener(this)
@@ -98,15 +98,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.button_arduino2) {
             Log.i("buttonClick", "Arduino 2 was clicked")
             communicationInterface!!.sendText("arduino2")
-        } else if (v.id == R.id.button_outlet1) {
+        } else if (v.id == R.id.imageoutlet1) {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
-        } else if (v.id == R.id.button_outlet2) {
+            if(mainActivityViewModel!!.toggleOutlet1()){
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
+            }else{
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            }
+        } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
-        } else if (v.id == R.id.button_outlet3) {
+            if(mainActivityViewModel!!.toggleOutlet2()){
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
+            }else{
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            }
+        } else if (v.id == R.id.imageoutlet3) {
             Log.i("buttonClick", "Outlet 3 was clicked")
             communicationInterface!!.sendText("outlet3")
+
+            if(mainActivityViewModel!!.toggleOutlet3()){
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.light_yellow_palette));
+            }else{
+                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(getResources().getColorStateList(R.color.beige_palette));
+            }
         } else if (v.id == R.id.button_songtitle) {
             Log.i("buttonClick", "songtitle was clicked")
             communicationInterface!!.sendText("songtitle")
