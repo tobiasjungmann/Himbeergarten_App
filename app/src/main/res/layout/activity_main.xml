@@ -12,13 +12,13 @@
         android:id="@+id/scroll_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@+id/button_settingsActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
             android:id="@+id/wrapper_layout"
@@ -27,14 +27,100 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_other_activities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5sp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/imagebike"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageplant"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="bikeactivity"
+                            android:src="@drawable/icon_bicycle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/imageplant"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="plantactivity"
+                            android:src="@drawable/icon_potted_plant" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/imagelistactivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageplant"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.3">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="listactivity"
+                            android:src="@drawable/icon_list" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_outlets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="5sp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,10 +135,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:backgroundTint="@color/beige_palette"
                         android:orientation="horizontal"
                         android:padding="2dp"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageoutlet2"
                         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +156,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:backgroundTint="@color/beige_palette"
+
                         android:orientation="horizontal"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +178,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:backgroundTint="@color/beige_palette"
                         android:orientation="horizontal"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="8dp"
@@ -204,7 +287,7 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/imagetime"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.20">
+                            app:layout_constraintWidth_percent="0.25">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -226,7 +309,7 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.20">
+                            app:layout_constraintWidth_percent="0.25">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -248,7 +331,7 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/imageweather"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.20">
+                            app:layout_constraintWidth_percent="0.25">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -281,15 +364,6 @@
                         </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <SeekBar
-                        android:id="@+id/seekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:progress="100"
-                        android:thumbTint="@color/beige_palette" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -392,45 +466,27 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:progress="100"
+                        android:backgroundTint="@color/beige_palette"
+                        android:thumbTint="@color/beige_palette" />
+
                     <TextView
                         android:id="@+id/textViewMorematrixOptions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:textColor="@color/green_yellow_palette"
-                        android:text="More Options" />
+                        android:text="More Options"
+                        android:textColor="@color/green_yellow_palette" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-
-            <Button
-                android:id="@+id/button_bikeActivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/custom_rectangle_rounded_corners"
-                android:text="Fahrrad Fahrt hinzufügen"
-                android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/medium_green_palette" />
-
-
-            <Button
-                android:id="@+id/button_plantoverviewActivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/custom_rectangle_rounded_corners"
-                android:text="Pflanzen"
-                android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/medium_green_palette" />
-
-
         </LinearLayout>
     </LinearLayout>
 
@@ -442,17 +498,10 @@
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:clickable="true"
+        android:backgroundTint="@color/beige_palette"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/icon_gear" />
 
-    <TextView
-        android:id="@+id/textViewSources"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sources"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

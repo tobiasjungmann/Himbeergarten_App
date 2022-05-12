@@ -51,10 +51,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<View>(R.id.imageoutlet2).setOnClickListener(this)
         findViewById<View>(R.id.imageoutlet3).setOnClickListener(this)
 
-        findViewById<View>(R.id.button_bikeActivity).setOnClickListener(this)
+        findViewById<View>(R.id.imagebike).setOnClickListener(this)
+        findViewById<View>(R.id.imageplant).setOnClickListener(this)
+        findViewById<View>(R.id.imagelistactivity).setOnClickListener(this)
+
         findViewById<View>(R.id.button_settingsActivity).setOnClickListener(this)
-        findViewById<View>(R.id.button_plantoverviewActivity).setOnClickListener(this)
-        findViewById<View>(R.id.textViewSources).setOnClickListener(this)
+
 
         findViewById<View>(R.id.imagequit).setOnClickListener(this)
         findViewById<View>(R.id.imagestandby).setOnClickListener(this)
@@ -108,13 +110,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (mainActivityViewModel!!.toggleOutlet1()) {
                 findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
                     getResources().getColorStateList(
-                        R.color.light_yellow_palette
+                        R.color.beige_palette
                     )
                 );
             } else {
                 findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
                     getResources().getColorStateList(
-                        R.color.beige_palette
+                        R.color.transparent
                     )
                 );
             }
@@ -124,13 +126,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (mainActivityViewModel!!.toggleOutlet2()) {
                 findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
                     getResources().getColorStateList(
-                        R.color.light_yellow_palette
+                        R.color.beige_palette
                     )
                 );
             } else {
                 findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
                     getResources().getColorStateList(
-                        R.color.beige_palette
+                        R.color.transparent
                     )
                 );
             }
@@ -141,35 +143,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (mainActivityViewModel!!.toggleOutlet3()) {
                 findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
                     getResources().getColorStateList(
-                        R.color.light_yellow_palette
+                        R.color.beige_palette
                     )
                 );
             } else {
                 findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.beige_palette
+                    getResources().getColorStateList(R.color.transparent
                     )
                 );
             }
 
-        } else if (v.id == R.id.button_bikeActivity) {
+        } else if (v.id == R.id.imagebike) {
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
+        } else if (v.id == R.id.imageplant) {
+            Log.i("buttonClick", "PlantOverview activity was clicked")
+            changeToPlantOverview()
+        } else if (v.id == R.id.imagelistactivity) {
+            Log.i("buttonClick", "List activity was clicked was clicked. Not yet implemented")
+
         } else if (v.id == R.id.button_settingsActivity) {
             Log.i("buttonClick", "Setting activity was clicked")
             changeToSettings()
-        } else if (v.id == R.id.button_plantoverviewActivity) {
-            Log.i("buttonClick", "PlantOverview activity was clicked")
-            changeToPlantOverview()
         } else if (v.id == R.id.imagestandby) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("standby")
         } else if (v.id == R.id.imagequit) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("quit")
-        } else if (v.id == R.id.textViewSources) {
-            Log.i("buttonClick", "OpenSources activity was clicked")
-            openSourcesDialog()
+
         } else if (v.id == R.id.textViewMorematrixOptions) {
             Log.i("buttonClick", "view more options activity was clicked")
             if (layoutmatrixmoreoptions!!.visibility == View.GONE) {
@@ -184,21 +186,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun openSourcesDialog() {
-        val builder = AlertDialog.Builder(this)
-        val titleView: TextView = TextView(this)
-        titleView.setPadding(36, 48, 36, 8)
-        titleView.setTextSize(16F)
-        titleView.setTextColor(Color.WHITE)
-        titleView.autoLinkMask
-        titleView.text =
-            "Pump icons created by Smashicons - Flaticon: https://www.flaticon.com/free-icons/pump\n\nPlant icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/plant\n\nOutlet icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/outlet\n\nWater drop icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/water-drop\""
-        builder.setCustomTitle(titleView)
-        builder.setCancelable(true)
-        builder.setPositiveButton("OK", null);
-        val dialog: Dialog = builder.create()
-        dialog.show()
-    }
+
 
     private fun changeToBike() {
         val intent = Intent(applicationContext, BikeTourActivity::class.java)
