@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:backgroundTint="@color/dark_yellow"
+                        android:backgroundTint="@color/beige_palette"
                         android:text="eintragen"
                         android:textSize="20sp" />
 
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
+                            android:backgroundTint="@color/beige_palette"
                             android:text="left"
                             android:textSize="20sp" />
 
@@ -191,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
+                            android:backgroundTint="@color/beige_palette"
                             android:text="Woche"
                             android:textSize="20sp" />
 
@@ -200,7 +200,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/dark_yellow"
+                            android:backgroundTint="@color/beige_palette"
                             android:text="right"
                             android:textSize="20sp" />
                     </LinearLayout>

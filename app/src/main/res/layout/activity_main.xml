@@ -415,7 +415,7 @@
                 android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Fahrrad Fahrt hinzufügen"
                 android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/light_green_old" />
+                app:backgroundTint="@color/medium_green_palette" />
 
 
             <Button
@@ -428,7 +428,7 @@
                 android:background="@drawable/custom_rectangle_rounded_corners"
                 android:text="Pflanzen"
                 android:textSize="@dimen/text_size"
-                app:backgroundTint="@color/light_green_old" />
+                app:backgroundTint="@color/medium_green_palette" />
 
 
         </LinearLayout>

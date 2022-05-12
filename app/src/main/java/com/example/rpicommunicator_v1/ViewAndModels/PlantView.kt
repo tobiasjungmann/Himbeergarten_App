@@ -152,8 +152,8 @@ class PlantView : AppCompatActivity() {
         lineDataSet1.lineWidth = 2f
         lineDataSet1.circleRadius = 6f
         lineDataSet1.circleHoleRadius = 3f
-        lineDataSet1.color = resources.getColor(R.color.dark_yellow)
-        lineDataSet1.setCircleColor(resources.getColor(R.color.dark_yellow))
+        lineDataSet1.color = resources.getColor(R.color.green_yellow_palette)
+        lineDataSet1.setCircleColor(resources.getColor(R.color.green_yellow_palette))
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
@@ -185,7 +185,7 @@ class PlantView : AppCompatActivity() {
         chart.axisRight.setDrawAxisLine(false)
         // chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
         val limitLine = LimitLine(200f) // set where the line should be drawn
-        limitLine.lineColor = resources.getColor(R.color.light_green)
+        limitLine.lineColor = resources.getColor(R.color.green_yellow_palette)
         limitLine.lineWidth = 2f
         chart.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn

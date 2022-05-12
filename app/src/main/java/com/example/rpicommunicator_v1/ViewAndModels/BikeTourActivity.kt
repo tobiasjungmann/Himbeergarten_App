@@ -92,8 +92,8 @@ class BikeTourActivity : AppCompatActivity() {
         lineDataSet1.lineWidth = 1f
         lineDataSet1.circleRadius = 2f
         lineDataSet1.circleHoleRadius = 1f
-        lineDataSet1.color = resources.getColor(R.color.dark_yellow)
-        lineDataSet1.setCircleColor(resources.getColor(R.color.dark_yellow))
+        lineDataSet1.color = resources.getColor(R.color.green_yellow_palette)
+        lineDataSet1.setCircleColor(resources.getColor(R.color.green_yellow_palette))
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
