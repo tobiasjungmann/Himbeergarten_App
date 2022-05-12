@@ -15,14 +15,14 @@ import com.example.rpicommunicator_v1.R
 
 class PlantOverview : AppCompatActivity() {
 
-    private val mainActivityViewModel: MainActivityViewModel =
-        ViewModelProvider(this).get(MainActivityViewModel::class.java)
+    private lateinit var mainActivityViewModel: MainActivityViewModel;
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_overview)
-
+        mainActivityViewModel=ViewModelProvider(this).get(MainActivityViewModel::class.java)
         initRecyclerView()
     }
 

@@ -9,7 +9,7 @@ import com.example.rpicommunicator_v1.Database.BikeTourDatabase
 import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [BikeTour::class], version = 2)
+@Database(entities = [BikeTour::class], version = 3)
 abstract class BikeTourDatabase : RoomDatabase() {
     abstract fun bikeTourDao(): BikeTourDao?
 

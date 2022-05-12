@@ -10,17 +10,15 @@ import com.example.rpicommunicator_v1.R
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var debug: Boolean = false;
-    private val communicationInterface: CommunicationInterface =
-        ViewModelProvider(this).get(CommunicationInterface::class.java)
-    private var ipText = findViewById<EditText>(R.id.inputIP)
+    private lateinit var communicationInterface: CommunicationInterface
+    private lateinit var ipText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-
-
+        ViewModelProvider(this).get(CommunicationInterface::class.java)
+        ipText = findViewById(R.id.inputIP)
         findViewById<View>(R.id.shutdown_button).setOnClickListener(this)
         findViewById<View>(R.id.connect_button).setOnClickListener(this)
 

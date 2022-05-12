@@ -11,8 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Plant::class],
-    version = 8
-) //mehrere entities in die geschweiften klammern version ändern, wenn tabelle verändert
+    version = 9
+)
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao?
 
