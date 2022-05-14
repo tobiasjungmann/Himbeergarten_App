@@ -1,8 +1,7 @@
 package com.example.rpicommunicator_v1.ViewAndModels
 
 object Constants {
-    const val PORT_DEBUG = 15439
-    const val PORT_Production = 17109
+    const val PORT = 15439
     const val IP = "192.168.0.23"
 
     //Open PlantView Activity

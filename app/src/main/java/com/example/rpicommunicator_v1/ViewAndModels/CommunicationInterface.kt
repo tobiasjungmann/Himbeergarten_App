@@ -7,20 +7,15 @@ import com.example.rpicommunicator_v1.Communication.SendThread
 class CommunicationInterface(application: Application) : AndroidViewModel(application) {
 
 
-    public var localIP: String = "test"
-    public var debugMode: Boolean = false
-
+    var localIP: String = Constants.IP
+    var localPort: Int = Constants.PORT
 
 
     /*
     Network communication Methods
      */
     fun sendText(message: String) {
-        if (localIP != null) {
-            SendThread(message, localIP, debugMode).start()
-        } else {
-            SendThread(message, debugMode).start()
-        }
+        SendThread(message, localIP,localPort).start()
     }
 
 
