@@ -11,6 +11,7 @@ import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
 
@@ -108,49 +109,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
             if (mainActivityViewModel!!.toggleOutlet1()) {
-                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.beige_palette
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
             } else {
-                findViewById<View>(R.id.imageoutlet1).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.transparent
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
             }
         } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
             if (mainActivityViewModel!!.toggleOutlet2()) {
-                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.beige_palette
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
             } else {
-                findViewById<View>(R.id.imageoutlet2).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.transparent
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
             }
         } else if (v.id == R.id.imageoutlet3) {
             Log.i("buttonClick", "Outlet 3 was clicked")
             communicationInterface!!.sendText("outlet3")
 
             if (mainActivityViewModel!!.toggleOutlet3()) {
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
-                    getResources().getColorStateList(
-                        R.color.beige_palette
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
             } else {
-                findViewById<View>(R.id.imageoutlet3).setBackgroundTintList(
-                    getResources().getColorStateList(R.color.transparent
-                    )
-                );
+                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
             }
 
         } else if (v.id == R.id.imagebike) {
@@ -161,7 +139,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             changeToPlantOverview()
         } else if (v.id == R.id.imagelistactivity) {
             Log.i("buttonClick", "List activity was clicked was clicked. Not yet implemented")
-
+            changeToCompareList()
         } else if (v.id == R.id.button_settingsActivity) {
             Log.i("buttonClick", "Setting activity was clicked")
             changeToSettings()
@@ -186,6 +164,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun changeToCompareList() {
+        val intent = Intent(applicationContext, ComparingList::class.java)
+        startActivity(intent)
+    }
 
 
     private fun changeToBike() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rpicommunicator_v1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +10,9 @@
         android:roundIcon="@mipmap/lightbulbround"
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
+        <activity
+            android:name=".ViewAndModels.ComparingList"
+            android:exported="false" />
         <activity
             android:name=".ViewAndModels.PlantOverview"
             android:exported="false" />

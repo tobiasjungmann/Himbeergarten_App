@@ -1,8 +1,11 @@
 package com.example.rpicommunicator_v1.Communication
 
-import android.os.StrictMode.ThreadPolicy
+import android.R
+import android.app.Activity
 import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import android.widget.TextView
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.IP
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.PORT
 import java.io.DataInputStream
@@ -12,15 +15,17 @@ import java.net.InetAddress
 import java.net.Socket
 import java.net.UnknownHostException
 
+
 class SendThread
-    (private val message: String, localIP: String,localPort: Int) : Thread() {
+    (private val message: String, localIP: String, localPort: Int) : Thread() {
     private var localIP: InetAddress? = null
-    private var localPort: Int= PORT
+    private var localPort: Int = PORT
+    private var activity: Activity? = null
 
     init {
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        this.localPort=localPort
+        this.localPort = localPort
         try {
             this.localIP = InetAddress.getByName(localIP)
         } catch (e: UnknownHostException) {
@@ -32,7 +37,6 @@ class SendThread
             e.printStackTrace()
         }
     }
-
 
 
     override fun run() {
@@ -49,6 +53,12 @@ class SendThread
             dout.flush()
             val str = din.readUTF()
             //todo use result to check status
+
+           /* if (activity != null) {
+                activity!!.runOnUiThread(Runnable {
+                    activity!!.findViewById(R.id.outlet)
+                })
+            }*/
             Log.i("run", "Reply: $str")
             dout.close()
             din.close()
