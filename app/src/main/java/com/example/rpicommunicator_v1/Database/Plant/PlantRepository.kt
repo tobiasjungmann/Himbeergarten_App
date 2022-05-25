@@ -1,11 +1,12 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Plant
 
 import android.app.Application
-import com.example.rpicommunicator_v1.Database.PlantDatabase.Companion.getInstance
+import com.example.rpicommunicator_v1.Database.Plant.PlantDatabase.Companion.getInstance
 
 import androidx.lifecycle.LiveData
 
 import android.database.sqlite.SQLiteConstraintException
+import com.example.rpicommunicator_v1.Database.FirebaseAccess
 
 class PlantRepository(application: Application?) {
     private val plantDao: PlantDao?

@@ -1,28 +1,28 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Plant
 
 import android.content.Context
 import androidx.room.Database
-import com.example.rpicommunicator_v1.Database.BikeTour
 import androidx.room.RoomDatabase
-import com.example.rpicommunicator_v1.Database.BikeTourDao
-import com.example.rpicommunicator_v1.Database.BikeTourDatabase
 import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [BikeTour::class], version = 3)
-abstract class BikeTourDatabase : RoomDatabase() {
-    abstract fun bikeTourDao(): BikeTourDao?
+@Database(
+    entities = [Plant::class],
+    version = 9
+)
+abstract class PlantDatabase : RoomDatabase() {
+    abstract fun plantDao(): PlantDao?
 
     companion object {
-        private var instance: BikeTourDatabase? = null
+        private var instance: PlantDatabase? = null
         @JvmStatic
         @Synchronized
-        fun getInstance(context: Context): BikeTourDatabase? {
+        fun getInstance(context: Context): PlantDatabase? {
             if (instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext,
-                    BikeTourDatabase::class.java,
-                    "biketour_database"
+                    PlantDatabase::class.java,
+                    "plant_database"
                 ).fallbackToDestructiveMigration().addCallback(
                     roomCallback
                 ).build()

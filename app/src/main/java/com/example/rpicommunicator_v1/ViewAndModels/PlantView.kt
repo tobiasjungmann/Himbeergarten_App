@@ -2,7 +2,7 @@ package com.example.rpicommunicator_v1.ViewAndModels
 
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rpicommunicator_v1.Database.Plant
+import com.example.rpicommunicator_v1.Database.Plant.Plant
 import android.widget.TextView
 import android.os.Bundle
 import android.util.Log

@@ -2,7 +2,7 @@ package com.example.rpicommunicator_v1.ViewAndModels
 
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rpicommunicator_v1.Database.BikeTour
+import com.example.rpicommunicator_v1.Database.Bike.BikeTour
 import android.os.Bundle
 import android.util.Log
 import android.view.View

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.rpicommunicator_v1.Database.Plant
+import com.example.rpicommunicator_v1.Database.Plant.Plant
 import com.example.rpicommunicator_v1.Plants.PlantAdapter
 import com.example.rpicommunicator_v1.R
 

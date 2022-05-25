@@ -1,7 +1,7 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Bike
 
 import android.app.Application
-import com.example.rpicommunicator_v1.Database.BikeTourDatabase.Companion.getInstance
+import com.example.rpicommunicator_v1.Database.Bike.BikeTourDatabase.Companion.getInstance
 import androidx.lifecycle.LiveData
 import android.database.sqlite.SQLiteConstraintException
 

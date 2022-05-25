@@ -1,6 +1,5 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Bike
 
-import com.example.rpicommunicator_v1.Database.BikeTour
 import androidx.lifecycle.LiveData
 import androidx.room.*
 

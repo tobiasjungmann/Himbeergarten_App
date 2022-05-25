@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Plant
 
 import android.util.Log
 import androidx.room.Entity

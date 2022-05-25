@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Bike
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

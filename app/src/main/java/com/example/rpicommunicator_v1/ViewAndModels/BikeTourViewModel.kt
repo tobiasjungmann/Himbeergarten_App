@@ -2,9 +2,9 @@ package com.example.rpicommunicator_v1.ViewAndModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.rpicommunicator_v1.Database.BikeTourRepository
+import com.example.rpicommunicator_v1.Database.Bike.BikeTourRepository
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.Database.BikeTour
+import com.example.rpicommunicator_v1.Database.Bike.BikeTour
 
 class BikeTourViewModel(application: Application) : AndroidViewModel(application) {
     private val bikeTourRepository: BikeTourRepository

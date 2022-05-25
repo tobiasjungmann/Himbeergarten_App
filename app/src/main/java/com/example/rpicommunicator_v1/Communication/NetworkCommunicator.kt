@@ -1,7 +1,7 @@
 package com.example.rpicommunicator_v1.Communication
 
-import com.example.rpicommunicator_v1.Database.PlantDao
-import com.example.rpicommunicator_v1.Database.Plant
+import com.example.rpicommunicator_v1.Database.Plant.PlantDao
+import com.example.rpicommunicator_v1.Database.Plant.Plant
 import android.database.sqlite.SQLiteConstraintException
 
 class NetworkCommunicator : Thread() {

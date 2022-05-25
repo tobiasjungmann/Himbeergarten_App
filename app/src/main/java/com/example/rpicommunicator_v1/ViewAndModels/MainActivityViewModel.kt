@@ -3,9 +3,9 @@ package com.example.rpicommunicator_v1.ViewAndModels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.example.rpicommunicator_v1.Database.PlantRepository
+import com.example.rpicommunicator_v1.Database.Plant.PlantRepository
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.Database.Plant
+import com.example.rpicommunicator_v1.Database.Plant.Plant
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 

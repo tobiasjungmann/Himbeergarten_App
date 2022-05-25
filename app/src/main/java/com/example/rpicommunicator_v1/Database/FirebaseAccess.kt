@@ -7,6 +7,8 @@ import com.example.rpicommunicator_v1.R
 import com.google.firebase.firestore.SetOptions
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
+import com.example.rpicommunicator_v1.Database.Plant.Plant
+import com.example.rpicommunicator_v1.Database.Plant.PlantRepository
 import com.google.android.gms.tasks.Task
 import java.lang.NullPointerException
 import java.util.*
