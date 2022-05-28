@@ -20,5 +20,5 @@ interface ComparingListDao {
     fun deleteAllLists()
 
     @Query("SELECT* FROM comparing_list_table")
-    fun getAllLists(): LiveData<List<ComparingList?>?>?
+    fun getAllLists(): LiveData<List<ComparingList>>
 }

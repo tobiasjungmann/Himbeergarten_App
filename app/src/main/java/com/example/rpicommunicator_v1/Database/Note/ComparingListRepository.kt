@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 
 class ComparingListRepository(application: Application?) {
     private var listDao: ComparingListDao? = null
-    private var allLists: LiveData<List<ComparingList?>?>? = null
+    private var allLists: LiveData<List<ComparingList>>
 
 
     init {
@@ -30,7 +30,7 @@ class ComparingListRepository(application: Application?) {
         DeleteAllListThread(listDao).start()
     }
 
-    fun getAllLists(): LiveData<List<ComparingList?>?>? {
+    fun getAllLists(): LiveData<List<ComparingList>> {
         return allLists
     }
 

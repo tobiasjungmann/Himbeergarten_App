@@ -1,9 +1,6 @@
 package com.example.rpicommunicator_v1.ViewAndModels
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -165,7 +162,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun changeToCompareList() {
-        val intent = Intent(applicationContext, ComparingList::class.java)
+        val intent = Intent(applicationContext, ComparingListActivity::class.java)
         startActivity(intent)
     }
 

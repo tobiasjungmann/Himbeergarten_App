@@ -6,7 +6,7 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="light_grey">#676666</color>
 
-
+    <color name="transparent_light_grey">#B3C4C4C4</color>
 
     <color name="beige_palette">#e3e7c3</color>
     <color name="light_yellow_palette">#EBE07B</color>

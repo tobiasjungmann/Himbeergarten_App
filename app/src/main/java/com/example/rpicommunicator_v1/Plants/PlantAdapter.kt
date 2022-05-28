@@ -15,10 +15,13 @@ import android.widget.ImageView
 import java.util.ArrayList
 
 class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
+
     private var plants: List<Plant> = ArrayList()
     private lateinit var mListener:  (View, Int, Int)-> Unit;
     private var mlongListener: OnItemLongClickListener? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
+
+
     fun setViewModel(mainActivityViewModel: MainActivityViewModel?) {
         this.mainActivityViewModel = mainActivityViewModel
     }

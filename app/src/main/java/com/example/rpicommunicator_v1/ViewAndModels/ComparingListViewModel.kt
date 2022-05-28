@@ -3,36 +3,40 @@ package com.example.rpicommunicator_v1.ViewAndModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.Database.Note.ComparingList
 import com.example.rpicommunicator_v1.Database.Note.ComparingListRepository
+
 
 class ComparingListViewModel(application: Application) : AndroidViewModel(application) {
 
-    var repository: ComparingListRepository? = null
-    var allLists: LiveData<List<ComparingList?>?>? = null
+    private val repository: ComparingListRepository
+    val allLists: LiveData<List<ComparingList>>
 
-    fun ListeViewModel(application: Application) {
-        super(application)
-        repository = ListeRepository(application)
+
+
+
+    init {
+        repository = ComparingListRepository(application)
         allLists = repository.getAllLists()
     }
 
-    fun insert(liste: Liste?) {
-        repository.insert(liste)
+    fun insert(list: ComparingList) {
+        repository.insert(list)
     }
 
-    fun update(liste: Liste?) {
-        repository.update(liste)
+    fun update(list: ComparingList) {
+        repository.update(list)
     }
 
-    fun delete(liste: Liste?) {
-        repository.delete(liste)
+    fun delete(list: ComparingList) {
+        repository.delete(list)
     }
 
     fun deleteAllLists() {
         repository.deleteAllLists()
     }
 
-    fun getAllLists(): LiveData<List<Liste?>?>? {
+    fun getAllComparingLists(): LiveData<List<ComparingList>> {
         return allLists
     }
 
