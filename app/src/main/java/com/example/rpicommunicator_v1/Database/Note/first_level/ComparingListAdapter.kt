@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.Database
+package com.example.rpicommunicator_v1.Database.Note.first_level
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.Database.Note.ComparingList
-import com.example.rpicommunicator_v1.Database.Plant.Plant
 import com.example.rpicommunicator_v1.R
 import java.util.ArrayList
 
@@ -46,14 +44,14 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     val DIFF_CALLBACK: DiffUtil.ItemCallback<ComparingList> =
         object : DiffUtil.ItemCallback<ComparingList>() {
             override fun areItemsTheSame(oldItem: ComparingList, newItem: ComparingList): Boolean {
-                return oldItem.getId() === newItem.getId()
+                return oldItem.id === newItem.id
             }
 
             override fun areContentsTheSame(
                 oldItem: ComparingList,
                 newItem: ComparingList
             ): Boolean {
-                return (oldItem.getTitle().equals(newItem.getTitle()))
+                return (oldItem.title.equals(newItem.title))
             }
         }
 
@@ -65,7 +63,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
         val currentList: ComparingList = comparingList.get(position)
-        holder.textViewTitle.setText(" " + currentList.getTitle())
+        holder.textViewTitle.setText(" " + currentList.title)
     }
 
 

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewAndModels.ComparingListActivity"
-    android:id="@+id/coordinator_layout_comparing_list"
+    tools:context=".ViewAndModels.ComparingElementActivity"
+    android:id="@+id/coordinator_layout_note"
     android:background="@android:color/darker_gray">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comparingListRecyclerView"
+        android:id="@+id/comparing_element_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/comparing_list_item"/>
+        tools:listitem="@layout/plant_item"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_note"

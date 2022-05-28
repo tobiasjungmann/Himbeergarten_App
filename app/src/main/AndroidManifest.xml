@@ -13,7 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
+            android:name=".ViewAndModels.ComparingElementActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewAndModels.ComparingListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewAndModels.AddComparingListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewAndModels.AddEditNoteActivity"
             android:exported="false" />
         <activity
             android:name=".ViewAndModels.PlantOverview"

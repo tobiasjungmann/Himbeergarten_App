@@ -3,7 +3,6 @@ package com.example.rpicommunicator_v1.ViewAndModels
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.Database.ComparingListAdapter
-import com.example.rpicommunicator_v1.Database.Note.ComparingList
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingListAdapter
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 import com.example.rpicommunicator_v1.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -117,8 +116,10 @@ class ComparingListActivity : AppCompatActivity() {
                 val data: Intent? = result.data
 
                 val title = data!!.getStringExtra(EXTRA_TITLE)
-                val liste = ComparingList(title)
-                listViewModel!!.insert(liste)
+                val liste = title?.let { ComparingList(it) }
+                if (liste != null) {
+                    listViewModel!!.insert(liste)
+                }
                 Toast.makeText(this, "List Saved", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Note not Saved", Toast.LENGTH_SHORT).show()

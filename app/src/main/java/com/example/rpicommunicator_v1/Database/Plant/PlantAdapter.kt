@@ -1,8 +1,7 @@
-package com.example.rpicommunicator_v1.Plants
+package com.example.rpicommunicator_v1.Database.Plant
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.Plants.PlantAdapter.PlantHolder
-import com.example.rpicommunicator_v1.Database.Plant.Plant
+import com.example.rpicommunicator_v1.Database.Plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.ViewAndModels.MainActivityViewModel
 import android.view.ViewGroup
 import android.view.LayoutInflater

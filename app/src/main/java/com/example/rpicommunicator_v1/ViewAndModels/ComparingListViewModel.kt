@@ -3,8 +3,8 @@ package com.example.rpicommunicator_v1.ViewAndModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.Database.Note.ComparingList
-import com.example.rpicommunicator_v1.Database.Note.ComparingListRepository
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingListRepository
 
 
 class ComparingListViewModel(application: Application) : AndroidViewModel(application) {

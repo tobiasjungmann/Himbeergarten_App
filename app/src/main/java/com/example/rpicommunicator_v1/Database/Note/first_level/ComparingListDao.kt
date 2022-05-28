@@ -1,11 +1,9 @@
-package com.example.rpicommunicator_v1.Database.Note
+package com.example.rpicommunicator_v1.Database.Note.first_level
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
+@Dao
 interface ComparingListDao {
     @Insert
     fun insert(liste: ComparingList?)

@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.Database.Note
+package com.example.rpicommunicator_v1.Database.Note.first_level
 
 import android.app.Application
 import androidx.lifecycle.LiveData
