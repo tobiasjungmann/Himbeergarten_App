@@ -8,11 +8,19 @@
 
     <color name="transparent_light_grey">#B3C4C4C4</color>
 
+    <color name="beige_palette">#8f9779</color>
+    <color name="light_yellow_palette">#78866b</color>
+    <color name="green_yellow_palette">#738276</color>
+    <color name="medium_green_palette">#738678</color>
+    <color name="darker_green_palette">#4d5d53</color>
+
+    <!--
     <color name="beige_palette">#e3e7c3</color>
     <color name="light_yellow_palette">#EBE07B</color>
     <color name="green_yellow_palette">#b9bd3f</color>
     <color name="medium_green_palette">#426000</color>
     <color name="darker_green_palette">#172006</color>
+    -->
 
     <color name="red">#B00020</color>
 </resources>

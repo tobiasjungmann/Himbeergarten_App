@@ -86,5 +86,5 @@ dependencies {
     //Diagram library
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
 
-
+    implementation "io.grpc:grpc-okhttp:1.43.2"
 }

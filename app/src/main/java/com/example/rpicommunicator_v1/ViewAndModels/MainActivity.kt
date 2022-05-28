@@ -106,9 +106,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
             if (mainActivityViewModel!!.toggleOutlet1()) {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
+                findViewById<View>(R.id.imageoutlet1).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
             } else {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
+                findViewById<View>(R.id.imageoutlet1).background.setTint(ContextCompat.getColor(this,R.color.transparent))
             }
         } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
@@ -123,9 +123,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             communicationInterface!!.sendText("outlet3")
 
             if (mainActivityViewModel!!.toggleOutlet3()) {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
+                findViewById<View>(R.id.imageoutlet3).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
             } else {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
+                findViewById<View>(R.id.imageoutlet3).background.setTint(ContextCompat.getColor(this,R.color.transparent))
             }
 
         } else if (v.id == R.id.imagebike) {
