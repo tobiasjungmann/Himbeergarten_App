@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 
 class NoteRepository(application: Application?) {
     private val notedao: NoteDao
-    val allNotes: LiveData<List<Note>>
-    private val listeNotes: LiveData<List<Note>>? = null
+    private val allNotes: LiveData<List<Note>>
+
     fun insert(note: Note?) {
         InsertNoteThread(notedao,note).start()
     }
@@ -31,6 +31,10 @@ class NoteRepository(application: Application?) {
 
     fun getListeNotes(listeID: Int): LiveData<List<Note>> {
         return notedao.getListNotes(listeID)
+    }
+
+    fun getAllNotes(): LiveData<List<Note>> {
+        return allNotes
     }
 
     private class InsertNoteThread(private val notedao: NoteDao, private val notes: Note?) :

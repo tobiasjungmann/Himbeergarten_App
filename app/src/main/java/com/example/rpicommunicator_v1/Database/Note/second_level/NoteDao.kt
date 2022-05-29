@@ -2,6 +2,7 @@ package com.example.rpicommunicator_v1.Database.Note.second_level
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 
 @Dao
 interface NoteDao {
@@ -25,4 +26,8 @@ interface NoteDao {
 
     @Query("SELECT* FROM NOTE_TABLE WHERE idListe==:listeNummer ORDER BY priority DESC")
     fun getListNotes(listeNummer: Int): LiveData<List<Note>>
+
+
+  //  @Query("SELECT* FROM comparing_list_table")
+  //  fun getAllLists(): LiveData<List<ComparingList>>
 }

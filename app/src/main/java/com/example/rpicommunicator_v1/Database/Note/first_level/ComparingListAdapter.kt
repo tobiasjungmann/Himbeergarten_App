@@ -14,24 +14,25 @@ import java.util.ArrayList
 class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.ComparingListHolder>() {
 
     private var comparingList: List<ComparingList> = ArrayList()
-    val listener: OnItemClickListener? = null
+   // val listener: OnItemClickListener? = null
     private lateinit var mListener:  (View, Int, Int)-> Unit;
 
-    class ComparingListHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ComparingListHolder(itemView: View,listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(itemView){
         val textViewTitle: TextView
         val relativeLayout: ConstraintLayout
 
         init {
             textViewTitle = itemView.findViewById(R.id.text_view_name_liste)
             relativeLayout = itemView.findViewById(R.id.item_layout_liste)
-            itemView.setOnClickListener {
+            itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
+           /* itemView.setOnClickListener {
                /* val position = adapterPosition
                 if (listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(comparingList.get(position))
                 }*/
                 Log.d("Comparing list adapter","should now open the next level of lists")
 
-            }
+            }*/
         }
     }
 
@@ -59,7 +60,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComparingListHolder {
         val itemView: View =
             LayoutInflater.from(parent.context).inflate(R.layout.comparing_list_item, parent, false)
-        return ComparingListHolder(itemView)
+        return ComparingListHolder(itemView,mListener)
     }
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {

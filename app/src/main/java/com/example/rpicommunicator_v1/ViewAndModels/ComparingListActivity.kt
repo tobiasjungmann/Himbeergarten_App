@@ -3,6 +3,8 @@ package com.example.rpicommunicator_v1.ViewAndModels
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,16 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingListAdapter
 import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
+import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingListViewModel
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.EXTRA_TITLE
+import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.EXTRA_TITLE
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_ID
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 
 class ComparingListActivity : AppCompatActivity() {
 
-
-    val ADD_LIST_REQUEST = 1
 
     private var listViewModel: ComparingListViewModel? = null
 
@@ -42,6 +44,13 @@ class ComparingListActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         val adapter = ComparingListAdapter()
+        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
+           Log.d("bla","adapter triggered")
+            val intent = Intent(this, ComparingElementActivity::class.java)
+            intent.putExtra(EXTRA_ID, listViewModel?.getComparingListByPosition(position)?.id)
+            startActivity(intent)
+        }
+        adapter.setOnItemClickListener(itemOnClick)
         recyclerView.adapter = adapter
 
         //listViewModel = ViewModelProviders.of(this).get(ListeViewModel::class.java)

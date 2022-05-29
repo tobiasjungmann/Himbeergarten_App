@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.ViewAndModels
+package com.example.rpicommunicator_v1.Database.Note.first_level
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -38,6 +38,10 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
 
     fun getAllComparingLists(): LiveData<List<ComparingList>> {
         return allLists
+    }
+
+    fun getComparingListByPosition(position: Int): ComparingList {
+        return allLists.value!![position]
     }
 
 

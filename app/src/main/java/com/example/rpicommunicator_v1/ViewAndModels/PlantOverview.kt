@@ -34,9 +34,7 @@ class PlantOverview : AppCompatActivity() {
 
         val adapter = PlantAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
-            Log.d("plantclick","plant was cklicked")
             openPlantView(position)
-
         }
         adapter.setOnItemClickListener(itemOnClick);
 

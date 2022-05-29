@@ -47,13 +47,13 @@ class NoteAdapter : RecyclerView.Adapter<NoteHolder>() {
             textViewTitle = itemView.findViewById(R.id.title)
             textViewDescription = itemView.findViewById(R.id.textView)
             textViewPriority = itemView.findViewById(R.id.textView2)
-
-            itemView.setOnClickListener {
+            itemView.setOnClickListener { listener?.invoke(it, getAdapterPosition(), getItemViewType())}
+            //itemView.setOnClickListener {
              /*   val position = adapterPosition
                 if (listener != null && position != RecyclerView.NO_POSITION) {
                     listener!!.onItemClick(noteList.get(position))
                 }*///todo
-            }
+            //}
         }
     }
 

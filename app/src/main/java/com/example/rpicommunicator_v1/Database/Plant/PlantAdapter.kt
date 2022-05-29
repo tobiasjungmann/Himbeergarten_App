@@ -50,8 +50,8 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         val v =
             LayoutInflater.from(parent.context).inflate(R.layout.plant_item, parent, false)
         v.setOnClickListener { Log.d("plantadapter","listener active") }
-        var plantHolder = PlantHolder(v, mListener, mlongListener)
-        return plantHolder;
+
+        return PlantHolder(v, mListener);
     }
 
     override fun onBindViewHolder(holder: PlantHolder, position: Int) {
@@ -87,8 +87,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     class PlantHolder(
         itemView: View,
-        listener: (View, Int, Int) -> Unit,
-        longListener: OnItemLongClickListener?
+        listener: (View, Int, Int) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
         var mImageView: ImageView
         var mTextView1: TextView
@@ -103,29 +102,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
             datumView = itemView.findViewById(R.id.textView2)
             button_delete = itemView.findViewById(R.id.delete_button)
             itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
-               // val position = bindingAdapterPosition
-               // Log.d("holder","listener triggered")
-               // if (position != RecyclerView.NO_POSITION) {
-//todo hier den neuen listener zum öffnen des neuen intents einfügen
-                    //listener.onItemClicked(position)
-                    //listener.
-                    //listener
 
-                            //idee: listener lambda ausführen
-               // }
-                /*val intent = Intent(applicationContext, PlantView::class.java)
-                val plant: Plant = mainActivityViewModel.getActPlant(position)
-                intent.putExtra(Constants.EXTRA_NAME, plant.name)
-                intent.putExtra(Constants.EXTRA_HUMIDITY, plant.humidity)
-                intent.putExtra(Constants.EXTRA_WATERED, plant.watered)
-                intent.putExtra(Constants.EXTRA_NEEDS_WATER, plant.needsWater)
-                intent.putExtra(Constants.EXTRA_IMAGE, plant.imageID)
-                intent.putExtra(Constants.EXTRA_ICON, plant.iconID)
-                intent.putExtra(Constants.EXTRA_INFO, plant.info)
-                intent.putExtra(Constants.EXTRA_ID, plant.id)
-                intent.putExtra(Constants.EXTRA_GRAPH_STRING, plant.graphString)
-                startActivity(intent)*/
-           // }
             itemView.setOnLongClickListener(OnLongClickListener {
 
                     val position = adapterPosition

@@ -7,7 +7,13 @@ import androidx.lifecycle.LiveData
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: NoteRepository
     val allNotes: LiveData<List<Note>>
-    private val allListeNotes: LiveData<List<Note>>? = null
+
+
+    init {
+        repository = NoteRepository(application)
+        allNotes = repository.getAllNotes()
+    }
+
     fun insert(note: Note?) {
         repository.insert(note)
     }
@@ -32,8 +38,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getListeNotes(listeID)
     }
 
-    init {
-        repository = NoteRepository(application)
-        allNotes = repository.allNotes
+    fun getListNotesByPosition(position: Int): Note{
+        return allNotes.value!![position]
     }
 }
