@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/blurHelper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/white"
+    android:minHeight="24dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
+
+            <TextView
+                android:id="@+id/title"
+                style="bold"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginRight="8dp"
+                android:maxLines="1"
+                android:text="Card Title"
+                android:textColor="@android:color/black"
+                app:autoSizeMaxTextSize="56sp"
+                app:autoSizeMinTextSize="20sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/light_grey"
+                android:textSize="15sp" />
+
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_rectangle_rounded_corners"
+            android:backgroundTint="@color/red"
+            android:text="Löschen"
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

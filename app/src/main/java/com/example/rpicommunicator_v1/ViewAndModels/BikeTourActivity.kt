@@ -10,6 +10,11 @@ import com.example.rpicommunicator_v1.R
 import androidx.lifecycle.ViewModelProvider
 import android.widget.TextView
 import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rpicommunicator_v1.Database.Bike.BikeAdapter
+import com.example.rpicommunicator_v1.Database.Plant.Plant
+import com.example.rpicommunicator_v1.Database.Plant.PlantAdapter
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -42,6 +47,27 @@ class BikeTourActivity : AppCompatActivity() {
                 findViewById<View>(R.id.direction_card_viewDiagram).visibility = View.GONE
                 findViewById<View>(R.id.direction_card_viewStatistics).visibility = View.GONE
             }
+        }
+
+        initRecyclerView()
+    }
+
+
+    private fun initRecyclerView() {
+        val recyclerView = findViewById<RecyclerView>(R.id.bike_tour_recyclerview)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        val adapter = BikeAdapter()
+
+        recyclerView.adapter = adapter
+        adapter.setViewModel(bikeViewModel)
+        bikeViewModel?.allBikeTours?.observe(
+            this
+        ) { bikeTours: List<BikeTour> ->
+            adapter.setBikeTours(
+                bikeTours
+            )
         }
     }
 

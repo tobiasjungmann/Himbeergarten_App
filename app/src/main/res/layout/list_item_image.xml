@@ -9,6 +9,7 @@
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:layout_marginBottom="8dp"
+    android:minHeight="24dp"
     android:backgroundTint="@color/white"
     app:cardCornerRadius="8dp">
 

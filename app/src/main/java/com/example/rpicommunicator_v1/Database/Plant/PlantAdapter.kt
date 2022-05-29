@@ -1,7 +1,5 @@
 package com.example.rpicommunicator_v1.Database.Plant
 
-import android.content.Intent
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.Database.Plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.ViewAndModels.MainActivityViewModel
@@ -13,9 +11,6 @@ import android.widget.TextView
 import android.view.View.OnLongClickListener
 import android.widget.Button
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.startActivity
-import com.example.rpicommunicator_v1.ViewAndModels.Constants
-import com.example.rpicommunicator_v1.ViewAndModels.PlantView
 import java.util.ArrayList
 
 class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
@@ -48,9 +43,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantHolder {
         val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.plant_item, parent, false)
-        v.setOnClickListener { Log.d("plantadapter","listener active") }
-
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
         return PlantHolder(v, mListener);
     }
 

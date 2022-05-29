@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
 
             android:scrollbars="vertical"
-            tools:listitem="@layout/plant_item" />
+            tools:listitem="@layout/list_item_image" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

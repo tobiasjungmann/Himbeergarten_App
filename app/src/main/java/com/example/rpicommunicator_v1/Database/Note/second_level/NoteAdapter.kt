@@ -5,11 +5,9 @@ import com.example.rpicommunicator_v1.Database.Note.second_level.NoteAdapter.Not
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 import com.example.rpicommunicator_v1.R
 import java.util.ArrayList
 
@@ -20,7 +18,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
         val itemView: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.plant_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
         return NoteHolder(itemView)
     }
 
