@@ -2,18 +2,15 @@ package com.example.rpicommunicator_v1.ViewAndModels
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rpicommunicator_v1.R
 
 class AddComparingListActivity : AppCompatActivity() {
 
-    val EXTRA_ID = "com.example.architectureexamplecif.EXTRA_ID"
-    val EXTRA_TITLE = "com.example.architectureexamplecif.EXTRA_TITLE"
-    val EXTRA_COLOR = "com.example.architectureexamplecif.EXTRA_COLOR"
+    val EXTRA_ID = "EXTRA_ID"
+    val EXTRA_TITLE = "EXTRA_TITLE"
+    val EXTRA_COLOR = "EXTRA_COLOR"
 
 
     private var editTextTitle: EditText? = null
@@ -27,12 +24,12 @@ class AddComparingListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_comparing_list)
         editTextTitle = findViewById(R.id.edit_Text_Liste)
         saveListButton = findViewById(R.id.save_new_list_button)
-        this.saveListButton!!.setOnClickListener{saveListe()}
+        this.saveListButton!!.setOnClickListener{saveList()}
     }
 
 
 
-    private fun saveListe() {
+    private fun saveList() {
         val title = editTextTitle!!.text.toString()
         if (title.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(this, "Insert title and Discription", Toast.LENGTH_SHORT).show()

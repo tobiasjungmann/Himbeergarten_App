@@ -35,8 +35,8 @@ class PlantView : AppCompatActivity() {
     private var waterNeededChanged = false
     private var plant: Plant? = null
     private var needsWater = false
-    private val willbeWaterdTextView: TextView = findViewById(R.id.will_be_watered)
-    private val headerView = findViewById<ImageView>(R.id.header_image)
+    private var willbeWaterdTextView: TextView? = null
+    private var headerView: ImageView? = null
     private var waterButton: Button? = null
 
 
@@ -46,6 +46,8 @@ class PlantView : AppCompatActivity() {
         mainActivityViewModel = ViewModelProvider(this).get(
             MainActivityViewModel::class.java
         )
+        willbeWaterdTextView = findViewById(R.id.will_be_watered)
+        headerView = findViewById<ImageView>(R.id.header_image)
         initPlant()
         initViewComponents()
         if (plant!!.graphString != "") {
@@ -61,40 +63,40 @@ class PlantView : AppCompatActivity() {
 
         waterButton = findViewById<View>(R.id.water_button) as Button
         if (plant!!.imageID != -1) {
-            headerView.setImageResource(plant!!.imageID)
+            headerView?.setImageResource(plant!!.imageID)
             val alpha = 1.toFloat()
-            headerView.alpha = alpha
+            headerView?.alpha = alpha
         } else {
-            headerView.setImageResource(R.drawable.icon_pump)
+            headerView?.setImageResource(R.drawable.icon_pump)
             val alpha = 0.1.toFloat()
-            headerView.alpha = alpha
+            headerView?.alpha = alpha
         }
         (findViewById<View>(R.id.plantNameTextView) as TextView).text = plant!!.name
         (findViewById<View>(R.id.humidityTextView) as TextView).text = plant!!.humidity
         (findViewById<View>(R.id.wateredTextView) as TextView).text = plant!!.watered
         (findViewById<View>(R.id.infoTextView) as TextView).text = plant!!.info
         if (needsWater) {
-            willbeWaterdTextView.setVisibility(View.VISIBLE)
+            willbeWaterdTextView?.setVisibility(View.VISIBLE)
             waterButton!!.setText(R.string.doNotWater)
         } else {
-            willbeWaterdTextView.setVisibility(View.INVISIBLE)
+            willbeWaterdTextView?.setVisibility(View.INVISIBLE)
             waterButton!!.setText(R.string.doWater)
         }
         waterButton!!.setOnClickListener { v: View? ->
             if (needsWater) {
                 if (!waterNeededChanged) {
-                    willbeWaterdTextView.setVisibility(View.INVISIBLE)
+                    willbeWaterdTextView?.setVisibility(View.INVISIBLE)
                     waterButton!!.setText(R.string.doWater)
                 } else {
-                    willbeWaterdTextView.setVisibility(View.VISIBLE)
+                    willbeWaterdTextView?.setVisibility(View.VISIBLE)
                     waterButton!!.setText(R.string.doNotWater)
                 }
             } else {
                 if (!waterNeededChanged) {
-                    willbeWaterdTextView.setVisibility(View.VISIBLE)
+                    willbeWaterdTextView?.setVisibility(View.VISIBLE)
                     waterButton!!.setText(R.string.doWater)
                 } else {
-                    willbeWaterdTextView.setVisibility(View.INVISIBLE)
+                    willbeWaterdTextView?.setVisibility(View.INVISIBLE)
                     waterButton!!.setText(R.string.doNotWater)
                 }
             }

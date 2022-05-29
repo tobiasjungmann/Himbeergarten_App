@@ -30,6 +30,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
                     listener.onItemClick(comparingList.get(position))
                 }*/
                 Log.d("Comparing list adapter","should now open the next level of lists")
+
             }
         }
     }

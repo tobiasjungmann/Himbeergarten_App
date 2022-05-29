@@ -3,6 +3,7 @@ package com.example.rpicommunicator_v1.ViewAndModels
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +31,15 @@ class PlantOverview : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.plant_view_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+
         val adapter = PlantAdapter()
+        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
+            Log.d("plantclick","plant was cklicked")
+            openPlantView(position)
+
+        }
+        adapter.setOnItemClickListener(itemOnClick);
+
         recyclerView.adapter = adapter
         adapter.setViewModel(mainActivityViewModel)
         mainActivityViewModel.allPlants.observe(
@@ -40,11 +49,7 @@ class PlantOverview : AppCompatActivity() {
                 plants
             )
         }
-        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
-            openPlantView(position)
 
-        }
-        adapter.setOnItemClickListener(itemOnClick);
         initSwipeToRefresh()
     }
 
@@ -67,6 +72,7 @@ class PlantOverview : AppCompatActivity() {
     }
 
     private fun openPlantView(position: Int) {
+        Log.d("overview","method for listener called")
         val intent = Intent(applicationContext, PlantView::class.java)
         val plant: Plant = mainActivityViewModel.getActPlant(position)
         intent.putExtra(Constants.EXTRA_NAME, plant.name)

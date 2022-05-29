@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingListAdapter
 import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.EXTRA_TITLE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -22,8 +23,7 @@ class ComparingListActivity : AppCompatActivity() {
 
 
     val ADD_LIST_REQUEST = 1
-    val EXTRA_TITLE = "EXTRA_TITLE"
-    val EXTRA_ID = "EXTRA_ID"
+
     private var listViewModel: ComparingListViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

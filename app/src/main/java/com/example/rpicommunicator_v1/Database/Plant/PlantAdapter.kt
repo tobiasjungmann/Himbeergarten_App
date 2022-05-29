@@ -1,5 +1,7 @@
 package com.example.rpicommunicator_v1.Database.Plant
 
+import android.content.Intent
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.Database.Plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.ViewAndModels.MainActivityViewModel
@@ -11,6 +13,9 @@ import android.widget.TextView
 import android.view.View.OnLongClickListener
 import android.widget.Button
 import android.widget.ImageView
+import androidx.core.content.ContextCompat.startActivity
+import com.example.rpicommunicator_v1.ViewAndModels.Constants
+import com.example.rpicommunicator_v1.ViewAndModels.PlantView
 import java.util.ArrayList
 
 class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
@@ -44,11 +49,14 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantHolder {
         val v =
             LayoutInflater.from(parent.context).inflate(R.layout.plant_item, parent, false)
-        return PlantHolder(v, mListener, mlongListener)
+        v.setOnClickListener { Log.d("plantadapter","listener active") }
+        var plantHolder = PlantHolder(v, mListener, mlongListener)
+        return plantHolder;
     }
 
     override fun onBindViewHolder(holder: PlantHolder, position: Int) {
         val currentItem = plants[position]
+
         if (currentItem.imageID != -1) {
             holder.mImageView.setImageResource(currentItem.iconID)
             val alpha = 1.toFloat()
@@ -94,18 +102,32 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
             mTextView2 = itemView.findViewById(R.id.textView)
             datumView = itemView.findViewById(R.id.textView2)
             button_delete = itemView.findViewById(R.id.delete_button)
-            itemView.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
+            itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
+               // val position = bindingAdapterPosition
+               // Log.d("holder","listener triggered")
+               // if (position != RecyclerView.NO_POSITION) {
+//todo hier den neuen listener zum öffnen des neuen intents einfügen
                     //listener.onItemClicked(position)
                     //listener.
-                    listener
+                    //listener
 
                             //idee: listener lambda ausführen
-                }
-            }
+               // }
+                /*val intent = Intent(applicationContext, PlantView::class.java)
+                val plant: Plant = mainActivityViewModel.getActPlant(position)
+                intent.putExtra(Constants.EXTRA_NAME, plant.name)
+                intent.putExtra(Constants.EXTRA_HUMIDITY, plant.humidity)
+                intent.putExtra(Constants.EXTRA_WATERED, plant.watered)
+                intent.putExtra(Constants.EXTRA_NEEDS_WATER, plant.needsWater)
+                intent.putExtra(Constants.EXTRA_IMAGE, plant.imageID)
+                intent.putExtra(Constants.EXTRA_ICON, plant.iconID)
+                intent.putExtra(Constants.EXTRA_INFO, plant.info)
+                intent.putExtra(Constants.EXTRA_ID, plant.id)
+                intent.putExtra(Constants.EXTRA_GRAPH_STRING, plant.graphString)
+                startActivity(intent)*/
+           // }
             itemView.setOnLongClickListener(OnLongClickListener {
-                if (listener != null) {
+
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         if (button_delete.visibility == View.GONE) {
@@ -115,7 +137,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
                         }
                         return@OnLongClickListener true
                     }
-                }
+
                 false
             })
         }
