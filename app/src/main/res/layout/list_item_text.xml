@@ -6,11 +6,9 @@
     android:id="@+id/blurHelper"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
     android:layout_marginBottom="8dp"
     android:backgroundTint="@color/white"
-    android:minHeight="24dp"
+    android:padding="8dp"
     app:cardCornerRadius="8dp">
 
     <LinearLayout

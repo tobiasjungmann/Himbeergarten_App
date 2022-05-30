@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,13 +15,13 @@ import com.example.rpicommunicator_v1.Database.Note.second_level.ComparingElemen
 import com.example.rpicommunicator_v1.Database.Note.second_level.ComparingElementAdapter
 import com.example.rpicommunicator_v1.Database.Note.second_level.ComparingElementViewModel
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.ADD_NOTE_REQUEST
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.EDIT_NOTE_REQUEST
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.EXTRA_DESCRIPTION
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.EXTRA_PRIORITY
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.EXTRA_TITLE
-import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity.Companion.MODE
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.ADD_NOTE_REQUEST
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EDIT_NOTE_REQUEST
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_ID
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_PRIORITY
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_TITLE
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.MODE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 

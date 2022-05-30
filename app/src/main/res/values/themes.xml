@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.RPICommunicator_V1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/beige_palette</item>
-        <item name="colorPrimaryVariant">@color/light_yellow_palette</item>
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/primary_green_darker</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/medium_green_palette</item>
-        <item name="colorSecondaryVariant">@color/beige_palette</item>
+        <item name="colorSecondaryVariant">@color/primary_green</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/darker_gray</item>

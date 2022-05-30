@@ -172,7 +172,7 @@
                     android:maxLines="1"
                     android:text="WIRD GEGOSSEN"
                     android:textAlignment="center"
-                    android:textColor="@color/beige_palette"
+                    android:textColor="@color/primary_green"
                     android:visibility="invisible"
                     app:autoSizeMaxTextSize="48sp"
                     app:autoSizeMinTextSize="20sp"
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:backgroundTint="@color/beige_palette"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Gießen"
                     android:textSize="20sp" />
 

@@ -19,10 +19,12 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
 
     class ComparingListHolder(itemView: View,listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(itemView){
         val textViewTitle: TextView
-
-
+        val textViewSecondary: TextView
+        val textViewDescription: TextView
         init {
             textViewTitle = itemView.findViewById(R.id.title)
+            textViewSecondary = itemView.findViewById(R.id.textView)
+            textViewDescription = itemView.findViewById(R.id.textView2)
             itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
         }
     }
@@ -57,6 +59,8 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
         val currentList: ComparingList = comparingList.get(position)
         holder.textViewTitle.setText(" " + currentList.title)
+        holder.textViewSecondary.visibility=View.GONE
+        holder.textViewDescription.visibility=View.GONE
     }
 
 

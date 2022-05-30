@@ -2,24 +2,24 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout_note"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewAndModels.ComparingElementActivity"
-    android:id="@+id/coordinator_layout_note"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    tools:context=".ViewAndModels.ComparingElementActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comparing_element_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_item_image"/>
+        tools:listitem="@layout/list_item_image" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
         android:layout_gravity="bottom|end"
-        android:layout_margin="32dp"/>
+        android:layout_margin="32dp"
+        android:src="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

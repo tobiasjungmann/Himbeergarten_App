@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/darker_gray"
     android:fitsSystemWindows="true">
 
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:backgroundTint="@color/beige_palette"
+                        android:backgroundTint="@color/primary_green"
                         android:text="eintragen"
                         android:textSize="20sp" />
 
@@ -136,7 +136,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_rectangle_rounded_corners" android:backgroundTint="@color/red"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:backgroundTint="@color/red"
                         android:text="vorherigen Eintrag löschen"
                         android:textSize="16sp"
                         app:backgroundTint="@color/red" />
@@ -160,7 +161,7 @@
                     android:layout_marginBottom="16dp"
                     android:orientation="vertical">
 
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="400dp">
 
@@ -171,7 +172,7 @@
 
                     </RelativeLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -180,31 +181,53 @@
 
                         <Button
                             android:id="@+id/add_buttonleft"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/beige_palette"
+                            android:backgroundTint="@color/primary_green"
                             android:text="left"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/add_buttonMode"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <Button
                             android:id="@+id/add_buttonMode"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/beige_palette"
+                            android:backgroundTint="@color/primary_green"
                             android:text="Woche"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginLeft="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/add_buttonright"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/add_buttonleft"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Button
                             android:id="@+id/add_buttonright"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:backgroundTint="@color/beige_palette"
+                            android:backgroundTint="@color/primary_green"
                             android:text="right"
-                            android:textSize="20sp" />
-                    </LinearLayout>
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/add_buttonMode"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginRight="8dp"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -254,17 +277,16 @@
                 android:layout_height="500dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:orientation="horizontal"
-                android:layout_marginBottom="32dp">
+                android:layout_marginBottom="32dp"
+                android:orientation="horizontal">
 
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/bike_tour_recyclerview"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/green_yellow_palette"
-                tools:listitem="@layout/list_item_image"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bike_tour_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/primary_green_lighter"
+                    tools:listitem="@layout/list_item_image" />
             </LinearLayout>
         </LinearLayout>
 

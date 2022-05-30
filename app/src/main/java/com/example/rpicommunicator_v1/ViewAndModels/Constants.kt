@@ -1,5 +1,7 @@
 package com.example.rpicommunicator_v1.ViewAndModels
 
+import android.Manifest
+
 object Constants {
     const val PORT = 15439
     const val IP = "192.168.0.23"
@@ -14,4 +16,16 @@ object Constants {
     const val EXTRA_INFO = "EXTRA_INFO"
     const val EXTRA_ID = "EXTRA_ID"
     const val EXTRA_GRAPH_STRING = "EXTRA_GRAPH_STRING"
+
+    const val EXTRA_TITLE = "EXTRA_TITLE"
+    const val EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION"
+    const val EXTRA_PRIORITY = "EXTRA_PRIORITY"
+    const val MODE = "mode"
+    const val ADD_NOTE_REQUEST = "ADD"
+    const val EDIT_NOTE_REQUEST = "EDIT"
+
+    const val TAG_CMAERA="cameraX"
+    const val FILE_NAME_FORMAT= "yy-MM-dd-HH-mm-ss-SSS"
+    const val REQUEST_CODE_PERMISSION=123
+    val REQUIRED_PERMISSIONS= arrayOf(Manifest.permission.CAMERA)
 }

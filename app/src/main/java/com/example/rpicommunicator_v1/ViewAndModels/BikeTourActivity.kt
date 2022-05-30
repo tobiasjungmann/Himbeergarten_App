@@ -13,8 +13,6 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.Database.Bike.BikeAdapter
-import com.example.rpicommunicator_v1.Database.Plant.Plant
-import com.example.rpicommunicator_v1.Database.Plant.PlantAdapter
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -118,8 +116,8 @@ class BikeTourActivity : AppCompatActivity() {
         lineDataSet1.lineWidth = 1f
         lineDataSet1.circleRadius = 2f
         lineDataSet1.circleHoleRadius = 1f
-        lineDataSet1.color = resources.getColor(R.color.green_yellow_palette)
-        lineDataSet1.setCircleColor(resources.getColor(R.color.green_yellow_palette))
+        lineDataSet1.color = resources.getColor(R.color.primary_green_lighter)
+        lineDataSet1.setCircleColor(resources.getColor(R.color.primary_green_lighter))
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)

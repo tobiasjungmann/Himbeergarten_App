@@ -10,7 +10,11 @@ import com.example.rpicommunicator_v1.ViewAndModels.AddEditNoteActivity
 import android.widget.Toast
 import android.app.Activity
 import android.widget.Button
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_ID
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_PRIORITY
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_TITLE
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.MODE
 
 class AddEditNoteActivity : AppCompatActivity() {
     private var editTextTitle: EditText? = null
@@ -28,7 +32,7 @@ class AddEditNoteActivity : AppCompatActivity() {
         numberPickerPriority?.setMinValue(1)
         numberPickerPriority?.setMaxValue(10)
 
-           //val saveButton=
+
 
         val saveButton=findViewById<Button>(R.id.button_save_comparing_element)
         saveButton.setOnClickListener{saveNote()}
@@ -66,32 +70,5 @@ class AddEditNoteActivity : AppCompatActivity() {
         }
         setResult(RESULT_OK, data)
         finish()
-    } /*   @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_note_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save_note:
-                saveNote();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }*/
-
-    companion object {
-        const val EXTRA_TITLE = "EXTRA_TITLE"
-        const val EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION"
-        const val EXTRA_PRIORITY = "EXTRA_PRIORITY"
-        const val MODE = "mode"
-        const val ADD_NOTE_REQUEST = "ADD"
-        const val EDIT_NOTE_REQUEST = "EDIT"
     }
 }

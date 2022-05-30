@@ -55,8 +55,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
             val alpha = 1.toFloat()
             holder.mImageView.alpha = alpha
         } else {
-            //holder.blurHelper.setCardBackgroundColor(R.color.dark_yellow);//setBackgroundColor(R.color.dark_yellow);
-            holder.mImageView.setImageResource(R.drawable.icon_pump)
+            holder.mImageView.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
             holder.mImageView.alpha = alpha
         }

@@ -14,6 +14,7 @@ import com.example.rpicommunicator_v1.R
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+    private var currentOn: Int=0
     private var viewMoreOptionsText: TextView? = null
     private var layoutmatrixmoreoptions: ConstraintLayout? = null
     private var destText: EditText? = null
@@ -86,15 +87,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         if (v.id == R.id.imagetrain) {
             Log.i("buttonClick", "Übernehmen was clicked")
+            toggleMatrixUi(R.id.imagetrain)
             communicationInterface!!.sendText("Stations;" + startText!!.text.toString() + ";" + destText!!.text.toString())
         } else if (v.id == R.id.imagespotify) {
             Log.i("buttonClick", "songtitle was clicked")
+            toggleMatrixUi(R.id.imagespotify)
             communicationInterface!!.sendText("songtitle")
         } else if (v.id == R.id.imagetime) {
             Log.i("buttonClick", "time_button was clicked")
+            toggleMatrixUi(R.id.imagetime)
             communicationInterface!!.sendText("changetime")
         } else if (v.id == R.id.imageweather) {
             Log.i("buttonClick", "weather button was clicked")
+            toggleMatrixUi(R.id.imageweather)
             communicationInterface!!.sendText("weather")
         } else if (v.id == R.id.imagearduino1) {
             Log.i("buttonClick", "Arduino 1 was clicked")
@@ -106,26 +111,56 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
             if (mainActivityViewModel!!.toggleOutlet1()) {
-                findViewById<View>(R.id.imageoutlet1).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
+                findViewById<View>(R.id.imageoutlet1).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.primary_green_transparent
+                    )
+                )
             } else {
-                findViewById<View>(R.id.imageoutlet1).background.setTint(ContextCompat.getColor(this,R.color.transparent))
+                findViewById<View>(R.id.imageoutlet1).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.transparent
+                    )
+                )
             }
         } else if (v.id == R.id.imageoutlet2) {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
             if (mainActivityViewModel!!.toggleOutlet2()) {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
+                findViewById<View>(R.id.imageoutlet2).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.primary_green_transparent
+                    )
+                )
             } else {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(ContextCompat.getColor(this,R.color.transparent))
+                findViewById<View>(R.id.imageoutlet2).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.transparent
+                    )
+                )
             }
         } else if (v.id == R.id.imageoutlet3) {
             Log.i("buttonClick", "Outlet 3 was clicked")
             communicationInterface!!.sendText("outlet3")
 
             if (mainActivityViewModel!!.toggleOutlet3()) {
-                findViewById<View>(R.id.imageoutlet3).background.setTint(ContextCompat.getColor(this,R.color.beige_palette))
+                findViewById<View>(R.id.imageoutlet3).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.primary_green_transparent
+                    )
+                )
             } else {
-                findViewById<View>(R.id.imageoutlet3).background.setTint(ContextCompat.getColor(this,R.color.transparent))
+                findViewById<View>(R.id.imageoutlet3).background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.transparent
+                    )
+                )
             }
 
         } else if (v.id == R.id.imagebike) {
@@ -143,6 +178,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imagestandby) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("standby")
+            toggleMatrixUi(R.id.imagestandby)
         } else if (v.id == R.id.imagequit) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("quit")
@@ -151,13 +187,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "view more options activity was clicked")
             if (layoutmatrixmoreoptions!!.visibility == View.GONE) {
                 layoutmatrixmoreoptions!!.visibility = View.VISIBLE
-                viewMoreOptionsText!!.text="Less Options"
+                viewMoreOptionsText!!.text = "Less Options"
             } else {
                 layoutmatrixmoreoptions!!.visibility = View.GONE
-                viewMoreOptionsText!!.text="More Options"
+                viewMoreOptionsText!!.text = "More Options"
             }
         }
 
+
+    }
+
+    private fun toggleMatrixUi(imageID: Int) {
+        if (imageID == R.id.imagestandby) {
+            switchOffCurrent()
+
+        } else {
+            switchOffCurrent()
+
+            findViewById<View>(imageID).background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.primary_green_transparent
+                )
+            )
+            currentOn=imageID
+        }
+    }
+
+    private fun switchOffCurrent() {
+        if (currentOn!=0) {
+            findViewById<View>(currentOn).background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.transparent
+                )
+            )
+            currentOn=0;
+        }
 
     }
 

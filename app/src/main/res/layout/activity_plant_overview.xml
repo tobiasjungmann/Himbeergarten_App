@@ -9,11 +9,11 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,12 +21,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
 
-            android:paddingBottom="24dp"
             android:id="@+id/plant_view_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:paddingBottom="24dp"
 
             android:scrollbars="vertical"
             tools:listitem="@layout/list_item_image" />
