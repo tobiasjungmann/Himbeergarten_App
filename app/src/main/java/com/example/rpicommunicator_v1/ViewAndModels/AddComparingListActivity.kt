@@ -50,6 +50,7 @@ class AddComparingListActivity : AppCompatActivity(), CameraContract.View {
         thumbnailsAdapter =
             CameraThumbnailsAdapter(imagePaths, { onThumbnailRemoved(it) }, thumbnailSize)
         binding.imageRecyclerView.adapter = thumbnailsAdapter
+        binding.addImageButton.setOnClickListener { showImageOptionsDialog() }
     }
 
     private fun saveList() {
@@ -66,6 +67,17 @@ class AddComparingListActivity : AppCompatActivity(), CameraContract.View {
         }
         setResult(RESULT_OK, data)
         finish()
+    }
+
+    private fun showImageOptionsDialog() {
+        val options = arrayOf("Take image","gallery")
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("Add picture")
+            .setItems(options) { _, index -> presenter.onImageOptionSelected(index) }
+            .setNegativeButton("cancel", null)
+            .create()
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+        alertDialog.show()
     }
 
     private fun onThumbnailRemoved(path: String) {

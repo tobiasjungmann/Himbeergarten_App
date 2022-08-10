@@ -64,7 +64,7 @@ class CameraPresenter constructor(
             return
         }
 
-        val authority = "de.tum.in.tumcampusapp.fileprovider"
+        val authority = "com.example.rpicommunicator_v1.fileprovider"
         val photoURI = FileProvider.getUriForFile(context, authority, photoFile)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         try {
