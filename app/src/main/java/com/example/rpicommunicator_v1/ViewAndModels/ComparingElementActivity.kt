@@ -19,6 +19,7 @@ import com.example.rpicommunicator_v1.ViewAndModels.Constants.ADD_NOTE_REQUEST
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EDIT_NOTE_REQUEST
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_ID
+import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_IMAGE_PATH
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_PRIORITY
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.MODE
@@ -26,7 +27,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 class ComparingElementActivity : AppCompatActivity() {
-
 
 
     private var comparingElementViewModel: ComparingElementViewModel? = null
@@ -38,7 +38,7 @@ class ComparingElementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comparing_element)
         val intent = intent
-        if ( intent.hasExtra(EXTRA_ID)) {
+        if (intent.hasExtra(EXTRA_ID)) {
             listeId = intent.getIntExtra(EXTRA_ID, -1)
         }
 
@@ -61,7 +61,7 @@ class ComparingElementActivity : AppCompatActivity() {
             val nextIntent = Intent(this, AddEditNoteActivity::class.java)
 
             nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
-            nextIntent.putExtra(EXTRA_ID,adapter.getNoteAt(position)?.id)
+            nextIntent.putExtra(EXTRA_ID, adapter.getNoteAt(position)?.id)
             nextIntent.putExtra(EXTRA_TITLE, adapter.getNoteAt(position)?.title)
             nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getNoteAt(position)?.description)
             nextIntent.putExtra(EXTRA_PRIORITY, adapter.getNoteAt(position)?.rating)
@@ -76,7 +76,8 @@ class ComparingElementActivity : AppCompatActivity() {
             ComparingElementViewModel::class.java
         )
 
-        comparingElementViewModel!!.getComparingElementByID(listeId).observe(this
+        comparingElementViewModel!!.getComparingElementByID(listeId).observe(
+            this
         ) { notes ->
             adapter.setElementList(notes as List<ComparingElement>)
         }
@@ -112,7 +113,6 @@ class ComparingElementActivity : AppCompatActivity() {
     }
 
 
-
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -124,20 +124,23 @@ class ComparingElementActivity : AppCompatActivity() {
                         val title = data.getStringExtra(EXTRA_TITLE)
                         val description = data.getStringExtra(EXTRA_DESCRIPTION)
                         val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
-                        val comparingElement = ComparingElement(title!!, description!!, priority, listeId)
+                        val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)
+                        val comparingElement =
+                            ComparingElement(title!!, description!!, priority, listeId, imagePath)
                         comparingElementViewModel?.insert(comparingElement)
                         Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode.equals(EDIT_NOTE_REQUEST))) {
                         val id = data.getIntExtra(EXTRA_ID, -1)
                         if (id == -1) {
                             Toast.makeText(this, "can not be updated", Toast.LENGTH_SHORT).show()
-                        }else {
+                        } else {
                             val title = data.getStringExtra(EXTRA_TITLE)
                             val description =
                                 data.getStringExtra(EXTRA_DESCRIPTION)
                             val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
-                            val comparingElement = ComparingElement(title!!, description!!, priority, listeId)
-                            comparingElement.id=id
+                            val comparingElement =
+                                ComparingElement(title!!, description!!, priority, listeId)
+                            comparingElement.id = id
                             comparingElementViewModel?.update(comparingElement)
 
                             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show()

@@ -11,8 +11,9 @@ class ComparingElement(
     val rating: Int,
     var idListe: Int,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    var image: ByteArray?=null
+    var imagePaths: Array<String>?
 ) {
+
     @PrimaryKey(autoGenerate = true)
     var id = 0
 

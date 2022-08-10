@@ -20,6 +20,7 @@ object Constants {
     const val EXTRA_TITLE = "EXTRA_TITLE"
     const val EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION"
     const val EXTRA_PRIORITY = "EXTRA_PRIORITY"
+    const val EXTRA_IMAGE_PATH = "EXTRA_image_path"
     const val MODE = "mode"
     const val ADD_NOTE_REQUEST = "ADD"
     const val EDIT_NOTE_REQUEST = "EDIT"
