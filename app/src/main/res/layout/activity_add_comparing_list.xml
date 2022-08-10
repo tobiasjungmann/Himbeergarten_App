@@ -61,21 +61,36 @@
     </androidx.cardview.widget.CardView>
 
 
-    <androidx.camera.view.PreviewView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_Text_List_Container" />
-
-    <Button
-        android:id="@+id/camera_shutter_button"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="make Photo"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_Text_List_Container">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/addImageButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:padding="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_outline_add_photo_alternate_24px"
+            android:tint="@color/color_primary"
+            app:cornerRadius="@dimen/material_corner_radius" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="horizontal" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

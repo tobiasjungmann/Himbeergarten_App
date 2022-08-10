@@ -5,6 +5,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="light_grey">#676666</color>
+    <color name="color_primary">#9C27B0</color>
 
     <color name="transparent_light_grey">#B3C4C4C4</color>
 
@@ -17,4 +18,9 @@
 
 
     <color name="red">#8F3B21</color>
+    <color name="text_primary">#F2000000</color> <!--F2 for 95% opacity-->
+    <color name="text_secondary">#8A000000</color> <!--8A for 54% opacity-->
+    <color name="text_primary_dark">#F2FFFFFF</color>
+    <color name="text_secondary_dark">#8AFFFFFF</color>
+
 </resources>

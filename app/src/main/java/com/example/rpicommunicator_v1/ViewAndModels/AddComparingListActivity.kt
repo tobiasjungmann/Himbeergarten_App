@@ -1,98 +1,61 @@
 package com.example.rpicommunicator_v1.ViewAndModels
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.ViewAndModels.CameraPresenter.Companion.REQUEST_GALLERY
+import com.example.rpicommunicator_v1.ViewAndModels.CameraPresenter.Companion.REQUEST_TAKE_PHOTO
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.ViewAndModels.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.databinding.ActivityAddComparingListBinding
-import java.lang.Exception
+import java.io.File
+import javax.inject.Inject
 
 
-class AddComparingListActivity : AppCompatActivity() {
+class AddComparingListActivity : AppCompatActivity(), CameraContract.View {
 
 
     private lateinit var binding: ActivityAddComparingListBinding
     private lateinit var editTextTitle: EditText
     private lateinit var saveListButton: Button
     private var imageCapture: ImageCapture? = null
+    private lateinit var thumbnailsAdapter: CameraThumbnailsAdapter
+
+
+    var presenter: CameraContract.Presenter=CameraPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_comparing_list)
-       /* binding = ActivityAddComparingListBinding.inflate(LayoutInflater)
+        binding = ActivityAddComparingListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        if (!allPermissionGranted()) {
-            ActivityCompat.requestPermissions(
-                this,
-                Constants.REQUIRED_PERMISSIONS,
-                Constants.REQUEST_CODE_PERMISSION
-            )
-        } else {
-            startCamera()
-        }*/
+      //  presenter = CameraPresenter(this)
+        presenter.attachView(this)
 
         editTextTitle = findViewById(R.id.edit_Text_Liste)
         saveListButton = findViewById(R.id.save_new_list_button)
         this.saveListButton.setOnClickListener { saveList() }
+
+
+        val imagePaths = presenter.imageElement.picturePaths
+        val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size).toInt()
+        thumbnailsAdapter =
+            CameraThumbnailsAdapter(imagePaths, { onThumbnailRemoved(it) }, thumbnailSize)
+        binding.imageRecyclerView.adapter = thumbnailsAdapter
     }
-
-  /*  private fun allPermissionGranted() = Constants.REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        // super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Constants.REQUEST_CODE_PERMISSION) {
-            if (allPermissionGranted()) {
-                startCamera()
-            } else {
-                finish()
-            }
-        }
-    }
-
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener({
-
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder().build().also { mPreview ->
-                mPreview.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-            }
-            imageCapture = ImageCapture.Builder().build()
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-            } catch (e: Exception) {
-                Log.d("CameraModule", "camera failed: ", e)
-            }
-        }, ContextCompat.getMainExecutor())
-    }*/
-
 
     private fun saveList() {
         val title = editTextTitle.text.toString()
         if (title.trim { it <= ' ' }.isEmpty()) {
-            Toast.makeText(this, "Insert title and Discription", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Insert title and Description", Toast.LENGTH_SHORT).show()
             return
         }
         val data = Intent()
@@ -103,5 +66,47 @@ class AddComparingListActivity : AppCompatActivity() {
         }
         setResult(RESULT_OK, data)
         finish()
+    }
+
+    private fun onThumbnailRemoved(path: String) {
+        val builder = AlertDialog.Builder(this)
+        val view = View.inflate(this, R.layout.picture_dialog, null)
+
+        val imageView = view.findViewById<ImageView>(R.id.feedback_big_image)
+        imageView.setImageURI(Uri.fromFile(File(path)))
+
+        builder.setView(view)
+            .setNegativeButton("cancel", null)
+            .setPositiveButton("Remove image") { _, _ -> removeThumbnail(path) }
+
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+        dialog.show()
+    }
+
+    private fun removeThumbnail(path: String) {
+        presenter.removeImage(path)
+    }
+
+    override fun openCamera(intent: Intent) {
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO)
+    }
+
+    override fun openGallery(intent: Intent) {
+        startActivityForResult(intent, REQUEST_GALLERY)
+    }
+
+
+    override fun onImageAdded(path: String) {
+        thumbnailsAdapter.addImage(path)
+    }
+
+    override fun onImageRemoved(position: Int) {
+        thumbnailsAdapter.removeImage(position)
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
+        requestPermissions(arrayOf(permission), requestCode)
     }
 }
