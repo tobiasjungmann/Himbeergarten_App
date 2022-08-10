@@ -1,9 +1,8 @@
-package com.example.rpicommunicator_v1.ViewAndModels
+package com.example.rpicommunicator_v1.ViewAndModels.camera
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 
 interface CameraContract {
     interface View {

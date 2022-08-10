@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.ViewAndModels
+package com.example.rpicommunicator_v1.ViewAndModels.camera
 
 import android.Manifest
 import android.content.ActivityNotFoundException
@@ -15,12 +15,10 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.rpicommunicator_v1.Database.Note.first_level.ComparingList
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 class CameraPresenter constructor(
     private val context: Context
@@ -144,13 +142,14 @@ class CameraPresenter constructor(
     }
 
     private fun clearPictures() {
-        /*    for (path in feedback.picturePaths) {
+            for (path in imageElement.picturePaths) {
                 File(path).delete()
-            }*/
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        //    outState.putParcelable(Const.FEEDBACK, feedback)
+        Log.e("debug", "onSaveInstanceState: called", )
+       //     outState.putParcelable(CA, imageElement)
     }
 
     /**

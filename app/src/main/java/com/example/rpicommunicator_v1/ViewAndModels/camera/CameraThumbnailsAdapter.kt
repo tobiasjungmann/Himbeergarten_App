@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.ViewAndModels
+package com.example.rpicommunicator_v1.ViewAndModels.camera
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -80,13 +80,13 @@
             android:padding="16dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_outline_add_photo_alternate_24px"
-            android:tint="@color/color_primary"
             app:cornerRadius="@dimen/material_corner_radius" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/imageRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:background="@color/white"
+            android:layout_height="200dp"
             android:layout_weight="1"
             android:scrollbars="horizontal" />
 
