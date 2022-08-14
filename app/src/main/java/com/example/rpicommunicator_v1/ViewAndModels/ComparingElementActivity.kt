@@ -61,10 +61,10 @@ class ComparingElementActivity : AppCompatActivity() {
             val nextIntent = Intent(this, AddEditNoteActivity::class.java)
 
             nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
-            nextIntent.putExtra(EXTRA_ID, adapter.getNoteAt(position)?.id)
-            nextIntent.putExtra(EXTRA_TITLE, adapter.getNoteAt(position)?.title)
-            nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getNoteAt(position)?.description)
-            nextIntent.putExtra(EXTRA_PRIORITY, adapter.getNoteAt(position)?.rating)
+            nextIntent.putExtra(EXTRA_ID, adapter.getNoteAt(position).id)
+            nextIntent.putExtra(EXTRA_TITLE, adapter.getNoteAt(position).title)
+            nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getNoteAt(position).description)
+            nextIntent.putExtra(EXTRA_PRIORITY, adapter.getNoteAt(position).rating)
 
             resultLauncher.launch(nextIntent)
         }
@@ -91,8 +91,6 @@ class ComparingElementActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-
-                //für drag and drop
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -124,9 +122,9 @@ class ComparingElementActivity : AppCompatActivity() {
                         val title = data.getStringExtra(EXTRA_TITLE)
                         val description = data.getStringExtra(EXTRA_DESCRIPTION)
                         val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
-                        val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)
+                            val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
                         val comparingElement =
-                            ComparingElement(title!!, description!!, priority, listeId, imagePath)
+                            ComparingElement(title!!, description!!, priority, listeId)//,imagePath )
                         comparingElementViewModel?.insert(comparingElement)
                         Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode.equals(EDIT_NOTE_REQUEST))) {
@@ -138,8 +136,9 @@ class ComparingElementActivity : AppCompatActivity() {
                             val description =
                                 data.getStringExtra(EXTRA_DESCRIPTION)
                             val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
+                            val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
                             val comparingElement =
-                                ComparingElement(title!!, description!!, priority, listeId)
+                                ComparingElement(title!!, description!!, priority, listeId)//,imagePath)
                             comparingElement.id = id
                             comparingElementViewModel?.update(comparingElement)
 

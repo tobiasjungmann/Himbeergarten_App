@@ -27,9 +27,9 @@ import com.example.rpicommunicator_v1.databinding.ActivityAddNoteBinding
 import java.io.File
 
 class AddEditNoteActivity : AppCompatActivity(), CameraContract.View {
-    private var editTextTitle: EditText? = null
-    private var editTextDescription: EditText? = null
-    private var numberPickerPriority: NumberPicker? = null
+    //private var editTextTitle: EditText? = null
+    //private var editTextDescription: EditText? = null
+    //private var numberPickerPriority: NumberPicker? = null
     private var mode: String? = null
 
     var presenter: CameraContract.Presenter = CameraPresenter(this)
@@ -42,10 +42,28 @@ class AddEditNoteActivity : AppCompatActivity(), CameraContract.View {
         setContentView(binding.root)
 
         presenter.attachView(this)
+        // editTextTitle = findViewById(R.id.edit_text_title)
+        // editTextDescription = findViewById(R.id.edit_text_description)
+        // numberPickerPriority = findViewById(R.id.number_picker_priority)
+        binding.numberPickerPriority.setMinValue(1)
+        binding.numberPickerPriority.setMaxValue(10)
 
-        editTextTitle = findViewById(R.id.edit_Text_Liste)
-
-
+        val intent = intent
+        if (intent.hasExtra(EXTRA_ID)) {
+            title = "Edit note"
+            binding.editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
+            binding.editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE))
+            binding.numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1))
+            presenter.imageElement.picturePaths.addAll(
+                0,
+                intent.getStringArrayExtra(EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
+            )
+        } else {
+            title = "AddNote"
+        }
+        if (intent.hasExtra(MODE)) {
+            mode = intent.getStringExtra(MODE)
+        }
         binding.imageRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -58,45 +76,22 @@ class AddEditNoteActivity : AppCompatActivity(), CameraContract.View {
             )
         binding.imageRecyclerView.adapter = thumbnailsAdapter
         binding.addImageButton.setOnClickListener { showImageOptionsDialog() }
-
-        //  setContentView(R.layout.activity_add_note)
-        editTextTitle = findViewById(R.id.edit_text_title)
-        editTextDescription = findViewById(R.id.edit_text_description)
-        numberPickerPriority = findViewById(R.id.number_picker_priority)
-        numberPickerPriority?.setMinValue(1)
-        numberPickerPriority?.setMaxValue(10)
-
-
-        val saveButton = findViewById<Button>(R.id.button_save_comparing_element)
-        saveButton.setOnClickListener { saveNote() }
-
-        val intent = intent
-        if (intent.hasExtra(EXTRA_ID)) {
-            title = "Edit note"
-            editTextDescription?.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
-            editTextTitle?.setText(intent.getStringExtra(EXTRA_TITLE))
-            numberPickerPriority?.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1))
-        } else {
-            title = "AddNote"
-        }
-        if (intent.hasExtra(MODE)) {
-            mode = intent.getStringExtra(MODE)
-        }
+        binding.buttonSaveComparingElement.setOnClickListener { saveNote() }
     }
 
     private fun saveNote() {
-        val title = editTextTitle!!.text.toString()
-        val description = editTextDescription!!.text.toString()
-        val priority = numberPickerPriority!!.value
+        val title = binding.editTextTitle.text.toString()
+        val description = binding.editTextDescription.text.toString()
+        val priority = binding.numberPickerPriority.value
         if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
-            Toast.makeText(this, "Insert title and Discription", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
         val data = Intent()
         data.putExtra(EXTRA_TITLE, title)
         data.putExtra(EXTRA_DESCRIPTION, description)
         data.putExtra(EXTRA_PRIORITY, priority)
-        data.putExtra(EXTRA_IMAGE_PATH,presenter.imageElement.picturePaths.toTypedArray())
+        data.putExtra(EXTRA_IMAGE_PATH, presenter.imageElement.picturePaths.toTypedArray())
 
         data.putExtra(MODE, mode)
         val id = intent.getIntExtra(EXTRA_ID, -1)
