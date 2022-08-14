@@ -4,7 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 
 import androidx.room.TypeConverter
-import com.example.rpicommunicator_v1.Database.Note.second_level.PathElement
+import com.example.rpicommunicator_v1.Database.Note.image.PathElement
 import kotlinx.serialization.decodeFromString
 
 /*class Converters {

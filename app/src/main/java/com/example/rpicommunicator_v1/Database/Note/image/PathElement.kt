@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.Database.Note.second_level
+package com.example.rpicommunicator_v1.Database.Note.image
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

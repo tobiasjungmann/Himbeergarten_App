@@ -3,29 +3,31 @@ package com.example.rpicommunicator_v1.Database.Note.second_level
 import android.app.Application
 import com.example.rpicommunicator_v1.Database.Note.second_level.ComparingElementDatabase.Companion.getInstance
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.Database.Note.image.PathElementDao
 
 
 class ComparingElementRepository(application: Application?) {
     private val comparingElementDao: ComparingElementDao
+
     private val allComparingElements: LiveData<List<ComparingElement>>
 
     fun insert(comparingElement: ComparingElement?) {
-        InsertNoteThread(comparingElementDao,comparingElement).start()
+        InsertNoteThread(comparingElementDao, comparingElement).start()
     }
 
     fun update(comparingElement: ComparingElement?) {
-        UpdateNoteThread(comparingElementDao,comparingElement).start()
+        UpdateNoteThread(comparingElementDao, comparingElement).start()
     }
 
     fun delete(comparingElement: ComparingElement?) {
-        DeleteNoteThread(comparingElementDao,comparingElement).start()
+        DeleteNoteThread(comparingElementDao, comparingElement).start()
     }
 
     fun deleteAllNotes() {
         DeleteAllNotesThread(comparingElementDao).start()
     }
 
-    fun deleteAllNotesListe(id: Int) {
+    fun deleteAllNotesList(id: Int) {
         DeleteAllComparingElementsOfList(comparingElementDao, id).start()
     }
 
@@ -37,21 +39,30 @@ class ComparingElementRepository(application: Application?) {
         return allComparingElements
     }
 
-    private class InsertNoteThread(private val comparingElementDao: ComparingElementDao, private val comparingElement: ComparingElement?) :
+    private class InsertNoteThread(
+        private val comparingElementDao: ComparingElementDao,
+        private val comparingElement: ComparingElement?
+    ) :
         Thread() {
         override fun run() {
             comparingElementDao.insert(comparingElement)
         }
     }
 
-    private class UpdateNoteThread(private val comparingElementDao: ComparingElementDao, private val comparingElement: ComparingElement?) :
+    private class UpdateNoteThread(
+        private val comparingElementDao: ComparingElementDao,
+        private val comparingElement: ComparingElement?
+    ) :
         Thread() {
         override fun run() {
             comparingElementDao.update(comparingElement)
         }
     }
 
-    private class DeleteNoteThread(private val comparingElementDao: ComparingElementDao, private val comparingElement: ComparingElement?) :
+    private class DeleteNoteThread(
+        private val comparingElementDao: ComparingElementDao,
+        private val comparingElement: ComparingElement?
+    ) :
         Thread() {
 
         override fun run() {
@@ -66,7 +77,10 @@ class ComparingElementRepository(application: Application?) {
         }
     }
 
-    private class DeleteAllComparingElementsOfList(private val comparingElementDao: ComparingElementDao, private val id: Int) :
+    private class DeleteAllComparingElementsOfList(
+        private val comparingElementDao: ComparingElementDao,
+        private val id: Int
+    ) :
         Thread() {
         override fun run() {
             comparingElementDao.deleteAllComparingElements(id)

@@ -15,7 +15,7 @@ class ComparingElementAdapter : RecyclerView.Adapter<NoteHolder>() {
     private var listener: ((View, Int, Int) -> Unit)? = null
     private var comparingElementList: List<ComparingElement> = ArrayList()
 
-
+// todo restructure in order to group this with the other lsit eleemtns
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
         val itemView: View =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)

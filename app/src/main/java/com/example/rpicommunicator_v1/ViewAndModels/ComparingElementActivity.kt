@@ -125,6 +125,11 @@ class ComparingElementActivity : AppCompatActivity() {
                             val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
                         val comparingElement =
                             ComparingElement(title!!, description!!, priority, listeId)//,imagePath )
+                        if (imagePath != null) {
+                            for (i in imagePath){
+
+                            }
+                        }
                         comparingElementViewModel?.insert(comparingElement)
                         Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode.equals(EDIT_NOTE_REQUEST))) {
