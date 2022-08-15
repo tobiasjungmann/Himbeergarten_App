@@ -15,33 +15,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
-            android:name=".ViewAndModels.ComparingElementActivity"
+            android:name=".component.comparing.ComparingElementActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.ComparingListActivity"
+            android:name=".component.comparing.ComparingListActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.AddComparingListActivity"
+            android:name=".component.comparing.AddComparingListActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.AddEditNoteActivity"
+            android:name=".component.comparing.AddComparingElementActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.PlantOverview"
+            android:name=".component.plant.PlantOverview"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.SettingsActivity"
+            android:name=".component.general.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.BikeTourActivity"
+            android:name=".component.bike.BikeTourActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewAndModels.PlantView"
+            android:name=".component.plant.PlantView"
             android:exported="false"
             android:label="@string/title_activity_plant_view"
             android:theme="@style/Theme.RPICommunicator_V1.NoActionBar" />
         <activity
-            android:name=".ViewAndModels.MainActivity"
+            android:name=".component.general.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
