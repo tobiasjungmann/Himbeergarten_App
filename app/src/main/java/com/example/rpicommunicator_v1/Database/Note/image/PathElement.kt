@@ -8,7 +8,9 @@ import com.example.rpicommunicator_v1.Database.Note.second_level.ComparingElemen
 
 
 
-@Entity(tableName = "path_element_database", foreignKeys =arrayOf(ForeignKey(entity = ComparingElement::class,
+@Entity(tableName = "path_element_database", foreignKeys = arrayOf(
+    ForeignKey(
+        entity = ComparingElement::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("parentEntry"),
         onDelete = ForeignKey.CASCADE)))
