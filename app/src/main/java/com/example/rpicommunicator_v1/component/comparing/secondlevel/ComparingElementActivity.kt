@@ -54,7 +54,8 @@ class ComparingElementActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.comparing_element_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-        val adapter = ComparingElementAdapter()
+        val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size_list).toInt()
+        val adapter = ComparingElementAdapter(thumbnailSize)
 
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             val nextIntent = Intent(this, AddComparingElementActivity::class.java)

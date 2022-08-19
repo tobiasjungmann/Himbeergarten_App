@@ -1,10 +1,13 @@
 package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
 
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +19,9 @@ import com.example.rpicommunicator_v1.database.compare.second_level.ComparingEle
 import java.io.File
 
 
-class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
+class ComparingElementAdapter internal constructor(
+    private val thumbnailSize: Int
+): RecyclerView.Adapter<ListHolder>() {
     private lateinit var comparingElementViewModel: ComparingElementViewModel
     private var listener: ((View, Int, Int) -> Unit)? = null
     private var comparingElementList: List<ComparingElement> = ArrayList()
@@ -35,18 +40,12 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
         holder.textViewDescription.text = currentList.description
 
         val helper = comparingElementViewModel.getAllPathsToElement(currentList.comparingElementId)
-        /*.observe { elements ->
-            holder.listThumbnailImageView.setImageResource(R.)
-        }*/
-        //todo set image view from path
-        Log.d("TAG", "onBindViewHolder: " + (helper.size ?: -1))
-        if (helper.size > 0) {
-            val imgFile = File(helper.get(0).path)
 
-            if (imgFile.exists()) {
-                val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
-                holder.listThumbnailImageView.setImageBitmap(myBitmap)
-            }
+        if (helper.size > 0) {
+            holder.listThumbnailImageView.visibility=View.VISIBLE
+                holder.listThumbnailImageView.setImageBitmap(helper.get(0).loadThumbnail( thumbnailSize))
+        }else{
+            holder.listThumbnailImageView.visibility=View.GONE
         }
     }
 
