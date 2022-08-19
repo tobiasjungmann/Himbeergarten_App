@@ -19,7 +19,7 @@ abstract class PathElementDatabase : RoomDatabase() {
                 instance = Room.databaseBuilder(
                     context.applicationContext, PathElementDatabase::class.java,
                     "path_element_database"
-                ).fallbackToDestructiveMigration().build()
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
             return instance
         }

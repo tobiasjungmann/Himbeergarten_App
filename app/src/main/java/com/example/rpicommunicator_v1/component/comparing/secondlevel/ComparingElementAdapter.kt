@@ -1,25 +1,30 @@
 package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
 
-import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
-import android.view.ViewGroup
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
-import java.util.ArrayList
+import java.io.File
+
 
 class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
+    private lateinit var comparingElementViewModel: ComparingElementViewModel
     private var listener: ((View, Int, Int) -> Unit)? = null
     private var comparingElementList: List<ComparingElement> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListHolder {
         val itemView: View =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
+
         return ListHolder(itemView)
     }
 
@@ -28,7 +33,21 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
         holder.textViewTitle.text = currentList.title
         holder.textViewPriority.text = currentList.rating.toString()
         holder.textViewDescription.text = currentList.description
-       // holder.listThumbnailImageView.setImageResource(R.)//todo darf keine ressource sein? in welchem format kann das vorliegen - erstmal abspecihern just load it from the path + thumbnail
+
+        val helper = comparingElementViewModel.getAllPathsToElement(currentList.comparingElementId)
+        /*.observe { elements ->
+            holder.listThumbnailImageView.setImageResource(R.)
+        }*/
+        //todo set image view from path
+        Log.d("TAG", "onBindViewHolder: " + (helper.size ?: -1))
+        if (helper.size > 0) {
+            val imgFile = File(helper.get(0).path)
+
+            if (imgFile.exists()) {
+                val myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath())
+                holder.listThumbnailImageView.setImageBitmap(myBitmap)
+            }
+        }
     }
 
     fun getElementAt(position: Int): ComparingElement {
@@ -45,8 +64,8 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
             textViewTitle = itemView.findViewById(R.id.title)
             textViewDescription = itemView.findViewById(R.id.textView)
             textViewPriority = itemView.findViewById(R.id.textView2)
-            listThumbnailImageView=itemView.findViewById(R.id.list_thumbnail_image_view)
-            itemView.setOnClickListener { listener?.invoke(it, getAdapterPosition(), getItemViewType())}
+            listThumbnailImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
+            itemView.setOnClickListener { listener?.invoke(it, adapterPosition, itemViewType) }
         }
     }
 
@@ -58,11 +77,17 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
     companion object {
         private val DIFF_CALLBACK: DiffUtil.ItemCallback<ComparingElement> =
             object : DiffUtil.ItemCallback<ComparingElement>() {
-                override fun areItemsTheSame(oldItem: ComparingElement, newItem: ComparingElement): Boolean {
+                override fun areItemsTheSame(
+                    oldItem: ComparingElement,
+                    newItem: ComparingElement
+                ): Boolean {
                     return oldItem.comparingElementId == newItem.comparingElementId
                 }
 
-                override fun areContentsTheSame(oldItem: ComparingElement, newItem: ComparingElement): Boolean {
+                override fun areContentsTheSame(
+                    oldItem: ComparingElement,
+                    newItem: ComparingElement
+                ): Boolean {
                     return oldItem.title == newItem.title && oldItem.description == newItem.description && oldItem.rating == newItem.rating
                 }
             }
@@ -72,8 +97,12 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
         return comparingElementList.size
     }
 
-    fun setElementList(comparingElementList: List<ComparingElement>) {
+    fun setElementList(
+        comparingElementList: List<ComparingElement>,
+        comparingElementViewModel: ComparingElementViewModel
+    ) {
         this.comparingElementList = comparingElementList
+        this.comparingElementViewModel = comparingElementViewModel
         notifyDataSetChanged()
     }
 }

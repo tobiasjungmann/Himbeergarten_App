@@ -25,12 +25,9 @@ import com.example.rpicommunicator_v1.databinding.ActivityAddNoteBinding
 import java.io.File
 
 class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
-    //private var editTextTitle: EditText? = null
-    //private var editTextDescription: EditText? = null
-    //private var numberPickerPriority: NumberPicker? = null
     private var mode: String? = null
 
-    var presenter: CameraContract.Presenter = CameraPresenter(this)
+    private var presenter: CameraContract.Presenter = CameraPresenter(this)
     private lateinit var binding: ActivityAddNoteBinding
     private lateinit var thumbnailsAdapter: CameraThumbnailsAdapter
 
@@ -40,11 +37,8 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
         setContentView(binding.root)
 
         presenter.attachView(this)
-        // editTextTitle = findViewById(R.id.edit_text_title)
-        // editTextDescription = findViewById(R.id.edit_text_description)
-        // numberPickerPriority = findViewById(R.id.number_picker_priority)
-        binding.numberPickerPriority.setMinValue(1)
-        binding.numberPickerPriority.setMaxValue(10)
+        binding.numberPickerPriority.minValue = 1
+        binding.numberPickerPriority.maxValue = 10
 
         val intent = intent
         if (intent.hasExtra(EXTRA_ID)) {

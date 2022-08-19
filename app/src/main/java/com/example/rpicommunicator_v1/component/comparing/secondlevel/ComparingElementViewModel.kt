@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElementRepository
+import com.example.rpicommunicator_v1.database.image.PathElement
 import com.example.rpicommunicator_v1.database.image.PathElementRepository
 
 class ComparingElementViewModel(application: Application) : AndroidViewModel(application) {
@@ -31,10 +32,10 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun getComparingElementByID(listeID: Int): LiveData<List<ComparingElement>> {
-        return elementRepo.getListeNotes(listeID)
+        return elementRepo.getComparingElementsById(listeID)
     }
 
-    /*fun getAllPathsToElement(idListe: Int): LiveData<List<ComparingElement>>{
-        return pathRepo.getAllById(idListe)
-    }*/
+    fun getAllPathsToElement(idListe: Int): List<PathElement>{
+        return pathRepo.getPathElementsById(idListe)
+    }
 }

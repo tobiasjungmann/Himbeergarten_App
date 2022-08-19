@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.rpicommunicator_v1.database.image.PathElementDatabase.Companion.getInstance
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.PathElement.image.PathElementDao
+import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 
 
 class PathElementRepository(application: Application?) {
@@ -36,8 +37,9 @@ class PathElementRepository(application: Application?) {
         TODO("Not yet implemented")
     }
 
-    fun getAllById(idList: Int) {
-        GetAllByIDThread(pathElementDao,idList).start()
+    fun getPathElementsById(idElement: Int): List<PathElement> {
+       // GetAllByIDThread(pathElementDao,idList).start()
+       return pathElementDao.getListPathElements(idElement)
     }
 
     private class InsertPathElementThread(private val pathElementDao: PathElementDao, private val pathElement: PathElement) :
@@ -76,12 +78,12 @@ class PathElementRepository(application: Application?) {
         }
     }
 
-    private class GetAllByIDThread(private val pathElementDao: PathElementDao, private val idList: Int) :
+    /*private class GetAllByIDThread(private val pathElementDao: PathElementDao, private val idList: Int) :
         Thread() {
         override fun run() {
             pathElementDao.getListPathElements(idList)
         }
-    }
+    }*/
 
     init {
         val database = getInstance(application!!)

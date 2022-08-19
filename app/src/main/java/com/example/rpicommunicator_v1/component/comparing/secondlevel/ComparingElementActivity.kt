@@ -21,7 +21,6 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_PRIORITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
-import com.example.rpicommunicator_v1.database.image.PathElement
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -33,6 +32,7 @@ class ComparingElementActivity : AppCompatActivity() {
     private var previouslyDeleted: ComparingElement? = null
 
 
+    // todo methode verkleinern - zu lang
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comparing_element)
@@ -41,7 +41,7 @@ class ComparingElementActivity : AppCompatActivity() {
             listeId = intent.getIntExtra(EXTRA_ID, -1)
         }
 
-        comparingElementViewModel = ViewModelProvider(this).get(
+        comparingElementViewModel = ViewModelProvider(this).get(        // todo warum wird das weiter unten nochmal initialisiert?
             ComparingElementViewModel::class.java
         )
 
@@ -78,8 +78,8 @@ class ComparingElementActivity : AppCompatActivity() {
         comparingElementViewModel!!.getComparingElementByID(listeId).observe(
             this
         ) { elements ->
-            adapter.setElementList(elements as List<ComparingElement>)
-        }
+            adapter.setElementList(elements as List<ComparingElement>, comparingElementViewModel!!)
+        }       // todo vermutlich hier
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT

@@ -30,7 +30,7 @@ class ComparingElementRepository(application: Application?) {
         DeleteAllComparingElementsOfList(comparingElementDao, id).start()
     }
 
-    fun getListeNotes(listeID: Int): LiveData<List<ComparingElement>> {
+    fun getComparingElementsById(listeID: Int): LiveData<List<ComparingElement>> {
         return comparingElementDao.getListNotes(listeID)
     }
 

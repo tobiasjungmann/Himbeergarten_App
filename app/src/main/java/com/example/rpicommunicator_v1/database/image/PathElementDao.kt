@@ -25,5 +25,5 @@ interface PathElementDao {
     val allPathElements: LiveData<List<PathElement>>
 
     @Query("SELECT* FROM path_element_database WHERE pathElementID==:listeNummer")
-    fun getListPathElements(listeNummer: Int): LiveData<List<PathElement>>
+    fun getListPathElements(listeNummer: Int): List<PathElement>
 }
