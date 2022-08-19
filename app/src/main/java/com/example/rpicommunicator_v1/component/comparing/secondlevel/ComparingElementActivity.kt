@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.component.comparing
+package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
 import android.app.Activity
 import android.content.Intent
@@ -44,8 +44,8 @@ class ComparingElementActivity : AppCompatActivity() {
             ComparingElementViewModel::class.java
         )
 
-        val buttonAddNote = findViewById<FloatingActionButton>(R.id.button_add_element)
-        buttonAddNote.setOnClickListener {
+        val buttonAddElement = findViewById<FloatingActionButton>(R.id.button_add_element)
+        buttonAddElement.setOnClickListener {
             val nextIntent = Intent(this, AddComparingElementActivity::class.java)
             nextIntent.putExtra(MODE, ADD_NOTE_REQUEST)
             resultLauncher.launch(nextIntent)
@@ -59,10 +59,10 @@ class ComparingElementActivity : AppCompatActivity() {
             val nextIntent = Intent(this, AddComparingElementActivity::class.java)
 
             nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
-            nextIntent.putExtra(EXTRA_ID, adapter.getNoteAt(position).id)
-            nextIntent.putExtra(EXTRA_TITLE, adapter.getNoteAt(position).title)
-            nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getNoteAt(position).description)
-            nextIntent.putExtra(EXTRA_PRIORITY, adapter.getNoteAt(position).rating)
+            nextIntent.putExtra(EXTRA_ID, adapter.getElementAt(position).comparingElementId)
+            nextIntent.putExtra(EXTRA_TITLE, adapter.getElementAt(position).title)
+            nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getElementAt(position).description)
+            nextIntent.putExtra(EXTRA_PRIORITY, adapter.getElementAt(position).rating)
 
             resultLauncher.launch(nextIntent)
         }
@@ -76,8 +76,8 @@ class ComparingElementActivity : AppCompatActivity() {
 
         comparingElementViewModel!!.getComparingElementByID(listeId).observe(
             this
-        ) { notes ->
-            adapter.setElementList(notes as List<ComparingElement>)
+        ) { elements ->
+            adapter.setElementList(elements as List<ComparingElement>)
         }
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -92,17 +92,18 @@ class ComparingElementActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                previouslyDeleted = adapter.getNoteAt(viewHolder.adapterPosition)
-                comparingElementViewModel!!.delete(adapter.getNoteAt(viewHolder.adapterPosition))
+                previouslyDeleted = adapter.getElementAt(viewHolder.bindingAdapterPosition)
+          // todo muss hier aus der livedata geladen werden - in den adapter übergeben      comparingElementViewModel.getAllPathsToElement(previouslyDeleted!!.idListe)
+                comparingElementViewModel!!.delete(adapter.getElementAt(viewHolder.bindingAdapterPosition))
                 val snackbar = Snackbar
                     .make(
-                        findViewById(R.id.coordinator_layout_note),
+                        findViewById(R.id.coordinator_layout_element),
                         "Notiz gelöscht",
                         Snackbar.LENGTH_LONG
                     )
                     .setAction(
                         "Rückgängig"
-                    ) { comparingElementViewModel!!.insert(previouslyDeleted) }
+                    ) { comparingElementViewModel!!.insert(previouslyDeleted, imagePath) }
                 snackbar.show()
             }
         }).attachToRecyclerView(recyclerView)
@@ -120,16 +121,17 @@ class ComparingElementActivity : AppCompatActivity() {
                         val title = data.getStringExtra(EXTRA_TITLE)
                         val description = data.getStringExtra(EXTRA_DESCRIPTION)
                         val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
-                            val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
+                        val imagePath =
+                            data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
                         val comparingElement =
-                            ComparingElement(title!!, description!!, priority, listeId)//,imagePath )
-                        if (imagePath != null) {
-                            for (i in imagePath){
-
-                            }
-                        }
-                        comparingElementViewModel?.insert(comparingElement)
-                        Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show()
+                            ComparingElement(
+                                title!!,
+                                description!!,
+                                priority,
+                                listeId
+                            )//,imagePath )
+                        comparingElementViewModel?.insert(comparingElement, imagePath)
+                        Toast.makeText(this, "Element Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode.equals(EDIT_NOTE_REQUEST))) {
                         val id = data.getIntExtra(EXTRA_ID, -1)
                         if (id == -1) {
@@ -139,11 +141,17 @@ class ComparingElementActivity : AppCompatActivity() {
                             val description =
                                 data.getStringExtra(EXTRA_DESCRIPTION)
                             val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
-                            val imagePath = data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
+                            val imagePath =
+                                data.getStringArrayExtra(EXTRA_IMAGE_PATH)//?.toCollection(ArrayList())
                             val comparingElement =
-                                ComparingElement(title!!, description!!, priority, listeId)//,imagePath)
-                            comparingElement.id = id
-                            comparingElementViewModel?.update(comparingElement)
+                                ComparingElement(
+                                    title!!,
+                                    description!!,
+                                    priority,
+                                    listeId
+                                )//,imagePath)
+                            comparingElement.comparingElementId = id
+                            comparingElementViewModel?.update(comparingElement, imagePath)
 
                             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show()
                         }

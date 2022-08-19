@@ -8,6 +8,6 @@ class ComparingList(
     val title: String) {
 
     @PrimaryKey(autoGenerate = true)
-    var id = 0
+    var comparingListId = 0
 
 }

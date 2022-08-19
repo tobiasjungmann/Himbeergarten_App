@@ -6,10 +6,9 @@ import androidx.room.RoomDatabase
 import androidx.room.Room
 import com.example.rpicommunicator_v1.database.PathElement.image.PathElementDao
 
-@Database(entities = [PathElement::class], version = 1)
+@Database(entities = [PathElement::class], version = 2)
 abstract class PathElementDatabase : RoomDatabase() {
     abstract fun pathElementDao(): PathElementDao
-
 
     companion object {
         private var instance: PathElementDatabase? = null

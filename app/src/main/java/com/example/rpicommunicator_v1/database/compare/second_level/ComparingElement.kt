@@ -18,7 +18,7 @@ class ComparingElement(
 
 
     @PrimaryKey(autoGenerate = true)
-    var id = 0
+    var comparingElementId = 0
 
 
   //  var imagePaths: ArrayList<PathElement> = arrayListOf<PathElement>()

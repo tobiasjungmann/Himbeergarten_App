@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.*
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
-import com.example.rpicommunicator_v1.component.comparing.ComparingListActivity
+import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
 
 

@@ -1,11 +1,10 @@
-package com.example.rpicommunicator_v1.component.comparing
+package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElementRepository
-import com.example.rpicommunicator_v1.database.image.PathElement
 import com.example.rpicommunicator_v1.database.image.PathElementRepository
 
 class ComparingElementViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,11 +17,12 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
         pathRepo = PathElementRepository(application)
     }
 
-    fun insert(comparingElement: ComparingElement?) {
+    fun insert(comparingElement: ComparingElement?, imagePaths: Array<String>?) {
         elementRepo.insert(comparingElement)
+        pathRepo.insertList(imagePaths)
     }
 
-    fun update(comparingElement: ComparingElement?, paths: List<PathElement>) {
+    fun update(comparingElement: ComparingElement?, paths: Array<String>?) {
         elementRepo.update(comparingElement)
         pathRepo.addAll(paths)
     }
@@ -33,5 +33,9 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
 
     fun getComparingElementByID(listeID: Int): LiveData<List<ComparingElement>> {
         return elementRepo.getListeNotes(listeID)
+    }
+
+    fun getAllPathsToElement(idListe: Int) {
+        return pathRepo.getAllById(idListe)
     }
 }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [ComparingList::class], version = 2)
+@Database(entities = [ComparingList::class], version = 3)
 abstract class ComparingListDatabase : RoomDatabase() {
     abstract fun comparingListDao(): ComparingListDao
 

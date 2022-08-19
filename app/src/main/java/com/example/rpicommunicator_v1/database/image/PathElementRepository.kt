@@ -11,9 +11,20 @@ class PathElementRepository(application: Application?) {
 
     private val allPathElements: LiveData<List<PathElement>>
 
-    fun insert(pathElement: PathElement?) {
+    fun insert(pathElement: PathElement) {
         InsertPathElementThread(pathElementDao,pathElement).start()
     }
+
+
+    fun insertList(pathElement: Array<String>?) {
+        if (pathElement != null) {
+            for (i in pathElement){
+                InsertPathElementThread(pathElementDao,PathElement(i)).start()
+            }
+        }
+    }
+
+
 
     fun update(pathElement: PathElement?) {
         UpdatePathElementThread(pathElementDao,pathElement).start()
@@ -23,11 +34,15 @@ class PathElementRepository(application: Application?) {
         DeletePathElementThread(pathElementDao,pathElement).start()
     }
 
-    fun addAll(paths: List<PathElement>) {
+    fun addAll(paths: Array<String>?) {
         TODO("Not yet implemented")
     }
 
-    private class InsertPathElementThread(private val pathElementDao: PathElementDao, private val pathElement: PathElement?) :
+    fun getAllById(idList: Int) {
+        GetAllByIDThread(pathElementDao,idList).start
+    }
+
+    private class InsertPathElementThread(private val pathElementDao: PathElementDao, private val pathElement: PathElement) :
         Thread() {
         override fun run() {
             pathElementDao.insert(pathElement)
@@ -60,6 +75,13 @@ class PathElementRepository(application: Application?) {
         Thread() {
         override fun run() {
             pathElementDao.deleteAllPathElements()
+        }
+    }
+
+    private class GetAllByIDThread(private val pathElementDao: PathElementDao, private val idList: Int) :
+        Thread() {
+        override fun run() {
+            pathElementDao.update(pathElement)
         }
     }
 

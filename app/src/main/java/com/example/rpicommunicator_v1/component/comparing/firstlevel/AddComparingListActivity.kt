@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.component.comparing
+package com.example.rpicommunicator_v1.component.comparing.firstlevel
 
 import android.content.Intent
 import android.os.Bundle

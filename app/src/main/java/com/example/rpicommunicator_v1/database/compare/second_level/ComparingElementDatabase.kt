@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.Room
 
-@Database(entities = [ComparingElement::class], version = 3)
+@Database(entities = [ComparingElement::class], version = 5)
 abstract class ComparingElementDatabase : RoomDatabase() {
     abstract fun noteDao(): ComparingElementDao
 

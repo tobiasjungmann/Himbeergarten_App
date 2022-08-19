@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.component.comparing
+package com.example.rpicommunicator_v1.component.comparing.firstlevel
 
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +38,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     val DIFF_CALLBACK: DiffUtil.ItemCallback<ComparingList> =
         object : DiffUtil.ItemCallback<ComparingList>() {
             override fun areItemsTheSame(oldItem: ComparingList, newItem: ComparingList): Boolean {
-                return oldItem.id === newItem.id
+                return oldItem.comparingListId === newItem.comparingListId
             }
 
             override fun areContentsTheSame(

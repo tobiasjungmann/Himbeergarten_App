@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.component.comparing
+package com.example.rpicommunicator_v1.component.comparing.firstlevel
 
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +17,7 @@ import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
+import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -45,7 +46,7 @@ class ComparingListActivity : AppCompatActivity() {
         val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
            Log.d("bla","adapter triggered")
             val intent = Intent(this, ComparingElementActivity::class.java)
-            intent.putExtra(EXTRA_ID, listViewModel?.getComparingListByPosition(position)?.id)
+            intent.putExtra(EXTRA_ID, listViewModel?.getComparingListByPosition(position)?.comparingListId)
             startActivity(intent)
         }
         adapter.setOnItemClickListener(itemOnClick)

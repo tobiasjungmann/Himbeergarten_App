@@ -15,16 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
-            android:name=".component.comparing.ComparingElementActivity"
+            android:name=".component.comparing.secondlevel.ComparingElementActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.ComparingListActivity"
+            android:name=".component.comparing.firstlevel.ComparingListActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.AddComparingListActivity"
+            android:name=".component.comparing.firstlevel.AddComparingListActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.AddComparingElementActivity"
+            android:name=".component.comparing.secondlevel.AddComparingElementActivity"
             android:exported="false" />
         <activity
             android:name=".component.plant.PlantOverview"

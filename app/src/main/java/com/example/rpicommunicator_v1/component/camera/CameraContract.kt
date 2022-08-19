@@ -14,7 +14,7 @@ interface CameraContract {
     }
 
     interface Presenter {
-        val imageElement: ImageElement
+      //  val imageElement: ImageElement
         fun attachView(view: View)
         fun removeImage(path: String)
         fun onImageOptionSelected(option: Int)
