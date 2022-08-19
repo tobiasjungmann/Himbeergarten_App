@@ -21,6 +21,7 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_PRIORITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
+import com.example.rpicommunicator_v1.database.image.PathElement
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -93,7 +94,11 @@ class ComparingElementActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 previouslyDeleted = adapter.getElementAt(viewHolder.bindingAdapterPosition)
-          // todo muss hier aus der livedata geladen werden - in den adapter übergeben      comparingElementViewModel.getAllPathsToElement(previouslyDeleted!!.idListe)
+             // =comparingElementViewModel!!;
+               // val previousPaths: List<PathElement>=
+               /* var test =
+                    comparingElementViewModel!!.getAllPathsToElement(previouslyDeleted!!.idListe)*/
+                // todo muss hier aus der livedata geladen werden - in den adapter übergeben      comparingElementViewModel.getAllPathsToElement(previouslyDeleted!!.idListe)
                 comparingElementViewModel!!.delete(adapter.getElementAt(viewHolder.bindingAdapterPosition))
                 val snackbar = Snackbar
                     .make(
@@ -103,7 +108,7 @@ class ComparingElementActivity : AppCompatActivity() {
                     )
                     .setAction(
                         "Rückgängig"
-                    ) { comparingElementViewModel!!.insert(previouslyDeleted, imagePath) }
+                    ) { comparingElementViewModel!!.insert(previouslyDeleted, arrayOf()) }
                 snackbar.show()
             }
         }).attachToRecyclerView(recyclerView)

@@ -52,7 +52,7 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
             binding.editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
             binding.editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE))
             binding.numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1))
-            presenter.imageElement.picturePaths.addAll(
+            presenter.imageElement.addAll(
                 0,
                 intent.getStringArrayExtra(EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
             )
@@ -68,7 +68,7 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size).toInt()
         thumbnailsAdapter =
             CameraThumbnailsAdapter(
-                presenter.imageElement.picturePaths,
+                presenter.imageElement,
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
@@ -89,7 +89,7 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
         data.putExtra(EXTRA_TITLE, title)
         data.putExtra(EXTRA_DESCRIPTION, description)
         data.putExtra(EXTRA_PRIORITY, priority)
-        data.putExtra(EXTRA_IMAGE_PATH, presenter.imageElement.picturePaths.toTypedArray())
+        data.putExtra(EXTRA_IMAGE_PATH, presenter.imageElement.toTypedArray())
 
         data.putExtra(MODE, mode)
         val id = intent.getIntExtra(EXTRA_ID, -1)

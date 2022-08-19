@@ -89,7 +89,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         var button_delete: Button
 
         init {
-            mImageView = itemView.findViewById(R.id.imageView)
+            mImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
             mTextView1 = itemView.findViewById(R.id.title)
             mTextView2 = itemView.findViewById(R.id.textView)
             datumView = itemView.findViewById(R.id.textView2)

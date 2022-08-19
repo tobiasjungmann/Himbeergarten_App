@@ -28,7 +28,7 @@ class ComparingElementAdapter : RecyclerView.Adapter<ListHolder>() {
         holder.textViewTitle.text = currentList.title
         holder.textViewPriority.text = currentList.rating.toString()
         holder.textViewDescription.text = currentList.description
-        holder.listThumbnailImageView.drawable=// just load it from the path + thumbnail
+       // holder.listThumbnailImageView.setImageResource(R.)//todo darf keine ressource sein? in welchem format kann das vorliegen - erstmal abspecihern just load it from the path + thumbnail
     }
 
     fun getElementAt(position: Int): ComparingElement {

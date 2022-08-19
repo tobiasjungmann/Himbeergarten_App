@@ -24,8 +24,6 @@ class PathElementRepository(application: Application?) {
         }
     }
 
-
-
     fun update(pathElement: PathElement?) {
         UpdatePathElementThread(pathElementDao,pathElement).start()
     }
@@ -39,7 +37,7 @@ class PathElementRepository(application: Application?) {
     }
 
     fun getAllById(idList: Int) {
-        GetAllByIDThread(pathElementDao,idList).start
+        GetAllByIDThread(pathElementDao,idList).start()
     }
 
     private class InsertPathElementThread(private val pathElementDao: PathElementDao, private val pathElement: PathElement) :
@@ -81,7 +79,7 @@ class PathElementRepository(application: Application?) {
     private class GetAllByIDThread(private val pathElementDao: PathElementDao, private val idList: Int) :
         Thread() {
         override fun run() {
-            pathElementDao.update(pathElement)
+            pathElementDao.getListPathElements(idList)
         }
     }
 

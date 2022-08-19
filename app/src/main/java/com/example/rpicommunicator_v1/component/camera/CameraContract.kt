@@ -14,7 +14,8 @@ interface CameraContract {
     }
 
     interface Presenter {
-      //  val imageElement: ImageElement
+        //  val imageElement: ImageElement
+        val imageElement: MutableList<String>
         fun attachView(view: View)
         fun removeImage(path: String)
         fun onImageOptionSelected(option: Int)

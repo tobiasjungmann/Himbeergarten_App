@@ -11,7 +11,6 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
     private val elementRepo: ComparingElementRepository
     private val pathRepo: PathElementRepository
 
-    // todo add path element here
     init {
         elementRepo = ComparingElementRepository(application)
         pathRepo = PathElementRepository(application)
@@ -35,7 +34,7 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
         return elementRepo.getListeNotes(listeID)
     }
 
-    fun getAllPathsToElement(idListe: Int) {
+    /*fun getAllPathsToElement(idListe: Int): LiveData<List<ComparingElement>>{
         return pathRepo.getAllById(idListe)
-    }
+    }*/
 }

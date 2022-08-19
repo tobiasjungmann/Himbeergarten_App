@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.rpicommunicator_v1.database.image.PathElement
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -26,7 +27,7 @@ class CameraPresenter constructor(
 
     private var currentPhotoPath: String? = null
     private var view: CameraContract.View? = null
-    override val imageElement: ImageElement = ImageElement(mutableListOf());
+    override val imageElement: MutableList<String> = mutableListOf();
 
 
     override fun attachView(view: CameraContract.View) {
@@ -82,8 +83,8 @@ class CameraPresenter constructor(
     }
 
     override fun removeImage(path: String) {
-        val index = imageElement.picturePaths.indexOf(path)
-        imageElement.picturePaths.remove(path)
+        val index = imageElement.indexOf(path)
+        imageElement.remove(path)
         //todo
         File(path).delete()
         view?.onImageRemoved(index)
@@ -124,14 +125,14 @@ class CameraPresenter constructor(
     override fun onNewImageTaken() {
         currentPhotoPath?.let {
             rescaleBitmap(context, it)
-            imageElement.picturePaths.add(it)
+            imageElement.add(it)
             view?.onImageAdded(it)
         }
     }
 
     override fun onNewImageSelected(uri: Uri?) {
         val filePath = rescaleBitmap(context, uri ?: return) ?: return
-        imageElement.picturePaths.add(filePath)
+        imageElement.add(filePath)
         view?.onImageAdded(filePath)
     }
 
@@ -142,7 +143,7 @@ class CameraPresenter constructor(
     }
 
     private fun clearPictures() {
-            for (path in imageElement.picturePaths) {
+            for (path in imageElement) {
                 File(path).delete()
             }
     }
