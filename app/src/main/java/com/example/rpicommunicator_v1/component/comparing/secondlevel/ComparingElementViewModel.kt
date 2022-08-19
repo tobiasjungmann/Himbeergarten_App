@@ -28,14 +28,14 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun delete(comparingElement: ComparingElement?) {
-        elementRepo.delete(comparingElement)        // cascade delete -> paths must not be added -> todo may delete images
+        elementRepo.delete(comparingElement)        // cascade delete -> paths must not be added
     }
 
-    fun getComparingElementByID(listeID: Int): LiveData<List<ComparingElement>> {
-        return elementRepo.getComparingElementsById(listeID)
+    fun getComparingElementByID(listId: Int): LiveData<List<ComparingElement>> {
+        return elementRepo.getComparingElementsById(listId)
     }
 
-    fun getAllPathsToElement(idListe: Int): List<PathElement>{
-        return pathRepo.getPathElementsById(idListe)
+    fun getAllPathsToElement(listId: Int): List<PathElement>{
+        return pathRepo.getPathElementsById(listId)
     }
 }

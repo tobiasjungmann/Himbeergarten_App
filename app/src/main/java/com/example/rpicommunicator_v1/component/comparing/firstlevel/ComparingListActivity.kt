@@ -56,10 +56,10 @@ class ComparingListActivity : AppCompatActivity() {
         listViewModel = ViewModelProvider(this).get(
             ComparingListViewModel::class.java
         )
-        listViewModel!!.getAllComparingLists().observe(this,
-            Observer<List<Any?>?> { lists -> //update RecyclerView
-                adapter.setComparingList(lists as List<ComparingList>)
-            })
+        listViewModel!!.getAllComparingLists().observe(this
+        ) { lists -> //update RecyclerView
+            adapter.setComparingList(lists as List<ComparingList>)
+        }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -71,24 +71,11 @@ class ComparingListActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-
-                //für drag and drop
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val lastDeleted = adapter.getListeAt(viewHolder.adapterPosition)
                 adapter.getListeAt(viewHolder.adapterPosition)?.let { listViewModel!!.delete(it) }
-
-                /*NoteViewModel noteViewModel;
-
-                noteViewModel = ViewModelProviders.of().get(NoteViewModel.class);
-                noteViewModel.getListeNotes(listeId).observe(this, new Observer<List<Note>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Note> notes) {
-                        //update RecyclerView
-                        adapter.submitList(notes);
-                    }
-                });*/
                 val snackbar = Snackbar
                     .make(
                         findViewById(R.id.coordinator_layout_comparing_list),
@@ -105,15 +92,6 @@ class ComparingListActivity : AppCompatActivity() {
                 snackbar.show()
             }
         }).attachToRecyclerView(recyclerView)
-
-       // adapter.setOnItemClickListener(ComparingListAdapter.OnItemClickListener)
-        /*adapter.setOnItemClickListener{
-            fun onItemClick(list: ComparingList) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(EXTRA_ID, list.getId())
-                startActivity(intent)
-            }
-        }*/
     }
 
 

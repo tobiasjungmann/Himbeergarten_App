@@ -13,7 +13,7 @@ import java.util.ArrayList
 class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.ComparingListHolder>() {
 
     private var comparingList: List<ComparingList> = ArrayList()
-    private lateinit var mListener:  (View, Int, Int)-> Unit;
+    private lateinit var mListener:  (View, Int, Int)-> Unit
 
 
     class ComparingListHolder(itemView: View,listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(itemView){
@@ -24,7 +24,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
             textViewTitle = itemView.findViewById(R.id.title)
             textViewSecondary = itemView.findViewById(R.id.textView)
             textViewDescription = itemView.findViewById(R.id.textView2)
-            itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
+            itemView.setOnClickListener { listener.invoke(it, bindingAdapterPosition, itemViewType)}
         }
     }
 
@@ -38,7 +38,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     val DIFF_CALLBACK: DiffUtil.ItemCallback<ComparingList> =
         object : DiffUtil.ItemCallback<ComparingList>() {
             override fun areItemsTheSame(oldItem: ComparingList, newItem: ComparingList): Boolean {
-                return oldItem.comparingListId === newItem.comparingListId
+                return oldItem.comparingListId == newItem.comparingListId
             }
 
             override fun areContentsTheSame(
@@ -57,7 +57,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
         val currentList: ComparingList = comparingList.get(position)
-        holder.textViewTitle.setText(" " + currentList.title)
+        holder.textViewTitle.text = " " + currentList.title
         holder.textViewSecondary.visibility=View.GONE
         holder.textViewDescription.visibility=View.GONE
     }

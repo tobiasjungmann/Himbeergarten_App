@@ -10,10 +10,7 @@ import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
 class ComparingListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: ComparingListRepository
-    val allLists: LiveData<List<ComparingList>>
-
-
-
+    private val allLists: LiveData<List<ComparingList>>
 
     init {
         repository = ComparingListRepository(application)
@@ -43,6 +40,4 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
     fun getComparingListByPosition(position: Int): ComparingList {
         return allLists.value!![position]
     }
-
-
 }

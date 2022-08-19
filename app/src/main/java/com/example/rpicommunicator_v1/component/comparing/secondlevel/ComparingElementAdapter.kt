@@ -1,13 +1,7 @@
 package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
-
-import android.content.Context
-import android.graphics.BitmapFactory
-import android.opengl.Visibility
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
-import java.io.File
+
 
 
 class ComparingElementAdapter internal constructor(

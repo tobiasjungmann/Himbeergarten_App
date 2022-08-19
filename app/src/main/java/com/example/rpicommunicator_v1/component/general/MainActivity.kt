@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
@@ -15,20 +14,20 @@ import com.example.rpicommunicator_v1.component.*
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
+import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentOn: Int=0
-    private var viewMoreOptionsText: TextView? = null
-    private var layoutmatrixmoreoptions: ConstraintLayout? = null
-    private var destText: EditText? = null
-    private var startText: EditText? = null
+    private lateinit var binding: ActivityMainBinding
     var mainActivityViewModel: MainActivityViewModel? = null
     var communicationInterface: CommunicationInterface? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
         mainActivityViewModel = ViewModelProvider(this).get(
             MainActivityViewModel::class.java
         )
@@ -39,32 +38,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initIO() {
-        destText = findViewById(R.id.inputDest)
-        startText = findViewById(R.id.inputStart)
-        layoutmatrixmoreoptions = findViewById(R.id.layoutmatrixmoreoptions)
-        viewMoreOptionsText = findViewById(R.id.textViewMorematrixOptions)
-        viewMoreOptionsText!!.setOnClickListener(this)
+     //   destText = findViewById(R.id.inputDest)
+     //   startText = findViewById(R.id.inputStart)
+     //   layoutmatrixmoreoptions = findViewById(R.id.layoutmatrixmoreoptions)
+        binding.textViewMorematrixOptions.setOnClickListener(this) 
+        /*= findViewById(R.id.textViewMorematrixOptions)
+        binding.textViewMorematrixOptions!!.setOnClickListener(this)
+*/
+        binding.imagetrain.setOnClickListener(this)
+        binding.imagetime.setOnClickListener(this)
+        binding.imagespotify.setOnClickListener(this)
+        binding.imageweather.setOnClickListener(this)
 
-        findViewById<View>(R.id.imagetrain).setOnClickListener(this)
-        findViewById<View>(R.id.imagetime).setOnClickListener(this)
-        findViewById<View>(R.id.imagespotify).setOnClickListener(this)
-        findViewById<View>(R.id.imageweather).setOnClickListener(this)
+        binding.imageoutlet1.setOnClickListener(this)
+        binding.imageoutlet2.setOnClickListener(this)
+        binding.imageoutlet3.setOnClickListener(this)
 
-        findViewById<View>(R.id.imageoutlet1).setOnClickListener(this)
-        findViewById<View>(R.id.imageoutlet2).setOnClickListener(this)
-        findViewById<View>(R.id.imageoutlet3).setOnClickListener(this)
-
-        findViewById<View>(R.id.imagebike).setOnClickListener(this)
-        findViewById<View>(R.id.imageplant).setOnClickListener(this)
-        findViewById<View>(R.id.imagelistactivity).setOnClickListener(this)
-
-        findViewById<View>(R.id.button_settingsActivity).setOnClickListener(this)
+        binding.imagebike.setOnClickListener(this)
+        binding.imageplant.setOnClickListener(this)
+        binding.imagelistactivity.setOnClickListener(this)
+        binding.buttonSettingsActivity.setOnClickListener(this)
 
 
-        findViewById<View>(R.id.imagequit).setOnClickListener(this)
-        findViewById<View>(R.id.imagestandby).setOnClickListener(this)
-        findViewById<View>(R.id.imagearduino1).setOnClickListener(this)
-        findViewById<View>(R.id.imagearduino2).setOnClickListener(this)
+        binding.imagequit.setOnClickListener(this)
+        binding.imagestandby.setOnClickListener(this)
+        binding.imagearduino1.setOnClickListener(this)
+        binding.imagearduino2.setOnClickListener(this)
 
         val sk = findViewById<SeekBar>(R.id.seekBar)
         sk.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (v.id == R.id.imagetrain) {
             Log.i("buttonClick", "Übernehmen was clicked")
             toggleMatrixUi(R.id.imagetrain)
-            communicationInterface!!.sendText("Stations;" + startText!!.text.toString() + ";" + destText!!.text.toString())
+            communicationInterface!!.sendText("Stations;" + binding.inputStart.text.toString() + ";" + binding.inputDest.text.toString())
         } else if (v.id == R.id.imagespotify) {
             Log.i("buttonClick", "songtitle was clicked")
             toggleMatrixUi(R.id.imagespotify)
@@ -115,14 +114,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 1 was clicked")
             communicationInterface!!.sendText("outlet1")
             if (mainActivityViewModel!!.toggleOutlet1()) {
-                findViewById<View>(R.id.imageoutlet1).background.setTint(
+                binding.imageoutlet1.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.primary_green_transparent
                     )
                 )
             } else {
-                findViewById<View>(R.id.imageoutlet1).background.setTint(
+                binding.imageoutlet1.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.transparent
@@ -133,14 +132,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Outlet 2 was clicked")
             communicationInterface!!.sendText("outlet2")
             if (mainActivityViewModel!!.toggleOutlet2()) {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(
+                binding.imageoutlet2.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.primary_green_transparent
                     )
                 )
             } else {
-                findViewById<View>(R.id.imageoutlet2).background.setTint(
+                binding.imageoutlet2.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.transparent
@@ -152,14 +151,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             communicationInterface!!.sendText("outlet3")
 
             if (mainActivityViewModel!!.toggleOutlet3()) {
-                findViewById<View>(R.id.imageoutlet3).background.setTint(
+                binding.imageoutlet3.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.primary_green_transparent
                     )
                 )
             } else {
-                findViewById<View>(R.id.imageoutlet3).background.setTint(
+                binding.imageoutlet3.background.setTint(
                     ContextCompat.getColor(
                         this,
                         R.color.transparent
@@ -189,12 +188,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         } else if (v.id == R.id.textViewMorematrixOptions) {
             Log.i("buttonClick", "view more options activity was clicked")
-            if (layoutmatrixmoreoptions!!.visibility == View.GONE) {
-                layoutmatrixmoreoptions!!.visibility = View.VISIBLE
-                viewMoreOptionsText!!.text = "Less Options"
+            if (binding.layoutmatrixmoreoptions.visibility == View.GONE) {
+                binding.layoutmatrixmoreoptions.visibility = View.VISIBLE
+                binding.textViewMorematrixOptions.text = "Less Options"
             } else {
-                layoutmatrixmoreoptions!!.visibility = View.GONE
-                viewMoreOptionsText!!.text = "More Options"
+                binding.layoutmatrixmoreoptions.visibility = View.GONE
+                binding.textViewMorematrixOptions.text = "More Options"
             }
         }
 
@@ -226,7 +225,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     R.color.transparent
                 )
             )
-            currentOn=0;
+            currentOn=0
         }
 
     }
