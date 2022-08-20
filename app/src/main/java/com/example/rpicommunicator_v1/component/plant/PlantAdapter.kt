@@ -1,24 +1,23 @@
 package com.example.rpicommunicator_v1.component.plant
 
-import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
-import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import com.example.rpicommunicator_v1.R
-import android.widget.TextView
 import android.view.View.OnLongClickListener
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
+import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.database.plant.Plant
-import java.util.ArrayList
 
 class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     private var plants: List<Plant> = ArrayList()
-    private lateinit var mListener:  (View, Int, Int)-> Unit;
-    private var mlongListener: OnItemLongClickListener? = null
+    private lateinit var clickListener:  (View, Int, Int)-> Unit
+    private var longClickListener: OnItemLongClickListener? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
 
 
@@ -26,26 +25,16 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         this.mainActivityViewModel = mainActivityViewModel
     }
 
-    interface OnItemClickListener {
-        fun onItemClicked(position: Int)
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemClicked(position: Int)
-    }
+    interface OnItemLongClickListener
 
     fun setOnItemClickListener(listener: (View, Int, Int) -> Unit) {
-        mListener = listener
-    }
-
-    fun setOnItemLongClickListener(longListener: OnItemLongClickListener?) {
-        mlongListener = longListener
+        clickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantHolder {
         val v =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
-        return PlantHolder(v, mListener);
+        return PlantHolder(v, clickListener)
     }
 
     override fun onBindViewHolder(holder: PlantHolder, position: Int) {
@@ -63,7 +52,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         holder.mTextView1.text = currentItem.name
         holder.mTextView2.text = currentItem.info
         holder.datumView.text = currentItem.watered
-        holder.button_delete.setOnClickListener { v ->
+        holder.buttonDelete.setOnClickListener { v ->
             v.visibility = View.GONE
             mainActivityViewModel!!.remove(plants[position])
         }
@@ -86,24 +75,24 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         var mTextView1: TextView
         var mTextView2: TextView
         var datumView: TextView
-        var button_delete: Button
+        var buttonDelete: Button
 
         init {
             mImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
             mTextView1 = itemView.findViewById(R.id.title)
             mTextView2 = itemView.findViewById(R.id.textView)
             datumView = itemView.findViewById(R.id.textView2)
-            button_delete = itemView.findViewById(R.id.delete_button)
-            itemView.setOnClickListener { listener.invoke(it, getAdapterPosition(), getItemViewType())}
+            buttonDelete = itemView.findViewById(R.id.delete_button)
+            itemView.setOnClickListener { listener.invoke(it, bindingAdapterPosition, itemViewType)}
 
             itemView.setOnLongClickListener(OnLongClickListener {
 
-                    val position = adapterPosition
+                    val position = bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        if (button_delete.visibility == View.GONE) {
-                            button_delete.visibility = View.VISIBLE
+                        if (buttonDelete.visibility == View.GONE) {
+                            buttonDelete.visibility = View.VISIBLE
                         } else {
-                            button_delete.visibility = View.GONE
+                            buttonDelete.visibility = View.GONE
                         }
                         return@OnLongClickListener true
                     }

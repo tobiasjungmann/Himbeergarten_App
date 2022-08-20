@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.*
+import com.example.rpicommunicator_v1.component.CommunicationInterface
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
@@ -18,33 +19,24 @@ import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private var currentOn: Int=0
+    private var currentOn: Int = 0
     private lateinit var binding: ActivityMainBinding
-    var mainActivityViewModel: MainActivityViewModel? = null
+    private var mainActivityViewModel: MainActivityViewModel? = null
     var communicationInterface: CommunicationInterface? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
-        mainActivityViewModel = ViewModelProvider(this).get(
-            MainActivityViewModel::class.java
-        )
-        communicationInterface = ViewModelProvider(this).get(
-            CommunicationInterface::class.java
-        )
+
+        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
         initIO()
     }
 
     private fun initIO() {
-     //   destText = findViewById(R.id.inputDest)
-     //   startText = findViewById(R.id.inputStart)
-     //   layoutmatrixmoreoptions = findViewById(R.id.layoutmatrixmoreoptions)
-        binding.textViewMorematrixOptions.setOnClickListener(this) 
-        /*= findViewById(R.id.textViewMorematrixOptions)
-        binding.textViewMorematrixOptions!!.setOnClickListener(this)
-*/
+        binding.textViewMorematrixOptions.setOnClickListener(this)
+
         binding.imagetrain.setOnClickListener(this)
         binding.imagetime.setOnClickListener(this)
         binding.imagespotify.setOnClickListener(this)
@@ -196,8 +188,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.textViewMorematrixOptions.text = "More Options"
             }
         }
-
-
     }
 
     private fun toggleMatrixUi(imageID: Int) {
@@ -213,21 +203,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     R.color.primary_green_transparent
                 )
             )
-            currentOn=imageID
+            currentOn = imageID
         }
     }
 
     private fun switchOffCurrent() {
-        if (currentOn!=0) {
+        if (currentOn != 0) {
             findViewById<View>(currentOn).background.setTint(
                 ContextCompat.getColor(
                     this,
                     R.color.transparent
                 )
             )
-            currentOn=0
+            currentOn = 0
         }
-
     }
 
     private fun changeToCompareList() {

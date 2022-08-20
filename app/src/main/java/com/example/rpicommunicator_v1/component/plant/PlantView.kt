@@ -1,16 +1,13 @@
 package com.example.rpicommunicator_v1.component.plant
 
 
-import androidx.appcompat.app.AppCompatActivity
-import com.example.rpicommunicator_v1.database.plant.Plant
-import android.widget.TextView
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import com.example.rpicommunicator_v1.R
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_GRAPH_STRING
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_HUMIDITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ICON
@@ -21,14 +18,15 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_NAME
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_NEEDS_WATER
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_WATERED
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
+import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.databinding.ActivityPlantViewBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.Entry
-import java.util.ArrayList
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class PlantView : AppCompatActivity() {
     private var mainActivityViewModel: MainActivityViewModel? = null
@@ -36,69 +34,62 @@ class PlantView : AppCompatActivity() {
     private var waterNeededChanged = false
     private var plant: Plant? = null
     private var needsWater = false
-    private var willbeWaterdTextView: TextView? = null
-    private var headerView: ImageView? = null
-    private var waterButton: Button? = null
+    private lateinit var binding: ActivityPlantViewBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plant_view)
-        mainActivityViewModel = ViewModelProvider(this).get(
-            MainActivityViewModel::class.java
-        )
-        willbeWaterdTextView = findViewById(R.id.will_be_watered)
-        headerView = findViewById<ImageView>(R.id.header_image)
+        binding = ActivityPlantViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+
         initPlant()
         initViewComponents()
         if (plant!!.graphString != "") {
             initChart(plant!!.graphString)
         } else {
-            findViewById<View>(R.id.chart).visibility = View.GONE
+            binding.chart.visibility = View.GONE
         }
     }
 
 
     private fun initViewComponents() {
-
-
-        waterButton = findViewById<View>(R.id.water_button) as Button
         if (plant!!.imageID != -1) {
-            headerView?.setImageResource(plant!!.imageID)
+            binding.headerImage.setImageResource(plant!!.imageID)
             val alpha = 1.toFloat()
-            headerView?.alpha = alpha
+            binding.headerImage.alpha = alpha
         } else {
-            headerView?.setImageResource(R.drawable.icon_plant)
+            binding.headerImage.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
-            headerView?.alpha = alpha
+            binding.headerImage.alpha = alpha
         }
         (findViewById<View>(R.id.plantNameTextView) as TextView).text = plant!!.name
         (findViewById<View>(R.id.humidityTextView) as TextView).text = plant!!.humidity
         (findViewById<View>(R.id.wateredTextView) as TextView).text = plant!!.watered
         (findViewById<View>(R.id.infoTextView) as TextView).text = plant!!.info
         if (needsWater) {
-            willbeWaterdTextView?.setVisibility(View.VISIBLE)
-            waterButton!!.setText(R.string.doNotWater)
+            binding.willBeWatered.visibility = View.VISIBLE
+            binding.waterButton.setText(R.string.doNotWater)
         } else {
-            willbeWaterdTextView?.setVisibility(View.INVISIBLE)
-            waterButton!!.setText(R.string.doWater)
+            binding.willBeWatered.visibility = View.INVISIBLE
+            binding.waterButton.setText(R.string.doWater)
         }
-        waterButton!!.setOnClickListener { v: View? ->
+        binding.waterButton.setOnClickListener {
             if (needsWater) {
                 if (!waterNeededChanged) {
-                    willbeWaterdTextView?.setVisibility(View.INVISIBLE)
-                    waterButton!!.setText(R.string.doWater)
+                    binding.willBeWatered.visibility = View.INVISIBLE
+                    binding.waterButton.setText(R.string.doWater)
                 } else {
-                    willbeWaterdTextView?.setVisibility(View.VISIBLE)
-                    waterButton!!.setText(R.string.doNotWater)
+                    binding.willBeWatered.visibility = View.VISIBLE
+                    binding.waterButton.setText(R.string.doNotWater)
                 }
             } else {
                 if (!waterNeededChanged) {
-                    willbeWaterdTextView?.setVisibility(View.VISIBLE)
-                    waterButton!!.setText(R.string.doWater)
+                    binding.willBeWatered.visibility = View.VISIBLE
+                    binding.waterButton.setText(R.string.doWater)
                 } else {
-                    willbeWaterdTextView?.setVisibility(View.INVISIBLE)
-                    waterButton!!.setText(R.string.doNotWater)
+                    binding.willBeWatered.visibility = View.INVISIBLE
+                    binding.waterButton.setText(R.string.doNotWater)
                 }
             }
             waterNeededChanged = !waterNeededChanged

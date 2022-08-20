@@ -29,10 +29,6 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
         repository.delete(list)
     }
 
-    fun deleteAllLists() {
-        repository.deleteAllLists()
-    }
-
     fun getAllComparingLists(): LiveData<List<ComparingList>> {
         return allLists
     }

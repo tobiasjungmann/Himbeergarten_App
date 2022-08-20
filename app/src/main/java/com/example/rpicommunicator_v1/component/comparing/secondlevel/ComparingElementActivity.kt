@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.ADD_NOTE_REQUEST
 import com.example.rpicommunicator_v1.component.Constants.EDIT_NOTE_REQUEST
@@ -21,7 +20,8 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_PRIORITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
+import com.example.rpicommunicator_v1.databinding.ActivityComparingElementBinding
 import com.google.android.material.snackbar.Snackbar
 
 class ComparingElementActivity : AppCompatActivity() {
@@ -30,37 +30,36 @@ class ComparingElementActivity : AppCompatActivity() {
     private var comparingElementViewModel: ComparingElementViewModel? = null
     private var listeId = 0
     private var previouslyDeleted: ComparingElement? = null
+    private lateinit var binding: ActivityComparingElementBinding
 
 
-    // todo methode verkleinern - zu lang
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comparing_element)
+        binding = ActivityComparingElementBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initRecyclerView()
         val intent = intent
         if (intent.hasExtra(EXTRA_ID)) {
             listeId = intent.getIntExtra(EXTRA_ID, -1)
         }
 
-        comparingElementViewModel =
-            ViewModelProvider(this).get(        // todo warum wird das weiter unten nochmal initialisiert?
-                ComparingElementViewModel::class.java
-            )
-
-        val buttonAddElement = findViewById<FloatingActionButton>(R.id.button_add_element)
-        buttonAddElement.setOnClickListener {
+        binding.buttonAddElement.setOnClickListener {
             val nextIntent = Intent(this, AddComparingElementActivity::class.java)
             nextIntent.putExtra(MODE, ADD_NOTE_REQUEST)
             resultLauncher.launch(nextIntent)
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.comparing_element_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
+    }
+
+    private fun initRecyclerView() {
+        binding.comparingElementRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.comparingElementRecyclerView.setHasFixedSize(true)
+
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size_list).toInt()
         val adapter = ComparingElementAdapter(thumbnailSize)
 
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             val nextIntent = Intent(this, AddComparingElementActivity::class.java)
-
             nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
             nextIntent.putExtra(EXTRA_ID, adapter.getElementAt(position).comparingElementId)
             nextIntent.putExtra(EXTRA_TITLE, adapter.getElementAt(position).title)
@@ -70,18 +69,14 @@ class ComparingElementActivity : AppCompatActivity() {
             resultLauncher.launch(nextIntent)
         }
         adapter.setOnItemClickListener(itemOnClick)
+        binding.comparingElementRecyclerView.adapter = adapter
 
-        recyclerView.adapter = adapter
-
-        comparingElementViewModel = ViewModelProvider(this).get(
-            ComparingElementViewModel::class.java
-        )
-
+        comparingElementViewModel = ViewModelProvider(this)[ComparingElementViewModel::class.java]
         comparingElementViewModel!!.getComparingElementByID(listeId).observe(
             this
         ) { elements ->
             adapter.setElementList(elements as List<ComparingElement>, comparingElementViewModel!!)
-        }       // todo vermutlich hier
+        }
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -99,7 +94,7 @@ class ComparingElementActivity : AppCompatActivity() {
                 comparingElementViewModel!!.delete(adapter.getElementAt(viewHolder.bindingAdapterPosition))
                 val snackbar = Snackbar
                     .make(
-                        findViewById(R.id.coordinator_layout_element),
+                        binding.coordinatorLayoutElement,
                         "Notiz gelöscht",
                         Snackbar.LENGTH_LONG
                     )
@@ -108,18 +103,18 @@ class ComparingElementActivity : AppCompatActivity() {
                     ) { comparingElementViewModel!!.insert(previouslyDeleted, arrayOf()) }
                 snackbar.show()
             }
-        }).attachToRecyclerView(recyclerView)
+        }).attachToRecyclerView(binding.comparingElementRecyclerView)
     }
 
 
-    var resultLauncher =
+    private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 val data: Intent? = result.data
                 val resultmode = data?.getStringExtra(MODE)
                 if (resultmode != null) {
-                    if ((resultmode.equals(ADD_NOTE_REQUEST))) {
+                    if ((resultmode == ADD_NOTE_REQUEST)) {
                         val title = data.getStringExtra(EXTRA_TITLE)
                         val description = data.getStringExtra(EXTRA_DESCRIPTION)
                         val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
@@ -134,7 +129,7 @@ class ComparingElementActivity : AppCompatActivity() {
                             )
                         comparingElementViewModel?.insert(comparingElement, imagePath)
                         Toast.makeText(this, "Element Saved", Toast.LENGTH_SHORT).show()
-                    } else if ((resultmode.equals(EDIT_NOTE_REQUEST))) {
+                    } else if ((resultmode == EDIT_NOTE_REQUEST)) {
                         val id = data.getIntExtra(EXTRA_ID, -1)
                         if (id == -1) {
                             Toast.makeText(this, "can not be updated", Toast.LENGTH_SHORT).show()

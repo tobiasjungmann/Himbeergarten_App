@@ -10,21 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
+import com.example.rpicommunicator_v1.database.plant.Plant
 
 class PlantOverview : AppCompatActivity() {
 
-    private lateinit var mainActivityViewModel: MainActivityViewModel;
-
-
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_overview)
-        mainActivityViewModel=ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        mainActivityViewModel= ViewModelProvider(this)[MainActivityViewModel::class.java]
         initRecyclerView()
     }
 
@@ -34,10 +32,10 @@ class PlantOverview : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         val adapter = PlantAdapter()
-        val itemOnClick: (View, Int, Int) -> Unit = { view, position, type ->
+        val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             openPlantView(position)
         }
-        adapter.setOnItemClickListener(itemOnClick);
+        adapter.setOnItemClickListener(itemOnClick)
 
         recyclerView.adapter = adapter
         adapter.setViewModel(mainActivityViewModel)

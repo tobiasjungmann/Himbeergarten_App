@@ -28,23 +28,23 @@ class ComparingElementAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
-        val currentList = comparingElementList.get(position)
+        val currentList = comparingElementList[position]
         holder.textViewTitle.text = currentList.title
         holder.textViewPriority.text = currentList.rating.toString()
         holder.textViewDescription.text = currentList.description
 
         val helper = comparingElementViewModel.getAllPathsToElement(currentList.comparingElementId)
 
-        if (helper.size > 0) {
+        if (helper.isNotEmpty()) {
             holder.listThumbnailImageView.visibility=View.VISIBLE
-                holder.listThumbnailImageView.setImageBitmap(helper.get(0).loadThumbnail( thumbnailSize))
+                holder.listThumbnailImageView.setImageBitmap(helper[0].loadThumbnail( thumbnailSize))
         }else{
             holder.listThumbnailImageView.visibility=View.GONE
         }
     }
 
     fun getElementAt(position: Int): ComparingElement {
-        return comparingElementList.get(position)
+        return comparingElementList[position]
     }
 
     inner class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -58,7 +58,7 @@ class ComparingElementAdapter internal constructor(
             textViewDescription = itemView.findViewById(R.id.textView)
             textViewPriority = itemView.findViewById(R.id.textView2)
             listThumbnailImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
-            itemView.setOnClickListener { listener?.invoke(it, adapterPosition, itemViewType) }
+            itemView.setOnClickListener { listener?.invoke(it, bindingAdapterPosition, itemViewType) }
         }
     }
 

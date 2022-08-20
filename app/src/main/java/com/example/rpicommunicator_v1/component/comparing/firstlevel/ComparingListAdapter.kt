@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
-import java.util.ArrayList
 
 class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.ComparingListHolder>() {
 
@@ -45,7 +44,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
                 oldItem: ComparingList,
                 newItem: ComparingList
             ): Boolean {
-                return (oldItem.title.equals(newItem.title))
+                return (oldItem.title == newItem.title)
             }
         }
 
@@ -56,20 +55,15 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     }
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
-        val currentList: ComparingList = comparingList.get(position)
+        val currentList: ComparingList = comparingList[position]
         holder.textViewTitle.text = " " + currentList.title
         holder.textViewSecondary.visibility=View.GONE
         holder.textViewDescription.visibility=View.GONE
     }
 
 
-    fun getListeAt(position: Int): ComparingList? {
-        return comparingList.get(position)
-    }
-
-
-    interface OnItemClickListener {
-        fun onItemClick(list: ComparingList?)
+    fun getListAt(position: Int): ComparingList {
+        return comparingList[position]
     }
 
     fun setOnItemClickListener(listener: (View, Int, Int) -> Unit) {

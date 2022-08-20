@@ -12,9 +12,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
-    private var outlet1 = false;
-    private var outlet2 = false;
-    private var outlet3 = false;
+    private var outlet1 = false
+    private var outlet2 = false
+    private var outlet3 = false
 
 
     fun update(plant: Plant) {
@@ -40,22 +40,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun toggleOutlet1(): Boolean {
         outlet1 = !outlet1
-        return outlet1;
+        return outlet1
     }
 
     fun toggleOutlet2(): Boolean {
         outlet2 = !outlet2
-        return outlet2;
+        return outlet2
     }
 
     fun toggleOutlet3(): Boolean {
         outlet3 = !outlet3
-        return outlet3;
+        return outlet3
     }
 
     init {
-
-        //networkCommunicator=new NetworkCommunicator();
         plantRepository = PlantRepository(application)
         allPlants = plantRepository.allPlants
     }
