@@ -1,17 +1,18 @@
 package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.example.rpicommunicator_v1.R
-import android.content.Intent
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
@@ -45,7 +46,7 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
             title = "Edit note"
             binding.editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
             binding.editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE))
-            binding.numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1))
+            binding.numberPickerPriority.value = intent.getIntExtra(EXTRA_PRIORITY, 1)
             presenter.imageElement.addAll(
                 0,
                 intent.getStringArrayExtra(EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
@@ -94,7 +95,7 @@ class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
         finish()
     }
 
-
+    @Deprecated("remove later on")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

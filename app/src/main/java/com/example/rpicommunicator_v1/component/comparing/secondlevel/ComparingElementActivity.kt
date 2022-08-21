@@ -148,7 +148,9 @@ class ComparingElementActivity : AppCompatActivity() {
                                     listeId
                                 )
                             comparingElement.comparingElementId = id
-                            comparingElementViewModel?.update(comparingElement, imagePath)
+                            if (imagePath != null) {
+                                comparingElementViewModel?.update(comparingElement, imagePath)
+                            }
 
                             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show()
                         }

@@ -69,7 +69,7 @@ class PathElementRepository(application: Application?) {
         Thread() {
         override fun run() {
             for (s in pathElements) {
-                pathElementDao.update(s)
+                // todo delete all elements and insert new onespathElementDao.update(s)
             }
         }
     }

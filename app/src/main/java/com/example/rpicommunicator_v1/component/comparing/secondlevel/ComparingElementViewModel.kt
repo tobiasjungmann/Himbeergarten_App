@@ -22,7 +22,7 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
         pathRepo.insertList(imagePaths)
     }
 
-    fun update(comparingElement: ComparingElement?, paths: Array<String>?) {
+    fun update(comparingElement: ComparingElement?, paths: Array<String>) {
         elementRepo.update(comparingElement)
         pathRepo.update(paths)
     }
