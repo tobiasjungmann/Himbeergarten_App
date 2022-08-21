@@ -26,7 +26,7 @@ class CameraPresenter constructor(
 
     private var currentPhotoPath: String? = null
     private var view: CameraContract.View? = null
-    override val imageElement: MutableList<String> = mutableListOf();
+    override val imageElement: MutableList<String> = mutableListOf()
 
 
     override fun attachView(view: CameraContract.View) {
@@ -48,7 +48,6 @@ class CameraPresenter constructor(
 
     override fun takePicture() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
         // Create the file where the photo should go
         var photoFile: File? = null
         try {
@@ -84,7 +83,6 @@ class CameraPresenter constructor(
     override fun removeImage(path: String) {
         val index = imageElement.indexOf(path)
         imageElement.remove(path)
-        //todo
         File(path).delete()
         view?.onImageRemoved(index)
     }
@@ -156,7 +154,7 @@ class CameraPresenter constructor(
      *
      * @return absolute path of the new destination file
      */
-    fun rescaleBitmap(context: Context, src: Uri): String? {
+    private fun rescaleBitmap(context: Context, src: Uri): String? {
         return try {
             val destination = createImageFile(context)
             rescaleBitmap(context, src, destination)
@@ -170,7 +168,7 @@ class CameraPresenter constructor(
     /**
      * @param filePath source and destination
      */
-    fun rescaleBitmap(context: Context, filePath: String) {
+    private fun rescaleBitmap(context: Context, filePath: String) {
         rescaleBitmap(context, Uri.fromFile(File(filePath)), File(filePath))
     }
 
@@ -181,9 +179,7 @@ class CameraPresenter constructor(
         try {
             var bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, src)
             val out = ByteArrayOutputStream()
-            //     Utils.log("img before: ${bitmap.width} x ${bitmap.height}")
             bitmap = getResizedBitmap(bitmap)
-            //     Utils.log("img after: ${bitmap.width} x ${bitmap.height}")
             bitmap.compress(Bitmap.CompressFormat.JPEG, FEEDBACK_IMG_COMPRESSION_QUALITY, out)
             FileOutputStream(destination).apply {
                 write(out.toByteArray())

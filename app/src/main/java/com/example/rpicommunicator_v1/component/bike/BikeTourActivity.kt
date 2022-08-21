@@ -1,40 +1,39 @@
 package com.example.rpicommunicator_v1.component.bike
 
 
-import androidx.appcompat.app.AppCompatActivity
-import com.example.rpicommunicator_v1.database.bike.BikeTour
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.rpicommunicator_v1.R
-import androidx.lifecycle.ViewModelProvider
-import android.widget.TextView
 import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.database.bike.BikeTour
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BikeTourActivity : AppCompatActivity() {
     private var bikeViewModel: BikeTourViewModel? = null
 
-    //  private LineDataSet lineDataSet1;
     private var bikeToursList: List<BikeTour>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bike)
-        bikeViewModel = ViewModelProvider(this).get(BikeTourViewModel::class.java)
-        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-        val time = formatter.format(Date())
+        bikeViewModel = ViewModelProvider(this)[BikeTourViewModel::class.java]
+
         initUIElements()
         bikeViewModel!!.allBikeTours.observe(this) { bikeTours ->
-            if (!bikeTours.isEmpty()) {
+            if (bikeTours.isNotEmpty()) {
                 findViewById<View>(R.id.direction_card_viewDiagram).visibility = View.VISIBLE
                 findViewById<View>(R.id.direction_card_viewStatistics).visibility = View.VISIBLE
                 bikeToursList = bikeTours
@@ -69,7 +68,6 @@ class BikeTourActivity : AppCompatActivity() {
     }
 
     private fun initStatistics() {
-        //int sum = data.values().stream().reduce(0, Integer::sum);
         var sum = 0
         for (b in bikeToursList!!) {
             sum += b.km.toInt()
@@ -79,7 +77,7 @@ class BikeTourActivity : AppCompatActivity() {
     }
 
     private fun initUIElements() {
-        findViewById<View>(R.id.add_button).setOnClickListener { v: View? ->
+        findViewById<View>(R.id.add_button).setOnClickListener {
             val from = (findViewById<View>(R.id.inputBikeFrom) as EditText).text.toString()
             val to = (findViewById<View>(R.id.inputBikesTo) as EditText).text.toString()
             val km = (findViewById<View>(R.id.editTextNumberDecimal) as EditText).text.toString()
@@ -92,7 +90,7 @@ class BikeTourActivity : AppCompatActivity() {
             (findViewById<View>(R.id.inputBikesTo) as EditText).setText("Zuhause")
             (findViewById<View>(R.id.editTextNumberDecimal) as EditText).setText("20")
         }
-        findViewById<View>(R.id.delete_button).setOnClickListener { v: View? ->
+        findViewById<View>(R.id.delete_button).setOnClickListener {
             bikeViewModel!!.remove(
                 bikeToursList!![bikeToursList!!.size - 1]
             )
@@ -115,8 +113,8 @@ class BikeTourActivity : AppCompatActivity() {
         lineDataSet1.lineWidth = 1f
         lineDataSet1.circleRadius = 2f
         lineDataSet1.circleHoleRadius = 1f
-        lineDataSet1.color = resources.getColor(R.color.primary_green_lighter)
-        lineDataSet1.setCircleColor(resources.getColor(R.color.primary_green_lighter))
+        lineDataSet1.color = ContextCompat.getColor(application,R.color.primary_green_lighter)
+        lineDataSet1.setCircleColor(ContextCompat.getColor(application,R.color.primary_green_lighter))
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
@@ -124,12 +122,11 @@ class BikeTourActivity : AppCompatActivity() {
 
     private fun styleChart(chart: LineChart) {
         chart.setDrawBorders(true)
-        chart.setBorderColor(resources.getColor(R.color.light_grey))
+        chart.setBorderColor(ContextCompat.getColor(application,R.color.light_grey))
         chart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
         chart.description = description // Hide the description
-        // chart.getAxisLeft().setDrawLabels(false);
         chart.axisRight.setDrawLabels(false)
         chart.axisRight.setDrawGridLines(false)
         chart.axisLeft.setDrawGridLines(false)

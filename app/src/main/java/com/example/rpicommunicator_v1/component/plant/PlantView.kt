@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_GRAPH_STRING
@@ -146,8 +147,8 @@ class PlantView : AppCompatActivity() {
         lineDataSet1.lineWidth = 2f
         lineDataSet1.circleRadius = 6f
         lineDataSet1.circleHoleRadius = 3f
-        lineDataSet1.color = resources.getColor(R.color.primary_green_lighter)
-        lineDataSet1.setCircleColor(resources.getColor(R.color.primary_green_lighter))
+        lineDataSet1.color = ContextCompat.getColor(application, R.color.primary_green_lighter)
+        lineDataSet1.setCircleColor(ContextCompat.getColor(application, R.color.primary_green_lighter))
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
@@ -156,34 +157,31 @@ class PlantView : AppCompatActivity() {
     
     private fun styleChart(chart: LineChart) {
         chart.setDrawBorders(true)
-        chart.setBorderColor(resources.getColor(R.color.light_grey))
+        chart.setBorderColor(ContextCompat.getColor(application, R.color.light_grey))
         chart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
         chart.description = description // Hide the description
-        // chart.getAxisLeft().setDrawLabels(false);
         chart.axisRight.setDrawLabels(false)
         chart.axisRight.setDrawGridLines(false)
         chart.axisLeft.setDrawGridLines(false)
         chart.axisLeft.setDrawLabels(false)
         chart.xAxis.setDrawGridLines(false)
         chart.xAxis.setDrawLabels(false)
-        //chart.getYAxis().setDrawGridLines(false);
-        chart.axisLeft.setAxisMinValue(0f)
-        chart.axisRight.setAxisMinValue(0f)
+        chart.axisLeft.axisMinimum=0F
+        chart.axisRight.axisMinimum=0F
         chart.axisLeft.axisMaximum = 500f
         chart.axisRight.axisMaximum = 500f
         chart.legend.isEnabled = false
         chart.xAxis.setDrawAxisLine(false)
         chart.axisLeft.setDrawAxisLine(false)
         chart.axisRight.setDrawAxisLine(false)
-        // chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
         val limitLine = LimitLine(200f) // set where the line should be drawn
-        limitLine.lineColor = resources.getColor(R.color.primary_green_lighter)
+        limitLine.lineColor = ContextCompat.getColor(application,R.color.primary_green_lighter)
         limitLine.lineWidth = 2f
         chart.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
-        limitLine2.lineColor = resources.getColor(R.color.red)
+        limitLine2.lineColor = ContextCompat.getColor(application,R.color.red)
         limitLine2.lineWidth = 2f
         chart.axisLeft.addLimitLine(limitLine2)
         chart.axisLeft.addLimitLine(limitLine)

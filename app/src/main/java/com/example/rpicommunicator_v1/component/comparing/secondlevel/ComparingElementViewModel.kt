@@ -24,7 +24,7 @@ class ComparingElementViewModel(application: Application) : AndroidViewModel(app
 
     fun update(comparingElement: ComparingElement?, paths: Array<String>?) {
         elementRepo.update(comparingElement)
-        pathRepo.addAll(paths)
+        pathRepo.update(paths)
     }
 
     fun delete(comparingElement: ComparingElement?) {
