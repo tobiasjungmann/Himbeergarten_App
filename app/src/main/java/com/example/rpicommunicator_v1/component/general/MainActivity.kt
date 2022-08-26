@@ -16,7 +16,7 @@ import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
-
+import io.grpc.ManagedChannelBuilder
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentOn: Int = 0
@@ -32,6 +32,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
         initIO()
+
+        var mChannel =
+            ManagedChannelBuilder.forAddress("127.0.0.1", 8000).usePlaintext().build();
+        /*Communication
+        blockingStub = RouteGuideGrpc.newBlockingStub(mChannel);
+        asyncStub = RouteGuideGrpc.newStub(mChannel);*/
+
     }
 
     private fun initIO() {

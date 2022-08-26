@@ -8,28 +8,30 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
 
 class PlantOverview : AppCompatActivity() {
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
+    private lateinit var binding: ActivityPlantOverviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPlantOverviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setContentView(R.layout.activity_plant_overview)
         mainActivityViewModel= ViewModelProvider(this)[MainActivityViewModel::class.java]
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.plant_view_recycler)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
+        binding.plantViewRecycler.layoutManager = LinearLayoutManager(this)
+       // binding.plantViewRecycler.setHasFixedSize(true)
 
         val adapter = PlantAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
@@ -37,7 +39,7 @@ class PlantOverview : AppCompatActivity() {
         }
         adapter.setOnItemClickListener(itemOnClick)
 
-        recyclerView.adapter = adapter
+        binding.plantViewRecycler.adapter = adapter
         adapter.setViewModel(mainActivityViewModel)
         mainActivityViewModel.allPlants.observe(
             this

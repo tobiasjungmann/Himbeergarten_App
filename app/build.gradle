@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id("dagger.hilt.android.plugin")
-
+    id 'com.google.protobuf'
 }
 
 android {
@@ -88,7 +88,7 @@ dependencies {
     //Diagram library
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
 
-    implementation "io.grpc:grpc-okhttp:1.43.2"
+  //  implementation "io.grpc:grpc-okhttp:1.43.2"
 
 
     implementation "androidx.camera:camera-camera2:1.1.0"
@@ -99,8 +99,35 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.38.1")
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    // GRPC Libraries
+    implementation 'io.grpc:grpc-okhttp:1.49.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.49.0'
+    implementation 'io.grpc:grpc-stub:1.49.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 }
 kapt {
     correctErrorTypes = true
 }
 
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.1"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.49.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+            }
+            task.plugins {
+                grpc { option 'lite' }
+            }
+        }
+    }
+}
