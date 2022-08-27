@@ -39,8 +39,9 @@ android {
         viewBinding true
     }
     namespace 'com.example.rpicommunicator_v1'
-
-
+    lintOptions {
+        disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation", "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
+    }
 }
 
 
@@ -88,7 +89,7 @@ dependencies {
     //Diagram library
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
 
-  //  implementation "io.grpc:grpc-okhttp:1.43.2"
+    //  implementation "io.grpc:grpc-okhttp:1.43.2"
 
 
     implementation "androidx.camera:camera-camera2:1.1.0"
