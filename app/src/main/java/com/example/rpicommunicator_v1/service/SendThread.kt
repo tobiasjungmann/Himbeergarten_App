@@ -50,13 +50,7 @@ class SendThread
             dout.writeUTF(message)
             dout.flush()
             val str = din.readUTF()
-            //todo use result to check status
 
-           /* if (activity != null) {
-                activity!!.runOnUiThread(Runnable {
-                    activity!!.findViewById(R.id.outlet)
-                })
-            }*/
             Log.i("run", "Reply: $str")
             dout.close()
             din.close()

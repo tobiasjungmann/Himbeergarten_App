@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package smart_home;
+option java_package = "com.example.rpicommunicator_v1";
 service Communicator {
   rpc SayHello(Request) returns (Reply) {}
 }

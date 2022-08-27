@@ -16,13 +16,14 @@ import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
-import io.grpc.ManagedChannelBuilder
+import com.example.rpicommunicator_v1.service.GrpcCommunicatorService
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentOn: Int = 0
     private lateinit var binding: ActivityMainBinding
     private var mainActivityViewModel: MainActivityViewModel? = null
     var communicationInterface: CommunicationInterface? = null
+    var grpcCommunicationInterface: GrpcCommunicatorService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,14 +32,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
+        grpcCommunicationInterface = ViewModelProvider(this)[GrpcCommunicatorService::class.java]
         initIO()
-
-        var mChannel =
-            ManagedChannelBuilder.forAddress("127.0.0.1", 8000).usePlaintext().build();
-        /*Communication
-        blockingStub = RouteGuideGrpc.newBlockingStub(mChannel);
-        asyncStub = RouteGuideGrpc.newStub(mChannel);*/
-
     }
 
     private fun initIO() {
@@ -166,6 +161,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         } else if (v.id == R.id.imagebike) {
+            grpcCommunicationInterface?.helloWorldGrpc()
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
         } else if (v.id == R.id.imageplant) {
