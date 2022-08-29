@@ -3,11 +3,10 @@ package com.example.rpicommunicator_v1.component.comparing.firstlevel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
+import com.example.rpicommunicator_v1.databinding.ListItemTextBinding
 
 class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.ComparingListHolder>() {
 
@@ -15,21 +14,19 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     private lateinit var mListener:  (View, Int, Int)-> Unit
 
 
-    class ComparingListHolder(itemView: View,listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(itemView){
-        val textViewTitle: TextView
-        val textViewSecondary: TextView
-        val textViewDescription: TextView
+    class ComparingListHolder(val binding: ListItemTextBinding, listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(binding.root){
+
         init {
-            textViewTitle = itemView.findViewById(R.id.title)
+           /* textViewTitle = itemView.findViewById(R.id.title)
             textViewSecondary = itemView.findViewById(R.id.textView)
-            textViewDescription = itemView.findViewById(R.id.textView2)
+            textViewDescription = itemView.findViewById(R.id.textView2)*/
             itemView.setOnClickListener { listener.invoke(it, bindingAdapterPosition, itemViewType)}
         }
     }
 
     fun setComparingList(comparingList: List<ComparingList>) {
         this.comparingList = comparingList
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0,comparingList.size)
     }
 
 
@@ -49,16 +46,15 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComparingListHolder {
-        val itemView: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_text, parent, false)
-        return ComparingListHolder(itemView,mListener)
+        val binding = ListItemTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ComparingListHolder(binding,mListener)
     }
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
         val currentList: ComparingList = comparingList[position]
-        holder.textViewTitle.text = " " + currentList.title
-        holder.textViewSecondary.visibility=View.GONE
-        holder.textViewDescription.visibility=View.GONE
+        holder.binding.title.text = " " + currentList.title
+        holder.binding.upperInfo.visibility=View.GONE
+        holder.binding.lowerInfo.visibility=View.GONE
     }
 
 

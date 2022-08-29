@@ -4,16 +4,13 @@ package com.example.rpicommunicator_v1.component.bike
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.database.bike.BikeTour
-import com.github.mikephil.charting.charts.LineChart
+import com.example.rpicommunicator_v1.databinding.ActivityBikeBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,25 +20,27 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class BikeTourActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityBikeBinding
     private var bikeViewModel: BikeTourViewModel? = null
 
     private var bikeToursList: List<BikeTour>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bike)
+        binding = ActivityBikeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         bikeViewModel = ViewModelProvider(this)[BikeTourViewModel::class.java]
 
         initUIElements()
         bikeViewModel!!.allBikeTours.observe(this) { bikeTours ->
             if (bikeTours.isNotEmpty()) {
-                findViewById<View>(R.id.direction_card_viewDiagram).visibility = View.VISIBLE
-                findViewById<View>(R.id.direction_card_viewStatistics).visibility = View.VISIBLE
+                binding.directionCardViewDiagram.visibility = View.VISIBLE
+                binding.directionCardViewStatistics.visibility = View.VISIBLE
                 bikeToursList = bikeTours
                 initChart(bikeTours)
                 initStatistics()
             } else {
-                findViewById<View>(R.id.direction_card_viewDiagram).visibility = View.GONE
-                findViewById<View>(R.id.direction_card_viewStatistics).visibility = View.GONE
+                binding.directionCardViewDiagram.visibility = View.GONE
+                binding.directionCardViewStatistics.visibility = View.GONE
             }
         }
 
@@ -50,13 +49,13 @@ class BikeTourActivity : AppCompatActivity() {
 
 
     private fun initRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.bike_tour_recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
+
+        binding.bikeTourRecyclerview.layoutManager = LinearLayoutManager(this)
+        binding.bikeTourRecyclerview.setHasFixedSize(true)
 
         val adapter = BikeAdapter()
 
-        recyclerView.adapter = adapter
+        binding.bikeTourRecyclerview.adapter = adapter
         adapter.setViewModel(bikeViewModel)
         bikeViewModel?.allBikeTours?.observe(
             this
@@ -72,25 +71,22 @@ class BikeTourActivity : AppCompatActivity() {
         for (b in bikeToursList!!) {
             sum += b.km.toInt()
         }
-        (findViewById<View>(R.id.sumOfAllToursTextView) as TextView).text =
+        binding.sumOfAllToursTextView.text =
             "$sum km von 2500km"
     }
 
     private fun initUIElements() {
-        findViewById<View>(R.id.add_button).setOnClickListener {
-            val from = (findViewById<View>(R.id.inputBikeFrom) as EditText).text.toString()
-            val to = (findViewById<View>(R.id.inputBikesTo) as EditText).text.toString()
-            val km = (findViewById<View>(R.id.editTextNumberDecimal) as EditText).text.toString()
+        binding.addButton.setOnClickListener {
+            val from = binding.inputBikeFrom.text.toString()
+            val to = binding.inputBikesTo.text.toString()
+            val km = binding.editTextNumberDecimal.text.toString()
                 .toDouble()
             val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
             val time = formatter.format(Date())
             Log.d("TAG", "initUIElements: $time")
             bikeViewModel!!.insert(BikeTour(from, to, km, time))
-            (findViewById<View>(R.id.inputBikeFrom) as EditText).setText("Unity Beta")
-            (findViewById<View>(R.id.inputBikesTo) as EditText).setText("Zuhause")
-            (findViewById<View>(R.id.editTextNumberDecimal) as EditText).setText("20")
         }
-        findViewById<View>(R.id.delete_button).setOnClickListener {
+       binding.deleteButton.setOnClickListener {
             bikeViewModel!!.remove(
                 bikeToursList!![bikeToursList!!.size - 1]
             )
@@ -98,15 +94,15 @@ class BikeTourActivity : AppCompatActivity() {
     }
 
     private fun initChart(bikeTours: List<BikeTour>) {
-        val chart = findViewById<LineChart>(R.id.chart)
+
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet1 = LineDataSet(getDataSet(bikeTours), "Data 1")
         styleDataset(lineDataSet1)
-        styleChart(chart)
+        styleChart()
         dataSets.add(lineDataSet1)
         val data = LineData(dataSets)
-        chart.data = data
-        chart.invalidate()
+        binding.chart.data = data
+        binding.chart.invalidate()
     }
 
     private fun styleDataset(lineDataSet1: LineDataSet) {
@@ -120,27 +116,27 @@ class BikeTourActivity : AppCompatActivity() {
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
     }
 
-    private fun styleChart(chart: LineChart) {
-        chart.setDrawBorders(true)
-        chart.setBorderColor(ContextCompat.getColor(application,R.color.light_grey))
-        chart.setDrawGridBackground(false)
+    private fun styleChart() {
+        binding.chart.setDrawBorders(true)
+        binding.chart.setBorderColor(ContextCompat.getColor(application,R.color.light_grey))
+        binding.chart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
-        chart.description = description // Hide the description
-        chart.axisRight.setDrawLabels(false)
-        chart.axisRight.setDrawGridLines(false)
-        chart.axisLeft.setDrawGridLines(false)
-        chart.axisLeft.setDrawLabels(false)
-        chart.xAxis.setDrawGridLines(false)
-        chart.xAxis.setDrawLabels(false)
-        chart.axisLeft.axisMaximum = 2500f
-        chart.axisRight.axisMaximum = 2500f
-        chart.xAxis.axisMaximum = 366f
-        chart.legend.isEnabled = false
-        chart.xAxis.setDrawAxisLine(false)
-        chart.axisLeft.setDrawAxisLine(false)
-        chart.axisRight.setDrawAxisLine(false)
-        // chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
+        binding.chart.description = description // Hide the description
+        binding.chart.axisRight.setDrawLabels(false)
+        binding.chart.axisRight.setDrawGridLines(false)
+        binding.chart.axisLeft.setDrawGridLines(false)
+        binding.chart.axisLeft.setDrawLabels(false)
+        binding.chart.xAxis.setDrawGridLines(false)
+        binding.chart.xAxis.setDrawLabels(false)
+      //  binding.chart.axisLeft.axisMaximum = 2500f    // todo togle with button
+      //  binding.chart.axisRight.axisMaximum = 2500f
+      //  binding.chart.xAxis.axisMaximum = 366f
+        binding.chart.legend.isEnabled = false
+        binding.chart.xAxis.setDrawAxisLine(false)
+        binding.chart.axisLeft.setDrawAxisLine(false)
+        binding.chart.axisRight.setDrawAxisLine(false)
+        // binding.chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
     }
 
     private fun getDataSet(graphlist: List<BikeTour>): ArrayList<Entry> {

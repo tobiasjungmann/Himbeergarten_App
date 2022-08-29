@@ -3,14 +3,11 @@ package com.example.rpicommunicator_v1.component.comparing.secondlevel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
-
+import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 
 
 class ComparingElementAdapter internal constructor(
@@ -21,25 +18,23 @@ class ComparingElementAdapter internal constructor(
     private var comparingElementList: List<ComparingElement> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListHolder {
-        val itemView: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
-
-        return ListHolder(itemView)
+        val binding = ListItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
         val currentList = comparingElementList[position]
-        holder.textViewTitle.text = currentList.title
-        holder.textViewPriority.text = currentList.rating.toString()
-        holder.textViewDescription.text = currentList.description
+        holder.binding.title.text = currentList.title
+        holder.binding.upperInfo.text = currentList.rating.toString()
+        holder.binding.lowerInfo.text = currentList.description
 
         val helper = comparingElementViewModel.getAllPathsToElement(currentList.comparingElementId)
 
         if (helper.isNotEmpty()) {
-            holder.listThumbnailImageView.visibility=View.VISIBLE
-                holder.listThumbnailImageView.setImageBitmap(helper[0].loadThumbnail( thumbnailSize))
+            holder.binding.listThumbnailImageView.visibility=View.VISIBLE
+                holder.binding.listThumbnailImageView.setImageBitmap(helper[0].loadThumbnail( thumbnailSize))
         }else{
-            holder.listThumbnailImageView.visibility=View.GONE
+            holder.binding.listThumbnailImageView.visibility=View.GONE
         }
     }
 
@@ -47,17 +42,8 @@ class ComparingElementAdapter internal constructor(
         return comparingElementList[position]
     }
 
-    inner class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textViewTitle: TextView
-        val textViewDescription: TextView
-        val textViewPriority: TextView
-        val listThumbnailImageView: ImageView
-
+    inner class ListHolder(val binding: ListItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            textViewTitle = itemView.findViewById(R.id.title)
-            textViewDescription = itemView.findViewById(R.id.textView)
-            textViewPriority = itemView.findViewById(R.id.textView2)
-            listThumbnailImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
             itemView.setOnClickListener { listener?.invoke(it, bindingAdapterPosition, itemViewType) }
         }
     }

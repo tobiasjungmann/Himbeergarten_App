@@ -53,14 +53,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imagelistactivity.setOnClickListener(this)
         binding.buttonSettingsActivity.setOnClickListener(this)
 
-
         binding.imagequit.setOnClickListener(this)
         binding.imagestandby.setOnClickListener(this)
         binding.imagearduino1.setOnClickListener(this)
         binding.imagearduino2.setOnClickListener(this)
 
-        val sk = findViewById<SeekBar>(R.id.seekBar)
-        sk.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             private var currentProgress = 0
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 Log.d("seekbar", "onStopTrackingTouch")
@@ -168,7 +166,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
         } else if (v.id == R.id.imagelistactivity) {
-            Log.i("buttonClick", "List activity was clicked was clicked. Not yet implemented")
+            Log.i("buttonClick", "List activity was clicked was clicked.")
             changeToCompareList()
         } else if (v.id == R.id.button_settingsActivity) {
             Log.i("buttonClick", "Setting activity was clicked")

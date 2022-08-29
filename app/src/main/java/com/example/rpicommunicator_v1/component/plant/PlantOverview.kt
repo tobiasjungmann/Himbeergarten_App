@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.AddElementActivity
@@ -64,15 +63,14 @@ class PlantOverview : AppCompatActivity() {
 
 
     private fun initSwipeToRefresh() {
-        val swipeContainer = findViewById<View>(R.id.swipeContainer) as SwipeRefreshLayout
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener {
+        binding.swipeContainer.setOnRefreshListener {
             mainActivityViewModel.reloadFromFirestore()
-            swipeContainer.isRefreshing = false
+            binding.swipeContainer.isRefreshing = false
         }
 
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(
+        binding.swipeContainer.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,

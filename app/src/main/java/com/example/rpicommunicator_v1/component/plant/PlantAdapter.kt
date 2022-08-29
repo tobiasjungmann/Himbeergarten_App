@@ -4,19 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 
 class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     private var plants: List<Plant> = ArrayList()
-    private lateinit var clickListener:  (View, Int, Int)-> Unit
+    private lateinit var clickListener: (View, Int, Int) -> Unit
     private var mainActivityViewModel: MainActivityViewModel? = null
 
 
@@ -24,34 +22,31 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         this.mainActivityViewModel = mainActivityViewModel
     }
 
-    interface OnItemLongClickListener
-
     fun setOnItemClickListener(listener: (View, Int, Int) -> Unit) {
         clickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantHolder {
-        val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_image, parent, false)
-        return PlantHolder(v, clickListener)
+        val binding = ListItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PlantHolder(clickListener,binding)
     }
 
     override fun onBindViewHolder(holder: PlantHolder, position: Int) {
         val currentItem = plants[position]
 
         if (currentItem.imageID != -1) {
-            holder.mImageView.setImageResource(currentItem.iconID)
+            holder.binding.listThumbnailImageView.setImageResource(currentItem.iconID)
             val alpha = 1.toFloat()
-            holder.mImageView.alpha = alpha
+            holder.binding.listThumbnailImageView.alpha = alpha
         } else {
-            holder.mImageView.setImageResource(R.drawable.icon_plant)
+            holder.binding.listThumbnailImageView.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
-            holder.mImageView.alpha = alpha
+            holder.binding.listThumbnailImageView.alpha = alpha
         }
-        holder.mTextView1.text = currentItem.name
-        holder.mTextView2.text = currentItem.info
-        holder.datumView.text = currentItem.watered
-        holder.buttonDelete.setOnClickListener { v ->
+        holder.binding.title.text = currentItem.name
+        holder.binding.upperInfo.text = currentItem.info
+        holder.binding.lowerInfo.text = currentItem.watered
+        holder.binding.deleteButton.setOnClickListener { v ->
             v.visibility = View.GONE
             mainActivityViewModel!!.remove(plants[position])
         }
@@ -63,39 +58,33 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     fun setPlants(plants: List<Plant>) {
         this.plants = plants
-        notifyItemRangeInserted(0,plants.size)
+        //notifyItemRangeInserted(0, plants.size)
+        notifyDataSetChanged()
     }
 
     class PlantHolder(
-        itemView: View,
-        listener: (View, Int, Int) -> Unit
-    ) : RecyclerView.ViewHolder(itemView) {
-        var mImageView: ImageView
-        var mTextView1: TextView
-        var mTextView2: TextView
-        var datumView: TextView
-        var buttonDelete: Button
-
+        listener: (View, Int, Int) -> Unit,
+        val binding: ListItemImageBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            mImageView = itemView.findViewById(R.id.list_thumbnail_image_view)
-            mTextView1 = itemView.findViewById(R.id.title)
-            mTextView2 = itemView.findViewById(R.id.textView)
-            datumView = itemView.findViewById(R.id.textView2)
-            buttonDelete = itemView.findViewById(R.id.delete_button)
-            itemView.setOnClickListener { listener.invoke(it, bindingAdapterPosition, itemViewType)}
+            itemView.setOnClickListener {
+                listener.invoke(
+                    it,
+                    bindingAdapterPosition,
+                    itemViewType
+                )
+            }
 
             itemView.setOnLongClickListener(OnLongClickListener {
-
-                    val position = bindingAdapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        if (buttonDelete.visibility == View.GONE) {
-                            buttonDelete.visibility = View.VISIBLE
-                        } else {
-                            buttonDelete.visibility = View.GONE
-                        }
-                        return@OnLongClickListener true
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    if (binding.deleteButton.visibility == View.GONE) {
+                        binding.deleteButton.visibility = View.VISIBLE
+                    } else {
+                        binding.deleteButton.visibility = View.GONE
                     }
-
+                    return@OnLongClickListener true
+                }
                 false
             })
         }

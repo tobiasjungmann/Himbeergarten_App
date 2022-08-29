@@ -4,7 +4,6 @@ package com.example.rpicommunicator_v1.component.plant
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +20,6 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_WATERED
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantViewBinding
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.Entry
@@ -64,10 +62,10 @@ class PlantView : AppCompatActivity() {
             val alpha = 0.1.toFloat()
             binding.headerImage.alpha = alpha
         }
-        (findViewById<View>(R.id.plantNameTextView) as TextView).text = plant!!.name
-        (findViewById<View>(R.id.humidityTextView) as TextView).text = plant!!.humidity
-        (findViewById<View>(R.id.wateredTextView) as TextView).text = plant!!.watered
-        (findViewById<View>(R.id.infoTextView) as TextView).text = plant!!.info
+        binding.plantNameTextView.text = plant!!.name
+        binding.humidityTextView.text = plant!!.humidity
+        binding.wateredTextView.text = plant!!.watered
+        binding.infoTextView.text = plant!!.info
         if (needsWater) {
             binding.willBeWatered.visibility = View.VISIBLE
             binding.waterButton.setText(R.string.doNotWater)
@@ -132,15 +130,14 @@ class PlantView : AppCompatActivity() {
     }
 
     private fun initChart(graphString: String) {
-        val chart = findViewById<LineChart>(R.id.chart)
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet1 = LineDataSet(getDataSet(graphString), "Data 1")
         styleDataset(lineDataSet1)
-        styleChart(chart)
+        styleChart()
         dataSets.add(lineDataSet1)
         val data = LineData(dataSets)
-        chart.data = data
-        chart.invalidate()
+        binding.chart.data = data
+        binding.chart.invalidate()
     }
 
     private fun styleDataset(lineDataSet1: LineDataSet) {
@@ -155,36 +152,36 @@ class PlantView : AppCompatActivity() {
     }
 
     
-    private fun styleChart(chart: LineChart) {
-        chart.setDrawBorders(true)
-        chart.setBorderColor(ContextCompat.getColor(application, R.color.light_grey))
-        chart.setDrawGridBackground(false)
+    private fun styleChart() {
+        binding.chart.setDrawBorders(true)
+        binding.chart.setBorderColor(ContextCompat.getColor(application, R.color.light_grey))
+        binding.chart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
-        chart.description = description // Hide the description
-        chart.axisRight.setDrawLabels(false)
-        chart.axisRight.setDrawGridLines(false)
-        chart.axisLeft.setDrawGridLines(false)
-        chart.axisLeft.setDrawLabels(false)
-        chart.xAxis.setDrawGridLines(false)
-        chart.xAxis.setDrawLabels(false)
-        chart.axisLeft.axisMinimum=0F
-        chart.axisRight.axisMinimum=0F
-        chart.axisLeft.axisMaximum = 500f
-        chart.axisRight.axisMaximum = 500f
-        chart.legend.isEnabled = false
-        chart.xAxis.setDrawAxisLine(false)
-        chart.axisLeft.setDrawAxisLine(false)
-        chart.axisRight.setDrawAxisLine(false)
+        binding.chart.description = description // Hide the description
+        binding.chart.axisRight.setDrawLabels(false)
+        binding.chart.axisRight.setDrawGridLines(false)
+        binding.chart.axisLeft.setDrawGridLines(false)
+        binding.chart.axisLeft.setDrawLabels(false)
+        binding.chart.xAxis.setDrawGridLines(false)
+        binding.chart.xAxis.setDrawLabels(false)
+        binding.chart.axisLeft.axisMinimum=0F
+        binding.chart.axisRight.axisMinimum=0F
+        binding.chart.axisLeft.axisMaximum = 500f
+        binding.chart.axisRight.axisMaximum = 500f
+        binding.chart.legend.isEnabled = false
+        binding.chart.xAxis.setDrawAxisLine(false)
+        binding.chart.axisLeft.setDrawAxisLine(false)
+        binding.chart.axisRight.setDrawAxisLine(false)
         val limitLine = LimitLine(200f) // set where the line should be drawn
         limitLine.lineColor = ContextCompat.getColor(application,R.color.primary_green_lighter)
         limitLine.lineWidth = 2f
-        chart.axisLeft.addLimitLine(limitLine)
+        binding.chart.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
         limitLine2.lineColor = ContextCompat.getColor(application,R.color.red)
         limitLine2.lineWidth = 2f
-        chart.axisLeft.addLimitLine(limitLine2)
-        chart.axisLeft.addLimitLine(limitLine)
+        binding.chart.axisLeft.addLimitLine(limitLine2)
+        binding.chart.axisLeft.addLimitLine(limitLine)
     }
 
     private fun getDataSet(graphString: String): ArrayList<Entry> {

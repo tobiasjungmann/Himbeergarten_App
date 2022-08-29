@@ -59,7 +59,7 @@
                     app:autoSizeTextType="uniform" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/upper_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
@@ -70,10 +70,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/lower_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView"
+                    android:layout_below="@+id/upper_info"
                     android:maxLines="2"
                     android:text=""
                     android:textColor="@color/light_grey"
