@@ -45,7 +45,7 @@ class ComparingElementActivity : AppCompatActivity() {
         }
 
         binding.buttonAddElement.setOnClickListener {
-            val nextIntent = Intent(this, AddComparingElementActivity::class.java)
+            val nextIntent = Intent(this, AddElementActivity::class.java)
             nextIntent.putExtra(MODE, ADD_NOTE_REQUEST)
             resultLauncher.launch(nextIntent)
         }
@@ -59,7 +59,7 @@ class ComparingElementActivity : AppCompatActivity() {
         val adapter = ComparingElementAdapter(thumbnailSize)
 
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-            val nextIntent = Intent(this, AddComparingElementActivity::class.java)
+            val nextIntent = Intent(this, AddElementActivity::class.java)
             nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
             nextIntent.putExtra(EXTRA_ID, adapter.getElementAt(position).comparingElementId)
             nextIntent.putExtra(EXTRA_TITLE, adapter.getElementAt(position).title)

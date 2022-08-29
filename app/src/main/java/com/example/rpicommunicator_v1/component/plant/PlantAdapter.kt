@@ -17,7 +17,6 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     private var plants: List<Plant> = ArrayList()
     private lateinit var clickListener:  (View, Int, Int)-> Unit
-    private var longClickListener: OnItemLongClickListener? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
 
 
@@ -64,7 +63,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     fun setPlants(plants: List<Plant>) {
         this.plants = plants
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0,plants.size)
     }
 
     class PlantHolder(

@@ -25,7 +25,7 @@ import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
 import com.example.rpicommunicator_v1.databinding.ActivityAddNoteBinding
 import java.io.File
 
-class AddComparingElementActivity : AppCompatActivity(), CameraContract.View {
+class AddElementActivity : AppCompatActivity(), CameraContract.View {
     private var mode: String? = null
 
     private var presenter: CameraContract.Presenter = CameraPresenter(this)

@@ -28,7 +28,7 @@
             android:name=".component.comparing.firstlevel.AddComparingListActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.secondlevel.AddComparingElementActivity"
+            android:name=".component.comparing.secondlevel.AddElementActivity"
             android:exported="false" />
         <activity
             android:name=".component.plant.PlantOverview"
