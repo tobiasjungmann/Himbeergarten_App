@@ -37,8 +37,8 @@ class ComparingListActivity : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
 
-        binding.comparingListRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.comparingListRecyclerView.setHasFixedSize(true)
+
+       // binding.comparingListRecyclerView.setHasFixedSize(true)
 
         val adapter = ComparingListAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
@@ -55,6 +55,7 @@ class ComparingListActivity : AppCompatActivity() {
         ) { lists -> //update RecyclerView
             adapter.setComparingList(lists as List<ComparingList>)
         }
+        binding.comparingListRecyclerView.layoutManager = LinearLayoutManager(this)
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,

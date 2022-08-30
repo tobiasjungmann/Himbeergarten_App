@@ -52,9 +52,6 @@ class ComparingElementActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        binding.comparingElementRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.comparingElementRecyclerView.setHasFixedSize(true)
-
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size_list).toInt()
         val adapter = ComparingElementAdapter(thumbnailSize)
 
@@ -77,6 +74,8 @@ class ComparingElementActivity : AppCompatActivity() {
         ) { elements ->
             adapter.setElementList(elements as List<ComparingElement>, comparingElementViewModel!!)
         }
+        binding.comparingElementRecyclerView.layoutManager = LinearLayoutManager(this)
+
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT

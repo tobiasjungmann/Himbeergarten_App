@@ -58,7 +58,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     fun setPlants(plants: List<Plant>) {
         this.plants = plants
-        //notifyItemRangeInserted(0, plants.size)
+       // notifyItemRangeInserted(0, plants.size)
         notifyDataSetChanged()
     }
 

@@ -28,6 +28,7 @@ class PlantOverview : AppCompatActivity() {
         setContentView(binding.root)
         setContentView(R.layout.activity_plant_overview)
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+
         initRecyclerView()
         binding.buttonAddElement.setOnClickListener {
             Log.i("buttonClick", "add element was clicked")
@@ -39,26 +40,21 @@ class PlantOverview : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        binding.plantViewRecycler.layoutManager = LinearLayoutManager(this)
-        // binding.plantViewRecycler.setHasFixedSize(true)
-
         val adapter = PlantAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             openPlantView(position)
         }
         adapter.setOnItemClickListener(itemOnClick)
-
-        binding.plantViewRecycler.adapter = adapter
         adapter.setViewModel(mainActivityViewModel)
+
         mainActivityViewModel.allPlants.observe(
             this
         ) { plants: List<Plant> ->
-            adapter.setPlants(
-                plants
-            );
+            adapter.setPlants(plants)
         }
-
         initSwipeToRefresh()
+        binding.plantViewRecycler.adapter = adapter
+        binding.plantViewRecycler.layoutManager = LinearLayoutManager(this)
     }
 
 

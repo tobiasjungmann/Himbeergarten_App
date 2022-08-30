@@ -3,7 +3,6 @@ package com.example.rpicommunicator_v1.component.comparing.secondlevel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
 import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
@@ -53,7 +52,7 @@ class ComparingElementAdapter internal constructor(
         this.listener = listener
     }
 
-    companion object {
+  /*  companion object {
         private val DIFF_CALLBACK: DiffUtil.ItemCallback<ComparingElement> =
             object : DiffUtil.ItemCallback<ComparingElement>() {
                 override fun areItemsTheSame(
@@ -70,7 +69,7 @@ class ComparingElementAdapter internal constructor(
                     return oldItem.title == newItem.title && oldItem.description == newItem.description && oldItem.rating == newItem.rating
                 }
             }
-    }
+    }*/
 
     override fun getItemCount(): Int {
         return comparingElementList.size

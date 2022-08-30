@@ -1,5 +1,6 @@
 package com.example.rpicommunicator_v1.component.comparing.firstlevel
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComparingListHolder {
+        Log.d("fdsa", "onCreateViewHolder: Called")
         val binding = ListItemTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ComparingListHolder(binding,mListener)
     }

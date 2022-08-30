@@ -3,13 +3,13 @@ package com.example.rpicommunicator_v1.component.general
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.database.plant.PlantRepository
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
-
+// todo possibly not needed in main anymore - rename
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
     private var outlet1 = false
