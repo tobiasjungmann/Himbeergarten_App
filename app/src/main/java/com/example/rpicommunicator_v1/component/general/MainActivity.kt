@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
@@ -16,14 +17,13 @@ import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
-import com.example.rpicommunicator_v1.service.GrpcCommunicatorService
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentOn: Int = 0
     private lateinit var binding: ActivityMainBinding
     private var mainActivityViewModel: MainActivityViewModel? = null
     var communicationInterface: CommunicationInterface? = null
-    var grpcCommunicationInterface: GrpcCommunicatorService? = null
+    private var outlets = ArrayList<LinearLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
-        grpcCommunicationInterface = ViewModelProvider(this)[GrpcCommunicatorService::class.java]
+
         initIO()
     }
 
@@ -44,9 +44,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imagespotify.setOnClickListener(this)
         binding.imageweather.setOnClickListener(this)
 
-        binding.imageoutlet1.setOnClickListener(this)
-        binding.imageoutlet2.setOnClickListener(this)
-        binding.imageoutlet3.setOnClickListener(this)
+        outlets.add(binding.imageoutlet0)
+        outlets.add(binding.imageoutlet1)
+        outlets.add(binding.imageoutlet2)
+        outlets.forEach{it.setOnClickListener(this)}
+
 
         binding.imagebike.setOnClickListener(this)
         binding.imageplant.setOnClickListener(this)
@@ -102,64 +104,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imagearduino2) {
             Log.i("buttonClick", "Arduino 2 was clicked")
             communicationInterface!!.sendText("arduino2")
+        } else if (v.id == R.id.imageoutlet0) {
+            processOutletClick(0)
         } else if (v.id == R.id.imageoutlet1) {
-            Log.i("buttonClick", "Outlet 1 was clicked")
-            communicationInterface!!.sendText("outlet1")
-            if (mainActivityViewModel!!.toggleOutlet1()) {
-                binding.imageoutlet1.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.primary_green_transparent
-                    )
-                )
-            } else {
-                binding.imageoutlet1.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.transparent
-                    )
-                )
-            }
+            processOutletClick(1)
         } else if (v.id == R.id.imageoutlet2) {
-            Log.i("buttonClick", "Outlet 2 was clicked")
-            communicationInterface!!.sendText("outlet2")
-            if (mainActivityViewModel!!.toggleOutlet2()) {
-                binding.imageoutlet2.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.primary_green_transparent
-                    )
-                )
-            } else {
-                binding.imageoutlet2.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.transparent
-                    )
-                )
-            }
-        } else if (v.id == R.id.imageoutlet3) {
-            Log.i("buttonClick", "Outlet 3 was clicked")
-            communicationInterface!!.sendText("outlet3")
-
-            if (mainActivityViewModel!!.toggleOutlet3()) {
-                binding.imageoutlet3.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.primary_green_transparent
-                    )
-                )
-            } else {
-                binding.imageoutlet3.background.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.transparent
-                    )
-                )
-            }
-
+            processOutletClick(2)
         } else if (v.id == R.id.imagebike) {
-            grpcCommunicationInterface?.helloWorldGrpc()
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
         } else if (v.id == R.id.imageplant) {
@@ -188,6 +139,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.layoutmatrixmoreoptions.visibility = View.GONE
                 binding.textViewMorematrixOptions.text = "More Options"
             }
+        }
+    }
+
+    private fun processOutletClick(outletId: Int) {
+        Log.i("buttonClick", "Outlet " + outletId + " was clicked")
+        if (mainActivityViewModel!!.outletClicked(outletId)) {
+            outlets[outletId].background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.primary_green_transparent
+                )
+            )
+        } else {
+            outlets[outletId].background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.transparent
+                )
+            )
         }
     }
 

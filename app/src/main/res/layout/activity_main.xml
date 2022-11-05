@@ -421,14 +421,14 @@
                     android:paddingBottom="8dp">
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet1"
+                        android:id="@+id/imageoutlet0"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
                         android:orientation="horizontal"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageoutlet2"
+                        app:layout_constraintEnd_toStartOf="@+id/imageoutlet1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent="0.3">
@@ -442,7 +442,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet2"
+                        android:id="@+id/imageoutlet1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
@@ -464,7 +464,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet3"
+                        android:id="@+id/imageoutlet2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
@@ -472,7 +472,7 @@
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageoutlet2"
+                        app:layout_constraintStart_toEndOf="@+id/imageoutlet1"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent="0.3">
 
