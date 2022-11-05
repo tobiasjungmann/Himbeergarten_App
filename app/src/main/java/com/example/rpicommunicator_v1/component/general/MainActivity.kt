@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         } else if (v.id == R.id.imagebike) {
-        //    grpcCommunicationInterface?.helloWorldGrpc()
+            grpcCommunicationInterface?.helloWorldGrpc()
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
         } else if (v.id == R.id.imageplant) {
