@@ -15,4 +15,8 @@ class GrpcCommunicatorService(private var blockingStub: CommunicatorGrpc.Communi
         Log.d("testing", "helloWorldGrpc: "+response.on)
         return response.on
     }
+
+    fun getStatus(): Communication.StatusReply {
+        return blockingStub.getStatus(Communication.EmptyMsg.newBuilder().build())
+    }
 }

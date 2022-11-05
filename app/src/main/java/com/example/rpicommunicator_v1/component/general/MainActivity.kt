@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
-
+        mainActivityViewModel!!.loadStatus();
         initIO()
+        communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
     }
 
     private fun initIO() {
@@ -47,8 +47,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outlets.add(binding.imageoutlet0)
         outlets.add(binding.imageoutlet1)
         outlets.add(binding.imageoutlet2)
-        outlets.forEach{it.setOnClickListener(this)}
-
+        outlets.forEach{
+            it.setOnClickListener(this)
+            adaptUIOutlet(outlets.indexOf(it))
+        }
 
         binding.imagebike.setOnClickListener(this)
         binding.imageplant.setOnClickListener(this)
@@ -144,7 +146,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun processOutletClick(outletId: Int) {
         Log.i("buttonClick", "Outlet " + outletId + " was clicked")
-        if (mainActivityViewModel!!.outletClicked(outletId)) {
+        mainActivityViewModel!!.outletClicked(outletId)
+        adaptUIOutlet(outletId)
+    }
+
+    private fun adaptUIOutlet(outletId: Int) {
+        if (mainActivityViewModel!!.getOutletState(outletId)) {
             outlets[outletId].background.setTint(
                 ContextCompat.getColor(
                     this,

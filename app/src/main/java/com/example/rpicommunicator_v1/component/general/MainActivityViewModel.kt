@@ -43,7 +43,18 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     // Start GRPC Implementation
     fun outletClicked(outletId: Int):Boolean {
-        outlets[outletId]=grpcCommunicationInterface.setOutletState(1,!outlets[outletId])
+        outlets[outletId]=grpcCommunicationInterface.setOutletState(outletId,!outlets[outletId])
+        return outlets[outletId]
+    }
+
+    fun loadStatus() {
+        val status=grpcCommunicationInterface.getStatus()
+        for (i in 0..outlets.size-1){
+            outlets[i]=status.getOutlets(i)
+        }
+    }
+
+    fun getOutletState(outletId: Int): Boolean {
         return outlets[outletId]
     }
 
@@ -54,5 +65,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             ManagedChannelBuilder.forAddress(Constants.IP, 8010).usePlaintext().build()
         grpcCommunicationInterface =
             GrpcCommunicatorService(CommunicatorGrpc.newBlockingStub(mChannel))
+
     }
 }
