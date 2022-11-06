@@ -13,45 +13,34 @@ import io.grpc.ManagedChannelBuilder
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    private var outlets = booleanArrayOf(false, false, false)
+
     private var grpcCommunicationInterface: GrpcCommunicatorService
 
-    //val items = MutableLiveData<List<Boolean>>()
-    private val _score = MutableLiveData(0)
-    val score: LiveData<Int> get() = _score
-    var test=0;
+    private val _outletStatus = MutableLiveData(listOf(false, false, false))
+    val outletStatus: LiveData<List<Boolean>> get() = _outletStatus
 
-    // Start GRPC Implementation
-    fun outletClicked(outletId: Int): Boolean {
-        outlets[outletId] = grpcCommunicationInterface.setOutletState(outletId, !outlets[outletId])
-        return outlets[outletId]
+    fun outletClicked(outletId: Int) {
+        Log.i("TAG", "outletClicked: reached")
+        outletStatus.value?.let {
+            grpcCommunicationInterface.setOutletState(outletId, !it[outletId], this)
+        }
     }
 
     fun loadStatus() {
-
-        val status = grpcCommunicationInterface.getStatus(_score, this)
-        /*for (i in 0..outlets.size - 1) {
-            outlets[i] = status.getOutlets(i)
-        }*/
+        grpcCommunicationInterface.getStatus(this)
     }
 
-    fun getOutletState(outletId: Int): Boolean {
-        return outlets[outletId]
-    }
 
     fun matrixChangeMode(matrixMode: Communication.MatrixState) {
         Log.i("buttonClick", "matrix mode change request to: " + matrixMode.name)
         grpcCommunicationInterface.matrixChangeMode(matrixMode)
     }
 
-    fun setScoreValue(i: Int) {
-        _score.postValue(i)
-        test=12
+    fun setOutletList(list: List<Boolean>) {
+        _outletStatus.postValue(list)
     }
 
-
     init {
-        //    items.value.put;
         val mChannel =
             ManagedChannelBuilder.forAddress(Constants.IP, 8010).usePlaintext().build()
         grpcCommunicationInterface =

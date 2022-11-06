@@ -32,10 +32,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        mainActivityViewModel!!.score.observe(this,
-            { res ->
-                binding.textViewMoreMatrixOptions.text = "Item change observer: " + res
-            })
+        mainActivityViewModel!!.outletStatus.observe(this
+        ) { res ->
+            for (i in 0 until outlets.size) {
+                adaptUIOutlet(i, res[i])
+            }
+        }
 
         mainActivityViewModel!!.loadStatus();
         initIO()
@@ -56,7 +58,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outlets.add(binding.imageoutlet2)
         outlets.forEach {
             it.setOnClickListener(this)
-            adaptUIOutlet(outlets.indexOf(it))
         }
 
         binding.imagebike.setOnClickListener(this)
@@ -114,15 +115,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "Arduino 2 was clicked")
             communicationInterface!!.sendText("arduino2")
         } else if (v.id == R.id.imageoutlet0) {
-            processOutletClick(0)
+            mainActivityViewModel!!.outletClicked(0)
         } else if (v.id == R.id.imageoutlet1) {
-            processOutletClick(1)
+            mainActivityViewModel!!.outletClicked(1)
         } else if (v.id == R.id.imageoutlet2) {
-            processOutletClick(2)
+            mainActivityViewModel!!.outletClicked(2)
         } else if (v.id == R.id.imagebike) {
             Log.i("buttonClick", "bike activity was clicked")
-            mainActivityViewModel!!.setScoreValue(1000)
-            // todochangeToBike()
+            changeToBike()
         } else if (v.id == R.id.imageplant) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
@@ -148,14 +148,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun processOutletClick(outletId: Int) {
-        Log.i("buttonClick", "Outlet " + outletId + " was clicked")
-        mainActivityViewModel!!.outletClicked(outletId)
-        adaptUIOutlet(outletId)
-    }
-
-    private fun adaptUIOutlet(outletId: Int) {
-        if (mainActivityViewModel!!.getOutletState(outletId)) {
+    private fun adaptUIOutlet(outletId: Int, state: Boolean) {
+        if (state) {
             outlets[outletId].background.setTint(
                 ContextCompat.getColor(
                     this,
