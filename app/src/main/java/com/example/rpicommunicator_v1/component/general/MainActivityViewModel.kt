@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.CommunicatorGrpc
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.database.plant.Plant
@@ -56,6 +57,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun getOutletState(outletId: Int): Boolean {
         return outlets[outletId]
+    }
+
+    fun matrixChangeMode(matrixMode: Communication.MatrixState) {
+        Log.i("buttonClick", "matrix mode change request to: "+matrixMode.name)
+        grpcCommunicationInterface.matrixChangeMode(matrixMode)
     }
 
     init {

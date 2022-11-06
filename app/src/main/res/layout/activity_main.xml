@@ -305,7 +305,7 @@
                         android:thumbTint="@color/primary_green" />
 
                     <TextView
-                        android:id="@+id/textViewMorematrixOptions"
+                        android:id="@+id/textViewMoreMatrixOptions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"

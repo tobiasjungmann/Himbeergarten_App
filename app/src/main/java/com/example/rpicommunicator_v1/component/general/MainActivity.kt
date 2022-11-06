@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.CommunicationInterface
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
@@ -31,13 +32,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        mainActivityViewModel!!.loadStatus();
+      //  mainActivityViewModel!!.loadStatus();
         initIO()
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
     }
 
     private fun initIO() {
-        binding.textViewMorematrixOptions.setOnClickListener(this)
+        binding.textViewMoreMatrixOptions.setOnClickListener(this)
 
         binding.imagetrain.setOnClickListener(this)
         binding.imagetime.setOnClickListener(this)
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outlets.add(binding.imageoutlet0)
         outlets.add(binding.imageoutlet1)
         outlets.add(binding.imageoutlet2)
-        outlets.forEach{
+        outlets.forEach {
             it.setOnClickListener(this)
             adaptUIOutlet(outlets.indexOf(it))
         }
@@ -85,21 +86,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         if (v.id == R.id.imagetrain) {
-            Log.i("buttonClick", "Übernehmen was clicked")
             toggleMatrixUi(R.id.imagetrain)
             communicationInterface!!.sendText("Stations;" + binding.inputStart.text.toString() + ";" + binding.inputDest.text.toString())
         } else if (v.id == R.id.imagespotify) {
-            Log.i("buttonClick", "songtitle was clicked")
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_SPOTIFY);
             toggleMatrixUi(R.id.imagespotify)
-            communicationInterface!!.sendText("songtitle")
         } else if (v.id == R.id.imagetime) {
-            Log.i("buttonClick", "time_button was clicked")
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TIME);
             toggleMatrixUi(R.id.imagetime)
-            communicationInterface!!.sendText("changetime")
         } else if (v.id == R.id.imageweather) {
-            Log.i("buttonClick", "weather button was clicked")
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_WEATHER);
             toggleMatrixUi(R.id.imageweather)
-            communicationInterface!!.sendText("weather")
+        } else if (v.id == R.id.imagequit) {
+            Log.i("buttonClick", "matrix standby was clicked")
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_NONE);
+
         } else if (v.id == R.id.imagearduino1) {
             Log.i("buttonClick", "Arduino 1 was clicked")
             communicationInterface!!.sendText("arduino1")
@@ -128,18 +129,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             communicationInterface!!.sendText("standby")
             toggleMatrixUi(R.id.imagestandby)
-        } else if (v.id == R.id.imagequit) {
-            Log.i("buttonClick", "PlantOverview activity was clicked")
-            communicationInterface!!.sendText("quit")
-
-        } else if (v.id == R.id.textViewMorematrixOptions) {
+        } else if (v.id == R.id.textViewMoreMatrixOptions) {
             Log.i("buttonClick", "view more options activity was clicked")
             if (binding.layoutmatrixmoreoptions.visibility == View.GONE) {
                 binding.layoutmatrixmoreoptions.visibility = View.VISIBLE
-                binding.textViewMorematrixOptions.text = "Less Options"
+                binding.textViewMoreMatrixOptions.text = "Less Options"
             } else {
                 binding.layoutmatrixmoreoptions.visibility = View.GONE
-                binding.textViewMorematrixOptions.text = "More Options"
+                binding.textViewMoreMatrixOptions.text = "More Options"
             }
         }
     }

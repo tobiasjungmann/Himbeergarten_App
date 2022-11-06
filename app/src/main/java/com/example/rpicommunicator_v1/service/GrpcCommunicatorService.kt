@@ -19,4 +19,8 @@ class GrpcCommunicatorService(private var blockingStub: CommunicatorGrpc.Communi
     fun getStatus(): Communication.StatusReply {
         return blockingStub.getStatus(Communication.EmptyMsg.newBuilder().build())
     }
+
+    fun matrixChangeMode(matrixMode: Communication.MatrixState) {
+      blockingStub.matrixSetMode(Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build())
+    }
 }
