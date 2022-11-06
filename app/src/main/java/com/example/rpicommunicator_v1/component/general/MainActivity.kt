@@ -32,10 +32,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-      //  mainActivityViewModel!!.loadStatus();
+        mainActivityViewModel!!.score.observe(this,
+            { res ->
+                binding.textViewMoreMatrixOptions.text = "Item change observer: " + res
+            })
+
+        mainActivityViewModel!!.loadStatus();
         initIO()
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
     }
+
 
     private fun initIO() {
         binding.textViewMoreMatrixOptions.setOnClickListener(this)
@@ -115,7 +121,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             processOutletClick(2)
         } else if (v.id == R.id.imagebike) {
             Log.i("buttonClick", "bike activity was clicked")
-            changeToBike()
+            mainActivityViewModel!!.setScoreValue(1000)
+            // todochangeToBike()
         } else if (v.id == R.id.imageplant) {
             Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
