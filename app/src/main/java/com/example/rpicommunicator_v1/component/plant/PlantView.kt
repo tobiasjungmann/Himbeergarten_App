@@ -17,7 +17,6 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_INFO
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_NAME
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_NEEDS_WATER
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_WATERED
-import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantViewBinding
 import com.github.mikephil.charting.components.Description
@@ -28,7 +27,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class PlantView : AppCompatActivity() {
-    private var mainActivityViewModel: MainActivityViewModel? = null
+    private var plantViewModel: PlantViewModel? = null
     private val dataWasChanged = false
     private var waterNeededChanged = false
     private var plant: Plant? = null
@@ -40,7 +39,7 @@ class PlantView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
 
         initPlant()
         initViewComponents()
@@ -123,8 +122,8 @@ class PlantView : AppCompatActivity() {
             Log.d("PlantView", "onstop: unchange data: " + plant!!.needsWater)
             plant!!.needsWater = !needsWater
             Log.d("PlantView", "onstop: data must be saved Plant: " + plant!!.needsWater)
-            mainActivityViewModel!!.update(plant!!)
-            mainActivityViewModel!!.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
+            plantViewModel!!.update(plant!!)
+            plantViewModel!!.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
         }
         super.onStop()
     }

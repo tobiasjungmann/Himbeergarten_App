@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.AddElementActivity
-import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
 
 class PlantOverview : AppCompatActivity() {
 
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private lateinit var plantViewModel: PlantViewModel
     private lateinit var binding: ActivityPlantOverviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class PlantOverview : AppCompatActivity() {
         binding = ActivityPlantOverviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setContentView(R.layout.activity_plant_overview)
-        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
 
         initRecyclerView()
         binding.buttonAddElement.setOnClickListener {
@@ -45,9 +44,9 @@ class PlantOverview : AppCompatActivity() {
             openPlantView(position)
         }
         adapter.setOnItemClickListener(itemOnClick)
-        adapter.setViewModel(mainActivityViewModel)
+        adapter.setViewModel(plantViewModel)
 
-        mainActivityViewModel.allPlants.observe(
+        plantViewModel.allPlants.observe(
             this
         ) { plants: List<Plant> ->
             adapter.setPlants(plants)
@@ -61,7 +60,7 @@ class PlantOverview : AppCompatActivity() {
     private fun initSwipeToRefresh() {
         // Setup refresh listener which triggers new data loading
         binding.swipeContainer.setOnRefreshListener {
-            mainActivityViewModel.reloadFromFirestore()
+            plantViewModel.reloadFromFirestore()
             binding.swipeContainer.isRefreshing = false
         }
 
@@ -77,7 +76,7 @@ class PlantOverview : AppCompatActivity() {
     private fun openPlantView(position: Int) {
         Log.d("overview", "method for listener called")
         val intent = Intent(applicationContext, PlantView::class.java)
-        val plant: Plant = mainActivityViewModel.getActPlant(position)
+        val plant: Plant = plantViewModel.getActPlant(position)
         intent.putExtra(Constants.EXTRA_NAME, plant.name)
         intent.putExtra(Constants.EXTRA_HUMIDITY, plant.humidity)
         intent.putExtra(Constants.EXTRA_WATERED, plant.watered)
@@ -87,7 +86,7 @@ class PlantOverview : AppCompatActivity() {
         intent.putExtra(Constants.EXTRA_INFO, plant.info)
         intent.putExtra(Constants.EXTRA_ID, plant.id)
         intent.putExtra(Constants.EXTRA_GRAPH_STRING, plant.graphString)
-        startActivity (intent)
+        startActivity(intent)
     }
 
     private var resultLauncher =
@@ -103,14 +102,14 @@ class PlantOverview : AppCompatActivity() {
                         val priority = data.getIntExtra(Constants.EXTRA_PRIORITY, 1)
                         val imagePath =
                             data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                       /* val comparingElement =
-                            ComparingElement(
-                                title!!,
-                                description!!,
-                                priority,
-                                listeId
-                            )
-                        ?.insert(comparingElement, imagePath)*/
+                        /* val comparingElement =
+                             ComparingElement(
+                                 title!!,
+                                 description!!,
+                                 priority,
+                                 listeId
+                             )
+                         ?.insert(comparingElement, imagePath)*/
                         Toast.makeText(this, "Element Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode == Constants.EDIT_NOTE_REQUEST)) {
                         val id = data.getIntExtra(Constants.EXTRA_ID, -1)

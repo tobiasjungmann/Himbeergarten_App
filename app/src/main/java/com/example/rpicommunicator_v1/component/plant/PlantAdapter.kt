@@ -6,7 +6,6 @@ import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
@@ -15,11 +14,11 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
 
     private var plants: List<Plant> = ArrayList()
     private lateinit var clickListener: (View, Int, Int) -> Unit
-    private var mainActivityViewModel: MainActivityViewModel? = null
+    private var plantViewModel: PlantViewModel? = null
 
 
-    fun setViewModel(mainActivityViewModel: MainActivityViewModel?) {
-        this.mainActivityViewModel = mainActivityViewModel
+    fun setViewModel(plantViewModel: PlantViewModel?) {
+        this.plantViewModel = plantViewModel
     }
 
     fun setOnItemClickListener(listener: (View, Int, Int) -> Unit) {
@@ -48,7 +47,7 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
         holder.binding.lowerInfo.text = currentItem.watered
         holder.binding.deleteButton.setOnClickListener { v ->
             v.visibility = View.GONE
-            mainActivityViewModel!!.remove(plants[position])
+            plantViewModel!!.remove(plants[position])
         }
     }
 
