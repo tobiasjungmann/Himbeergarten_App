@@ -95,8 +95,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         if (v.id == R.id.imagetrain) {
+            mainActivityViewModel!!.matrixChangeToMVV(binding.inputStart.text.toString(), binding.inputDest.text.toString())
             toggleMatrixUi(R.id.imagetrain)
-            communicationInterface!!.sendText("Stations;" + binding.inputStart.text.toString() + ";" + binding.inputDest.text.toString())
+           // communicationInterface!!.sendText("Stations;" + binding.inputStart.text.toString() + ";" + binding.inputDest.text.toString())
         } else if (v.id == R.id.imagespotify) {
             mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_SPOTIFY);
             toggleMatrixUi(R.id.imagespotify)

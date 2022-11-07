@@ -15,7 +15,6 @@ import io.grpc.ManagedChannelBuilder
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private var grpcCommunicationInterface: GrpcCommunicatorService
-
     private val _outletStatus = MutableLiveData(listOf(false, false, false, false, false))
     val outletStatus: LiveData<List<Boolean>> get() = _outletStatus
 
@@ -36,9 +35,16 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         grpcCommunicationInterface.matrixChangeMode(matrixMode)
     }
 
+    fun matrixChangeToMVV(start: String, destination: String) {
+        Log.i("buttonClick", "MVV Matrix View selected from " + start + " to "+destination)
+        grpcCommunicationInterface.matrixChangeToMVV(start, destination)
+    }
+
     fun setOutletList(list: List<Boolean>) {
         _outletStatus.postValue(list)
     }
+
+
 
     init {
         val mChannel =

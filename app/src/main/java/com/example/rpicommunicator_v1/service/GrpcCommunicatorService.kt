@@ -11,7 +11,11 @@ class GrpcCommunicatorService(
 ) {
 
 
-    fun setOutletState(id: Communication.GPIOInstances, state: Boolean, mainActivityViewModel: MainActivityViewModel) {
+    fun setOutletState(
+        id: Communication.GPIOInstances,
+        state: Boolean,
+        mainActivityViewModel: MainActivityViewModel
+    ) {
         grpcStub.outletOn(
             Communication.GPIORequest.newBuilder().setOn(state).setId(id).build(),
             object : StreamObserver<Communication.GPIOReply> {
@@ -21,37 +25,60 @@ class GrpcCommunicatorService(
                         mainActivityViewModel.setOutletList(response.statusListList)
                     }
                 }
+
                 override fun onError(throwable: Throwable?) {
-                    Log.d("GRPC", "onError: setOutletState "+throwable.toString())
+                    Log.d("GRPC", "onError: setOutletState " + throwable.toString())
 
                 }
+
                 override fun onCompleted() {
                     Log.d("GRPC", "onCompleted: setOutletState")
                 }
             })
     }
 
-    fun getStatus( mainActivityViewModel: MainActivityViewModel) {
+    fun getStatus(mainActivityViewModel: MainActivityViewModel) {
         grpcStub.getStatus(Communication.EmptyMsg.newBuilder().build(),
             object : StreamObserver<Communication.StatusReply> {
                 override fun onNext(response: Communication.StatusReply?) {
-                    mainActivityViewModel.setOutletList(response?.outletsList ?: listOf(false,false,false))
+                    mainActivityViewModel.setOutletList(
+                        response?.outletsList ?: listOf(
+                            false,
+                            false,
+                            false
+                        )
+                    )
                 }
+
                 override fun onError(throwable: Throwable?) {
-                    Log.d("GRPC", "onError: getStatus "+throwable.toString())
+                    Log.d("GRPC", "onError: getStatus " + throwable.toString())
                 }
+
                 override fun onCompleted() {
                     Log.d("GRPC", "onCompleted: getStatus")
                 }
             })
     }
 
-    // todo adapt the ui accordingly - must also be based on live data
     fun matrixChangeMode(matrixMode: Communication.MatrixState) {
+        executeMatrixChangeMode(
+            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build()
+        )
+    }
+
+    fun matrixChangeToMVV(start: String, destination: String) {
+        executeMatrixChangeMode(
+            Communication.MatrixChangeModeRequest.newBuilder()
+                .setState(Communication.MatrixState.MATRIX_MVV).setStart(start)
+                .setDestination(destination).build()
+        )
+    }
+
+    private fun executeMatrixChangeMode(build: Communication.MatrixChangeModeRequest) {
         grpcStub.matrixSetMode(
-            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),
-            object : StreamObserver<Communication.EmptyMsg> {
-                override fun onNext(response: Communication.EmptyMsg?) {
+            build,
+            object : StreamObserver<Communication.MatrixChangeModeReply> {
+                override fun onNext(response: Communication.MatrixChangeModeReply?) {
                     //consume response
                 }
 
