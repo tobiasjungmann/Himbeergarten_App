@@ -16,13 +16,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private var grpcCommunicationInterface: GrpcCommunicatorService
 
-    private val _outletStatus = MutableLiveData(listOf(false, false, false))
+    private val _outletStatus = MutableLiveData(listOf(false, false, false, false, false))
     val outletStatus: LiveData<List<Boolean>> get() = _outletStatus
 
-    fun outletClicked(outletId: Int) {
+    fun outletClicked(outletId: Communication.GPIOInstances) {
         Log.i("TAG", "outletClicked: reached")
         outletStatus.value?.let {
-            grpcCommunicationInterface.setOutletState(outletId, !it[outletId], this)
+            grpcCommunicationInterface.setOutletState(outletId, !it[outletId.number], this)
         }
     }
 

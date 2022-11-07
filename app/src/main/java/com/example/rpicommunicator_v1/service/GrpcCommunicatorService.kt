@@ -11,9 +11,9 @@ class GrpcCommunicatorService(
 ) {
 
 
-    fun setOutletState(id: Int, state: Boolean,mainActivityViewModel: MainActivityViewModel) {
+    fun setOutletState(id: Communication.GPIOInstances, state: Boolean, mainActivityViewModel: MainActivityViewModel) {
         grpcStub.outletOn(
-            Communication.GPIORequest.newBuilder().setOn(state).setOutletId(id).build(),
+            Communication.GPIORequest.newBuilder().setOn(state).setId(id).build(),
             object : StreamObserver<Communication.GPIOReply> {
                 override fun onNext(response: Communication.GPIOReply?) {
                     //consume response

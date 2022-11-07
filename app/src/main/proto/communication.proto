@@ -14,7 +14,7 @@ service Communicator {
 }
 
 message GPIORequest{
-  int32 outletId = 1;
+  GPIOInstances id = 1;
   bool on = 2;
 }
 
@@ -42,6 +42,14 @@ message MatrixActivationRequest{
 
 message MatrixChangeModeRequest{
   MatrixState state = 1;
+}
+
+enum GPIOInstances{
+  GPIO_OUTLET_1=0;
+  GPIO_OUTLET_2=1;
+  GPIO_OUTLET_3=2;
+  GPIO_ARDUINO_1=3;
+  GPIO_ARDUINO_2=4;
 }
 
 enum MatrixState{

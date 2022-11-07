@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outlets.add(binding.imageoutlet0)
         outlets.add(binding.imageoutlet1)
         outlets.add(binding.imageoutlet2)
+        outlets.add(binding.imagearduino1)
+        outlets.add(binding.imagearduino2)
         outlets.forEach {
             it.setOnClickListener(this)
         }
@@ -107,19 +109,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imagequit) {
             Log.i("buttonClick", "matrix standby was clicked")
             mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_NONE);
-
         } else if (v.id == R.id.imagearduino1) {
             Log.i("buttonClick", "Arduino 1 was clicked")
+            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_1)
             communicationInterface!!.sendText("arduino1")
         } else if (v.id == R.id.imagearduino2) {
             Log.i("buttonClick", "Arduino 2 was clicked")
+            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_2)
             communicationInterface!!.sendText("arduino2")
         } else if (v.id == R.id.imageoutlet0) {
-            mainActivityViewModel!!.outletClicked(0)
+            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_1)
         } else if (v.id == R.id.imageoutlet1) {
-            mainActivityViewModel!!.outletClicked(1)
+            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_2)
         } else if (v.id == R.id.imageoutlet2) {
-            mainActivityViewModel!!.outletClicked(2)
+            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_3)
         } else if (v.id == R.id.imagebike) {
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
