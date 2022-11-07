@@ -21,7 +21,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_TIME)
     val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
 
-    fun outletClicked(outletId: Communication.GPIOInstances) {
+    fun gpioButtonClicked(outletId: Communication.GPIOInstances) {
         Log.i("TAG", "outletClicked: reached")
         gpioStates.value?.let {
             grpcCommunicationInterface.setOutletState(outletId, !it[outletId.number], this)

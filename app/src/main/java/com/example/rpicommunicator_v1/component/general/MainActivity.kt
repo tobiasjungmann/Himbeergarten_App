@@ -119,15 +119,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imagestandby) {
             mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_STANDBY)
         } else if (v.id == R.id.imagearduino1) {
-            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_1)
+            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_ARDUINO_1)
         } else if (v.id == R.id.imagearduino2) {
-            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_2)
+            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_ARDUINO_2)
         } else if (v.id == R.id.imageoutlet0) {
-            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_1)
+            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_1)
         } else if (v.id == R.id.imageoutlet1) {
-            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_2)
+            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_2)
         } else if (v.id == R.id.imageoutlet2) {
-            mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_3)
+            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_3)
         } else if (v.id == R.id.imagebike) {
             Log.i("buttonClick", "bike activity was clicked")
             changeToBike()

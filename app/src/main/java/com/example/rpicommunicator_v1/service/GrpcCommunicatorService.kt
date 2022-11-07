@@ -42,12 +42,13 @@ class GrpcCommunicatorService(
             object : StreamObserver<Communication.StatusReply> {
                 override fun onNext(response: Communication.StatusReply?) {
                     mainActivityViewModel.setGpioStates(
-                        response?.outletsList ?: listOf(
+                        response?.gpiosList ?: listOf(
                             false,
                             false,
                             false
                         )
                     )
+                    mainActivityViewModel.setCurrentMatrixMode(response?.matrixState ?:Communication.MatrixState.MATRIX_TIME)
                 }
 
                 override fun onError(throwable: Throwable?) {
@@ -65,7 +66,8 @@ class GrpcCommunicatorService(
         mainActivityViewModel: MainActivityViewModel
     ) {
         executeMatrixChangeMode(
-            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),mainActivityViewModel
+            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),
+            mainActivityViewModel
         )
     }
 
@@ -77,11 +79,14 @@ class GrpcCommunicatorService(
         executeMatrixChangeMode(
             Communication.MatrixChangeModeRequest.newBuilder()
                 .setState(Communication.MatrixState.MATRIX_MVV).setStart(start)
-                .setDestination(destination).build(),mainActivityViewModel
+                .setDestination(destination).build(), mainActivityViewModel
         )
     }
 
-    private fun executeMatrixChangeMode(build: Communication.MatrixChangeModeRequest,mainActivityViewModel: MainActivityViewModel) {
+    private fun executeMatrixChangeMode(
+        build: Communication.MatrixChangeModeRequest,
+        mainActivityViewModel: MainActivityViewModel
+    ) {
         grpcStub.matrixSetMode(
             build,
             object : StreamObserver<Communication.MatrixChangeModeReply> {
