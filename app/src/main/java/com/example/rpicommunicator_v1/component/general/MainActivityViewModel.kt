@@ -15,12 +15,15 @@ import io.grpc.ManagedChannelBuilder
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private var grpcCommunicationInterface: GrpcCommunicatorService
-    private val _outletStatus = MutableLiveData(listOf(false, false, false, false, false))
-    val outletStatus: LiveData<List<Boolean>> get() = _outletStatus
+    private val _gpioStates = MutableLiveData(listOf(false, false, false, false, false))
+    val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
+
+    private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_TIME)
+    val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
 
     fun outletClicked(outletId: Communication.GPIOInstances) {
         Log.i("TAG", "outletClicked: reached")
-        outletStatus.value?.let {
+        gpioStates.value?.let {
             grpcCommunicationInterface.setOutletState(outletId, !it[outletId.number], this)
         }
     }
@@ -29,21 +32,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         grpcCommunicationInterface.getStatus(this)
     }
 
-
     fun matrixChangeMode(matrixMode: Communication.MatrixState) {
         Log.i("buttonClick", "matrix mode change request to: " + matrixMode.name)
-        grpcCommunicationInterface.matrixChangeMode(matrixMode)
+        grpcCommunicationInterface.matrixChangeMode(matrixMode,this)
     }
 
     fun matrixChangeToMVV(start: String, destination: String) {
-        Log.i("buttonClick", "MVV Matrix View selected from " + start + " to "+destination)
-        grpcCommunicationInterface.matrixChangeToMVV(start, destination)
+        Log.i("buttonClick", "matrix mode change request to MATRIX_MVV (from " + start + " to "+destination+")")
+        grpcCommunicationInterface.matrixChangeToMVV(start, destination,this)
     }
 
-    fun setOutletList(list: List<Boolean>) {
-        _outletStatus.postValue(list)
+    fun setGpioStates(list: List<Boolean>) {
+        _gpioStates.postValue(list)
     }
 
+    fun setCurrentMatrixMode(matrixMode: Communication.MatrixState) {
+        _currentMatrixMode.postValue(matrixMode)
+    }
 
 
     init {

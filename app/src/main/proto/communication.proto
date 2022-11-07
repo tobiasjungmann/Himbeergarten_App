@@ -64,4 +64,6 @@ enum MatrixState{
   MATRIX_WEATHER = 2;
   MATRIX_SPOTIFY = 3;
   MATRIX_MVV = 4;
+  MATRIX_STANDBY = 5;
+  MATRIX_TERMINATE = 6;
 }

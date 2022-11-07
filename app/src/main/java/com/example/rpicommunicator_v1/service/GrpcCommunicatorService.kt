@@ -22,7 +22,7 @@ class GrpcCommunicatorService(
                 override fun onNext(response: Communication.GPIOReply?) {
                     //consume response
                     if (response != null) {
-                        mainActivityViewModel.setOutletList(response.statusListList)
+                        mainActivityViewModel.setGpioStates(response.statusListList)
                     }
                 }
 
@@ -41,7 +41,7 @@ class GrpcCommunicatorService(
         grpcStub.getStatus(Communication.EmptyMsg.newBuilder().build(),
             object : StreamObserver<Communication.StatusReply> {
                 override fun onNext(response: Communication.StatusReply?) {
-                    mainActivityViewModel.setOutletList(
+                    mainActivityViewModel.setGpioStates(
                         response?.outletsList ?: listOf(
                             false,
                             false,
@@ -60,26 +60,33 @@ class GrpcCommunicatorService(
             })
     }
 
-    fun matrixChangeMode(matrixMode: Communication.MatrixState) {
+    fun matrixChangeMode(
+        matrixMode: Communication.MatrixState,
+        mainActivityViewModel: MainActivityViewModel
+    ) {
         executeMatrixChangeMode(
-            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build()
+            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),mainActivityViewModel
         )
     }
 
-    fun matrixChangeToMVV(start: String, destination: String) {
+    fun matrixChangeToMVV(
+        start: String,
+        destination: String,
+        mainActivityViewModel: MainActivityViewModel
+    ) {
         executeMatrixChangeMode(
             Communication.MatrixChangeModeRequest.newBuilder()
                 .setState(Communication.MatrixState.MATRIX_MVV).setStart(start)
-                .setDestination(destination).build()
+                .setDestination(destination).build(),mainActivityViewModel
         )
     }
 
-    private fun executeMatrixChangeMode(build: Communication.MatrixChangeModeRequest) {
+    private fun executeMatrixChangeMode(build: Communication.MatrixChangeModeRequest,mainActivityViewModel: MainActivityViewModel) {
         grpcStub.matrixSetMode(
             build,
             object : StreamObserver<Communication.MatrixChangeModeReply> {
                 override fun onNext(response: Communication.MatrixChangeModeReply?) {
-                    //consume response
+                    response?.let { mainActivityViewModel.setCurrentMatrixMode(it.state) }
                 }
 
                 override fun onError(throwable: Throwable?) {

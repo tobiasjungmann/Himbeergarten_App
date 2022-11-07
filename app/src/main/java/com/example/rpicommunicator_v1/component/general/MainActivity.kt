@@ -20,26 +20,35 @@ import com.example.rpicommunicator_v1.component.plant.PlantOverview
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private var currentOn: Int = 0
+    private var currentMatrixActivated: Int = 0
     private lateinit var binding: ActivityMainBinding
     private var mainActivityViewModel: MainActivityViewModel? = null
     var communicationInterface: CommunicationInterface? = null
-    private var outlets = ArrayList<LinearLayout>()
+    private var gpioButtons = ArrayList<LinearLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        currentMatrixActivated = R.id.imagetime
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        mainActivityViewModel!!.outletStatus.observe(this
+        mainActivityViewModel!!.gpioStates.observe(
+            this
         ) { res ->
-            for (i in 0 until outlets.size) {
-                adaptUIOutlet(i, res[i])
+            for (i in 0 until gpioButtons.size) {
+                adaptUIGPIO(i, res[i])
             }
         }
 
-        mainActivityViewModel!!.loadStatus();
+        mainActivityViewModel!!.currentMatrixMode.observe(
+            this
+        ) { res ->
+            toggleMatrixUi(res)
+        }
+
+
+        mainActivityViewModel!!.loadStatus()
         initIO()
         communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
     }
@@ -53,12 +62,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imagespotify.setOnClickListener(this)
         binding.imageweather.setOnClickListener(this)
 
-        outlets.add(binding.imageoutlet0)
-        outlets.add(binding.imageoutlet1)
-        outlets.add(binding.imageoutlet2)
-        outlets.add(binding.imagearduino1)
-        outlets.add(binding.imagearduino2)
-        outlets.forEach {
+        gpioButtons.add(binding.imageoutlet0)
+        gpioButtons.add(binding.imageoutlet1)
+        gpioButtons.add(binding.imageoutlet2)
+        gpioButtons.add(binding.imagearduino1)
+        gpioButtons.add(binding.imagearduino2)
+        gpioButtons.forEach {
             it.setOnClickListener(this)
         }
 
@@ -95,29 +104,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         if (v.id == R.id.imagetrain) {
-            mainActivityViewModel!!.matrixChangeToMVV(binding.inputStart.text.toString(), binding.inputDest.text.toString())
-            toggleMatrixUi(R.id.imagetrain)
-           // communicationInterface!!.sendText("Stations;" + binding.inputStart.text.toString() + ";" + binding.inputDest.text.toString())
+            mainActivityViewModel!!.matrixChangeToMVV(
+                binding.inputStart.text.toString(),
+                binding.inputDest.text.toString()
+            )
         } else if (v.id == R.id.imagespotify) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_SPOTIFY);
-            toggleMatrixUi(R.id.imagespotify)
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_SPOTIFY)
         } else if (v.id == R.id.imagetime) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TIME);
-            toggleMatrixUi(R.id.imagetime)
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TIME)
         } else if (v.id == R.id.imageweather) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_WEATHER);
-            toggleMatrixUi(R.id.imageweather)
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_WEATHER)
         } else if (v.id == R.id.imagequit) {
-            Log.i("buttonClick", "matrix standby was clicked")
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_NONE);
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TERMINATE)
+        } else if (v.id == R.id.imagestandby) {
+            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_STANDBY)
         } else if (v.id == R.id.imagearduino1) {
-            Log.i("buttonClick", "Arduino 1 was clicked")
             mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_1)
-            communicationInterface!!.sendText("arduino1")
         } else if (v.id == R.id.imagearduino2) {
-            Log.i("buttonClick", "Arduino 2 was clicked")
             mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_ARDUINO_2)
-            communicationInterface!!.sendText("arduino2")
         } else if (v.id == R.id.imageoutlet0) {
             mainActivityViewModel!!.outletClicked(Communication.GPIOInstances.GPIO_OUTLET_1)
         } else if (v.id == R.id.imageoutlet1) {
@@ -136,10 +140,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.button_settingsActivity) {
             Log.i("buttonClick", "Setting activity was clicked")
             changeToSettings()
-        } else if (v.id == R.id.imagestandby) {
-            Log.i("buttonClick", "PlantOverview activity was clicked")
-            communicationInterface!!.sendText("standby")
-            toggleMatrixUi(R.id.imagestandby)
         } else if (v.id == R.id.textViewMoreMatrixOptions) {
             Log.i("buttonClick", "view more options activity was clicked")
             if (binding.layoutmatrixmoreoptions.visibility == View.GONE) {
@@ -152,16 +152,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun adaptUIOutlet(outletId: Int, state: Boolean) {
+    private fun adaptUIGPIO(outletId: Int, state: Boolean) {
         if (state) {
-            outlets[outletId].background.setTint(
+            gpioButtons[outletId].background.setTint(
                 ContextCompat.getColor(
                     this,
                     R.color.primary_green_transparent
                 )
             )
         } else {
-            outlets[outletId].background.setTint(
+            gpioButtons[outletId].background.setTint(
                 ContextCompat.getColor(
                     this,
                     R.color.transparent
@@ -170,32 +170,42 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun toggleMatrixUi(imageID: Int) {
-        if (imageID == R.id.imagestandby) {
-            switchOffCurrent()
-
-        } else {
-            switchOffCurrent()
-
-            findViewById<View>(imageID).background.setTint(
-                ContextCompat.getColor(
-                    this,
-                    R.color.primary_green_transparent
-                )
+    private fun toggleMatrixUi(matrixId: Communication.MatrixState) {
+        val id = getResIdForMatrixState(matrixId)
+        switchOffCurrent()
+        findViewById<View>(id).background.setTint(
+            ContextCompat.getColor(
+                this,
+                R.color.primary_green_transparent
             )
-            currentOn = imageID
+        )
+        currentMatrixActivated = id
+    }
+
+    private fun getResIdForMatrixState(matrixState: Communication.MatrixState): Int {
+        if (matrixState == Communication.MatrixState.MATRIX_MVV) {
+            return R.id.imagetrain
+        } else if (matrixState == Communication.MatrixState.MATRIX_STANDBY) {
+            return R.id.imagestandby
+        } else if (matrixState == Communication.MatrixState.MATRIX_SPOTIFY) {
+            return R.id.imagespotify
+        } else if (matrixState == Communication.MatrixState.MATRIX_WEATHER) {
+            return R.id.imageweather
+        } else if (matrixState == Communication.MatrixState.MATRIX_TERMINATE) {
+            return R.id.imagequit
         }
+        return R.id.imagetime
     }
 
     private fun switchOffCurrent() {
-        if (currentOn != 0) {
-            findViewById<View>(currentOn).background.setTint(
+        if (currentMatrixActivated != 0) {
+            findViewById<View>(currentMatrixActivated).background.setTint(
                 ContextCompat.getColor(
                     this,
                     R.color.transparent
                 )
             )
-            currentOn = 0
+            currentMatrixActivated = 0
         }
     }
 
