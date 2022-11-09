@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.CommunicationInterface
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
 import com.example.rpicommunicator_v1.component.plant.PlantOverview
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentMatrixActivated: Int = 0
     private lateinit var binding: ActivityMainBinding
     private var mainActivityViewModel: MainActivityViewModel? = null
-    var communicationInterface: CommunicationInterface? = null
     private var gpioButtons = ArrayList<LinearLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +48,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mainActivityViewModel!!.loadStatus()
         initIO()
-        communicationInterface = ViewModelProvider(this)[CommunicationInterface::class.java]
     }
 
 
@@ -88,7 +85,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 currentProgress = (currentProgress * 2) + 55
                 Toast.makeText(applicationContext, currentProgress.toString(), Toast.LENGTH_LONG)
                     .show()
-                communicationInterface!!.sendText("newBrightness:$currentProgress")
+                mainActivityViewModel!!.setMatrixBrightness(currentProgress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {

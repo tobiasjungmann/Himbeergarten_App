@@ -5,19 +5,19 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.CommunicationInterface
 import com.example.rpicommunicator_v1.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var communicationInterface: CommunicationInterface
     private lateinit var binding: ActivitySettingsBinding
+    private var mainActivityViewModel: MainActivityViewModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewModelProvider(this)[CommunicationInterface::class.java]
+        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
 
         binding.connectButton.setOnClickListener(this)
         binding.textViewSources.setOnClickListener(this)
@@ -41,7 +41,9 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun connectToRPI() {
-        communicationInterface.localIP = binding.inputIP.text.toString()
-        communicationInterface.localPort = binding.inputPort.text.toString().toInt()
+        mainActivityViewModel!!.setCommunicationCredentials(
+            binding.inputIP.text.toString(),
+            binding.inputPort.text.toString().toInt()
+        )
     }
 }

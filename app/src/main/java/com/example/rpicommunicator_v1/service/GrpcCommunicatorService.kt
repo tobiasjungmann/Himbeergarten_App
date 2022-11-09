@@ -48,7 +48,9 @@ class GrpcCommunicatorService(
                             false
                         )
                     )
-                    mainActivityViewModel.setCurrentMatrixMode(response?.matrixState ?:Communication.MatrixState.MATRIX_TIME)
+                    mainActivityViewModel.setCurrentMatrixMode(
+                        response?.matrixState ?: Communication.MatrixState.MATRIX_TIME
+                    )
                 }
 
                 override fun onError(throwable: Throwable?) {
@@ -102,6 +104,26 @@ class GrpcCommunicatorService(
                     //on complete
                 }
             })
+    }
+
+    fun setMatrixBrightness(currentProgress: Int, mainActivityViewModel: MainActivityViewModel) {
+
+        grpcStub.matrixSetBrightness(
+            Communication.MatrixBrightnessRequest.newBuilder()
+                .setBrightness(currentProgress).build(),
+            object : StreamObserver<Communication.EmptyMsg> {
+                override fun onNext(response: Communication.EmptyMsg?) {
+                }
+
+                override fun onError(throwable: Throwable?) {
+                    //handle error
+                }
+
+                override fun onCompleted() {
+                    //on complete
+                }
+            })
+        TODO("Not yet implemented")
     }
 }
 
