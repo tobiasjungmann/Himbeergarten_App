@@ -31,7 +31,7 @@
             android:name=".component.comparing.secondlevel.AddElementActivity"
             android:exported="false" />
         <activity
-            android:name=".component.plant.PlantOverview"
+            android:name=".component.plant.PlantOverviewActivity"
             android:exported="false" />
         <activity
             android:name=".component.general.SettingsActivity"
@@ -40,7 +40,7 @@
             android:name=".component.bike.BikeTourActivity"
             android:exported="false" />
         <activity
-            android:name=".component.plant.PlantView"
+            android:name=".component.plant.PlantViewActivity"
             android:exported="false"
             android:label="@string/title_activity_plant_view"
             android:theme="@style/Theme.RPICommunicator_V1.NoActionBar" />

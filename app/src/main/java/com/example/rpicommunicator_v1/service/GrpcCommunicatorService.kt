@@ -24,11 +24,12 @@ class GrpcCommunicatorService(
                     if (response != null) {
                         mainActivityViewModel.setGpioStates(response.statusListList)
                     }
+                    mainActivityViewModel.setServerAvailable(true);
                 }
 
                 override fun onError(throwable: Throwable?) {
                     Log.d("GRPC", "onError: setOutletState " + throwable.toString())
-
+                    mainActivityViewModel.setServerAvailable(false);
                 }
 
                 override fun onCompleted() {
@@ -45,16 +46,18 @@ class GrpcCommunicatorService(
                         response?.gpiosList ?: listOf(
                             false,
                             false,
-                            false
+                            false, false, false
                         )
                     )
                     mainActivityViewModel.setCurrentMatrixMode(
                         response?.matrixState ?: Communication.MatrixState.MATRIX_TIME
                     )
+                    mainActivityViewModel.setServerAvailable(true);
                 }
 
                 override fun onError(throwable: Throwable?) {
                     Log.d("GRPC", "onError: getStatus " + throwable.toString())
+                    mainActivityViewModel.setServerAvailable(false);
                 }
 
                 override fun onCompleted() {
@@ -94,9 +97,11 @@ class GrpcCommunicatorService(
             object : StreamObserver<Communication.MatrixChangeModeReply> {
                 override fun onNext(response: Communication.MatrixChangeModeReply?) {
                     response?.let { mainActivityViewModel.setCurrentMatrixMode(it.state) }
+                    mainActivityViewModel.setServerAvailable(true);
                 }
 
                 override fun onError(throwable: Throwable?) {
+                    mainActivityViewModel.setServerAvailable(false);
                     //handle error
                 }
 
@@ -113,9 +118,11 @@ class GrpcCommunicatorService(
                 .setBrightness(currentProgress).build(),
             object : StreamObserver<Communication.EmptyMsg> {
                 override fun onNext(response: Communication.EmptyMsg?) {
+                    mainActivityViewModel.setServerAvailable(true);
                 }
 
                 override fun onError(throwable: Throwable?) {
+                    mainActivityViewModel.setServerAvailable(false);
                     //handle error
                 }
 
@@ -123,7 +130,6 @@ class GrpcCommunicatorService(
                     //on complete
                 }
             })
-        TODO("Not yet implemented")
     }
 }
 

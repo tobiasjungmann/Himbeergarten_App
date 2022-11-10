@@ -205,4 +205,17 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_settingsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|right"
+        android:layout_weight="1"
+        android:backgroundTint="@color/primary_green"
+        android:clickable="true"
+        android:contentDescription="Add Photo"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,6 +10,7 @@ import com.example.rpicommunicator_v1.CommunicatorGrpc
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.service.GrpcCommunicatorService
 import io.grpc.ManagedChannelBuilder
+import java.util.*
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,10 +20,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
     private val rpiIpAddress = Constants.IP
     private val rpiPort = 8010
-    private var grpcCommunicationInterface: GrpcCommunicatorService=initGrpcStub()
+    private var grpcCommunicationInterface: GrpcCommunicatorService = initGrpcStub()
 
     private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_TIME)
     val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
+
+    private val _serverAvailable = MutableLiveData(true)
+    val serverAvailable: LiveData<Boolean> get() = _serverAvailable
 
     fun gpioButtonClicked(outletId: Communication.GPIOInstances) {
         Log.i("TAG", "outletClicked: reached")
@@ -56,20 +60,34 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         _currentMatrixMode.postValue(matrixMode)
     }
 
+    fun setServerAvailable(available: Boolean) {
+        _serverAvailable.postValue(available)
+    }
+
     fun setMatrixBrightness(currentProgress: Int) {
         grpcCommunicationInterface.setMatrixBrightness(currentProgress, this)
     }
 
     fun setCommunicationCredentials(ipAddress: String, port: Int) {
         if (!(ipAddress == rpiIpAddress && port == rpiPort)) {
-            grpcCommunicationInterface=initGrpcStub()
+            grpcCommunicationInterface = initGrpcStub()
             // todo save in preferences and load for the next time
         }
     }
 
-    private fun initGrpcStub() : GrpcCommunicatorService{
+    private fun initGrpcStub(): GrpcCommunicatorService {
+        val wildcardConfig: MutableMap<String, Any> = HashMap()
+        wildcardConfig["name"] = listOf(emptyMap<Any, Any>())
+        wildcardConfig["timeout"] = "7s"
         val mChannel =
-            ManagedChannelBuilder.forAddress(rpiIpAddress, rpiPort).usePlaintext().build()
+            ManagedChannelBuilder.forAddress(rpiIpAddress, rpiPort).usePlaintext()
+                .defaultServiceConfig(
+                    Collections.singletonMap(
+                        "methodConfig", listOf(
+                            wildcardConfig
+                        )
+                    )
+                ).build()
         return GrpcCommunicatorService(CommunicatorGrpc.newStub(mChannel))
     }
 }

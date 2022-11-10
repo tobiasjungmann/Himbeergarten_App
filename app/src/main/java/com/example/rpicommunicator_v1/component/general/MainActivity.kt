@@ -2,12 +2,9 @@ package com.example.rpicommunicator_v1.component.general
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +12,7 @@ import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
-import com.example.rpicommunicator_v1.component.plant.PlantOverview
+import com.example.rpicommunicator_v1.component.plant.PlantOverviewActivity
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,45 +25,45 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        currentMatrixActivated = R.id.imagetime
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        mainActivityViewModel!!.gpioStates.observe(
-            this
-        ) { res ->
+
+        currentMatrixActivated = R.id.imagetime  // initial button which is highlighted by default
+
+        initLiveDataObservers()
+        mainActivityViewModel!!.loadStatus()
+        initIO()
+    }
+
+    private fun initLiveDataObservers() {
+        mainActivityViewModel!!.gpioStates.observe(this) { res ->
             for (i in 0 until gpioButtons.size) {
                 adaptUIGPIO(i, res[i])
             }
         }
 
-        mainActivityViewModel!!.currentMatrixMode.observe(
-            this
-        ) { res ->
+        mainActivityViewModel!!.currentMatrixMode.observe(this) { res ->
             toggleMatrixUi(res)
         }
 
-
-        mainActivityViewModel!!.loadStatus()
-        initIO()
+        mainActivityViewModel!!.serverAvailable.observe(this) { res ->
+            if (res) {
+                binding.textViewConnectionStatus.visibility = SeekBar.GONE
+            } else {
+                binding.textViewConnectionStatus.visibility = SeekBar.VISIBLE
+            }
+        }
     }
 
 
     private fun initIO() {
+        initGpioUi()
+        initSeekbarBrightness()
         binding.textViewMoreMatrixOptions.setOnClickListener(this)
 
         binding.imagetrain.setOnClickListener(this)
         binding.imagetime.setOnClickListener(this)
         binding.imagespotify.setOnClickListener(this)
         binding.imageweather.setOnClickListener(this)
-
-        gpioButtons.add(binding.imageoutlet0)
-        gpioButtons.add(binding.imageoutlet1)
-        gpioButtons.add(binding.imageoutlet2)
-        gpioButtons.add(binding.imagearduino1)
-        gpioButtons.add(binding.imagearduino2)
-        gpioButtons.forEach {
-            it.setOnClickListener(this)
-        }
 
         binding.imagebike.setOnClickListener(this)
         binding.imageplant.setOnClickListener(this)
@@ -77,26 +74,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imagestandby.setOnClickListener(this)
         binding.imagearduino1.setOnClickListener(this)
         binding.imagearduino2.setOnClickListener(this)
+    }
 
-        binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+    private fun initSeekbarBrightness() {
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             private var currentProgress = 0
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                Log.d("seekbar", "onStopTrackingTouch")
                 currentProgress = (currentProgress * 2) + 55
-                Toast.makeText(applicationContext, currentProgress.toString(), Toast.LENGTH_LONG)
-                    .show()
                 mainActivityViewModel!!.setMatrixBrightness(currentProgress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                Log.d("seekbar", "onStartTrackingTouch")
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                Log.d("seekbar", "onProgresschanged")
                 currentProgress = progress
             }
         })
+    }
+
+    private fun initGpioUi() {
+        gpioButtons.add(binding.imageoutlet0)
+        gpioButtons.add(binding.imageoutlet1)
+        gpioButtons.add(binding.imageoutlet2)
+        gpioButtons.add(binding.imagearduino1)
+        gpioButtons.add(binding.imagearduino2)
+        gpioButtons.forEach {
+            it.setOnClickListener(this)
+        }
     }
 
     override fun onClick(v: View) {
@@ -126,19 +131,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.imageoutlet2) {
             mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_3)
         } else if (v.id == R.id.imagebike) {
-            Log.i("buttonClick", "bike activity was clicked")
             changeToBike()
         } else if (v.id == R.id.imageplant) {
-            Log.i("buttonClick", "PlantOverview activity was clicked")
             changeToPlantOverview()
         } else if (v.id == R.id.imagelistactivity) {
-            Log.i("buttonClick", "List activity was clicked was clicked.")
             changeToCompareList()
         } else if (v.id == R.id.button_settingsActivity) {
-            Log.i("buttonClick", "Setting activity was clicked")
             changeToSettings()
         } else if (v.id == R.id.textViewMoreMatrixOptions) {
-            Log.i("buttonClick", "view more options activity was clicked")
             if (binding.layoutmatrixmoreoptions.visibility == View.GONE) {
                 binding.layoutmatrixmoreoptions.visibility = View.VISIBLE
                 binding.textViewMoreMatrixOptions.text = "Less Options"
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun changeToPlantOverview() {
-        val intent = Intent(applicationContext, PlantOverview::class.java)
+        val intent = Intent(applicationContext, PlantOverviewActivity::class.java)
         startActivity(intent)
     }
 }
