@@ -26,9 +26,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-class PlantView : AppCompatActivity() {
+class PlantViewActivity : AppCompatActivity() {
     private var plantViewModel: PlantViewModel? = null
-    private val dataWasChanged = false
+    private val dataWasChanged = false      // todo move in viewmodel - does not belong here
     private var waterNeededChanged = false
     private var plant: Plant? = null
     private var needsWater = false

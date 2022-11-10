@@ -10,13 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.AddElementActivity
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
 
-class PlantOverview : AppCompatActivity() {
+class PlantOverviewActivity : AppCompatActivity() {
 
     private lateinit var plantViewModel: PlantViewModel
     private lateinit var binding: ActivityPlantOverviewBinding
@@ -25,7 +24,7 @@ class PlantOverview : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantOverviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setContentView(R.layout.activity_plant_overview)
+        //setContentView(R.layout.activity_plant_overview)
         plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
 
         initRecyclerView()
@@ -35,7 +34,6 @@ class PlantOverview : AppCompatActivity() {
             nextIntent.putExtra(Constants.MODE, Constants.ADD_NOTE_REQUEST)
             resultLauncher.launch(nextIntent)
         }
-
     }
 
     private fun initRecyclerView() {
@@ -49,7 +47,7 @@ class PlantOverview : AppCompatActivity() {
         plantViewModel.allPlants.observe(
             this
         ) { plants: List<Plant> ->
-            adapter.setPlants(plants)
+            adapter.setPlants(plants as List<Plant>)
         }
         initSwipeToRefresh()
         binding.plantViewRecycler.adapter = adapter
@@ -75,7 +73,7 @@ class PlantOverview : AppCompatActivity() {
 
     private fun openPlantView(position: Int) {
         Log.d("overview", "method for listener called")
-        val intent = Intent(applicationContext, PlantView::class.java)
+        val intent = Intent(applicationContext, PlantViewActivity::class.java)
         val plant: Plant = plantViewModel.getActPlant(position)
         intent.putExtra(Constants.EXTRA_NAME, plant.name)
         intent.putExtra(Constants.EXTRA_HUMIDITY, plant.humidity)
