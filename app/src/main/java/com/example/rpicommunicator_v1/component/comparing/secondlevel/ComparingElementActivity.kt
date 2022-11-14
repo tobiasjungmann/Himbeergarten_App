@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.Constants.ADD_NOTE_REQUEST
-import com.example.rpicommunicator_v1.component.Constants.EDIT_NOTE_REQUEST
+import com.example.rpicommunicator_v1.component.Constants.ADD_REQUEST
+import com.example.rpicommunicator_v1.component.Constants.EDIT_REQUEST
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
@@ -46,7 +46,7 @@ class ComparingElementActivity : AppCompatActivity() {
 
         binding.buttonAddElement.setOnClickListener {
             val nextIntent = Intent(this, AddElementActivity::class.java)
-            nextIntent.putExtra(MODE, ADD_NOTE_REQUEST)
+            nextIntent.putExtra(MODE, ADD_REQUEST)
             resultLauncher.launch(nextIntent)
         }
     }
@@ -57,7 +57,7 @@ class ComparingElementActivity : AppCompatActivity() {
 
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             val nextIntent = Intent(this, AddElementActivity::class.java)
-            nextIntent.putExtra(MODE, EDIT_NOTE_REQUEST)
+            nextIntent.putExtra(MODE, EDIT_REQUEST)
             nextIntent.putExtra(EXTRA_ID, adapter.getElementAt(position).comparingElementId)
             nextIntent.putExtra(EXTRA_TITLE, adapter.getElementAt(position).title)
             nextIntent.putExtra(EXTRA_DESCRIPTION, adapter.getElementAt(position).description)
@@ -113,7 +113,7 @@ class ComparingElementActivity : AppCompatActivity() {
                 val data: Intent? = result.data
                 val resultmode = data?.getStringExtra(MODE)
                 if (resultmode != null) {
-                    if ((resultmode == ADD_NOTE_REQUEST)) {
+                    if ((resultmode == ADD_REQUEST)) {
                         val title = data.getStringExtra(EXTRA_TITLE)
                         val description = data.getStringExtra(EXTRA_DESCRIPTION)
                         val priority = data.getIntExtra(EXTRA_PRIORITY, 1)
@@ -128,7 +128,7 @@ class ComparingElementActivity : AppCompatActivity() {
                             )
                         comparingElementViewModel?.insert(comparingElement, imagePath)
                         Toast.makeText(this, "Element Saved", Toast.LENGTH_SHORT).show()
-                    } else if ((resultmode == EDIT_NOTE_REQUEST)) {
+                    } else if ((resultmode == EDIT_REQUEST)) {
                         val id = data.getIntExtra(EXTRA_ID, -1)
                         if (id == -1) {
                             Toast.makeText(this, "can not be updated", Toast.LENGTH_SHORT).show()

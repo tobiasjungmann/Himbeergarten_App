@@ -28,7 +28,7 @@ class PlantOverviewActivity : AppCompatActivity() {
         initRecyclerView()
         binding.buttonAddElement.setOnClickListener {
             val nextIntent = Intent(this, AddEditPlantActivity::class.java)
-            nextIntent.putExtra(Constants.MODE, Constants.ADD_NOTE_REQUEST)
+            nextIntent.putExtra(Constants.MODE, Constants.ADD_REQUEST)
             resultLauncher.launch(nextIntent)
         }
     }
@@ -89,9 +89,9 @@ class PlantOverviewActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 val data: Intent? = result.data
-                val resultmode = data?.getStringExtra(Constants.MODE)
-                if (resultmode != null) {
-                    if ((resultmode == Constants.ADD_NOTE_REQUEST)) {
+                val resultMode = data?.getStringExtra(Constants.MODE)
+                if (resultMode != null) {
+                    if ((resultMode == Constants.ADD_REQUEST)) {
                         var name = data.getStringExtra(Constants.EXTRA_TITLE)
                         var type = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
                         var info = data.getStringExtra(Constants.EXTRA_INFO)
@@ -103,14 +103,7 @@ class PlantOverviewActivity : AppCompatActivity() {
                             plantViewModel.addPlant(name,type,info)
 
                         Toast.makeText(this, "New Plant saved Saved", Toast.LENGTH_SHORT).show()
-                    } else if ((resultmode == Constants.EDIT_NOTE_REQUEST)) {
-                        val id = data.getIntExtra(Constants.EXTRA_ID, -1)
-                        if (id == -1) {
-                            Toast.makeText(this, "Internal Error: does not exist in DB.", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this, "updated - not yet implemented", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
+                    }  else {
                         Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
                     }
                 }

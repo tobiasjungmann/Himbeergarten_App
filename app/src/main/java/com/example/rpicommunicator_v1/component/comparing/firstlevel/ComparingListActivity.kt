@@ -3,7 +3,6 @@ package com.example.rpicommunicator_v1.component.comparing.firstlevel
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,7 +41,6 @@ class ComparingListActivity : AppCompatActivity() {
 
         val adapter = ComparingListAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-           Log.d("bla","adapter triggered")
             val intent = Intent(this, ComparingElementActivity::class.java)
             intent.putExtra(EXTRA_ID, listViewModel?.getComparingListByPosition(position)?.comparingListId)
             startActivity(intent)

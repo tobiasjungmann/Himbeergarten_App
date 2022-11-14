@@ -22,8 +22,8 @@ object Constants {
     const val EXTRA_PRIORITY = "EXTRA_PRIORITY"
     const val EXTRA_IMAGE_PATH = "EXTRA_image_path"
     const val MODE = "mode"
-    const val ADD_NOTE_REQUEST = "ADD"
-    const val EDIT_NOTE_REQUEST = "EDIT"
+    const val ADD_REQUEST = "ADD"
+    const val EDIT_REQUEST = "EDIT"
 
     const val TAG_CMAERA="cameraX"
     const val FILE_NAME_FORMAT= "yy-MM-dd-HH-mm-ss-SSS"

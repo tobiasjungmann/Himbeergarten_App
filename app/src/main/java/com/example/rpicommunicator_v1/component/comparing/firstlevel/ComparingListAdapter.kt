@@ -18,9 +18,6 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
     class ComparingListHolder(val binding: ListItemTextBinding, listener: (View, Int, Int) -> Unit) : RecyclerView.ViewHolder(binding.root){
 
         init {
-           /* textViewTitle = itemView.findViewById(R.id.title)
-            textViewSecondary = itemView.findViewById(R.id.textView)
-            textViewDescription = itemView.findViewById(R.id.textView2)*/
             itemView.setOnClickListener { listener.invoke(it, bindingAdapterPosition, itemViewType)}
         }
     }

@@ -206,7 +206,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_settingsActivity"
+        android:id="@+id/button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -217,5 +217,5 @@
         android:clickable="true"
         android:contentDescription="Add Photo"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+        app:srcCompat="@drawable/ic_baseline_edit_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

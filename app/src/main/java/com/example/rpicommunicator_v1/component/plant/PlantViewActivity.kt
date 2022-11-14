@@ -1,13 +1,18 @@
 package com.example.rpicommunicator_v1.component.plant
 
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_GRAPH_STRING
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_HUMIDITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ICON
@@ -27,12 +32,12 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class PlantViewActivity : AppCompatActivity() {
-    private var plantViewModel: PlantViewModel? = null
+    private lateinit var plantViewModel: PlantViewModel
+    private lateinit var binding: ActivityPlantViewBinding
     private val dataWasChanged = false      // todo move in viewmodel - does not belong here
     private var waterNeededChanged = false
     private var plant: Plant? = null
     private var needsWater = false
-    private lateinit var binding: ActivityPlantViewBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +97,11 @@ class PlantViewActivity : AppCompatActivity() {
             }
             waterNeededChanged = !waterNeededChanged
         }
+        binding.buttonEdit.setOnClickListener {
+            val nextIntent = Intent(this, AddEditPlantActivity::class.java)
+            nextIntent.putExtra(Constants.MODE, Constants.EDIT_REQUEST)
+            resultLauncher.launch(nextIntent)
+        }
     }
 
     private fun initPlant() {
@@ -122,8 +132,8 @@ class PlantViewActivity : AppCompatActivity() {
             Log.d("PlantView", "onstop: unchange data: " + plant!!.needsWater)
             plant!!.needsWater = !needsWater
             Log.d("PlantView", "onstop: data must be saved Plant: " + plant!!.needsWater)
-            plantViewModel!!.update(plant!!)
-            plantViewModel!!.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
+            plantViewModel.update(plant!!)
+            plantViewModel.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
         }
         super.onStop()
     }
@@ -144,13 +154,18 @@ class PlantViewActivity : AppCompatActivity() {
         lineDataSet1.circleRadius = 6f
         lineDataSet1.circleHoleRadius = 3f
         lineDataSet1.color = ContextCompat.getColor(application, R.color.primary_green_lighter)
-        lineDataSet1.setCircleColor(ContextCompat.getColor(application, R.color.primary_green_lighter))
+        lineDataSet1.setCircleColor(
+            ContextCompat.getColor(
+                application,
+                R.color.primary_green_lighter
+            )
+        )
         lineDataSet1.setDrawValues(false)
         lineDataSet1.setDrawHorizontalHighlightIndicator(false)
         lineDataSet1.setDrawVerticalHighlightIndicator(false)
     }
 
-    
+
     private fun styleChart() {
         binding.chart.setDrawBorders(true)
         binding.chart.setBorderColor(ContextCompat.getColor(application, R.color.light_grey))
@@ -164,8 +179,8 @@ class PlantViewActivity : AppCompatActivity() {
         binding.chart.axisLeft.setDrawLabels(false)
         binding.chart.xAxis.setDrawGridLines(false)
         binding.chart.xAxis.setDrawLabels(false)
-        binding.chart.axisLeft.axisMinimum=0F
-        binding.chart.axisRight.axisMinimum=0F
+        binding.chart.axisLeft.axisMinimum = 0F
+        binding.chart.axisRight.axisMinimum = 0F
         binding.chart.axisLeft.axisMaximum = 500f
         binding.chart.axisRight.axisMaximum = 500f
         binding.chart.legend.isEnabled = false
@@ -173,11 +188,11 @@ class PlantViewActivity : AppCompatActivity() {
         binding.chart.axisLeft.setDrawAxisLine(false)
         binding.chart.axisRight.setDrawAxisLine(false)
         val limitLine = LimitLine(200f) // set where the line should be drawn
-        limitLine.lineColor = ContextCompat.getColor(application,R.color.primary_green_lighter)
+        limitLine.lineColor = ContextCompat.getColor(application, R.color.primary_green_lighter)
         limitLine.lineWidth = 2f
         binding.chart.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
-        limitLine2.lineColor = ContextCompat.getColor(application,R.color.red)
+        limitLine2.lineColor = ContextCompat.getColor(application, R.color.red)
         limitLine2.lineWidth = 2f
         binding.chart.axisLeft.addLimitLine(limitLine2)
         binding.chart.axisLeft.addLimitLine(limitLine)
@@ -196,97 +211,33 @@ class PlantViewActivity : AppCompatActivity() {
             )
         }
         return dataSets
-    } /* public class GraphXAxisValueFormatter implements IAxisValueFormatter {
-
-        private int MINUTES_INTERVAL = 5;
-        private String[] mValues;
-        private int mInterval;
-        public SensorInterval.Interval mSlot;
-
-        public GraphXAxisValueFormatter(List<BinSensorData> range, int interval, SensorInterval.Interval slot) {
-            mValues = new String[range.size()];
-            mInterval = interval;
-            mSlot = slot;
-
-            Calendar calendar = Calendar.getInstance();
-            for (int i = 0; i < range.size(); i++) {
-                calendar.setTimeInMillis(range.get(i).getTime());
-
-                int unroundedMinutes = calendar.get(Calendar.MINUTE);
-                int mod = unroundedMinutes % MINUTES_INTERVAL;
-                calendar.add(Calendar.MINUTE, mod < 8 ? -mod : (MINUTES_INTERVAL - mod));
-
-
-                String s = "";
-
-                if (slot.equals(SensorInterval.Interval.HOUR) || slot.equals(SensorInterval.Interval.DAY))
-                    s = Util.getTimeFromTimestamp(calendar.getTimeInMillis());
-                else if (slot.equals(SensorInterval.Interval.WEEK))
-                    s = Util.getDayFromTimestamp(calendar.getTimeInMillis());
-                else if (slot.equals(SensorInterval.Interval.MONTH))
-                    s = Util.getMonthFromTimestamp(calendar.getTimeInMillis());
-                else if (slot.equals(SensorInterval.Interval.YEAR))
-                    s = Util.getYearFromTimestamp(calendar.getTimeInMillis());
-
-
-                Util.setLog("Time : " + s);
-                mValues[i] = s;
-            }
-        }
-
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            if (value % mInterval == 0 && value >= 0) {
-                return mValues[(int) value % mValues.length];
-            } else
-                return "";
-
-        }
-
-
-        public int getDecimalDigits() {
-            return 0;
-        }
-    }*/
-    /*public class MyYAxisValueFormatterExample implements IAxisValueFormatter {
-
-        private DecimalFormat mFormat;
-
-        public MyYAxisValueFormatterExample() {
-
-            // format values to 1 decimal digit
-            mFormat = new DecimalFormat("###,###,##0.0");
-        }
-
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            // "value" represents the position of the label on the axis (x or y)
-            //2021.04.06:14:39_650;2021.04.06:14:44_331;2021.04.06:14:45_435;2021.04.06:14:47_357;2021.04.06:14:48_322
-            try {
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM");
-                return sdf.format(new Date(1,));
-
-            } catch (Exception e) {
-
-                return  dateInMillisecons;
-            }
-            return mFormat.format(value) + " $";
-        }
     }
 
-    private class MyXAxisValueFormatter implements IAxisValueFormatter {
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                val resultMode = data?.getStringExtra(Constants.MODE)
+                if (resultMode != null) {
+                    if ((resultMode == Constants.EDIT_REQUEST)) {
+                        var name = data.getStringExtra(Constants.EXTRA_TITLE)
+                        var type = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
+                        var info = data.getStringExtra(Constants.EXTRA_INFO)
+                        val imagePath =
+                            data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
+                        if (name == null) {name="Name"}
+                        if (type == null) {type=""}
+                        if (info == null) {info=""}
+                        plantViewModel.addPlant(name,type,info)
 
-        @Override
-        public String getXValue(String dateInMillisecons, int index, ViewPortHandler viewPortHandler) {
-            try {
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM");
-                return sdf.format(new Date(Long.parseLong(dateInMillisecons)));
-
-            } catch (Exception e) {
-
-                return  dateInMillisecons;
+                        Toast.makeText(this, "Plant edited", Toast.LENGTH_SHORT).show()
+                    }  else {
+                        Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
             }
-        }*/
+        }
 }
