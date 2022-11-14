@@ -7,10 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.CommunicatorGrpc
-import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.service.GrpcCommunicatorService
-import com.example.rpicommunicator_v1.service.GrpcStorageServerService
 import io.grpc.ManagedChannelBuilder
 import java.util.*
 
@@ -22,8 +20,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
     private val rpiIpAddress = Constants.IP
     private val rpiPort = 8010
+
     private var grpcCommunicationInterface: GrpcCommunicatorService = initGrpcStub()
-    private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
     private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_NONE)
     val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
@@ -43,9 +41,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun matrixChangeMode(matrixMode: Communication.MatrixState) {
-        grpcStorageServerInterface.setHumidityTest()
         Log.i("buttonClick", "matrix mode change request to: " + matrixMode.name)
-        //grpcCommunicationInterface.matrixChangeMode(matrixMode, this)
+        grpcCommunicationInterface.matrixChangeMode(matrixMode, this)
     }
 
     fun matrixChangeToMVV(start: String, destination: String) {
@@ -94,21 +91,4 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 ).build()
         return GrpcCommunicatorService(CommunicatorGrpc.newStub(mChannel))
     }
-
-    private fun initStorageGrpcStub(): GrpcStorageServerService {
-        val wildcardConfig: MutableMap<String, Any> = HashMap()
-        wildcardConfig["name"] = listOf(emptyMap<Any, Any>())
-        wildcardConfig["timeout"] = "7s"
-        val mChannel =
-            ManagedChannelBuilder.forAddress("192.168.0.8", 12346).usePlaintext()
-                .defaultServiceConfig(
-                    Collections.singletonMap(
-                        "methodConfig", listOf(
-                            wildcardConfig
-                        )
-                    )
-                ).build()
-        return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
-    }
-
 }

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.component.Constants
-import com.example.rpicommunicator_v1.component.comparing.secondlevel.AddElementActivity
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
 
@@ -24,13 +23,11 @@ class PlantOverviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantOverviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setContentView(R.layout.activity_plant_overview)
         plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
 
         initRecyclerView()
         binding.buttonAddElement.setOnClickListener {
-            Log.i("buttonClick", "add element was clicked")
-            val nextIntent = Intent(this, AddElementActivity::class.java)
+            val nextIntent = Intent(this, AddEditPlantActivity::class.java)
             nextIntent.putExtra(Constants.MODE, Constants.ADD_NOTE_REQUEST)
             resultLauncher.launch(nextIntent)
         }
@@ -95,51 +92,30 @@ class PlantOverviewActivity : AppCompatActivity() {
                 val resultmode = data?.getStringExtra(Constants.MODE)
                 if (resultmode != null) {
                     if ((resultmode == Constants.ADD_NOTE_REQUEST)) {
-                        val title = data.getStringExtra(Constants.EXTRA_TITLE)
-                        val description = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
-                        val priority = data.getIntExtra(Constants.EXTRA_PRIORITY, 1)
+                        var name = data.getStringExtra(Constants.EXTRA_TITLE)
+                        var type = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
+                        var info = data.getStringExtra(Constants.EXTRA_INFO)
                         val imagePath =
                             data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                        /* val comparingElement =
-                             ComparingElement(
-                                 title!!,
-                                 description!!,
-                                 priority,
-                                 listeId
-                             )
-                         ?.insert(comparingElement, imagePath)*/
-                        Toast.makeText(this, "Element Saved", Toast.LENGTH_SHORT).show()
+                        if (name == null) {name="Name"}
+                        if (type == null) {type=""}
+                        if (info == null) {info=""}
+                            plantViewModel.addPlant(name,type,info)
+
+                        Toast.makeText(this, "New Plant saved Saved", Toast.LENGTH_SHORT).show()
                     } else if ((resultmode == Constants.EDIT_NOTE_REQUEST)) {
                         val id = data.getIntExtra(Constants.EXTRA_ID, -1)
                         if (id == -1) {
-                            Toast.makeText(this, "can not be updated", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Internal Error: does not exist in DB.", Toast.LENGTH_SHORT).show()
                         } else {
-                            val title = data.getStringExtra(Constants.EXTRA_TITLE)
-                            val description =
-                                data.getStringExtra(Constants.EXTRA_DESCRIPTION)
-                            val priority = data.getIntExtra(Constants.EXTRA_PRIORITY, 1)
-                            val imagePath =
-                                data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                            /*val comparingElement =
-                                ComparingElement(
-                                    title!!,
-                                    description!!,
-                                    priority,
-                                    listeId
-                                )
-                            comparingElement.comparingElementId = id
-                            if (imagePath != null) {
-                                comparingElementViewModel?.update(comparingElement, imagePath)
-                            }*/
-
-                            Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "updated - not yet implemented", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(this, "Element not Saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(this, "Element not Saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
             }
         }
 }

@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher,MissingLeanbackSupport">
 
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +17,9 @@
         android:roundIcon="@mipmap/lightbulbround"
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
+        <activity
+            android:name=".component.plant.AddEditPlantActivity"
+            android:exported="false" />
         <activity
             android:name=".component.comparing.secondlevel.ComparingElementActivity"
             android:exported="false" />
