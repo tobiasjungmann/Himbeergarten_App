@@ -25,7 +25,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var grpcCommunicationInterface: GrpcCommunicatorService = initGrpcStub()
     private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
-    private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_TIME)
+    private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_NONE)
     val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
 
     private val _serverAvailable = MutableLiveData(true)

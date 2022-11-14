@@ -50,7 +50,7 @@ class GrpcCommunicatorService(
                         )
                     )
                     mainActivityViewModel.setCurrentMatrixMode(
-                        response?.matrixState ?: Communication.MatrixState.MATRIX_TIME
+                        response?.matrixState ?: Communication.MatrixState.MATRIX_NONE
                     )
                     mainActivityViewModel.setServerAvailable(true);
                 }

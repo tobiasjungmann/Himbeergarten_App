@@ -95,30 +95,6 @@
                         android:orientation="horizontal"
                         android:paddingTop="16dp"
                         android:paddingBottom="8dp">
-
-                        <LinearLayout
-                            android:id="@+id/imagetrain"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageweather"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagetime"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="train"
-                                android:src="@drawable/icon_train" />
-                        </LinearLayout>
-
                         <LinearLayout
                             android:id="@+id/imagetime"
                             android:layout_width="0dp"
@@ -142,16 +118,16 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/imagespotify"
+                            android:id="@+id/imagetrain"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/custom_rectangle_rounded_corners"
                             android:orientation="horizontal"
                             android:padding="2dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageweather"
                             app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imageweather"
+                            app:layout_constraintStart_toEndOf="@+id/imagetime"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintWidth_percent="0.23">
 
@@ -159,9 +135,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:adjustViewBounds="true"
-                                android:contentDescription="spotify"
-                                android:src="@drawable/icon_playlist" />
+                                android:contentDescription="train"
+                                android:src="@drawable/icon_train" />
                         </LinearLayout>
+
 
                         <LinearLayout
                             android:id="@+id/imageweather"
@@ -183,6 +160,29 @@
                                 android:adjustViewBounds="true"
                                 android:contentDescription="weather"
                                 android:src="@drawable/icon_weather" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/imagespotify"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/custom_rectangle_rounded_corners"
+                            android:orientation="horizontal"
+                            android:padding="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/imageweather"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.23">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="spotify"
+                                android:src="@drawable/icon_playlist" />
                         </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

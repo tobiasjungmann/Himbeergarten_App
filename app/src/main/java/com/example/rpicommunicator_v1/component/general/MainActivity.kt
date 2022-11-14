@@ -1,5 +1,6 @@
 package com.example.rpicommunicator_v1.component.general
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -16,7 +17,7 @@ import com.example.rpicommunicator_v1.component.plant.PlantOverviewActivity
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private var currentMatrixActivated: Int = 0
+    private var currentMatrixActivated: Int = R.integer.INVALID_LAYOUT_ID
     private lateinit var binding: ActivityMainBinding
     private var mainActivityViewModel: MainActivityViewModel? = null
     private var gpioButtons = ArrayList<LinearLayout>()
@@ -26,8 +27,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-
-        currentMatrixActivated = R.id.imagetime  // initial button which is highlighted by default
 
         initLiveDataObservers()
         mainActivityViewModel!!.loadStatus()
@@ -169,13 +168,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun toggleMatrixUi(matrixId: Communication.MatrixState) {
         val id = getResIdForMatrixState(matrixId)
+
         switchOffCurrent()
-        findViewById<View>(id).background.setTint(
-            ContextCompat.getColor(
-                this,
-                R.color.primary_green_transparent
+        if (id != R.integer.INVALID_LAYOUT_ID) {
+            findViewById<View>(id).background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.primary_green_transparent
+                )
             )
-        )
+        }
         currentMatrixActivated = id
     }
 
@@ -190,19 +192,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             return R.id.imageweather
         } else if (matrixState == Communication.MatrixState.MATRIX_TERMINATE) {
             return R.id.imagequit
+        } else if (matrixState == Communication.MatrixState.MATRIX_TIME) {
+            return R.id.imagetime
         }
-        return R.id.imagetime
+
+        return R.integer.INVALID_LAYOUT_ID
     }
 
+    @SuppressLint("ResourceType")   // will either be an INVALID_LAYOUT_ID or a valid id
     private fun switchOffCurrent() {
-        if (currentMatrixActivated != 0) {
+        if (currentMatrixActivated != R.integer.INVALID_LAYOUT_ID) {
             findViewById<View>(currentMatrixActivated).background.setTint(
                 ContextCompat.getColor(
                     this,
                     R.color.transparent
                 )
             )
-            currentMatrixActivated = 0
+            currentMatrixActivated = R.integer.INVALID_LAYOUT_ID
         }
     }
 
