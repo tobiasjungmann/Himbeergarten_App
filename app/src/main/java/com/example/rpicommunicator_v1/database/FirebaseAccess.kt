@@ -1,25 +1,15 @@
 package com.example.rpicommunicator_v1.database
 
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.example.rpicommunicator_v1.R
-import com.google.firebase.firestore.SetOptions
-import android.database.sqlite.SQLiteConstraintException
-import android.util.Log
-import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
-import com.google.android.gms.tasks.Task
-import java.lang.NullPointerException
-import java.util.*
 
 class FirebaseAccess(plantRepository: PlantRepository) {
-    private val plantRepository: PlantRepository
-    private val db: FirebaseFirestore
+   // private val plantRepository: PlantRepository
+   // private val db: FirebaseFirestore
 
     //plant.setImageID(R.drawable.plant1);
     //plant.setIconID(R.drawable.plant1);
-    val fromFirebase: Unit
+  /*  val fromFirebase: Unit
         get() {
             db.collection("plants")
                 .get()
@@ -126,5 +116,5 @@ class FirebaseAccess(plantRepository: PlantRepository) {
     init {
         db = FirebaseFirestore.getInstance()
         this.plantRepository = plantRepository
-    }
+    }*/
 }

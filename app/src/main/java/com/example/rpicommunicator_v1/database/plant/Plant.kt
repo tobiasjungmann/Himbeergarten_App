@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "plant_table")
 class Plant(//(autoGenerate = true)
-    @field:PrimaryKey var id: String,
+//    @field:PrimaryKey var id: String,
     var name: String,
     var info: String,
     var watered: String,
@@ -14,6 +14,7 @@ class Plant(//(autoGenerate = true)
     var needsWater: Boolean,
     val graphString: String
 ) {
+    @field:PrimaryKey var id: String="-1"
     var imageID = -1
     var iconID = -1
 

@@ -26,10 +26,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 class PlantDetailFragment : Fragment() {
     private lateinit var plantViewModel: PlantViewModel
     private lateinit var binding: FragmentPlantDetailBinding
-    //   private val dataWasChanged = false      // todo move in viewmodel - does not belong here
-    //   private var waterNeededChanged = false
-    //   private var plant: Plant? = null
-    //   private var needsWater = false
 
 
     override fun onCreateView(
@@ -37,13 +33,13 @@ class PlantDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPlantDetailBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
+
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
         if (plantViewModel.getCurrentPlant()==null){
             Log.d("Debug", "onCreateView: No plant specified for the detail view")
         }
-       // initPlant()
+
         initViewComponents()
         if (plantViewModel.getCurrentPlant()!!.graphString != "") {
             initChart(plantViewModel.getCurrentPlant()!!.graphString)
@@ -68,33 +64,8 @@ class PlantDetailFragment : Fragment() {
         binding.humidityTextView.text = plant.humidity
         binding.wateredTextView.text = plant.watered
         binding.infoTextView.text = plant.info
-        if (plant.needsWater) {
-            binding.willBeWatered.visibility = View.VISIBLE
-            binding.waterButton.setText(R.string.doNotWater)
-        } else {
-            binding.willBeWatered.visibility = View.INVISIBLE
-            binding.waterButton.setText(R.string.doWater)
-        }
-        binding.waterButton.setOnClickListener {
-          /* fixme part of viewmoddel if (plant.needsWater) {
-                if (!waterNeededChanged) {
-                    binding.willBeWatered.visibility = View.INVISIBLE
-                    binding.waterButton.setText(R.string.doWater)
-                } else {
-                    binding.willBeWatered.visibility = View.VISIBLE
-                    binding.waterButton.setText(R.string.doNotWater)
-                }
-            } else {
-                if (!waterNeededChanged) {
-                    binding.willBeWatered.visibility = View.VISIBLE
-                    binding.waterButton.setText(R.string.doWater)
-                } else {
-                    binding.willBeWatered.visibility = View.INVISIBLE
-                    binding.waterButton.setText(R.string.doNotWater)
-                }
-            }
-            waterNeededChanged = !waterNeededChanged*/
-        }
+
+
         binding.buttonEdit.setOnClickListener {
             // current plant can be kept - no need to reset it
             val nextFrag = AddEditPlantFragment()
@@ -105,18 +76,10 @@ class PlantDetailFragment : Fragment() {
         }
     }
 
-    /*private fun initPlant() {
-        plant = plantViewModel.getCurrentPlant()
-    }*/
 
     override fun onStop() {
-        /* fixme if (dataWasChanged || waterNeededChanged) {
-            Log.d("PlantView", "onstop: unchange data: " + plant!!.needsWater)
-            plant!!.needsWater = !needsWater
-            Log.d("PlantView", "onstop: data must be saved Plant: " + plant!!.needsWater)
-            plantViewModel.update(plant!!)
-            plantViewModel.updateWateredInFirebase(plant!!.id, plant!!.needsWater)
-        }*/
+        plantViewModel.saveCurrentPlant()
+
         super.onStop()
     }
 

@@ -40,12 +40,13 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
 
-        if (plantViewModel.getCurrentPlant() != null) {
-
+        if (plantViewModel.getCurrentPlant() == null) {
+            plantViewModel.createEmptyPlant()
+        }
             binding.editTextDescription.setText(plantViewModel.getCurrentPlant()!!.info)
             binding.editTextTitle.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
-        }
+
 
         binding.imageRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

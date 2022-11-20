@@ -10,7 +10,7 @@ class PlantRepository(application: Application?) {
     private val plantDao: PlantDao?
     val allPlants: LiveData<List<Plant>>
     private val firebaseAccess: FirebaseAccess
-    var currentPlant: Plant? = null
+
 
     fun insert(plant: Plant) {
         InsertPlantThread(plantDao, plant).start()
@@ -21,7 +21,7 @@ class PlantRepository(application: Application?) {
     }
 
     fun reloadFromFirestore() {
-        firebaseAccess.fromFirebase
+        //firebaseAccess.fromFirebase
     }
 
     fun remove(plant: Plant) {
@@ -29,12 +29,10 @@ class PlantRepository(application: Application?) {
     }
 
     fun updateWateredInFirebase(id: String?, needsWater: Boolean?) {
-        firebaseAccess.updateWateredInFirebase(id, needsWater!!)
+      //  firebaseAccess.updateWateredInFirebase(id, needsWater!!)
     }
 
-    fun setCurrentPlant(position: Int) {
-        currentPlant = allPlants.value!![position]
-    }
+
 
     private class InsertPlantThread(private val plantDao: PlantDao?, private val plant: Plant) :
         Thread() {
@@ -71,6 +69,5 @@ class PlantRepository(application: Application?) {
         plantDao = database!!.plantDao()
         allPlants = plantDao!!.allPlants
         firebaseAccess = FirebaseAccess(this)
-        //firebaseAccess.getFromFirebase();
     }
 }

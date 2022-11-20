@@ -19,6 +19,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
 
+    private var currentPlant: Plant? = null
+    private val currentPlantWasChanged = false
 
     fun update(plant: Plant) {
         plantRepository.update(plant)
@@ -38,8 +40,11 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setCurrentPlant(position: Int) {
-        plantRepository.setCurrentPlant(position)
+        currentPlant = allPlants.value!![position]
+    }
 
+    fun getCurrentPlant(): Plant? {
+        return currentPlant
     }
 
     fun setHumidityTest() {
@@ -71,11 +76,17 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
     }
 
-    fun getCurrentPlant(): Plant? {
-        return plantRepository.currentPlant
+    fun saveCurrentPlant() {
+        //if (dataWasChanged || waterNeededChanged) {
+            Log.d("PlantView", "onstop: unchange data: " + currentPlant!!.needsWater)
+                    //   currentPlant!!.needsWater = !needsWater
+            Log.d("PlantView", "onstop: data must be saved Plant: " + currentPlant!!.needsWater)
+            update(currentPlant!!)
+            updateWateredInFirebase(currentPlant!!.id, currentPlant!!.needsWater)
+        //}
     }
-    init {
-        Log.d("debug", "Hello new fragment: ")
-        plantRepository.currentPlant= allPlants.value?.get(0)
+
+    fun createEmptyPlant() {
+        currentPlant= Plant("","","","",false,"")
     }
 }
