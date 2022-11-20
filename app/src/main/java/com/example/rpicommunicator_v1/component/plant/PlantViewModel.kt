@@ -74,4 +74,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     fun getCurrentPlant(): Plant? {
         return plantRepository.currentPlant
     }
+    init {
+        Log.d("debug", "Hello new fragment: ")
+        plantRepository.currentPlant= allPlants.value?.get(0)
+    }
 }

@@ -35,28 +35,22 @@ class PlantOverviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentPlantOverviewBinding.inflate(inflater, container, false)
-      //  binding = FragmentPlantDetailBinding.inflate(layoutInflater)
-        val view = binding.root
-    //    setContentView(view)
+
 
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
-//_binding.
-//binding.buttonAddElement
+
         binding.buttonAddElementFragement .setOnClickListener {
-            val nextFrag = PlantDetailFragment()
+            val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
                 .addToBackStack(null)
                 .commit()
-            /*  fixme val nextIntent = Intent(this, AddEditPlantActivity::class.java)
-              nextIntent.putExtra(Constants.MODE, Constants.ADD_REQUEST)
-              resultLauncher.launch(nextIntent)*/
         }
         initRecyclerView()
-        return binding.root// inflater.inflate(R.layout.fragment_plant_overview, container, false)
+        return binding.root
     }
 
 
@@ -105,10 +99,12 @@ private fun initRecyclerView() {
     }
 
     private fun openPlantView(position: Int) {
-        /* fixme Log.d("overview", "method for listener called")
-        val intent = Intent(applicationContext, PlantViewActivity::class.java)
         plantViewModel.setCurrentPlant(position)
-        startActivity(intent)*/
+        val nextFrag = PlantDetailFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+            .addToBackStack(null)
+            .commit()
     }
 
     private var resultLauncher =
