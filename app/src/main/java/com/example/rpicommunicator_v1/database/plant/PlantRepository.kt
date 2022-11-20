@@ -1,17 +1,17 @@
 package com.example.rpicommunicator_v1.database.plant
 
 import android.app.Application
-import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
-
-import androidx.lifecycle.LiveData
-
 import android.database.sqlite.SQLiteConstraintException
+import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.FirebaseAccess
+import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
 
 class PlantRepository(application: Application?) {
     private val plantDao: PlantDao?
     val allPlants: LiveData<List<Plant>>
     private val firebaseAccess: FirebaseAccess
+    var currentPlant: Plant? = null
+
     fun insert(plant: Plant) {
         InsertPlantThread(plantDao, plant).start()
     }
@@ -30,6 +30,10 @@ class PlantRepository(application: Application?) {
 
     fun updateWateredInFirebase(id: String?, needsWater: Boolean?) {
         firebaseAccess.updateWateredInFirebase(id, needsWater!!)
+    }
+
+    fun setCurrentPlant(position: Int) {
+        currentPlant = allPlants.value!![position]
     }
 
     private class InsertPlantThread(private val plantDao: PlantDao?, private val plant: Plant) :

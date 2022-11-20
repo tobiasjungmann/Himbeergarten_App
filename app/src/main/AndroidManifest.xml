@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
+            android:name=".PlantHolderActivity"
+            android:exported="false" />
+        <activity
             android:name=".component.plant.AddEditPlantActivity"
             android:exported="false" />
         <activity

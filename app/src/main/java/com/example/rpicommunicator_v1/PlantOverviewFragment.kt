@@ -1,39 +1,75 @@
-package com.example.rpicommunicator_v1.component.plant
+package com.example.rpicommunicator_v1
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.component.Constants
+import com.example.rpicommunicator_v1.component.plant.PlantAdapter
+import com.example.rpicommunicator_v1.component.plant.PlantViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
+import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
+import com.example.rpicommunicator_v1.databinding.FragmentPlantOverviewBinding
 
-class PlantOverviewActivity : AppCompatActivity() {
+
+class PlantOverviewFragment : Fragment() {
 
     private lateinit var plantViewModel: PlantViewModel
-    private lateinit var binding: ActivityPlantOverviewBinding
+  //  private lateinit var binding: FragmentPlantDetailBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPlantOverviewBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
+    private var _binding: FragmentPlantOverviewBinding? = null
 
-        initRecyclerView()
-        binding.buttonAddElement.setOnClickListener {
-            val nextIntent = Intent(this, AddEditPlantActivity::class.java)
-            nextIntent.putExtra(Constants.MODE, Constants.ADD_REQUEST)
-            resultLauncher.launch(nextIntent)
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentPlantOverviewBinding.inflate(inflater, container, false)
+      //  binding = FragmentPlantDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+    //    setContentView(view)
+
+        plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
+//_binding.
+//binding.buttonAddElement
+        binding.buttonAddElementFragement .setOnClickListener {
+            val nextFrag = PlantDetailFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
+            /*  fixme val nextIntent = Intent(this, AddEditPlantActivity::class.java)
+              nextIntent.putExtra(Constants.MODE, Constants.ADD_REQUEST)
+              resultLauncher.launch(nextIntent)*/
         }
+        initRecyclerView()
+        return binding.root// inflater.inflate(R.layout.fragment_plant_overview, container, false)
     }
 
-    private fun initRecyclerView() {
+
+
+
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}
+
+
+
+private fun initRecyclerView() {
         val adapter = PlantAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             openPlantView(position)
@@ -48,7 +84,7 @@ class PlantOverviewActivity : AppCompatActivity() {
         }
         initSwipeToRefresh()
         binding.plantViewRecycler.adapter = adapter
-        binding.plantViewRecycler.layoutManager = LinearLayoutManager(this)
+        binding.plantViewRecycler.layoutManager = LinearLayoutManager(context)
     }
 
 
@@ -69,10 +105,10 @@ class PlantOverviewActivity : AppCompatActivity() {
     }
 
     private fun openPlantView(position: Int) {
-        Log.d("overview", "method for listener called")
+        /* fixme Log.d("overview", "method for listener called")
         val intent = Intent(applicationContext, PlantViewActivity::class.java)
         plantViewModel.setCurrentPlant(position)
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
     private var resultLauncher =
@@ -91,15 +127,15 @@ class PlantOverviewActivity : AppCompatActivity() {
                         if (name == null) {name="Name"}
                         if (type == null) {type=""}
                         if (info == null) {info=""}
-                            plantViewModel.addPlant(name,type,info)
+                        plantViewModel.addPlant(name,type,info)
 
-                        Toast.makeText(this, "New Plant saved Saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "New Plant saved Saved", Toast.LENGTH_SHORT).show()
                     }  else {
-                        Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
             }
         }
 }

@@ -11,19 +11,18 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
 import com.example.rpicommunicator_v1.databinding.ActivityAddEditPlantBinding
 import java.io.File
 
-class AddEditPlantActivity : AppCompatActivity() , CameraContract.View {
+class AddEditPlantActivity : AppCompatActivity(), CameraContract.View {
 
-private var mode: String? = null
-
+    private lateinit var plantViewModel: PlantViewModel
     private var presenter: CameraContract.Presenter = CameraPresenter(this)
     private lateinit var binding: ActivityAddEditPlantBinding
     private lateinit var thumbnailsAdapter: CameraThumbnailsAdapter
@@ -32,25 +31,20 @@ private var mode: String? = null
         super.onCreate(savedInstanceState)
         binding = ActivityAddEditPlantBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        plantViewModel = ViewModelProvider(this)[PlantViewModel::class.java]
         presenter.attachView(this)
 
-        val intent = intent
-        if (intent.hasExtra(Constants.EXTRA_ID)) {
-            title = "Edit Plant"
-            binding.editTextDescription.setText(intent.getStringExtra(Constants.EXTRA_DESCRIPTION))
-            binding.editTextTitle.setText(intent.getStringExtra(Constants.EXTRA_TITLE))
-            binding.editTextInfo.setText(intent.getStringExtra(Constants.EXTRA_INFO))
-            presenter.imageElement.addAll(
+        if (plantViewModel.getCurrentPlant()!=null) {
+
+            binding.editTextDescription.setText(plantViewModel.getCurrentPlant()!!.info)
+            binding.editTextTitle.setText(plantViewModel.getCurrentPlant()!!.name)
+            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
+            /*presenter.imageElement.addAll(
                 0,
-                intent.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
-            )
-        } else {
-            title = "Add New Plant"
+                plantViewModel.currentPlant!!.imageID
+            )*/
         }
-        if (intent.hasExtra(Constants.MODE)) {
-            mode = intent.getStringExtra(Constants.MODE)
-        }
+
         binding.imageRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -61,6 +55,7 @@ private var mode: String? = null
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
+
         binding.imageRecyclerView.adapter = thumbnailsAdapter
         binding.addImageButton.setOnClickListener { showImageOptionsDialog() }
         binding.buttonSaveComparingElement.setOnClickListener { saveNote() }
@@ -74,16 +69,9 @@ private var mode: String? = null
             return
         }
         val data = Intent()
-        data.putExtra(Constants.EXTRA_TITLE, title)
-        data.putExtra(Constants.EXTRA_DESCRIPTION, description)
-        data.putExtra(Constants.EXTRA_IMAGE_PATH, presenter.imageElement.toTypedArray())
-
-        data.putExtra(Constants.MODE, mode)
-        val id = intent.getIntExtra(Constants.EXTRA_ID, -1)
-        if (id != -1) {
-            data.putExtra(Constants.EXTRA_ID, id)
-        }
-        setResult(RESULT_OK, data)
+        plantViewModel.getCurrentPlant()!!.name=title
+      //  plantViewModel.currentPlant!!.watered=description
+        plantViewModel.getCurrentPlant()!!.info=description
         finish()
     }
 

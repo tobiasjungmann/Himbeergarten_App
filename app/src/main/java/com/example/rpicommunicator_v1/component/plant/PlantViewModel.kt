@@ -37,8 +37,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plantRepository.reloadFromFirestore()
     }
 
-    fun getActPlant(position: Int): Plant {
-        return allPlants.value!![position]
+    fun setCurrentPlant(position: Int) {
+        plantRepository.setCurrentPlant(position)
+
     }
 
     fun setHumidityTest() {
@@ -46,7 +47,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun addPlant(name: String, type: String, info: String) {
-        grpcStorageServerInterface.addPlant(name,type,info)
+        grpcStorageServerInterface.addPlant(name, type, info)
     }
 
     init {
@@ -68,5 +69,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 ).build()
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
+    }
+
+    fun getCurrentPlant(): Plant? {
+        return plantRepository.currentPlant
     }
 }

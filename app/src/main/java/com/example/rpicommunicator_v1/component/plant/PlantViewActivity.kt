@@ -13,15 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_GRAPH_STRING
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_HUMIDITY
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_ICON
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_INFO
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_NAME
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_NEEDS_WATER
-import com.example.rpicommunicator_v1.component.Constants.EXTRA_WATERED
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ActivityPlantViewBinding
 import com.github.mikephil.charting.components.Description
@@ -105,26 +96,7 @@ class PlantViewActivity : AppCompatActivity() {
     }
 
     private fun initPlant() {
-        val name = intent.getStringExtra(EXTRA_NAME)
-        val humidity = intent.getStringExtra(EXTRA_HUMIDITY)
-        val watered = intent.getStringExtra(EXTRA_WATERED)
-        needsWater = intent.getBooleanExtra(EXTRA_NEEDS_WATER, false)
-        val imageid = intent.getIntExtra(EXTRA_IMAGE, -1)
-        val iconid = intent.getIntExtra(EXTRA_ICON, -1)
-        val info = intent.getStringExtra(EXTRA_INFO)
-        val id = intent.getStringExtra(EXTRA_ID)
-        val graphString = intent.getStringExtra(EXTRA_GRAPH_STRING)
-        plant = Plant(
-            id.toString(),
-            name.toString(),
-            info.toString(),
-            watered.toString(),
-            humidity.toString(),
-            needsWater,
-            graphString.toString()
-        )
-        plant!!.imageID = imageid
-        plant!!.iconID = iconid
+        plant = plantViewModel.getCurrentPlant()
     }
 
     override fun onStop() {
@@ -226,13 +198,19 @@ class PlantViewActivity : AppCompatActivity() {
                         var info = data.getStringExtra(Constants.EXTRA_INFO)
                         val imagePath =
                             data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                        if (name == null) {name="Name"}
-                        if (type == null) {type=""}
-                        if (info == null) {info=""}
-                        plantViewModel.addPlant(name,type,info)
+                        if (name == null) {
+                            name = "Name"
+                        }
+                        if (type == null) {
+                            type = ""
+                        }
+                        if (info == null) {
+                            info = ""
+                        }
+                        plantViewModel.addPlant(name, type, info)
 
                         Toast.makeText(this, "Plant edited", Toast.LENGTH_SHORT).show()
-                    }  else {
+                    } else {
                         Toast.makeText(this, "Plant not Saved", Toast.LENGTH_SHORT).show()
                     }
                 }
