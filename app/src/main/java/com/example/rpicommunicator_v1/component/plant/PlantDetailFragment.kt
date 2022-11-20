@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1
+package com.example.rpicommunicator_v1.component.plant
 
 import android.app.Activity
 import android.content.Intent
@@ -12,9 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
-import com.example.rpicommunicator_v1.component.plant.AddEditPlantActivity
-import com.example.rpicommunicator_v1.component.plant.PlantViewModel
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LimitLine
@@ -97,9 +96,12 @@ class PlantDetailFragment : Fragment() {
             waterNeededChanged = !waterNeededChanged*/
         }
         binding.buttonEdit.setOnClickListener {
-            val nextIntent = Intent(activity, AddEditPlantActivity::class.java)
-            nextIntent.putExtra(Constants.MODE, Constants.EDIT_REQUEST)
-            resultLauncher.launch(nextIntent)
+            // current plant can be kept - no need to reset it
+            val nextFrag = AddEditPlantFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -133,7 +135,9 @@ class PlantDetailFragment : Fragment() {
         lineDataSet1.lineWidth = 2f
         lineDataSet1.circleRadius = 6f
         lineDataSet1.circleHoleRadius = 3f
-        lineDataSet1.color = ContextCompat.getColor(requireContext().applicationContext, R.color.primary_green_lighter)
+        lineDataSet1.color = ContextCompat.getColor(requireContext().applicationContext,
+            R.color.primary_green_lighter
+        )
         lineDataSet1.setCircleColor(
             ContextCompat.getColor(
                 requireContext().applicationContext,
@@ -148,7 +152,9 @@ class PlantDetailFragment : Fragment() {
 
     private fun styleChart() {
         binding.chart.setDrawBorders(true)
-        binding.chart.setBorderColor(ContextCompat.getColor(requireContext().applicationContext, R.color.light_grey))
+        binding.chart.setBorderColor(ContextCompat.getColor(requireContext().applicationContext,
+            R.color.light_grey
+        ))
         binding.chart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
@@ -168,11 +174,15 @@ class PlantDetailFragment : Fragment() {
         binding.chart.axisLeft.setDrawAxisLine(false)
         binding.chart.axisRight.setDrawAxisLine(false)
         val limitLine = LimitLine(200f) // set where the line should be drawn
-        limitLine.lineColor = ContextCompat.getColor(requireContext().applicationContext, R.color.primary_green_lighter)
+        limitLine.lineColor = ContextCompat.getColor(requireContext().applicationContext,
+            R.color.primary_green_lighter
+        )
         limitLine.lineWidth = 2f
         binding.chart.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
-        limitLine2.lineColor = ContextCompat.getColor(requireContext().applicationContext, R.color.red)
+        limitLine2.lineColor = ContextCompat.getColor(requireContext().applicationContext,
+            R.color.red
+        )
         limitLine2.lineWidth = 2f
         binding.chart.axisLeft.addLimitLine(limitLine2)
         binding.chart.axisLeft.addLimitLine(limitLine)

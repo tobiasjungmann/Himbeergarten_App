@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1
+package com.example.rpicommunicator_v1.component.plant
 
 import android.app.Activity
 import android.content.Intent
@@ -15,10 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
-import com.example.rpicommunicator_v1.component.plant.PlantViewModel
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 import java.io.File
 

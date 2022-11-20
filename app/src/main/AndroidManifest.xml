@@ -18,10 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RPICommunicator_V1">
         <activity
-            android:name=".PlantHolderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".component.plant.AddEditPlantActivity"
+            android:name=".component.plant.PlantHolderActivity"
             android:exported="false" />
         <activity
             android:name=".component.comparing.secondlevel.ComparingElementActivity"
@@ -36,19 +33,11 @@
             android:name=".component.comparing.secondlevel.AddElementActivity"
             android:exported="false" />
         <activity
-            android:name=".component.plant.PlantOverviewActivity"
-            android:exported="false" />
-        <activity
             android:name=".component.general.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".component.bike.BikeTourActivity"
             android:exported="false" />
-        <activity
-            android:name=".component.plant.PlantViewActivity"
-            android:exported="false"
-            android:label="@string/title_activity_plant_view"
-            android:theme="@style/Theme.RPICommunicator_V1.NoActionBar" />
         <activity
             android:name=".component.general.MainActivity"
             android:exported="true">

@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1
+package com.example.rpicommunicator_v1.component.plant
 
 import android.app.Activity
 import android.content.Intent
@@ -11,12 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants
-import com.example.rpicommunicator_v1.component.plant.PlantAdapter
-import com.example.rpicommunicator_v1.component.plant.PlantViewModel
 import com.example.rpicommunicator_v1.database.plant.Plant
-import com.example.rpicommunicator_v1.databinding.ActivityPlantOverviewBinding
-import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.example.rpicommunicator_v1.databinding.FragmentPlantOverviewBinding
 
 
