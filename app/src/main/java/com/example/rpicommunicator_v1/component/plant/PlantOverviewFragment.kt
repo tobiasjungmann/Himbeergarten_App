@@ -39,10 +39,10 @@ class PlantOverviewFragment : Fragment() {
 
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
-        binding.buttonAddElementFragement .setOnClickListener {
+        binding.buttonAddPlant .setOnClickListener {
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+                .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
                 .addToBackStack(null)
                 .commit()
         }
@@ -69,25 +69,25 @@ private fun initRecyclerView() {
         adapter.setViewModel(plantViewModel)
 
         plantViewModel.allPlants.observe(
-            this
+            viewLifecycleOwner
         ) { plants: List<Plant> ->
             adapter.setPlants(plants as List<Plant>)
         }
         initSwipeToRefresh()
-        binding.plantViewRecycler.adapter = adapter
-        binding.plantViewRecycler.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewPlant.adapter = adapter
+        binding.recyclerViewPlant.layoutManager = LinearLayoutManager(context)
     }
 
 
     private fun initSwipeToRefresh() {
         // Setup refresh listener which triggers new data loading
-        binding.swipeContainer.setOnRefreshListener {
+        binding.swipeRefreshContainerPlant.setOnRefreshListener {
             plantViewModel.reloadFromFirestore()
-            binding.swipeContainer.isRefreshing = false
+            binding.swipeRefreshContainerPlant.isRefreshing = false
         }
 
         // Configure the refreshing colors
-        binding.swipeContainer.setColorSchemeResources(
+        binding.swipeRefreshContainerPlant.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
@@ -99,7 +99,7 @@ private fun initRecyclerView() {
         plantViewModel.setCurrentPlant(position)
         val nextFrag = PlantDetailFragment()
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+            .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
             .addToBackStack(null)
             .commit()
     }

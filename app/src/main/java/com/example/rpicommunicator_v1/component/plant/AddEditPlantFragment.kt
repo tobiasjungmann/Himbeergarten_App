@@ -43,16 +43,16 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         if (plantViewModel.getCurrentPlant() == null) {
             plantViewModel.createEmptyPlant()
         }
-            binding.editTextDescription.setText(plantViewModel.getCurrentPlant()!!.info)
+            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.info)
             binding.editTextName.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
 
 
-        binding.imageRecyclerView.layoutManager =
+        binding.recyclerViewComparingElementImages.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
-        binding.addImageButton.setOnClickListener { showImageOptionsDialog() }
+        binding.buttonComparingElementAddImage.setOnClickListener { showImageOptionsDialog() }
         binding.buttonSaveComparingElement.setOnClickListener { saveNote() }
 
         initCameraUI()
@@ -70,12 +70,12 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
-        binding.imageRecyclerView.adapter = thumbnailsAdapter
+        binding.recyclerViewComparingElementImages.adapter = thumbnailsAdapter
     }
 
     private fun saveNote() {
         val title = binding.editTextName.text.toString()
-        val description = binding.editTextDescription.text.toString()
+        val description = binding.editTextCompElementDescription.text.toString()
         if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
@@ -116,7 +116,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         val builder = AlertDialog.Builder(requireContext())
         val view = View.inflate(context, R.layout.picture_dialog, null)
 
-        val imageView = view.findViewById<ImageView>(R.id.feedback_big_image)
+        val imageView = view.findViewById<ImageView>(R.id.image_view_picture_dialog)
         imageView.setImageURI(Uri.fromFile(File(path)))
 
         builder.setView(view)

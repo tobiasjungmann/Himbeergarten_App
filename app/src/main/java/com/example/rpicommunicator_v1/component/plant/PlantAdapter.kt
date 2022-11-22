@@ -42,10 +42,10 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
             val alpha = 0.1.toFloat()
             holder.binding.listThumbnailImageView.alpha = alpha
         }
-        holder.binding.title.text = currentItem.name
-        holder.binding.upperInfo.text = currentItem.info
-        holder.binding.lowerInfo.text = currentItem.watered
-        holder.binding.deleteButton.setOnClickListener { v ->
+        holder.binding.textViewTitle.text = currentItem.name
+        holder.binding.textViewInfo.text = currentItem.info
+        holder.binding.textViewDescription.text = currentItem.watered
+        holder.binding.buttonDeleteItem.setOnClickListener { v ->
             v.visibility = View.GONE
             plantViewModel!!.remove(plants[position])
         }
@@ -76,10 +76,10 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
             itemView.setOnLongClickListener(OnLongClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    if (binding.deleteButton.visibility == View.GONE) {
-                        binding.deleteButton.visibility = View.VISIBLE
+                    if (binding.buttonDeleteItem.visibility == View.GONE) {
+                        binding.buttonDeleteItem.visibility = View.VISIBLE
                     } else {
-                        binding.deleteButton.visibility = View.GONE
+                        binding.buttonDeleteItem.visibility = View.GONE
                     }
                     return@OnLongClickListener true
                 }

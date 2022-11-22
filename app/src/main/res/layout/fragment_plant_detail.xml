@@ -3,6 +3,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".component.plant.PlantDetailFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,14 +11,14 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
+        android:id="@+id/app_bar_layout_plant_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+            android:id="@+id/collapsing_toolbar_plant_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -27,8 +28,7 @@
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -37,7 +37,7 @@
                 card_view:cardElevation="5sp">
 
                 <ImageView
-                    android:id="@+id/header_image"
+                    android:id="@+id/image_view_plant_detail_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -52,15 +52,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/scroll_view_plant_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/direction_card_view"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -78,7 +77,7 @@
                 android:padding="8dp">
 
                 <TextView
-                    android:id="@+id/plantNameTextView"
+                    android:id="@+id/text_view_plant_name"
                     style="bold"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
@@ -99,7 +98,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/humidityTextView"
+                    android:id="@+id/text_view_humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
@@ -120,7 +119,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/infoTextView"
+                    android:id="@+id/text_view_plant_detail_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -128,18 +127,6 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="4dp"
                     android:text="---"
-                    android:textColor="@color/light_grey"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/usedPump"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Pumpe: 1"
                     android:textColor="@color/light_grey"
                     android:textSize="15sp" />
 
@@ -153,7 +140,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/wateredTextView"
+                    android:id="@+id/text_view_last_watered"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -164,29 +151,12 @@
                     android:textColor="@color/light_grey"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/will_be_watered"
-                    style="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:maxLines="1"
-                    android:text="WIRD GEGOSSEN"
-                    android:textAlignment="center"
-                    android:textColor="@color/primary_green"
-                    android:visibility="invisible"
-                    app:autoSizeMaxTextSize="48sp"
-                    app:autoSizeMinTextSize="20sp"
-                    app:autoSizeTextType="uniform" />
-
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="400dp">
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart"
+                        android:id="@+id/chart_plant_detail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -199,7 +169,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_edit"
+        android:id="@+id/button_edit_plant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -208,7 +178,7 @@
         android:layout_weight="1"
         android:backgroundTint="@color/primary_green"
         android:clickable="true"
-        android:contentDescription="Add Photo"
+        android:contentDescription="Edit plant"
         android:focusable="true"
         app:srcCompat="@drawable/ic_baseline_edit_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

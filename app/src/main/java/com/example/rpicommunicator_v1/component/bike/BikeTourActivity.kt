@@ -86,7 +86,7 @@ class BikeTourActivity : AppCompatActivity() {
             Log.d("TAG", "initUIElements: $time")
             bikeViewModel!!.insert(BikeTour(from, to, km, time))
         }
-       binding.deleteButton.setOnClickListener {
+       binding.buttonDeleteItem.setOnClickListener {
             bikeViewModel!!.remove(
                 bikeToursList!![bikeToursList!!.size - 1]
             )
@@ -101,8 +101,8 @@ class BikeTourActivity : AppCompatActivity() {
         styleChart()
         dataSets.add(lineDataSet1)
         val data = LineData(dataSets)
-        binding.chart.data = data
-        binding.chart.invalidate()
+        binding.chartPlantDetail.data = data
+        binding.chartPlantDetail.invalidate()
     }
 
     private fun styleDataset(lineDataSet1: LineDataSet) {
@@ -117,25 +117,25 @@ class BikeTourActivity : AppCompatActivity() {
     }
 
     private fun styleChart() {
-        binding.chart.setDrawBorders(true)
-        binding.chart.setBorderColor(ContextCompat.getColor(application,R.color.light_grey))
-        binding.chart.setDrawGridBackground(false)
+        binding.chartPlantDetail.setDrawBorders(true)
+        binding.chartPlantDetail.setBorderColor(ContextCompat.getColor(application,R.color.light_grey))
+        binding.chartPlantDetail.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
-        binding.chart.description = description // Hide the description
-        binding.chart.axisRight.setDrawLabels(false)
-        binding.chart.axisRight.setDrawGridLines(false)
-        binding.chart.axisLeft.setDrawGridLines(false)
-        binding.chart.axisLeft.setDrawLabels(false)
-        binding.chart.xAxis.setDrawGridLines(false)
-        binding.chart.xAxis.setDrawLabels(false)
-      //  binding.chart.axisLeft.axisMaximum = 2500f    // todo togle with button
-      //  binding.chart.axisRight.axisMaximum = 2500f
-      //  binding.chart.xAxis.axisMaximum = 366f
-        binding.chart.legend.isEnabled = false
-        binding.chart.xAxis.setDrawAxisLine(false)
-        binding.chart.axisLeft.setDrawAxisLine(false)
-        binding.chart.axisRight.setDrawAxisLine(false)
+        binding.chartPlantDetail.description = description // Hide the description
+        binding.chartPlantDetail.axisRight.setDrawLabels(false)
+        binding.chartPlantDetail.axisRight.setDrawGridLines(false)
+        binding.chartPlantDetail.axisLeft.setDrawGridLines(false)
+        binding.chartPlantDetail.axisLeft.setDrawLabels(false)
+        binding.chartPlantDetail.xAxis.setDrawGridLines(false)
+        binding.chartPlantDetail.xAxis.setDrawLabels(false)
+      //  binding.chartPlantDetail.axisLeft.axisMaximum = 2500f    // todo togle with button
+      //  binding.chartPlantDetail.axisRight.axisMaximum = 2500f
+      //  binding.chartPlantDetail.xAxis.axisMaximum = 366f
+        binding.chartPlantDetail.legend.isEnabled = false
+        binding.chartPlantDetail.xAxis.setDrawAxisLine(false)
+        binding.chartPlantDetail.axisLeft.setDrawAxisLine(false)
+        binding.chartPlantDetail.axisRight.setDrawAxisLine(false)
         // binding.chart.getXAxis().setValueFormatter(new MyXAxisValueFormatter());
     }
 

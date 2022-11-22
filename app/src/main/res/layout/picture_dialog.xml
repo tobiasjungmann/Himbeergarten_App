@@ -11,7 +11,7 @@
     android:paddingEnd="@dimen/material_default_padding">
 
     <ImageView
-        android:id="@+id/feedback_big_image"
+        android:id="@+id/image_view_picture_dialog"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_gravity="center"

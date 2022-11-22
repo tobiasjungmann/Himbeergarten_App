@@ -33,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edit_text"
+                    android:background="@drawable/edit_text_custom"
                     android:orientation="vertical">
 
 
@@ -49,12 +49,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edit_text"
+                    android:background="@drawable/edit_text_custom"
                     android:orientation="vertical">
 
 
                     <EditText
-                        android:id="@+id/edit_text_description"
+                        android:id="@+id/edit_text_comp_element_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Description"
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edit_text"
+                    android:background="@drawable/edit_text_custom"
                     android:orientation="vertical">
 
 
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/custom_edit_text"
+                    android:background="@drawable/edit_text_custom"
                     android:orientation="vertical">
 
 
@@ -111,7 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_Text_List_Container">
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/addImageButton"
+                android:id="@+id/button_comparing_element_add_image"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
@@ -124,7 +124,7 @@
                 android:layout_marginStart="16dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/imageRecyclerView"
+                android:id="@+id/recycler_view_comparing_element_images"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

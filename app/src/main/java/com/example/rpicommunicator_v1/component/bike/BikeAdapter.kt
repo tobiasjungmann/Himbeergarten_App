@@ -26,10 +26,10 @@ class BikeAdapter : RecyclerView.Adapter<BikeAdapter.BikeTourHolder>() {
     override fun onBindViewHolder(holder: BikeTourHolder, position: Int) {
         val currentItem = bikeTours[position]
 
-        holder.binding.title.text = "Gefahrene Kilometer: "+currentItem.km.toString()
-        holder.binding.upperInfo.text = currentItem.from+" - "+currentItem.to
-        holder.binding.lowerInfo.text = currentItem.time
-        holder.binding.deleteButton.setOnClickListener { v ->
+        holder.binding.textViewTitle.text = "Gefahrene Kilometer: "+currentItem.km.toString()
+        holder.binding.textViewInfo.text = currentItem.from+" - "+currentItem.to
+        holder.binding.textViewDescription.text = currentItem.time
+        holder.binding.buttonDeleteItem.setOnClickListener { v ->
             v.visibility = View.GONE
             bikeViewModel!!.remove(bikeTours[position])
         }
@@ -52,10 +52,10 @@ class BikeAdapter : RecyclerView.Adapter<BikeAdapter.BikeTourHolder>() {
 
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    if (binding.deleteButton.visibility == View.GONE) {
-                        binding.deleteButton.visibility = View.VISIBLE
+                    if (binding.buttonDeleteItem.visibility == View.GONE) {
+                        binding.buttonDeleteItem.visibility = View.VISIBLE
                     } else {
-                        binding.deleteButton.visibility = View.GONE
+                        binding.buttonDeleteItem.visibility = View.GONE
                     }
                     return@OnLongClickListener true
                 }

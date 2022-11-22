@@ -44,7 +44,7 @@ class PlantDetailFragment : Fragment() {
         if (plantViewModel.getCurrentPlant()!!.graphString != "") {
             initChart(plantViewModel.getCurrentPlant()!!.graphString)
         } else {
-            binding.chart.visibility = View.GONE
+            binding.chartPlantDetail.visibility = View.GONE
         }
         return binding.root
     }
@@ -52,25 +52,25 @@ class PlantDetailFragment : Fragment() {
     private fun initViewComponents() {
         val plant=plantViewModel.getCurrentPlant()!!
         if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
-            binding.headerImage.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
+            binding.imageViewPlantDetailHeader.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
             val alpha = 1.toFloat()
-            binding.headerImage.alpha = alpha
+            binding.imageViewPlantDetailHeader.alpha = alpha
         } else {
-            binding.headerImage.setImageResource(R.drawable.icon_plant)
+            binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
-            binding.headerImage.alpha = alpha
+            binding.imageViewPlantDetailHeader.alpha = alpha
         }
-        binding.plantNameTextView.text = plant.name
-        binding.humidityTextView.text = plant.humidity
-        binding.wateredTextView.text = plant.watered
-        binding.infoTextView.text = plant.info
+        binding.textViewPlantName.text = plant.name
+        binding.textViewHumidity.text = plant.humidity
+        binding.textViewLastWatered.text = plant.watered
+        binding.textViewPlantDetailDescription.text = plant.info
 
 
-        binding.buttonEdit.setOnClickListener {
+        binding.buttonEditPlant.setOnClickListener {
             // current plant can be kept - no need to reset it
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view, nextFrag, "findThisFragment")
+                .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
                 .addToBackStack(null)
                 .commit()
         }
@@ -90,8 +90,8 @@ class PlantDetailFragment : Fragment() {
         styleChart()
         dataSets.add(lineDataSet1)
         val data = LineData(dataSets)
-        binding.chart.data = data
-        binding.chart.invalidate()
+        binding.chartPlantDetail.data = data
+        binding.chartPlantDetail.invalidate()
     }
 
     private fun styleDataset(lineDataSet1: LineDataSet) {
@@ -114,41 +114,41 @@ class PlantDetailFragment : Fragment() {
 
 
     private fun styleChart() {
-        binding.chart.setDrawBorders(true)
-        binding.chart.setBorderColor(ContextCompat.getColor(requireContext().applicationContext,
+        binding.chartPlantDetail.setDrawBorders(true)
+        binding.chartPlantDetail.setBorderColor(ContextCompat.getColor(requireContext().applicationContext,
             R.color.light_grey
         ))
-        binding.chart.setDrawGridBackground(false)
+        binding.chartPlantDetail.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
-        binding.chart.description = description // Hide the description
-        binding.chart.axisRight.setDrawLabels(false)
-        binding.chart.axisRight.setDrawGridLines(false)
-        binding.chart.axisLeft.setDrawGridLines(false)
-        binding.chart.axisLeft.setDrawLabels(false)
-        binding.chart.xAxis.setDrawGridLines(false)
-        binding.chart.xAxis.setDrawLabels(false)
-        binding.chart.axisLeft.axisMinimum = 0F
-        binding.chart.axisRight.axisMinimum = 0F
-        binding.chart.axisLeft.axisMaximum = 500f
-        binding.chart.axisRight.axisMaximum = 500f
-        binding.chart.legend.isEnabled = false
-        binding.chart.xAxis.setDrawAxisLine(false)
-        binding.chart.axisLeft.setDrawAxisLine(false)
-        binding.chart.axisRight.setDrawAxisLine(false)
+        binding.chartPlantDetail.description = description // Hide the description
+        binding.chartPlantDetail.axisRight.setDrawLabels(false)
+        binding.chartPlantDetail.axisRight.setDrawGridLines(false)
+        binding.chartPlantDetail.axisLeft.setDrawGridLines(false)
+        binding.chartPlantDetail.axisLeft.setDrawLabels(false)
+        binding.chartPlantDetail.xAxis.setDrawGridLines(false)
+        binding.chartPlantDetail.xAxis.setDrawLabels(false)
+        binding.chartPlantDetail.axisLeft.axisMinimum = 0F
+        binding.chartPlantDetail.axisRight.axisMinimum = 0F
+        binding.chartPlantDetail.axisLeft.axisMaximum = 500f
+        binding.chartPlantDetail.axisRight.axisMaximum = 500f
+        binding.chartPlantDetail.legend.isEnabled = false
+        binding.chartPlantDetail.xAxis.setDrawAxisLine(false)
+        binding.chartPlantDetail.axisLeft.setDrawAxisLine(false)
+        binding.chartPlantDetail.axisRight.setDrawAxisLine(false)
         val limitLine = LimitLine(200f) // set where the line should be drawn
         limitLine.lineColor = ContextCompat.getColor(requireContext().applicationContext,
             R.color.primary_green_lighter
         )
         limitLine.lineWidth = 2f
-        binding.chart.axisLeft.addLimitLine(limitLine)
+        binding.chartPlantDetail.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
         limitLine2.lineColor = ContextCompat.getColor(requireContext().applicationContext,
             R.color.red
         )
         limitLine2.lineWidth = 2f
-        binding.chart.axisLeft.addLimitLine(limitLine2)
-        binding.chart.axisLeft.addLimitLine(limitLine)
+        binding.chartPlantDetail.axisLeft.addLimitLine(limitLine2)
+        binding.chartPlantDetail.axisLeft.addLimitLine(limitLine)
     }
 
     private fun getDataSet(graphString: String): ArrayList<Entry> {

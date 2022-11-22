@@ -51,9 +51,9 @@ class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.Comparing
 
     override fun onBindViewHolder(holder: ComparingListHolder, position: Int) {
         val currentList: ComparingList = comparingList[position]
-        holder.binding.title.text = " " + currentList.title
-        holder.binding.upperInfo.visibility=View.GONE
-        holder.binding.lowerInfo.visibility=View.GONE
+        holder.binding.textViewTitle.text = " " + currentList.title
+        holder.binding.textViewInfo.visibility=View.GONE
+        holder.binding.textViewDescription.visibility=View.GONE
     }
 
 

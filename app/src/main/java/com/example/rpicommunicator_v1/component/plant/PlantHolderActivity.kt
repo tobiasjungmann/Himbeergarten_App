@@ -12,7 +12,7 @@ class PlantHolderActivity : AppCompatActivity(R.layout.activity_plant_holder) {
             if (savedInstanceState == null) {
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    add<PlantOverviewFragment>(R.id.fragment_container_view)
+                    add<PlantOverviewFragment>(R.id.fragment_container_view_plant)
                 }
             }
         }

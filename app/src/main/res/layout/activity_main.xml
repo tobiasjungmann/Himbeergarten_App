@@ -42,7 +42,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_edit_text"
+                        android:background="@drawable/edit_text_custom"
                         android:orientation="vertical">
 
                         <EditText
@@ -68,7 +68,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp"
-                        android:background="@drawable/custom_edit_text"
+                        android:background="@drawable/edit_text_custom"
                         android:orientation="vertical">
 
                         <EditText

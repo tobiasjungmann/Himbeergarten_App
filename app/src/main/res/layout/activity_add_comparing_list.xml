@@ -8,7 +8,7 @@
     tools:context=".component.comparing.firstlevel.AddComparingListActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/edit_Text_List_Container"
+        android:id="@+id/edit_text_list_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -33,11 +33,11 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/custom_edit_text"
+                android:background="@drawable/edit_text_custom"
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_Text_Liste"
+                    android:id="@+id/edit_text_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -52,7 +52,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/save_new_list_button"
+                android:id="@+id/button_save_new_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

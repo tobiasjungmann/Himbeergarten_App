@@ -23,9 +23,9 @@ class ComparingElementAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
         val currentList = comparingElementList[position]
-        holder.binding.title.text = currentList.title
-        holder.binding.upperInfo.text = currentList.rating.toString()
-        holder.binding.lowerInfo.text = currentList.description
+        holder.binding.textViewTitle.text = currentList.title
+        holder.binding.textViewInfo.text = currentList.rating.toString()
+        holder.binding.textViewDescription.text = currentList.description
 
         val helper = comparingElementViewModel.getAllPathsToElement(currentList.comparingElementId)
 

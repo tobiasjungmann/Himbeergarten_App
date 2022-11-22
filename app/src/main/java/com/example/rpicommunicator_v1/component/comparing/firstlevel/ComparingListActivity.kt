@@ -31,13 +31,10 @@ class ComparingListActivity : AppCompatActivity() {
         binding = ActivityComparingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonAddNote.setOnClickListener{
+        binding.buttonAddCompList.setOnClickListener{
             val intent = Intent(this, AddComparingListActivity::class.java)
             resultLauncher.launch(intent)
         }
-
-
-       // binding.comparingListRecyclerView.setHasFixedSize(true)
 
         val adapter = ComparingListAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
@@ -46,14 +43,14 @@ class ComparingListActivity : AppCompatActivity() {
             startActivity(intent)
         }
         adapter.setOnItemClickListener(itemOnClick)
-        binding.comparingListRecyclerView.adapter = adapter
+        binding.recyclerViewCompList.adapter = adapter
 
         listViewModel = ViewModelProvider(this)[ComparingListViewModel::class.java]
         listViewModel!!.getAllComparingLists().observe(this
         ) { lists -> //update RecyclerView
             adapter.setComparingList(lists as List<ComparingList>)
         }
-        binding.comparingListRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewCompList.layoutManager = LinearLayoutManager(this)
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -85,7 +82,7 @@ class ComparingListActivity : AppCompatActivity() {
                     }
                 snackbar.show()
             }
-        }).attachToRecyclerView(binding.comparingListRecyclerView)
+        }).attachToRecyclerView(binding.recyclerViewCompList)
     }
 
 
@@ -96,9 +93,9 @@ class ComparingListActivity : AppCompatActivity() {
                 val data: Intent? = result.data
 
                 val title = data!!.getStringExtra(EXTRA_TITLE)
-                val liste = title?.let { ComparingList(it) }
-                if (liste != null) {
-                    listViewModel!!.insert(liste)
+                val list = title?.let { ComparingList(it) }
+                if (list != null) {
+                    listViewModel!!.insert(list)
                 }
                 Toast.makeText(this, "List Saved", Toast.LENGTH_SHORT).show()
             } else {

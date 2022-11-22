@@ -9,7 +9,7 @@
 
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/scroll_view_plant_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -39,7 +39,7 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:id="@+id/plantNameTextView"
+                        android:id="@+id/text_view_plant_name"
                         style="bold"
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_edit_text"
+                        android:background="@drawable/edit_text_custom"
                         android:orientation="vertical">
 
                         <EditText
@@ -78,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_edit_text"
+                        android:background="@drawable/edit_text_custom"
                         android:orientation="vertical">
 
                         <EditText
@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/custom_edit_text"
+                        android:background="@drawable/edit_text_custom"
                         android:orientation="vertical">
 
                         <EditText
@@ -132,7 +132,7 @@
                         android:textSize="20sp" />
 
                     <Button
-                        android:id="@+id/delete_button"
+                        android:id="@+id/button_delete_item"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -166,7 +166,7 @@
                         android:layout_height="400dp">
 
                         <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/chart"
+                            android:id="@+id/chart_plant_detail"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 

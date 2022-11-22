@@ -44,8 +44,8 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         val intent = intent
         if (intent.hasExtra(EXTRA_ID)) {
             title = "Edit note"
-            binding.editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
-            binding.editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE))
+            binding.editTextCompElemDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
+            binding.editTextCompElemTitle.setText(intent.getStringExtra(EXTRA_TITLE))
             binding.numberPickerPriority.value = intent.getIntExtra(EXTRA_PRIORITY, 1)
             presenter.imageElement.addAll(
                 0,
@@ -57,7 +57,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         if (intent.hasExtra(MODE)) {
             mode = intent.getStringExtra(MODE)
         }
-        binding.imageRecyclerView.layoutManager =
+        binding.recyclerViewCompElemImages.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size).toInt()
@@ -67,14 +67,14 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
-        binding.imageRecyclerView.adapter = thumbnailsAdapter
-        binding.addImageButton.setOnClickListener { showImageOptionsDialog() }
-        binding.buttonSaveComparingElement.setOnClickListener { saveNote() }
+        binding.recyclerViewCompElemImages.adapter = thumbnailsAdapter
+        binding.buttonCompElemAddImage.setOnClickListener { showImageOptionsDialog() }
+        binding.buttonSaveCompElem.setOnClickListener { saveNote() }
     }
 
     private fun saveNote() {
-        val title = binding.editTextTitle.text.toString()
-        val description = binding.editTextDescription.text.toString()
+        val title = binding.editTextCompElemTitle.text.toString()
+        val description = binding.editTextCompElemDescription.text.toString()
         val priority = binding.numberPickerPriority.value
         if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(this, "Insert Title and Description", Toast.LENGTH_SHORT).show()
@@ -127,7 +127,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         val builder = AlertDialog.Builder(this)
         val view = View.inflate(this, R.layout.picture_dialog, null)
 
-        val imageView = view.findViewById<ImageView>(R.id.feedback_big_image)
+        val imageView = view.findViewById<ImageView>(R.id.image_view_picture_dialog)
         imageView.setImageURI(Uri.fromFile(File(path)))
 
         builder.setView(view)

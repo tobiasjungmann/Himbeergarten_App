@@ -9,7 +9,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/edit_Text_List_Container"
+        android:id="@+id/edit_text_list_comp_elem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -17,7 +17,6 @@
         android:backgroundTint="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5sp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,12 +31,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_edit_text"
+                android:background="@drawable/edit_text_custom"
                 android:orientation="vertical">
 
 
                 <EditText
-                    android:id="@+id/edit_text_title"
+                    android:id="@+id/edit_text_comp_elem_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Title"
@@ -47,15 +46,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="8dp"
-
-                android:background="@drawable/custom_edit_text"
+                android:background="@drawable/edit_text_custom"
                 android:orientation="vertical">
 
 
                 <EditText
-                    android:id="@+id/edit_text_description"
+                    android:id="@+id/edit_text_comp_elem_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"
@@ -76,7 +73,7 @@
                 android:layout_height="wrap_content"></NumberPicker>
 
             <Button
-                android:id="@+id/button_save_comparing_element"
+                android:id="@+id/button_save_comp_elem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="save" />
@@ -89,10 +86,10 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_Text_List_Container">
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_list_comp_elem">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/addImageButton"
+            android:id="@+id/button_comp_elem_add_image"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -105,7 +102,7 @@
             android:layout_marginStart="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imageRecyclerView"
+            android:id="@+id/recycler_view_comp_elem_images"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -19,11 +19,11 @@ class AddComparingListActivity : AppCompatActivity() {
         binding = ActivityAddComparingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.saveNewListButton.setOnClickListener { saveList() }
+        binding.buttonSaveNewList.setOnClickListener { saveList() }
     }
 
     private fun saveList() {
-        val title = binding.editTextListe.text.toString()
+        val title = binding.editTextList.text.toString()
         if (title.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(this, "Insert title and Description", Toast.LENGTH_SHORT).show()
             return

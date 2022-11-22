@@ -44,7 +44,7 @@ class ComparingElementActivity : AppCompatActivity() {
             listeId = intent.getIntExtra(EXTRA_ID, -1)
         }
 
-        binding.buttonAddElement.setOnClickListener {
+        binding.buttonAddCompElem.setOnClickListener {
             val nextIntent = Intent(this, AddElementActivity::class.java)
             nextIntent.putExtra(MODE, ADD_REQUEST)
             resultLauncher.launch(nextIntent)
@@ -66,7 +66,7 @@ class ComparingElementActivity : AppCompatActivity() {
             resultLauncher.launch(nextIntent)
         }
         adapter.setOnItemClickListener(itemOnClick)
-        binding.comparingElementRecyclerView.adapter = adapter
+        binding.recyclerViewCompElem.adapter = adapter
 
         comparingElementViewModel = ViewModelProvider(this)[ComparingElementViewModel::class.java]
         comparingElementViewModel!!.getComparingElementByID(listeId).observe(
@@ -74,7 +74,7 @@ class ComparingElementActivity : AppCompatActivity() {
         ) { elements ->
             adapter.setElementList(elements as List<ComparingElement>, comparingElementViewModel!!)
         }
-        binding.comparingElementRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewCompElem.layoutManager = LinearLayoutManager(this)
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -102,7 +102,7 @@ class ComparingElementActivity : AppCompatActivity() {
                     ) { comparingElementViewModel!!.insert(previouslyDeleted, arrayOf()) }
                 snackbar.show()
             }
-        }).attachToRecyclerView(binding.comparingElementRecyclerView)
+        }).attachToRecyclerView(binding.recyclerViewCompElem)
     }
 
 
