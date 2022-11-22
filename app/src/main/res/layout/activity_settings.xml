@@ -29,18 +29,24 @@
             android:orientation="vertical"
             android:padding="8dp">
 
+            <TextView
+                style="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:text="Station"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                app:autoSizeTextType="uniform" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_edit_text"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/inputIP"
+                    android:id="@+id/edit_text_station_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -63,13 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_edit_text"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/inputPort"
+                    android:id="@+id/edit_text_station_port"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -87,6 +90,67 @@
 
             </LinearLayout>
 
+            <TextView
+                style="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:maxLines="1"
+                android:text="Server"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                app:autoSizeTextType="uniform" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_text_server_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@android:color/white"
+                    android:ems="10"
+                    android:hint="Default IP"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="192.168.0.12"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_text_server_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@android:color/white"
+                    android:ems="10"
+                    android:hint="Port"
+                    android:importantForAutofill="no"
+                    android:inputType="numberSigned"
+                    android:text="15439"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_size" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

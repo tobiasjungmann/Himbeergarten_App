@@ -42,8 +42,8 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun connectToRPI() {
         mainActivityViewModel!!.setCommunicationCredentials(
-            binding.inputIP.text.toString(),
-            binding.inputPort.text.toString().toInt()
+            binding.editTextStationAddress.text.toString(),
+            binding.editTextServerPort.text.toString().toInt()
         )
     }
 }

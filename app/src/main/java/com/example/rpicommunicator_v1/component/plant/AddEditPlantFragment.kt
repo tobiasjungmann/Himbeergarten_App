@@ -44,7 +44,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
             plantViewModel.createEmptyPlant()
         }
             binding.editTextDescription.setText(plantViewModel.getCurrentPlant()!!.info)
-            binding.editTextTitle.setText(plantViewModel.getCurrentPlant()!!.name)
+            binding.editTextName.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
 
 
@@ -74,17 +74,14 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     }
 
     private fun saveNote() {
-        val title = binding.editTextTitle.text.toString()
+        val title = binding.editTextName.text.toString()
         val description = binding.editTextDescription.text.toString()
         if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
-        val data = Intent()
         plantViewModel.getCurrentPlant()!!.name = title
-        //  plantViewModel.currentPlant!!.watered=description
         plantViewModel.getCurrentPlant()!!.info = description
-        //fixme   finish()
     }
 
     @Deprecated("remove later on")

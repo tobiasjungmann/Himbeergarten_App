@@ -38,7 +38,7 @@
 
 
                     <EditText
-                        android:id="@+id/edit_text_title"
+                        android:id="@+id/edit_text_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Name"
@@ -75,6 +75,22 @@
                         android:layout_height="wrap_content"
                         android:hint="Description"
                         android:inputType="textMultiLine" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:orientation="vertical">
+
+
+                    <EditText
+                        android:id="@+id/edit_text_gpio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="1"
+                        android:inputType="number" />
                 </LinearLayout>
 
 
