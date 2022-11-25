@@ -41,7 +41,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         if (plantViewModel.getCurrentPlant() != null) {
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.info)
             binding.editTextName.setText(plantViewModel.getCurrentPlant()!!.name)
-            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
+            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.lastWatered)
         }
 
         binding.recyclerViewComparingElementImages.layoutManager =
@@ -156,6 +156,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
-        plantViewModel.updateCurrentPlant(title, description,gpioString.toInt())
+        plantViewModel.createUpdateCurrentPlant(title, description,gpioString.toInt())
     }
 }

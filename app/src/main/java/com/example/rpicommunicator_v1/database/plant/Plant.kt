@@ -1,25 +1,22 @@
 package com.example.rpicommunicator_v1.database.plant
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.rpicommunicator_v1.R
 
 @Entity(tableName = "plant_table")
-class Plant(//(autoGenerate = true)
-//    @field:PrimaryKey var id: String,
+class Plant(
     var name: String,
     var info: String,
-    var watered: String,
-    val humidity: String,
-    var needsWater: Boolean,
-    val graphString: String
+    var gpio: Int
 ) {
-    @field:PrimaryKey var id: String="-1"
-    var imageID = -1
-    var iconID = -1
-    var gpio=-1
-
-    init {
-        Log.d("Constructor", "Plant: needsWater: $needsWater")
-    }
+    @field:PrimaryKey
+    var id: Int = -1
+    var imageID = R.drawable.plant2
+    var iconID = R.drawable.icon_plant
+    var syncedWithServer = false
+    var humidity: String = ""
+    var needsWater: Boolean = false
+    var graphString: String = ""
+    var lastWatered: String = ""
 }

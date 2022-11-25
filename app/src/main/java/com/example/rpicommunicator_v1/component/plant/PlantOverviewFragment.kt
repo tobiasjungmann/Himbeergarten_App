@@ -73,8 +73,9 @@ private fun initRecyclerView() {
 
     private fun initSwipeToRefresh() {
         // Setup refresh listener which triggers new data loading
+        // todo should only be triggered if actively pulled
         binding.swipeRefreshContainerPlant.setOnRefreshListener {
-            plantViewModel.reloadFromServer()
+         // fixme add again   plantViewModel.reloadFromServer()
             binding.swipeRefreshContainerPlant.isRefreshing = false
         }
 

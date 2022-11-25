@@ -21,8 +21,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     private var currentPlant: Plant? = null
 
     fun update(plant: Plant) {
+        plant.syncedWithServer = false
         plantRepository.update(plant)
-        grpcStorageServerInterface.updatePlant(plant)
+        grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
     }
 
     fun remove(plant: Plant) {
@@ -44,19 +45,22 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun clearCurrentPlant() {
-        currentPlant=null
+        currentPlant = null
     }
 
 
-    fun updateCurrentPlant(title: String, description: String, gpio: Int) {
-        if (title.isEmpty() && description.isEmpty() || gpio < 1) {
+    fun createUpdateCurrentPlant(title: String, info: String, gpio: Int) {
+        if (title.isNotEmpty() || info.isNotEmpty() || gpio > 0) {
             if (currentPlant == null) {
-                currentPlant = Plant("", "", "", "", false, "")
+                currentPlant = Plant(title, info, gpio)
+                plantRepository.insert(currentPlant!!)
+                grpcStorageServerInterface.addUpdatePlant(currentPlant!!, plantRepository)
+            } else {
+                currentPlant!!.name = title
+                currentPlant!!.info = info
+                currentPlant!!.gpio = gpio
+                update(currentPlant!!)
             }
-            currentPlant!!.name = title
-            currentPlant!!.info = description
-            currentPlant!!.gpio = gpio
-            update(currentPlant!!)
         }
     }
 
@@ -79,5 +83,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     init {
         plantRepository = PlantRepository(application)
         allPlants = plantRepository.allPlants
+        // todo sync unsynced plants with server
     }
 }
