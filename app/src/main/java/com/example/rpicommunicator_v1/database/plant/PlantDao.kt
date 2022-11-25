@@ -14,7 +14,6 @@ interface PlantDao {
     @Delete
     fun delete(plant: Plant?)
 
-    //Wegen den Livedata als returntyp werden werte in der Liste immer automatisch updated
     @get:Query("SELECT * FROM plant_table")
     val allPlants: LiveData<List<Plant>>
 }

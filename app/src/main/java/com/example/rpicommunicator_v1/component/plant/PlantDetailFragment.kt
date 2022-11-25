@@ -1,19 +1,14 @@
 package com.example.rpicommunicator_v1.component.plant
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LimitLine
@@ -33,7 +28,6 @@ class PlantDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPlantDetailBinding.inflate(layoutInflater)
-
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
         if (plantViewModel.getCurrentPlant()==null){
@@ -76,12 +70,6 @@ class PlantDetailFragment : Fragment() {
         }
     }
 
-
-    override fun onStop() {
-        plantViewModel.saveCurrentPlant()
-
-        super.onStop()
-    }
 
     private fun initChart(graphString: String) {
         val dataSets = ArrayList<ILineDataSet>()
@@ -165,39 +153,4 @@ class PlantDetailFragment : Fragment() {
         }
         return dataSets
     }
-
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                val data: Intent? = result.data
-                val resultMode = data?.getStringExtra(Constants.MODE)
-                if (resultMode != null) {
-                    if ((resultMode == Constants.EDIT_REQUEST)) {
-                        var name = data.getStringExtra(Constants.EXTRA_TITLE)
-                        var type = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
-                        var info = data.getStringExtra(Constants.EXTRA_INFO)
-                        val imagePath =
-                            data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                        if (name == null) {
-                            name = "Name"
-                        }
-                        if (type == null) {
-                            type = ""
-                        }
-                        if (info == null) {
-                            info = ""
-                        }
-                        plantViewModel.addPlant(name, type, info)
-
-                        Toast.makeText(context, "Plant edited", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
-            }
-        }
-
 }

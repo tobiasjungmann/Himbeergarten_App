@@ -36,17 +36,13 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentAddEditPlantBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
-
-        if (plantViewModel.getCurrentPlant() == null) {
-            plantViewModel.createEmptyPlant()
-        }
+        if (plantViewModel.getCurrentPlant() != null) {
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.info)
             binding.editTextName.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.watered)
-
+        }
 
         binding.recyclerViewComparingElementImages.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -71,17 +67,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
                 thumbnailSize
             )
         binding.recyclerViewComparingElementImages.adapter = thumbnailsAdapter
-    }
-
-    private fun saveNote() {
-        val title = binding.editTextName.text.toString()
-        val description = binding.editTextCompElementDescription.text.toString()
-        if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
-            Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
-            return
-        }
-        plantViewModel.getCurrentPlant()!!.name = title
-        plantViewModel.getCurrentPlant()!!.info = description
     }
 
     @Deprecated("remove later on")
@@ -152,5 +137,25 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     @RequiresApi(api = Build.VERSION_CODES.M)
     override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
         requestPermissions(arrayOf(permission), requestCode)
+    }
+
+    override fun onStop() {
+        saveNote()
+        super.onStop()
+    }
+
+    private fun saveNote() {
+        val title = binding.editTextName.text.toString()
+        val description = binding.editTextCompElementDescription.text.toString()
+        var gpioString = binding.editTextGpio.text.toString()
+        if (gpioString.isEmpty()){
+            gpioString="-1"
+        }
+
+        if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
+            Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
+            return
+        }
+        plantViewModel.updateCurrentPlant(title, description,gpioString.toInt())
     }
 }

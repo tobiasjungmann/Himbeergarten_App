@@ -1,18 +1,13 @@
 package com.example.rpicommunicator_v1.component.plant
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.FragmentPlantOverviewBinding
 
@@ -20,8 +15,6 @@ import com.example.rpicommunicator_v1.databinding.FragmentPlantOverviewBinding
 class PlantOverviewFragment : Fragment() {
 
     private lateinit var plantViewModel: PlantViewModel
-  //  private lateinit var binding: FragmentPlantDetailBinding
-
     private var _binding: FragmentPlantOverviewBinding? = null
 
     // This property is only valid between onCreateView and
@@ -35,11 +28,10 @@ class PlantOverviewFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentPlantOverviewBinding.inflate(inflater, container, false)
-
-
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
         binding.buttonAddPlant .setOnClickListener {
+            plantViewModel.clearCurrentPlant()
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
@@ -103,32 +95,4 @@ private fun initRecyclerView() {
             .addToBackStack(null)
             .commit()
     }
-
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                val data: Intent? = result.data
-                val resultMode = data?.getStringExtra(Constants.MODE)
-                if (resultMode != null) {
-                    if ((resultMode == Constants.ADD_REQUEST)) {
-                        var name = data.getStringExtra(Constants.EXTRA_TITLE)
-                        var type = data.getStringExtra(Constants.EXTRA_DESCRIPTION)
-                        var info = data.getStringExtra(Constants.EXTRA_INFO)
-                        val imagePath =
-                            data.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)
-                        if (name == null) {name="Name"}
-                        if (type == null) {type=""}
-                        if (info == null) {info=""}
-                        plantViewModel.addPlant(name,type,info)
-
-                        Toast.makeText(context, "New Plant saved Saved", Toast.LENGTH_SHORT).show()
-                    }  else {
-                        Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Plant not Saved", Toast.LENGTH_SHORT).show()
-            }
-        }
 }

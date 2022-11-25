@@ -76,17 +76,20 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
     }
 
-    fun saveCurrentPlant() {
-        //if (dataWasChanged || waterNeededChanged) {
-            Log.d("PlantView", "onstop: unchange data: " + currentPlant!!.needsWater)
-                    //   currentPlant!!.needsWater = !needsWater
-            Log.d("PlantView", "onstop: data must be saved Plant: " + currentPlant!!.needsWater)
+    fun updateCurrentPlant(title: String, description: String, gpio: Int) {
+        if (title.isEmpty() && description.isEmpty() || gpio < 1) {
+            if (currentPlant == null) {
+                currentPlant = Plant("", "", "", "", false, "")
+            }
+            currentPlant!!.name = title
+            currentPlant!!.info = description
+            currentPlant!!.gpio = gpio
             update(currentPlant!!)
             updateWateredInFirebase(currentPlant!!.id, currentPlant!!.needsWater)
-        //}
+        }
     }
 
-    fun createEmptyPlant() {
-        currentPlant= Plant("","","","",false,"")
+    fun clearCurrentPlant() {
+        currentPlant=null
     }
 }

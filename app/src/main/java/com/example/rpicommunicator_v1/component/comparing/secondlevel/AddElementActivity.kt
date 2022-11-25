@@ -164,5 +164,4 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
     override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
         requestPermissions(arrayOf(permission), requestCode)
     }
-
 }

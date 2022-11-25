@@ -17,6 +17,7 @@ class Plant(//(autoGenerate = true)
     @field:PrimaryKey var id: String="-1"
     var imageID = -1
     var iconID = -1
+    var gpio=-1
 
     init {
         Log.d("Constructor", "Plant: needsWater: $needsWater")

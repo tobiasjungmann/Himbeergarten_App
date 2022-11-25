@@ -2,13 +2,13 @@ package com.example.rpicommunicator_v1.database.plant
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.RoomDatabase
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Plant::class],
-    version = 9
+    version = 10
 )
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao?
