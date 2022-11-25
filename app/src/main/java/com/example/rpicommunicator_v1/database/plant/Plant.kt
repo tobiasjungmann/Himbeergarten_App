@@ -10,8 +10,8 @@ class Plant(
     var info: String,
     var gpio: Int
 ) {
-    @field:PrimaryKey
-    var id: Int = -1
+    @field:PrimaryKey(autoGenerate = true)
+    var id: Int=0
     var imageID = R.drawable.plant2
     var iconID = R.drawable.icon_plant
     var syncedWithServer = false

@@ -49,14 +49,15 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(title: String, info: String, gpio: Int) {
-        if (title.isNotEmpty() || info.isNotEmpty() || gpio > 0) {
+    fun createUpdateCurrentPlant(name: String, info: String, gpio: Int) {
+        if (name.isNotEmpty() || info.isNotEmpty() || gpio > 0) {
             if (currentPlant == null) {
-                currentPlant = Plant(title, info, gpio)
+                currentPlant = Plant(name, info, gpio)
                 plantRepository.insert(currentPlant!!)
                 grpcStorageServerInterface.addUpdatePlant(currentPlant!!, plantRepository)
             } else {
-                currentPlant!!.name = title
+                // todo check if changes have occured
+                currentPlant!!.name = name
                 currentPlant!!.info = info
                 currentPlant!!.gpio = gpio
                 update(currentPlant!!)
@@ -83,6 +84,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     init {
         plantRepository = PlantRepository(application)
         allPlants = plantRepository.allPlants
-        // todo sync unsynced plants with server
+
+        allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
+            .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }
     }
 }

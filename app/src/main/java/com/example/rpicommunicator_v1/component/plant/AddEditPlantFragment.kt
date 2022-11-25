@@ -39,9 +39,9 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
         if (plantViewModel.getCurrentPlant() != null) {
-            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.info)
-            binding.editTextName.setText(plantViewModel.getCurrentPlant()!!.name)
-            binding.editTextInfo.setText(plantViewModel.getCurrentPlant()!!.lastWatered)
+            binding.editTextAddEditPlantName.setText(plantViewModel.getCurrentPlant()!!.name)
+            binding.editTextAddEditPlantInfo.setText(plantViewModel.getCurrentPlant()!!.info)
+            binding.editTextAddEditPlantGpio.setText(plantViewModel.getCurrentPlant()!!.gpio)
         }
 
         binding.recyclerViewComparingElementImages.layoutManager =
@@ -49,7 +49,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
 
 
         binding.buttonComparingElementAddImage.setOnClickListener { showImageOptionsDialog() }
-        binding.buttonSaveComparingElement.setOnClickListener { savePlant() }
+        binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
 
         initCameraUI()
 
@@ -145,17 +145,17 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     }
 
     private fun savePlant() {
-        val title = binding.editTextName.text.toString()
-        val description = binding.editTextCompElementDescription.text.toString()
-        var gpioString = binding.editTextGpio.text.toString()
+        val name = binding.editTextAddEditPlantName.text.toString()
+        val info = binding.editTextAddEditPlantInfo.text.toString()
+        var gpioString = binding.editTextAddEditPlantGpio.text.toString()
         if (gpioString.isEmpty()){
             gpioString="-1"
         }
 
-        if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
+        if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
-        plantViewModel.createUpdateCurrentPlant(title, description,gpioString.toInt())
+        plantViewModel.createUpdateCurrentPlant(name, info,gpioString.toInt())
     }
 }

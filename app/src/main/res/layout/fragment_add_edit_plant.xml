@@ -10,7 +10,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/edit_Text_List_Container"
+            android:id="@+id/edit_text_list_item_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -38,7 +38,7 @@
 
 
                     <EditText
-                        android:id="@+id/edit_text_name"
+                        android:id="@+id/edit_text_add_edit_plant_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Name"
@@ -54,10 +54,10 @@
 
 
                     <EditText
-                        android:id="@+id/edit_text_comp_element_description"
+                        android:id="@+id/edit_text_add_edit_plant_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Description"
+                        android:hint="Info"
                         android:inputType="textMultiLine" />
                 </LinearLayout>
 
@@ -70,23 +70,7 @@
 
 
                     <EditText
-                        android:id="@+id/edit_text_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Description"
-                        android:inputType="textMultiLine" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edit_text_custom"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/edit_text_gpio"
+                        android:id="@+id/edit_text_add_edit_plant_gpio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="1"
@@ -95,7 +79,7 @@
 
 
                 <Button
-                    android:id="@+id/button_save_comparing_element"
+                    android:id="@+id/button_save_add_edit_element"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="save" />
@@ -108,7 +92,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_Text_List_Container">
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_list_item_container">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/button_comparing_element_add_image"

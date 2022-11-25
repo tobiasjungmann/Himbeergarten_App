@@ -22,19 +22,19 @@ import com.example.rpicommunicator_v1.component.Constants.MODE
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
-import com.example.rpicommunicator_v1.databinding.ActivityAddNoteBinding
+import com.example.rpicommunicator_v1.databinding.ActivityAddCompElemBinding
 import java.io.File
 
 class AddElementActivity : AppCompatActivity(), CameraContract.View {
     private var mode: String? = null
 
     private var presenter: CameraContract.Presenter = CameraPresenter(this)
-    private lateinit var binding: ActivityAddNoteBinding
+    private lateinit var binding: ActivityAddCompElemBinding
     private lateinit var thumbnailsAdapter: CameraThumbnailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddNoteBinding.inflate(layoutInflater)
+        binding = ActivityAddCompElemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         presenter.attachView(this)

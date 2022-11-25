@@ -6,17 +6,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
-import com.example.rpicommunicator_v1.databinding.ActivityAddComparingListBinding
+import com.example.rpicommunicator_v1.databinding.ActivityAddCompListBinding
 
 
 class AddComparingListActivity : AppCompatActivity() {
 
 
-    private lateinit var binding: ActivityAddComparingListBinding
+    private lateinit var binding: ActivityAddCompListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddComparingListBinding.inflate(layoutInflater)
+        binding = ActivityAddCompListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.buttonSaveNewList.setOnClickListener { saveList() }
