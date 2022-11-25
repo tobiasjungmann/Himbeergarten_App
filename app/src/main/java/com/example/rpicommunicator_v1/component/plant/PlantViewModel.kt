@@ -15,28 +15,24 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
-
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
 
     private var currentPlant: Plant? = null
-    private val currentPlantWasChanged = false
 
     fun update(plant: Plant) {
         plantRepository.update(plant)
-    }
-
-    fun updateWateredInFirebase(id: String?, needsWater: Boolean?) {
-        plantRepository.updateWateredInFirebase(id, needsWater)
+        grpcStorageServerInterface.updatePlant(plant)
     }
 
     fun remove(plant: Plant) {
         plantRepository.remove(plant)
+        grpcStorageServerInterface.removePlant(plant)
     }
 
-    fun reloadFromFirestore() {
+    fun reloadFromServer() {
         Log.d("PlantviewModel", "reloading")
-        plantRepository.reloadFromFirestore()
+        grpcStorageServerInterface.reloadPlantsFromServer(plantRepository)
     }
 
     fun setCurrentPlant(position: Int) {
@@ -47,17 +43,21 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return currentPlant
     }
 
-    fun setHumidityTest() {
-        grpcStorageServerInterface.setHumidityTest()
+    fun clearCurrentPlant() {
+        currentPlant=null
     }
 
-    fun addPlant(name: String, type: String, info: String) {
-        grpcStorageServerInterface.addPlant(name, type, info)
-    }
 
-    init {
-        plantRepository = PlantRepository(application)
-        allPlants = plantRepository.allPlants
+    fun updateCurrentPlant(title: String, description: String, gpio: Int) {
+        if (title.isEmpty() && description.isEmpty() || gpio < 1) {
+            if (currentPlant == null) {
+                currentPlant = Plant("", "", "", "", false, "")
+            }
+            currentPlant!!.name = title
+            currentPlant!!.info = description
+            currentPlant!!.gpio = gpio
+            update(currentPlant!!)
+        }
     }
 
     private fun initStorageGrpcStub(): GrpcStorageServerService {
@@ -76,20 +76,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
     }
 
-    fun updateCurrentPlant(title: String, description: String, gpio: Int) {
-        if (title.isEmpty() && description.isEmpty() || gpio < 1) {
-            if (currentPlant == null) {
-                currentPlant = Plant("", "", "", "", false, "")
-            }
-            currentPlant!!.name = title
-            currentPlant!!.info = description
-            currentPlant!!.gpio = gpio
-            update(currentPlant!!)
-            updateWateredInFirebase(currentPlant!!.id, currentPlant!!.needsWater)
-        }
-    }
-
-    fun clearCurrentPlant() {
-        currentPlant=null
+    init {
+        plantRepository = PlantRepository(application)
+        allPlants = plantRepository.allPlants
     }
 }

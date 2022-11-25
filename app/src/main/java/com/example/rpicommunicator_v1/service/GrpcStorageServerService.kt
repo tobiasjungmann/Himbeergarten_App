@@ -3,6 +3,8 @@ package com.example.rpicommunicator_v1.service
 import android.util.Log
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.StorageServerOuterClass
+import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import io.grpc.stub.StreamObserver
 
 class GrpcStorageServerService(
@@ -48,6 +50,18 @@ class GrpcStorageServerService(
                     //on complete
                 }
             })
+    }
+
+    fun reloadPlantsFromServer(plantRepository: PlantRepository) {
+        TODO("Not yet implemented")
+    }
+
+    fun removePlant(plant: Plant) {
+
+    }
+
+    fun updatePlant(plant: Plant) {
+        TODO("Not yet implemented")
     }
 }
 

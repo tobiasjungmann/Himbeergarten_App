@@ -49,7 +49,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
 
 
         binding.buttonComparingElementAddImage.setOnClickListener { showImageOptionsDialog() }
-        binding.buttonSaveComparingElement.setOnClickListener { saveNote() }
+        binding.buttonSaveComparingElement.setOnClickListener { savePlant() }
 
         initCameraUI()
 
@@ -140,11 +140,11 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     }
 
     override fun onStop() {
-        saveNote()
+        savePlant()
         super.onStop()
     }
 
-    private fun saveNote() {
+    private fun savePlant() {
         val title = binding.editTextName.text.toString()
         val description = binding.editTextCompElementDescription.text.toString()
         var gpioString = binding.editTextGpio.text.toString()

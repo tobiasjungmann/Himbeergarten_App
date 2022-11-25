@@ -74,7 +74,7 @@ private fun initRecyclerView() {
     private fun initSwipeToRefresh() {
         // Setup refresh listener which triggers new data loading
         binding.swipeRefreshContainerPlant.setOnRefreshListener {
-            plantViewModel.reloadFromFirestore()
+            plantViewModel.reloadFromServer()
             binding.swipeRefreshContainerPlant.isRefreshing = false
         }
 
