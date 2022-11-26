@@ -1,13 +1,15 @@
 package com.example.rpicommunicator_v1.component.general
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.CommunicatorGrpc
-import com.example.rpicommunicator_v1.component.Constants
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.service.GrpcCommunicatorService
 import io.grpc.ManagedChannelBuilder
 import java.util.*
@@ -18,8 +20,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val _gpioStates = MutableLiveData(listOf(false, false, false, false, false))
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
-    private val rpiIpAddress = Constants.IP
-    private val rpiPort = 8010
 
     private var grpcCommunicationInterface: GrpcCommunicatorService = initGrpcStub()
 
@@ -41,15 +41,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun matrixChangeMode(matrixMode: Communication.MatrixState) {
-        Log.i("buttonClick", "matrix mode change request to: " + matrixMode.name)
         grpcCommunicationInterface.matrixChangeMode(matrixMode, this)
     }
 
     fun matrixChangeToMVV(start: String, destination: String) {
-        Log.i(
-            "buttonClick",
-            "matrix mode change request to MATRIX_MVV (from " + start + " to " + destination + ")"
-        )
         grpcCommunicationInterface.matrixChangeToMVV(start, destination, this)
     }
 
@@ -69,19 +64,18 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         grpcCommunicationInterface.setMatrixBrightness(currentProgress, this)
     }
 
-    fun setCommunicationCredentials(ipAddress: String, port: Int) {
-        if (!(ipAddress == rpiIpAddress && port == rpiPort)) {
-            grpcCommunicationInterface = initGrpcStub()
-            // todo save in preferences and load for the next time
-        }
-    }
+    private fun initGrpcStub(): GrpcCommunicatorService {       // todo code dublicate -> use static fucntion
+        val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
+            Context.MODE_PRIVATE
+        )
+        val ipStation = mPref.getString(this.getApplication<Application>().resources.getString(R.string.ADDRESS_STATION_PREF), "192.168.0.8")
+        val portStation = mPref.getInt(this.getApplication<Application>().resources.getString(R.string.PORT_STATION_PREF), 8010)
 
-    private fun initGrpcStub(): GrpcCommunicatorService {
         val wildcardConfig: MutableMap<String, Any> = HashMap()
         wildcardConfig["name"] = listOf(emptyMap<Any, Any>())
         wildcardConfig["timeout"] = "7s"
         val mChannel =
-            ManagedChannelBuilder.forAddress(rpiIpAddress, rpiPort).usePlaintext()
+            ManagedChannelBuilder.forAddress(ipStation, portStation).usePlaintext()
                 .defaultServiceConfig(
                     Collections.singletonMap(
                         "methodConfig", listOf(

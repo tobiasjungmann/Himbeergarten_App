@@ -2,4 +2,13 @@
 <resources>
     <integer name="INVALID_LAYOUT_ID">-1</integer>
 
+
+    <string name="SHARED_PREF_KEY">shared_pref_key</string>
+    <string name="ADDRESS_SERVER_PREF">address_server</string>
+    <string name="PORT_SERVER_PREF">port_server</string>
+    <string name="ADDRESS_STATION_PREF">address_station</string>
+    <string name="PORT_STATION_PREF">port_station</string>
+
+    <integer name="DEFAULT_PORT_STATION">12345</integer>
+    <integer name="DEFAULT_PORT_SERVER">8010</integer>
 </resources>
