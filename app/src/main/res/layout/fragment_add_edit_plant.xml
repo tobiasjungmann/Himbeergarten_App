@@ -75,8 +75,15 @@
                         android:layout_height="wrap_content"
                         android:hint="1"
                         android:inputType="number" />
+
                 </LinearLayout>
 
+                <ListView
+                    android:id="@+id/list_view_gpio_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/lb_browse_header_color"
+                    tools:listitem="@layout/list_item_gpio"/>
 
                 <Button
                     android:id="@+id/button_save_add_edit_element"

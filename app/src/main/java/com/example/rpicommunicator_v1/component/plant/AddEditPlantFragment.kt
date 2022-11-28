@@ -1,5 +1,6 @@
 package com.example.rpicommunicator_v1.component.plant
 
+import MyAdapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -41,7 +42,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         if (plantViewModel.getCurrentPlant() != null) {
             binding.editTextAddEditPlantName.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextAddEditPlantInfo.setText(plantViewModel.getCurrentPlant()!!.info)
-            binding.editTextAddEditPlantGpio.setText(plantViewModel.getCurrentPlant()!!.gpio)
+            binding.editTextAddEditPlantGpio.setText(plantViewModel.getCurrentPlant()!!.gpio.toString())
         }
 
         binding.recyclerViewComparingElementImages.layoutManager =
@@ -51,9 +52,20 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         binding.buttonComparingElementAddImage.setOnClickListener { showImageOptionsDialog() }
         binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
 
+        initGpioList()
         initCameraUI()
 
         return binding.root
+    }
+
+    private fun initGpioList() {
+
+        val list = ArrayList<String>()
+        list.add("1")
+        list.add("2")
+
+        val adapter = MyAdapter(requireContext(), list)
+        binding.listViewGpioSelect.adapter = adapter
     }
 
     private fun initCameraUI() {
@@ -148,14 +160,14 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
         var gpioString = binding.editTextAddEditPlantGpio.text.toString()
-        if (gpioString.isEmpty()){
-            gpioString="-1"
+        if (gpioString.isEmpty()) {
+            gpioString = "-1"
         }
 
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
-        plantViewModel.createUpdateCurrentPlant(name, info,gpioString.toInt())
+        plantViewModel.createUpdateCurrentPlant(name, info, gpioString.toInt())
     }
 }
