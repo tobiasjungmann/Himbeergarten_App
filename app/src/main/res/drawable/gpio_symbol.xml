@@ -4,9 +4,10 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:shape="oval">
 
-
-
 <size
-    android:width="16dp"
-    android:height="16dp"/>
+    android:width="20dp"
+    android:height="20dp"/>
+    <stroke
+        android:width="18dp"
+        android:color="#000"/>
 </shape>

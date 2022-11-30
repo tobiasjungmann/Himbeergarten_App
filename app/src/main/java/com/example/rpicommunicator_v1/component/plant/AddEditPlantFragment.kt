@@ -67,21 +67,35 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
                 0,
                 "3,3V",
                 R.color.gpio_orange,
-                R.color.white,
                 R.color.gpio_red,
-                R.color.primary_green,
                 "5V"
             )
         )
         list.add(
             GpioElement(
                 1,
-                "GND",
-                R.color.white,
+                "GPIO 2",
                 R.color.arduino_turquise,
-                R.color.white,
                 R.color.gpio_red,
                 "5V"
+            )
+        )
+        list.add(
+            GpioElement(
+                2,
+                "GPIO 3",
+                R.color.arduino_turquise,
+                R.color.gpio_brown,
+                "5V"
+            )
+        )
+        list.add(
+            GpioElement(
+                3,
+                "GPIO 4",
+                R.color.arduino_turquise,
+                R.color.arduino_turquise,
+                "GPIO 14"
             )
         )
 

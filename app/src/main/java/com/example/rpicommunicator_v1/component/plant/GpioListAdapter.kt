@@ -30,26 +30,14 @@ class MyAdapter(
         val binding =
             ListItemGpioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.imageView1.setColorFilter(
-            ContextCompat.getColor(context,element.backgroundLeft ),
+            ContextCompat.getColor(context,element.accentLeft ),
             android.graphics.PorterDuff.Mode.SRC_IN
-        );
-        binding.imageView1.setBackgroundColor(
-            ContextCompat.getColor(
-                context,
-                element.accentLeft
-            )
         )
         binding.textView.text = arrayList[position].labelLeft
 
         binding.imageView2.setColorFilter(
-            ContextCompat.getColor(context, element.backgroundRight),
+            ContextCompat.getColor(context, element.accentRight),
             android.graphics.PorterDuff.Mode.SRC_IN
-        );
-        binding.imageView2.setBackgroundColor(
-            ContextCompat.getColor(
-                context,
-                element.accentRight
-            )
         )
         binding.textView2.text = element.labelRight
         return binding.root
