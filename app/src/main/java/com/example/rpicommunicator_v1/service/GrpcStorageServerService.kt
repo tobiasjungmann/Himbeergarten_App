@@ -60,6 +60,7 @@ class GrpcStorageServerService(
                 }
 
                 override fun onError(throwable: Throwable?) {
+                     throwable?.stackTrace
                     Log.i("add Plant", "Plant not stored in server.")
                 }
 

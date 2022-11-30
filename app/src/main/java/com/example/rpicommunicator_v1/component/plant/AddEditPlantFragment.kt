@@ -20,6 +20,7 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
+import com.example.rpicommunicator_v1.component.general.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 import java.io.File
 
@@ -60,9 +61,29 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
 
     private fun initGpioList() {
 
-        val list = ArrayList<String>()
-        list.add("1")
-        list.add("2")
+        val list = ArrayList<GpioElement>()
+        list.add(
+            GpioElement(
+                0,
+                "3,3V",
+                R.color.gpio_orange,
+                R.color.white,
+                R.color.gpio_red,
+                R.color.primary_green,
+                "5V"
+            )
+        )
+        list.add(
+            GpioElement(
+                1,
+                "GND",
+                R.color.white,
+                R.color.arduino_turquise,
+                R.color.white,
+                R.color.gpio_red,
+                "5V"
+            )
+        )
 
         val adapter = MyAdapter(requireContext(), list)
         binding.listViewGpioSelect.adapter = adapter

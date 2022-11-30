@@ -23,4 +23,11 @@
     <color name="text_primary_dark">#F2FFFFFF</color>
     <color name="text_secondary_dark">#8AFFFFFF</color>
 
+    <color name="gpio_orange">#F4a641</color>
+    <color name="gpio_red">#E76451</color>
+    <color name="gpio_brown">#664c43</color>
+    <color name="gpio_yellow">#FF5722</color>
+    <color name="arduino_turquise">#2A9d8f</color>
+    <color name="ardiuno_blue">#264653</color>
+
 </resources>

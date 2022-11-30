@@ -8,6 +8,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.StorageServerGrpc
+import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
+import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import com.example.rpicommunicator_v1.service.GrpcStorageServerService
@@ -42,6 +44,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setCurrentPlant(position: Int) {
         currentPlant = allPlants.value!![position]
+        grpcStorageServerInterface.setHumidityTest()
+        update(currentPlant!!)// todo only while testing
     }
 
     fun getCurrentPlant(): Plant? {
@@ -73,8 +77,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
-        val ipServer = mPref.getString(this.getApplication<Application>().resources.getString(R.string.ADDRESS_SERVER_PREF), "192.168.0.8")
-        val portServer = mPref.getInt(this.getApplication<Application>().resources.getString(R.string.PORT_SERVER_PREF), 12346)
+        val ipServer = mPref.getString(this.getApplication<Application>().resources.getString(R.string.ADDRESS_SERVER_PREF), DEFAULT_SERVER_IP)
+        val portServer = mPref.getInt(this.getApplication<Application>().resources.getString(R.string.PORT_SERVER_PREF), DEFAULT_SERVER_PORT)
 
 
         val wildcardConfig: MutableMap<String, Any> = HashMap()

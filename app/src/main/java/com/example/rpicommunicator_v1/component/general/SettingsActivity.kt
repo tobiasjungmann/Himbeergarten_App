@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
@@ -25,13 +26,13 @@ private lateinit var mPref: SharedPreferences
             Context.MODE_PRIVATE
         )
         binding.editTextServerAddress.setText( mPref.getString(
-            this.application.resources.getString(R.string.ADDRESS_SERVER_PREF), "192.168.0.8"))
+            this.application.resources.getString(R.string.ADDRESS_SERVER_PREF), DEFAULT_SERVER_IP))
         binding.editTextServerPort.setText( mPref.getString(
             this.application.resources.getString(R.string.PORT_SERVER_PREF),
             this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()))
 
         binding.editTextStationAddress.setText( mPref.getString(
-            this.application.resources.getString(R.string.ADDRESS_STATION_PREF), "192.168.0.8"))
+            this.application.resources.getString(R.string.ADDRESS_STATION_PREF), DEFAULT_SERVER_IP))
         binding.editTextStationPort.setText( mPref.getString(
             this.application.resources.getString(R.string.PORT_STATION_PREF),
             this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()))
