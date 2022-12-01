@@ -30,7 +30,7 @@ class PlantOverviewFragment : Fragment() {
         _binding = FragmentPlantOverviewBinding.inflate(inflater, container, false)
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
-        binding.buttonAddPlant .setOnClickListener {
+        binding.buttonAddPlant.setOnClickListener {
             plantViewModel.clearCurrentPlant()
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
@@ -42,23 +42,17 @@ class PlantOverviewFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-
-
-override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
-}
-
-
-
-private fun initRecyclerView() {
-        val adapter = PlantAdapter()
+    private fun initRecyclerView() {
+        val adapter = PlantAdapter(plantViewModel)
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             openPlantView(position)
         }
         adapter.setOnItemClickListener(itemOnClick)
-        adapter.setViewModel(plantViewModel)
 
         plantViewModel.allPlants.observe(
             viewLifecycleOwner
@@ -75,7 +69,7 @@ private fun initRecyclerView() {
         // Setup refresh listener which triggers new data loading
         // todo should only be triggered if actively pulled
         binding.swipeRefreshContainerPlant.setOnRefreshListener {
-         // fixme add again   plantViewModel.reloadFromServer()
+            // fixme add again   plantViewModel.reloadFromServer()
             binding.swipeRefreshContainerPlant.isRefreshing = false
         }
 

@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [Plant::class],
-    version = 14
+    entities = [Plant::class,GpioElement::class,Device::class],
+    version = 15
 )
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao?

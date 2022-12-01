@@ -10,16 +10,11 @@ import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 
-class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
+class PlantAdapter (private val plantViewModel: PlantViewModel): RecyclerView.Adapter<PlantHolder>() {
 
     private var plants: List<Plant> = ArrayList()
     private lateinit var clickListener: (View, Int, Int) -> Unit
-    private var plantViewModel: PlantViewModel? = null
 
-
-    fun setViewModel(plantViewModel: PlantViewModel?) {
-        this.plantViewModel = plantViewModel
-    }
 
     fun setOnItemClickListener(listener: (View, Int, Int) -> Unit) {
         clickListener = listener
@@ -33,15 +28,16 @@ class PlantAdapter : RecyclerView.Adapter<PlantHolder>() {
     override fun onBindViewHolder(holder: PlantHolder, position: Int) {
         val currentItem = plants[position]
 
-        if (currentItem.imageID != -1) {
+        // todo query images
+        /*if (currentItem.imageID != -1) {
             holder.binding.listThumbnailImageView.setImageResource(currentItem.iconID)
             val alpha = 1.toFloat()
             holder.binding.listThumbnailImageView.alpha = alpha
-        } else {
+        } else {*/
             holder.binding.listThumbnailImageView.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
             holder.binding.listThumbnailImageView.alpha = alpha
-        }
+        //}
         holder.binding.textViewTitle.text = currentItem.name
         holder.binding.textViewInfo.text = currentItem.info
         holder.binding.textViewDescription.text = currentItem.lastWatered

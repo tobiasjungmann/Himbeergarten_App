@@ -8,11 +8,11 @@ import com.example.rpicommunicator_v1.R
 class Plant(
     var name: String,
     var info: String,
-    var gpio: Int
+    var gpio: String
 ) {
     @field:PrimaryKey(autoGenerate = true)
     var id: Int=0
-    var imageID = R.drawable.plant2
+    //var imageID = R.drawable.plant2
     var iconID = R.drawable.icon_plant
     var syncedWithServer = false
     var humidity: String = ""

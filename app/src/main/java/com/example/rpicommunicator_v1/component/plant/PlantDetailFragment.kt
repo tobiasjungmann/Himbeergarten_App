@@ -45,15 +45,16 @@ class PlantDetailFragment : Fragment() {
 
     private fun initViewComponents() {
         val plant=plantViewModel.getCurrentPlant()!!
-        if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
+        // todo add query with path element
+        /*if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
             binding.imageViewPlantDetailHeader.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
             val alpha = 1.toFloat()
             binding.imageViewPlantDetailHeader.alpha = alpha
         } else {
-            binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
+      */      binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
             val alpha = 0.1.toFloat()
             binding.imageViewPlantDetailHeader.alpha = alpha
-        }
+        //}
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
         binding.textViewLastWatered.text = plant.lastWatered

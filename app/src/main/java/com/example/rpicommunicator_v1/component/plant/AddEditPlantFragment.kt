@@ -1,6 +1,6 @@
 package com.example.rpicommunicator_v1.component.plant
 
-import MyAdapter
+import GpioAdapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -61,55 +61,22 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
 
     private fun initGpioList() {
 
-        val list = ArrayList<GpioElementPair>()
-        list.add(
-            GpioElementPair(
-                GpioElement(0, "3,3V", R.color.gpio_orange),
-                GpioElement(1, "5V", R.color.gpio_red)
-            )
-        )
-        list.add(
-            GpioElementPair(
-                GpioElement(2, "GPIO 2", R.color.arduino_turquise),
-                GpioElement(3, "5V", R.color.gpio_red)
-            )
-        )
-        list.add(
-            GpioElementPair(
-                GpioElement(4, "GPIO 3", R.color.arduino_turquise),
-                GpioElement(5, "Ground", R.color.gpio_brown)
-            )
-        )
-        /* list.add(
-             GpioElementPair(
-                 1,
-                 "GPIO 2",
-                 R.color.arduino_turquise,
-                 R.color.gpio_red,
-                 "5V"
-             )
-         )
-         list.add(
-             GpioElementPair(
-                 2,
-                 "GPIO 3",
-                 R.color.arduino_turquise,
-                 R.color.gpio_brown,
-                 "5V"
-             )
-         )
-         list.add(
-             GpioElementPair(
-                 3,
-                 "GPIO 4",
-                 R.color.arduino_turquise,
-                 R.color.arduino_turquise,
-                 "GPIO 14"
-             )
-         )*/
-
-        val adapter = MyAdapter(requireContext(), list, plantViewModel)
+      //  val list = ArrayList<GpioElementPair>()
+        //  plantViewModel.plantRepository.addRPi()
+        val adapter = GpioAdapter(requireContext(), plantViewModel)
+        plantViewModel.allGpioElements.observe(
+            viewLifecycleOwner
+        ) { gpioElements: List<GpioElement> ->
+            val pairs = ArrayList<GpioElementPair>()
+            for (i in 0..gpioElements.size step 2) {
+                if (i + 1 < gpioElements.size) {
+                    pairs.add(GpioElementPair(gpioElements[i], gpioElements[i + 1]))
+                }
+            }
+            adapter.setGpioElements(pairs)
+        }
         binding.listViewGpioSelect.adapter = adapter
+        binding.listViewGpioSelect.layoutManager = LinearLayoutManager(context)
     }
 
     private fun initCameraUI() {

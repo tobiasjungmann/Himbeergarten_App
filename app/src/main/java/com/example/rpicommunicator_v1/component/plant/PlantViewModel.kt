@@ -23,8 +23,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
-    private val plantRepository: PlantRepository
+    /*todo add again private*/ val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
+    val allGpioElements: LiveData<List<GpioElement>>
 
     private var currentPlant: Plant? = null
     private var currentGpioElement: GpioElement? = null
@@ -61,8 +62,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun createUpdateCurrentPlant(name: String, info: String) {
-        val gpio=1      // todo get current value from gpioelement
-        if (name.isNotEmpty() || info.isNotEmpty() || gpio > 0) {
+        val gpio="1"      // todo get current value from gpioelement
+        if (name.isNotEmpty() || info.isNotEmpty() || gpio.isNotEmpty()) {
             if (currentPlant == null) {
                 currentPlant = Plant(name, info, gpio)
                 plantRepository.insertPlant(currentPlant!!)
@@ -118,6 +119,7 @@ return currentGpioElement
     init {
         plantRepository = PlantRepository(application)
         allPlants = plantRepository.allPlants
+        allGpioElements = plantRepository.allGpioElements
 
         allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
             .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }

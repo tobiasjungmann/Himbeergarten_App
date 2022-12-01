@@ -66,14 +66,14 @@ class PlantRepository(application: Application?) {
             // Added from top to bottom, left to right
             val device=Device("usb 0")
             deviceDao?.insert(device)
-            gpioElementDao?.insert(GpioElement(device, "3,3V", R.color.gpio_orange))
-            gpioElementDao?.insert(GpioElement(device, "5V", R.color.gpio_red))
+            gpioElementDao?.insert(GpioElement(device.id, "3,3V", R.color.gpio_orange))
+            gpioElementDao?.insert(GpioElement(device.id, "5V", R.color.gpio_red))
 
-            gpioElementDao?.insert(GpioElement(device, "GPIO 2", R.color.arduino_turquise))
-            gpioElementDao?.insert(GpioElement(device, "5V", R.color.gpio_red))
+            gpioElementDao?.insert(GpioElement(device.id, "GPIO 2", R.color.arduino_turquise))
+            gpioElementDao?.insert(GpioElement(device.id, "5V", R.color.gpio_red))
 
-            gpioElementDao?.insert(GpioElement(device, "GPIO 3", R.color.arduino_turquise))
-            gpioElementDao?.insert(GpioElement(device, "Ground", R.color.gpio_brown))
+            gpioElementDao?.insert(GpioElement(device.id, "GPIO 3", R.color.arduino_turquise))
+            gpioElementDao?.insert(GpioElement(device.id, "Ground", R.color.gpio_brown))
 
         }
     }
