@@ -20,7 +20,8 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
-import com.example.rpicommunicator_v1.component.general.GpioElement
+import com.example.rpicommunicator_v1.component.general.GpioElementPair
+import com.example.rpicommunicator_v1.database.plant.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 import java.io.File
 
@@ -43,7 +44,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         if (plantViewModel.getCurrentPlant() != null) {
             binding.editTextAddEditPlantName.setText(plantViewModel.getCurrentPlant()!!.name)
             binding.editTextAddEditPlantInfo.setText(plantViewModel.getCurrentPlant()!!.info)
-            binding.editTextAddEditPlantGpio.setText(plantViewModel.getCurrentPlant()!!.gpio.toString())
         }
 
         binding.recyclerViewComparingElementImages.layoutManager =
@@ -61,45 +61,54 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
 
     private fun initGpioList() {
 
-        val list = ArrayList<GpioElement>()
+        val list = ArrayList<GpioElementPair>()
         list.add(
-            GpioElement(
-                0,
-                "3,3V",
-                R.color.gpio_orange,
-                R.color.gpio_red,
-                "5V"
+            GpioElementPair(
+                GpioElement(0, "3,3V", R.color.gpio_orange),
+                GpioElement(1, "5V", R.color.gpio_red)
             )
         )
         list.add(
-            GpioElement(
-                1,
-                "GPIO 2",
-                R.color.arduino_turquise,
-                R.color.gpio_red,
-                "5V"
+            GpioElementPair(
+                GpioElement(2, "GPIO 2", R.color.arduino_turquise),
+                GpioElement(3, "5V", R.color.gpio_red)
             )
         )
         list.add(
-            GpioElement(
-                2,
-                "GPIO 3",
-                R.color.arduino_turquise,
-                R.color.gpio_brown,
-                "5V"
+            GpioElementPair(
+                GpioElement(4, "GPIO 3", R.color.arduino_turquise),
+                GpioElement(5, "Ground", R.color.gpio_brown)
             )
         )
-        list.add(
-            GpioElement(
-                3,
-                "GPIO 4",
-                R.color.arduino_turquise,
-                R.color.arduino_turquise,
-                "GPIO 14"
-            )
-        )
+        /* list.add(
+             GpioElementPair(
+                 1,
+                 "GPIO 2",
+                 R.color.arduino_turquise,
+                 R.color.gpio_red,
+                 "5V"
+             )
+         )
+         list.add(
+             GpioElementPair(
+                 2,
+                 "GPIO 3",
+                 R.color.arduino_turquise,
+                 R.color.gpio_brown,
+                 "5V"
+             )
+         )
+         list.add(
+             GpioElementPair(
+                 3,
+                 "GPIO 4",
+                 R.color.arduino_turquise,
+                 R.color.arduino_turquise,
+                 "GPIO 14"
+             )
+         )*/
 
-        val adapter = MyAdapter(requireContext(), list)
+        val adapter = MyAdapter(requireContext(), list, plantViewModel)
         binding.listViewGpioSelect.adapter = adapter
     }
 
@@ -194,15 +203,11 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     private fun savePlant() {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
-        var gpioString = binding.editTextAddEditPlantGpio.text.toString()
-        if (gpioString.isEmpty()) {
-            gpioString = "-1"
-        }
 
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
         }
-        plantViewModel.createUpdateCurrentPlant(name, info, gpioString.toInt())
+        plantViewModel.createUpdateCurrentPlant(name, info)
     }
 }

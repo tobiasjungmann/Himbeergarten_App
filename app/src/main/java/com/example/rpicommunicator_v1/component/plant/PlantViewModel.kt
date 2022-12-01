@@ -10,6 +10,7 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
+import com.example.rpicommunicator_v1.database.plant.GpioElement
 import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import com.example.rpicommunicator_v1.service.GrpcStorageServerService
@@ -19,21 +20,23 @@ import java.util.*
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
+
     private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
     private val plantRepository: PlantRepository
     val allPlants: LiveData<List<Plant>>
 
     private var currentPlant: Plant? = null
+    private var currentGpioElement: GpioElement? = null
 
     fun update(plant: Plant) {
         plant.syncedWithServer = false
-        plantRepository.update(plant)
+        plantRepository.updatePlant(plant)
         grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
     }
 
     fun remove(plant: Plant) {
-        plantRepository.remove(plant)
+        plantRepository.removePlant(plant)
         grpcStorageServerInterface.removePlant(plant)
     }
 
@@ -57,14 +60,15 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(name: String, info: String, gpio: Int) {
+    fun createUpdateCurrentPlant(name: String, info: String) {
+        val gpio=1      // todo get current value from gpioelement
         if (name.isNotEmpty() || info.isNotEmpty() || gpio > 0) {
             if (currentPlant == null) {
                 currentPlant = Plant(name, info, gpio)
-                plantRepository.insert(currentPlant!!)
+                plantRepository.insertPlant(currentPlant!!)
                 grpcStorageServerInterface.addUpdatePlant(currentPlant!!, plantRepository)
             } else {
-                // todo check if changes have occured
+                // todo check if changes have occurred
                 currentPlant!!.name = name
                 currentPlant!!.info = info
                 currentPlant!!.gpio = gpio
@@ -74,11 +78,18 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun initStorageGrpcStub(): GrpcStorageServerService {
-        val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
+        val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(
+            this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
-        val ipServer = mPref.getString(this.getApplication<Application>().resources.getString(R.string.ADDRESS_SERVER_PREF), DEFAULT_SERVER_IP)
-        val portServer = mPref.getInt(this.getApplication<Application>().resources.getString(R.string.PORT_SERVER_PREF), DEFAULT_SERVER_PORT)
+        val ipServer = mPref.getString(
+            this.getApplication<Application>().resources.getString(R.string.ADDRESS_SERVER_PREF),
+            DEFAULT_SERVER_IP
+        )
+        val portServer = mPref.getInt(
+            this.getApplication<Application>().resources.getString(R.string.PORT_SERVER_PREF),
+            DEFAULT_SERVER_PORT
+        )
 
 
         val wildcardConfig: MutableMap<String, Any> = HashMap()
@@ -94,6 +105,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 ).build()
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
+    }
+
+    fun gpioSelectedForElement(gpioElement: GpioElement) {
+        currentGpioElement = gpioElement
+    }
+
+    fun getCurrentGpio(): GpioElement? {
+return currentGpioElement
     }
 
     init {

@@ -12,7 +12,8 @@ import com.example.rpicommunicator_v1.databinding.ActivitySettingsBinding
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySettingsBinding
-private lateinit var mPref: SharedPreferences
+    private lateinit var mPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -20,22 +21,35 @@ private lateinit var mPref: SharedPreferences
         binding.connectButton.setOnClickListener(this)
         binding.textViewSources.setOnClickListener(this)
 
-
         mPref = this.application.getSharedPreferences(
             this.application.resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
-        binding.editTextServerAddress.setText( mPref.getString(
-            this.application.resources.getString(R.string.ADDRESS_SERVER_PREF), DEFAULT_SERVER_IP))
-        binding.editTextServerPort.setText( mPref.getString(
-            this.application.resources.getString(R.string.PORT_SERVER_PREF),
-            this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()))
+        binding.editTextServerAddress.setText(
+            mPref.getString(
+                this.application.resources.getString(R.string.ADDRESS_SERVER_PREF),
+                DEFAULT_SERVER_IP
+            )
+        )
+        binding.editTextServerPort.setText(
+            mPref.getString(
+                this.application.resources.getString(R.string.PORT_SERVER_PREF),
+                this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()
+            )
+        )
 
-        binding.editTextStationAddress.setText( mPref.getString(
-            this.application.resources.getString(R.string.ADDRESS_STATION_PREF), DEFAULT_SERVER_IP))
-        binding.editTextStationPort.setText( mPref.getString(
-            this.application.resources.getString(R.string.PORT_STATION_PREF),
-            this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()))
+        binding.editTextStationAddress.setText(
+            mPref.getString(
+                this.application.resources.getString(R.string.ADDRESS_STATION_PREF),
+                DEFAULT_SERVER_IP
+            )
+        )
+        binding.editTextStationPort.setText(
+            mPref.getString(
+                this.application.resources.getString(R.string.PORT_STATION_PREF),
+                this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()
+            )
+        )
     }
 
     override fun onClick(view: View?) {

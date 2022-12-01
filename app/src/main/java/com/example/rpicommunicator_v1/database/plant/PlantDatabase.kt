@@ -12,6 +12,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 )
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao?
+    abstract fun gpioElementDao(): GpioElementDao?
+    abstract fun deviceDao(): DeviceDao?
 
     companion object {
         private var instance: PlantDatabase? = null

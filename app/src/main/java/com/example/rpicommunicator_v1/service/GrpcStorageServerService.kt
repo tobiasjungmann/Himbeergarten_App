@@ -67,7 +67,7 @@ class GrpcStorageServerService(
                 override fun onCompleted() {
                     Log.i("add Plant", "Stored plant successfully in server.")
                     plant.syncedWithServer=true
-                    plantRepository.update(plant)
+                    plantRepository.updatePlant(plant)
                 }
             })
     }
