@@ -491,7 +491,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/icon_gear"
+        app:srcCompat="@drawable/ic_baseline_gear_24"
         android:focusable="true"
         android:contentDescription="Settings" />
 
