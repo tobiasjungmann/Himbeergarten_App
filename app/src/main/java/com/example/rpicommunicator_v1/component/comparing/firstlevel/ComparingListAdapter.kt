@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
+import com.example.rpicommunicator_v1.database.compare.models.ComparingList
 import com.example.rpicommunicator_v1.databinding.ListItemTextBinding
 
 class ComparingListAdapter : RecyclerView.Adapter<ComparingListAdapter.ComparingListHolder>() {

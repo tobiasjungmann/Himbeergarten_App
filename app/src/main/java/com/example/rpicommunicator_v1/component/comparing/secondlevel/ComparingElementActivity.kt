@@ -20,7 +20,7 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_PRIORITY
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
-import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
+import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
 import com.example.rpicommunicator_v1.databinding.ActivityComparingElementBinding
 import com.google.android.material.snackbar.Snackbar
 

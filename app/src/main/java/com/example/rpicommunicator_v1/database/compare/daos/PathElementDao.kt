@@ -1,9 +1,9 @@
-package com.example.rpicommunicator_v1.database.PathElement.image
+package com.example.rpicommunicator_v1.database.compare.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.rpicommunicator_v1.database.image.PathElement
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.daos.DefaultDao
 
 @Dao

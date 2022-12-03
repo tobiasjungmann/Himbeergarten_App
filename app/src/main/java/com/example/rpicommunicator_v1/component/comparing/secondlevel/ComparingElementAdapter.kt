@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
-import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
+import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
 import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 
 

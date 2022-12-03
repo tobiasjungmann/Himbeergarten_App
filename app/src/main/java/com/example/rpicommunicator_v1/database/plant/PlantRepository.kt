@@ -4,8 +4,8 @@ import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
-import com.example.rpicommunicator_v1.database.PathElement.image.PathElementDao
-import com.example.rpicommunicator_v1.database.image.PathElement
+import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
 import com.example.rpicommunicator_v1.database.plant.daos.DeviceDao
 import com.example.rpicommunicator_v1.database.plant.daos.GpioElementDao

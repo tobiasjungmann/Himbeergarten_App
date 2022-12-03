@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rpicommunicator_v1.database.bike.BikeTour
+import com.example.rpicommunicator_v1.database.compare.models.BikeTour
 import com.example.rpicommunicator_v1.databinding.ListItemTextBinding
 
 

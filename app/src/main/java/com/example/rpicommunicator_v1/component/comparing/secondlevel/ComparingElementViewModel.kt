@@ -3,39 +3,36 @@ package com.example.rpicommunicator_v1.component.comparing.secondlevel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 import com.example.rpicommunicator_v1.database.compare.LocalRepository
-import com.example.rpicommunicator_v1.database.image.PathElement
-import com.example.rpicommunicator_v1.database.image.PathElementRepository
+import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 
 class ComparingElementViewModel(application: Application) : AndroidViewModel(application) {
-    private val elementRepo: LocalRepository
-    private val pathRepo: PathElementRepository
+    private val repository: LocalRepository
 
     init {
-        elementRepo = LocalRepository(application)
-        pathRepo = PathElementRepository(application)
+        repository = LocalRepository(application)
     }
 
     fun insert(comparingElement: ComparingElement?, imagePaths: Array<String>?) {
-        elementRepo.insertComparingElement(comparingElement)
-        pathRepo.insertList(imagePaths)
+        repository.insertComparingElement(comparingElement)
+        repository.insertPathElements(imagePaths)
     }
 
     fun update(comparingElement: ComparingElement?, paths: Array<String>) {
-        elementRepo.updateComparingElement(comparingElement)
-        pathRepo.update(paths)
+        repository.updateComparingElement(comparingElement)
+        repository.updatePathElements(paths)
     }
 
     fun delete(comparingElement: ComparingElement?) {
-        elementRepo.deleteComparingElement(comparingElement)        // cascade delete -> paths must not be added
+        repository.deleteComparingElement(comparingElement)        // cascade delete -> paths must not be added
     }
 
     fun getComparingElementByID(listId: Int): LiveData<List<ComparingElement>> {
-        return elementRepo.getComparingElementsById(listId)
+        return repository.getComparingElementsById(listId)
     }
 
     fun getAllPathsToElement(listId: Int): List<PathElement>{
-        return pathRepo.getPathElementsById(listId)
+        return repository.getPathElementsById(listId)
     }
 }

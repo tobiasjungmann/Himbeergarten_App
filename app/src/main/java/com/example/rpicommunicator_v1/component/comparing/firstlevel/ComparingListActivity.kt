@@ -15,7 +15,7 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementActivity
-import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
+import com.example.rpicommunicator_v1.database.compare.models.ComparingList
 import com.example.rpicommunicator_v1.databinding.ActivityComparingListBinding
 import com.google.android.material.snackbar.Snackbar
 

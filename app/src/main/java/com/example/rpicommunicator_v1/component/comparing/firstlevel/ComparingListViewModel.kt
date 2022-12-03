@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.database.compare.LocalRepository
-import com.example.rpicommunicator_v1.database.compare.first_level.ComparingList
+import com.example.rpicommunicator_v1.database.compare.models.ComparingList
 
 
 class ComparingListViewModel(application: Application) : AndroidViewModel(application) {

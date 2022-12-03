@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.database.bike.BikeTour
+import com.example.rpicommunicator_v1.database.compare.models.BikeTour
 import com.example.rpicommunicator_v1.databinding.ActivityBikeBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry

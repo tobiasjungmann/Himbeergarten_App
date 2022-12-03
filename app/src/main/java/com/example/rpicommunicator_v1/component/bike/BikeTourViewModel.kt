@@ -2,25 +2,23 @@ package com.example.rpicommunicator_v1.component.bike
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.rpicommunicator_v1.database.bike.BikeTourRepository
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.database.bike.BikeTour
+import com.example.rpicommunicator_v1.database.compare.models.BikeTour
+import com.example.rpicommunicator_v1.database.compare.LocalRepository
 
 class BikeTourViewModel(application: Application) : AndroidViewModel(application) {
-    private val bikeTourRepository: BikeTourRepository
+    private val repository: LocalRepository
     val allBikeTours: LiveData<List<BikeTour>>
     fun remove(bikeTour: BikeTour) {
-        bikeTourRepository.remove(bikeTour)
+        repository.remove(bikeTour)
     }
 
     fun insert(bikeTour: BikeTour) {
-        bikeTourRepository.insert(bikeTour)
+        repository.insert(bikeTour)
     }
 
     init {
-
-        //networkCommunicator=new NetworkCommunicator();
-        bikeTourRepository = BikeTourRepository(application)
-        allBikeTours = bikeTourRepository.allBikeTours
+        repository = LocalRepository(application)
+        allBikeTours = repository.allBikeTours
     }
 }

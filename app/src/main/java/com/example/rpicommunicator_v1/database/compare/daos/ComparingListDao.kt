@@ -1,8 +1,9 @@
-package com.example.rpicommunicator_v1.database.compare.first_level
+package com.example.rpicommunicator_v1.database.compare.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
+import com.example.rpicommunicator_v1.database.compare.models.ComparingList
 import com.example.rpicommunicator_v1.database.plant.daos.DefaultDao
 
 @Dao

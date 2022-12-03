@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.database.image
+package com.example.rpicommunicator_v1.database.compare.models
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

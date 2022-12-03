@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.database.compare.second_level
+package com.example.rpicommunicator_v1.database.compare.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
