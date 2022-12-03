@@ -10,9 +10,10 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
-import com.example.rpicommunicator_v1.database.plant.GpioElement
-import com.example.rpicommunicator_v1.database.plant.Plant
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
+import com.example.rpicommunicator_v1.database.plant.models.GpioElement
+import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 import com.example.rpicommunicator_v1.service.GrpcStorageServerService
 import io.grpc.ManagedChannelBuilder
 import java.util.*
@@ -23,9 +24,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
 
-    /*todo add again private*/ val plantRepository: PlantRepository
-    val allPlants: LiveData<List<Plant>>
-    val allGpioElements: LiveData<List<GpioElement>>
+    private val plantRepository: PlantRepository
+   // val allPlants: LiveData<List<Plant>>
+
 
     private var currentPlant: Plant? = null
     private var currentGpioElement: GpioElement? = null
@@ -47,7 +48,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setCurrentPlant(position: Int) {
-        currentPlant = allPlants.value!![position]
+        currentPlant = plantRepository.allPlants.value!![position]
         grpcStorageServerInterface.setHumidityTest()
         update(currentPlant!!)// todo only while testing
     }
@@ -62,17 +63,16 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun createUpdateCurrentPlant(name: String, info: String) {
-        val gpio="1"      // todo get current value from gpioelement
-        if (name.isNotEmpty() || info.isNotEmpty() || gpio.isNotEmpty()) {
+        if (name.isNotEmpty() || info.isNotEmpty() || currentGpioElement!=null) {
             if (currentPlant == null) {
-                currentPlant = Plant(name, info, gpio)
+                currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
                 plantRepository.insertPlant(currentPlant!!)
                 grpcStorageServerInterface.addUpdatePlant(currentPlant!!, plantRepository)
             } else {
                 // todo check if changes have occurred
                 currentPlant!!.name = name
                 currentPlant!!.info = info
-                currentPlant!!.gpio = gpio
+                currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
                 update(currentPlant!!)
             }
         }
@@ -113,15 +113,26 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getCurrentGpio(): GpioElement? {
-return currentGpioElement
+        return currentGpioElement
+    }
+
+    fun getHumidityEntries(): LiveData<List<HumidityEntry>> {
+        return plantRepository.getHumidityEntriesForSensorSlot(currentPlant)
+    }
+
+    fun getGpioEntries(): LiveData<List<GpioElement>> {
+        return plantRepository.allGpioElements
+    }
+
+    fun getAllPlants(): LiveData<List<Plant>> {
+        return plantRepository.allPlants
     }
 
     init {
         plantRepository = PlantRepository(application)
-        allPlants = plantRepository.allPlants
-        allGpioElements = plantRepository.allGpioElements
 
-        allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
+        // todo replace by query and observer
+        plantRepository.allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
             .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }
     }
 }

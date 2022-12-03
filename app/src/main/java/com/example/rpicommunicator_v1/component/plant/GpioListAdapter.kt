@@ -7,9 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.general.GpioElementPair
-import com.example.rpicommunicator_v1.component.plant.PlantViewModel
-import com.example.rpicommunicator_v1.database.plant.GpioElement
+import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.ListItemGpioBinding
 
 

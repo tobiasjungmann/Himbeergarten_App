@@ -158,7 +158,8 @@
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/chart_plant_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
             </LinearLayout>

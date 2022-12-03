@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.plant.PlantAdapter.PlantHolder
-import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 
 class PlantAdapter (private val plantViewModel: PlantViewModel): RecyclerView.Adapter<PlantHolder>() {

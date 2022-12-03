@@ -1,6 +1,5 @@
 package com.example.rpicommunicator_v1.component.plant
 
-import GpioAdapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -20,8 +19,7 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
-import com.example.rpicommunicator_v1.component.general.GpioElementPair
-import com.example.rpicommunicator_v1.database.plant.GpioElement
+import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 import java.io.File
 
@@ -64,7 +62,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
       //  val list = ArrayList<GpioElementPair>()
         //  plantViewModel.plantRepository.addRPi()
         val adapter = GpioAdapter(requireContext(), plantViewModel)
-        plantViewModel.allGpioElements.observe(
+        plantViewModel.getGpioEntries().observe(
             viewLifecycleOwner
         ) { gpioElements: List<GpioElement> ->
             val pairs = ArrayList<GpioElementPair>()

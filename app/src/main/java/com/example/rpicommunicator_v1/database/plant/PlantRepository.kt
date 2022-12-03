@@ -3,8 +3,19 @@ package com.example.rpicommunicator_v1.database.plant
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.Constants.GPIO_COLOR_3_3V
+import com.example.rpicommunicator_v1.component.Constants.GPIO_COLOR_5V
+import com.example.rpicommunicator_v1.component.Constants.GPIO_COLOR_GND
+import com.example.rpicommunicator_v1.component.Constants.GPIO_COLOR_GPIO
 import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
+import com.example.rpicommunicator_v1.database.plant.daos.DeviceDao
+import com.example.rpicommunicator_v1.database.plant.daos.GpioElementDao
+import com.example.rpicommunicator_v1.database.plant.daos.HumidityEntryDao
+import com.example.rpicommunicator_v1.database.plant.daos.PlantDao
+import com.example.rpicommunicator_v1.database.plant.models.Device
+import com.example.rpicommunicator_v1.database.plant.models.GpioElement
+import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 
 class PlantRepository(application: Application?) {
     private val plantDao: PlantDao?
@@ -14,8 +25,9 @@ class PlantRepository(application: Application?) {
     val allGpioElements: LiveData<List<GpioElement>>
 
     private val deviceDao: DeviceDao?
-    val allDevices: LiveData<List<Device>>
-
+    private val allDevices: LiveData<List<Device>>
+    private val humidityEntryDao: HumidityEntryDao?
+    val allHumidityEntries: LiveData<List<HumidityEntry>>
 
     // todo overload function to potentially include image paths
     fun insertPlant(plant: Plant) {
@@ -31,8 +43,21 @@ class PlantRepository(application: Application?) {
     }
 
     fun addRPi() {
-        AddRPiThread(gpioElementDao,deviceDao).start()
+        AddRPiThread(gpioElementDao, deviceDao).start()
     }
+
+    fun getHumidityEntriesForSensorSlot(currentPlant: Plant?): LiveData<List<HumidityEntry>> {
+       /* if (currentPlant == null) {
+            return;
+        } else {
+            //todo call query ad return live data with gpioElementId
+        }*/
+        return allHumidityEntries
+    }
+
+    /*fun getHumidityEntriesForSensorSlot(device: Device, sensorSlot: Int){
+//return allHumidityEntries.
+    }*/
 
     private class InsertPlantThread(private val plantDao: PlantDao?, private val plant: Plant) :
         Thread() {
@@ -59,22 +84,61 @@ class PlantRepository(application: Application?) {
         }
     }
 
-    private class AddRPiThread(private val gpioElementDao: GpioElementDao?,private val deviceDao: DeviceDao?) :
+    private class AddRPiThread(
+        private val gpioElementDao: GpioElementDao?,
+        private val deviceDao: DeviceDao?
+    ) :
         Thread() {
         override fun run() {
 
-            // Added from top to bottom, left to right
-            val device=Device("usb 0")
+
+            val device = Device("usb 0")
             deviceDao?.insert(device)
-            gpioElementDao?.insert(GpioElement(device.id, "3,3V", R.color.gpio_orange))
-            gpioElementDao?.insert(GpioElement(device.id, "5V", R.color.gpio_red))
+            addRPiPinoutForDevice(device.device)
+        }
 
-            gpioElementDao?.insert(GpioElement(device.id, "GPIO 2", R.color.arduino_turquise))
-            gpioElementDao?.insert(GpioElement(device.id, "5V", R.color.gpio_red))
-
-            gpioElementDao?.insert(GpioElement(device.id, "GPIO 3", R.color.arduino_turquise))
-            gpioElementDao?.insert(GpioElement(device.id, "Ground", R.color.gpio_brown))
-
+        private fun addRPiPinoutForDevice(parent: Int) {
+            // Added from top to bottom, left to right
+            gpioElementDao?.insert(GpioElement(parent, "3.3V", GPIO_COLOR_3_3V))
+            gpioElementDao?.insert(GpioElement(parent, "5V", GPIO_COLOR_5V))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 2", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "5V", GPIO_COLOR_5V))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 3", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 4", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 14", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 15", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 17", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 18", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 27", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GND", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 22", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 23", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "3.3V", GPIO_COLOR_3_3V))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 24", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 10", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 9", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 25", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 11", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 8", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 7", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 0", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 1", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 5", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 6", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 12", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 13", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 19", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 16", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 26", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 20", GPIO_COLOR_GPIO))
+            gpioElementDao?.insert(GpioElement(parent, "Ground", GPIO_COLOR_GND))
+            gpioElementDao?.insert(GpioElement(parent, "GPIO 21", GPIO_COLOR_GPIO))
         }
     }
 
@@ -88,5 +152,8 @@ class PlantRepository(application: Application?) {
 
         deviceDao = database.deviceDao()
         allDevices = deviceDao!!.allDevices
+
+        humidityEntryDao = database.humidityEntryDao()
+        allHumidityEntries = humidityEntryDao!!.allHumidityEntries
     }
 }

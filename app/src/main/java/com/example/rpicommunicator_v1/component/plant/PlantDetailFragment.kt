@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LimitLine
@@ -30,21 +31,22 @@ class PlantDetailFragment : Fragment() {
         binding = FragmentPlantDetailBinding.inflate(layoutInflater)
         plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
 
-        if (plantViewModel.getCurrentPlant()==null){
+        if (plantViewModel.getCurrentPlant() == null) {
             Log.d("Debug", "onCreateView: No plant specified for the detail view")
         }
 
         initViewComponents()
-        if (plantViewModel.getCurrentPlant()!!.graphString != "") {
-            initChart(plantViewModel.getCurrentPlant()!!.graphString)
-        } else {
-            binding.chartPlantDetail.visibility = View.GONE
-        }
+        initChart()
+        /*  if (plantViewModel.getCurrentPlant()!!.graphString != "") {
+              initChart(plantViewModel.getCurrentPlant()!!.graphString)
+          } else {
+              binding.chartPlantDetail.visibility = View.GONE
+          }*/
         return binding.root
     }
 
     private fun initViewComponents() {
-        val plant=plantViewModel.getCurrentPlant()!!
+        val plant = plantViewModel.getCurrentPlant()!!
         // todo add query with path element
         /*if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
             binding.imageViewPlantDetailHeader.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
@@ -52,8 +54,8 @@ class PlantDetailFragment : Fragment() {
             binding.imageViewPlantDetailHeader.alpha = alpha
         } else {
       */      binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
-            val alpha = 0.1.toFloat()
-            binding.imageViewPlantDetailHeader.alpha = alpha
+        val alpha = 0.1.toFloat()
+        binding.imageViewPlantDetailHeader.alpha = alpha
         //}
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
@@ -72,22 +74,28 @@ class PlantDetailFragment : Fragment() {
     }
 
 
-    private fun initChart(graphString: String) {
-        val dataSets = ArrayList<ILineDataSet>()
-        val lineDataSet1 = LineDataSet(getDataSet(graphString), "Data 1")
-        styleDataset(lineDataSet1)
-        styleChart()
-        dataSets.add(lineDataSet1)
-        val data = LineData(dataSets)
-        binding.chartPlantDetail.data = data
-        binding.chartPlantDetail.invalidate()
+    private fun initChart() {
+        plantViewModel.getHumidityEntries().observe(
+            viewLifecycleOwner
+        ) { humidityEntries: List<HumidityEntry> ->
+            val dataSets = ArrayList<ILineDataSet>()
+            val lineDataSet1 = LineDataSet(getDataSet(humidityEntries), "Data 1")
+            styleDataset(lineDataSet1)
+            styleChart()
+            dataSets.add(lineDataSet1)
+            val data = LineData(dataSets)
+            binding.chartPlantDetail.data = data
+            binding.chartPlantDetail.invalidate()
+            binding.chartPlantDetail.visibility = View.VISIBLE
+        }
     }
 
     private fun styleDataset(lineDataSet1: LineDataSet) {
         lineDataSet1.lineWidth = 2f
         lineDataSet1.circleRadius = 6f
         lineDataSet1.circleHoleRadius = 3f
-        lineDataSet1.color = ContextCompat.getColor(requireContext().applicationContext,
+        lineDataSet1.color = ContextCompat.getColor(
+            requireContext().applicationContext,
             R.color.primary_green_lighter
         )
         lineDataSet1.setCircleColor(
@@ -104,9 +112,12 @@ class PlantDetailFragment : Fragment() {
 
     private fun styleChart() {
         binding.chartPlantDetail.setDrawBorders(true)
-        binding.chartPlantDetail.setBorderColor(ContextCompat.getColor(requireContext().applicationContext,
-            R.color.light_grey
-        ))
+        binding.chartPlantDetail.setBorderColor(
+            ContextCompat.getColor(
+                requireContext().applicationContext,
+                R.color.light_grey
+            )
+        )
         binding.chartPlantDetail.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
@@ -126,13 +137,15 @@ class PlantDetailFragment : Fragment() {
         binding.chartPlantDetail.axisLeft.setDrawAxisLine(false)
         binding.chartPlantDetail.axisRight.setDrawAxisLine(false)
         val limitLine = LimitLine(200f) // set where the line should be drawn
-        limitLine.lineColor = ContextCompat.getColor(requireContext().applicationContext,
+        limitLine.lineColor = ContextCompat.getColor(
+            requireContext().applicationContext,
             R.color.primary_green_lighter
         )
         limitLine.lineWidth = 2f
         binding.chartPlantDetail.axisLeft.addLimitLine(limitLine)
         val limitLine2 = LimitLine(100f) // set where the line should be drawn
-        limitLine2.lineColor = ContextCompat.getColor(requireContext().applicationContext,
+        limitLine2.lineColor = ContextCompat.getColor(
+            requireContext().applicationContext,
             R.color.red
         )
         limitLine2.lineWidth = 2f
@@ -140,17 +153,10 @@ class PlantDetailFragment : Fragment() {
         binding.chartPlantDetail.axisLeft.addLimitLine(limitLine)
     }
 
-    private fun getDataSet(graphString: String): ArrayList<Entry> {
+    private fun getDataSet(entries: List<HumidityEntry>): ArrayList<Entry> {
         val dataSets = ArrayList<Entry>()
-        val coordinates = graphString.split(";").toTypedArray()
-        for (s in coordinates) {
-            dataSets.add(
-                Entry(
-                    s.substring(0, s.indexOf("_")).toInt().toFloat(),
-                    s.substring(s.indexOf("_") + 1).toInt()
-                        .toFloat()
-                )
-            )
+        for (s in entries) {
+            dataSets.add(Entry(s.value, s.timestamp))
         }
         return dataSets
     }

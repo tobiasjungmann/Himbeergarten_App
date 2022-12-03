@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.database.plant
+package com.example.rpicommunicator_v1.database.plant.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,15 +8,14 @@ import com.example.rpicommunicator_v1.R
 class Plant(
     var name: String,
     var info: String,
-    var gpio: String
+    var gpioElement:Int
 ) {
     @field:PrimaryKey(autoGenerate = true)
-    var id: Int=0
-    //var imageID = R.drawable.plant2
+    var plant: Int=0
     var iconID = R.drawable.icon_plant
     var syncedWithServer = false
     var humidity: String = ""
     var needsWater: Boolean = false
-    var graphString: String = ""
     var lastWatered: String = ""
+
 }

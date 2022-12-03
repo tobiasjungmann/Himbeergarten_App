@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.database.plant.Plant
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 import com.example.rpicommunicator_v1.databinding.FragmentPlantOverviewBinding
 
 
@@ -54,7 +54,7 @@ class PlantOverviewFragment : Fragment() {
         }
         adapter.setOnItemClickListener(itemOnClick)
 
-        plantViewModel.allPlants.observe(
+        plantViewModel.getAllPlants().observe(
             viewLifecycleOwner
         ) { plants: List<Plant> ->
             adapter.setPlants(plants as List<Plant>)

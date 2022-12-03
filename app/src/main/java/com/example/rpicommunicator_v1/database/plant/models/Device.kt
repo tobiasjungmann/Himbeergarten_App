@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.database.plant
+package com.example.rpicommunicator_v1.database.plant.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "device_table")
 class Device(var serialComPort: String) {
     @field:PrimaryKey(autoGenerate = true)
-    var id = -1
+    var device = -1
 }

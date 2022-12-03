@@ -1,19 +1,13 @@
 package com.example.rpicommunicator_v1.database.PathElement.image
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
 import com.example.rpicommunicator_v1.database.image.PathElement
+import com.example.rpicommunicator_v1.database.plant.daos.DefaultDao
 
 @Dao
-interface PathElementDao {
-    @Insert
-    fun insert(pathElement: PathElement?)
-
-    @Update
-    fun update(pathElement: PathElement?)
-
-    @Delete
-    fun delete(pathElement: PathElement?)
+interface PathElementDao: DefaultDao<PathElement> {
 
     @Query("DELETE FROM path_element_database")
     fun deleteAllPathElements()

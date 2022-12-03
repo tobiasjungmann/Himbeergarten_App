@@ -1,6 +1,6 @@
-package com.example.rpicommunicator_v1.component.general
+package com.example.rpicommunicator_v1.component.plant
 
-import com.example.rpicommunicator_v1.database.plant.GpioElement
+import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 
 class GpioElementPair(
     val left: GpioElement,

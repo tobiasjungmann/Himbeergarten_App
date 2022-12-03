@@ -2,18 +2,12 @@ package com.example.rpicommunicator_v1.database.image
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Converters
-import com.example.rpicommunicator_v1.database.compare.second_level.ComparingElement
 import java.io.File
 import java.io.FileOutputStream
-import java.security.AccessController.getContext
 
 @Entity(tableName = "path_element_database")
 @TypeConverters(Converters::class)
@@ -23,7 +17,7 @@ class PathElement(
 
     @PrimaryKey(autoGenerate = true)
     var pathElementID = 0
-    var parentEntry: Long = 0
+    var parentEntry: Int = 0
 
     fun loadThumbnail(thumbnailSize: Int): Bitmap {
         val thumbnailPath=path.substring(0,path.length-5)+"_Thumbnail.jpg"
