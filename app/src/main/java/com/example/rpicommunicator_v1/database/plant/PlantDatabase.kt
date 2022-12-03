@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rpicommunicator_v1.component.Constants
+import com.example.rpicommunicator_v1.database.PathElement.image.PathElementDao
 import com.example.rpicommunicator_v1.database.image.PathElement
 import com.example.rpicommunicator_v1.database.plant.daos.DeviceDao
 import com.example.rpicommunicator_v1.database.plant.daos.GpioElementDao
@@ -26,6 +27,7 @@ abstract class PlantDatabase : RoomDatabase() {
     abstract fun gpioElementDao(): GpioElementDao?
     abstract fun deviceDao(): DeviceDao?
     abstract fun humidityEntryDao(): HumidityEntryDao?
+    abstract fun pathDao(): PathElementDao?
 
 
 

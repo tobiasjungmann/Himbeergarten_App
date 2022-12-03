@@ -55,6 +55,7 @@ class GpioAdapter(
                 ContextCompat.getColor(context, R.color.gpio_red)
             )
             // todo update all other values - remove color from unselected element
+            // todo get view for previous, set color in it
             plantViewModel.gpioSelectedForElement(gpioElement)
         }
     }

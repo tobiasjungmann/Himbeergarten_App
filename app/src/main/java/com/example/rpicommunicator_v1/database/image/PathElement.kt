@@ -13,11 +13,12 @@ import java.io.FileOutputStream
 @TypeConverters(Converters::class)
 class PathElement(
     val path: String,
+    val parentEntry: Int = 0
 ) {
 
     @PrimaryKey(autoGenerate = true)
     var pathElementID = 0
-    var parentEntry: Int = 0
+
 
     fun loadThumbnail(thumbnailSize: Int): Bitmap {
         val thumbnailPath=path.substring(0,path.length-5)+"_Thumbnail.jpg"

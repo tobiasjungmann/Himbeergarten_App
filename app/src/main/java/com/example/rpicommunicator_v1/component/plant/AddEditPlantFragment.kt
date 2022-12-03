@@ -73,8 +73,9 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
             }
             adapter.setGpioElements(pairs)
         }
-        binding.listViewGpioSelect.adapter = adapter
-        binding.listViewGpioSelect.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewGpioSelect.adapter = adapter
+        binding.recyclerViewGpioSelect.layoutManager = LinearLayoutManager(context)
+     //   binding.recyclerViewGpioSelect.isNestedScrollingEnabled = false
     }
 
     private fun initCameraUI() {
