@@ -9,9 +9,9 @@ class GpioElementPair(
 ) {
     fun gpioInUse(leftUsed: Boolean): Boolean{
         return if (leftUsed){
-            left.userId>-1
+            left.plant>-1
         }else{
-            right.userId>-1
+            right.plant>-1
         }
     }
 

@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 
 @Dao
-interface GpioElementDao:DefaultDao<GpioElement>  {
+interface GpioElementDao : DefaultDao<GpioElement> {
 
     @get:Query("SELECT * FROM gpio_element_table")
     val allGpioElements: LiveData<List<GpioElement>>

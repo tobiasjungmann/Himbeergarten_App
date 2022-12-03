@@ -59,7 +59,7 @@ class PlantDetailFragment : Fragment() {
         //}
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
-        binding.textViewLastWatered.text = plant.lastWatered
+       // binding.textViewLastWatered.text = plant.lastWatered
         binding.textViewPlantDetailDescription.text = plant.info
 
 

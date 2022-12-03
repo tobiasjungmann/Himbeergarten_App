@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-//@Entity(tableName = "humidity_entry_table")
 @Entity(tableName = "humidity_entry_table",
     foreignKeys = arrayOf(
         ForeignKey(entity = GpioElement::class,
@@ -17,5 +16,5 @@ class HumidityEntry(
     val gpioElement: Int
 ) {
     @field:PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var humidityEntry: Int = 0
 }

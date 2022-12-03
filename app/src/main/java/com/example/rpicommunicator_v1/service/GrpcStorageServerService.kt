@@ -3,8 +3,8 @@ package com.example.rpicommunicator_v1.service
 import android.util.Log
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.StorageServerOuterClass
-import com.example.rpicommunicator_v1.database.plant.models.Plant
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 import io.grpc.stub.StreamObserver
 
 class GrpcStorageServerService(
@@ -53,7 +53,7 @@ class GrpcStorageServerService(
     fun addUpdatePlant(plant: Plant, plantRepository: PlantRepository) {
         grpcStub.addNewPlant(
             StorageServerOuterClass.AddPlantRequest.newBuilder()
-                .setName(plant.name).setInfo(plant.info).setType(plant.lastWatered).build(),
+                .setName(plant.name).setInfo(plant.info).build(),
             object : StreamObserver<StorageServerOuterClass.PlantOverviewMsg> {
                 override fun onNext(response: StorageServerOuterClass.PlantOverviewMsg) {
                     Log.i("add plant", "On Next Humidity Request ")
@@ -74,7 +74,7 @@ class GrpcStorageServerService(
 
     fun removePlant(plant: Plant) {
         grpcStub.deletePlant(
-            StorageServerOuterClass.DeletePlantRequest.newBuilder()
+            StorageServerOuterClass.PlantRequest.newBuilder()
                 .setPlant(plant.plant).build(),
             object : StreamObserver<StorageServerOuterClass.DeletePlantReply> {
                 override fun onNext(response: StorageServerOuterClass.DeletePlantReply) {

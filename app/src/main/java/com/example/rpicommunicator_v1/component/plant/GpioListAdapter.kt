@@ -50,7 +50,7 @@ class GpioAdapter(
     }
 
     private fun gpioClicked(gpioElement: GpioElement, label: TextView) {
-        if (gpioElement.userId == -1) {
+        if (gpioElement.plant == -1) {
             label.setBackgroundColor(
                 ContextCompat.getColor(context, R.color.gpio_red)
             )

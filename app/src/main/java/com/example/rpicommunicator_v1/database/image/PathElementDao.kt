@@ -18,6 +18,6 @@ interface PathElementDao: DefaultDao<PathElement> {
     @get:Query("SELECT* FROM path_element_database")
     val allPathElements: LiveData<List<PathElement>>
 
-    @Query("SELECT* FROM path_element_database WHERE pathElementID==:listeNummer")
-    fun getListPathElements(listeNummer: Int): List<PathElement>
+    @Query("SELECT* FROM path_element_database WHERE pathElementID==:parent")
+    fun getListPathElements(parent: Int): List<PathElement>
 }
