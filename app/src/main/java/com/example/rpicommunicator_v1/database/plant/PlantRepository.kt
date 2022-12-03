@@ -3,6 +3,7 @@ package com.example.rpicommunicator_v1.database.plant
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
 import com.example.rpicommunicator_v1.database.PathElement.image.PathElementDao
 import com.example.rpicommunicator_v1.database.image.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
@@ -27,9 +28,8 @@ class PlantRepository(application: Application?) {
     private val deviceDao: DeviceDao?
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
-    //val allHumidityEntries: LiveData<List<HumidityEntry>> - may ad again for another thread
+    val currentHumidityEntries: LiveData<List<HumidityEntry>>
 
-    // todo overload function to potentially include image paths
     fun insertPlant(plant: Plant) {
         InsertPlantThread(plantDao, plant).start()
     }
@@ -50,9 +50,8 @@ class PlantRepository(application: Application?) {
         InsertImagePathElement(pathDao, pathElement, parentId).start()
     }
 
-    fun getHumidityEntriesForSensorSlot(currentPlant: Plant?): LiveData<List<HumidityEntry>> {
-// todo probably in different thread + error handling
-        return humidityEntryDao!!.filteredHumidityEntries(currentPlant!!.plant)
+    fun getHumidityEntriesForSensorSlot(currentPlant: Plant?) {
+        QueryHumidityEntries(humidityEntryDao, currentPlant?.plant ?: -1, currentHumidityEntries)
     }
 
     private class InsertPlantThread(private val plantDao: PlantDao?, private val plant: Plant) :
@@ -70,6 +69,17 @@ class PlantRepository(application: Application?) {
         Thread() {
         override fun run() {
             plantDao!!.update(plant)
+        }
+    }
+
+    private class QueryHumidityEntries(
+        private val humidityEntryDao: HumidityEntryDao?,
+        private val plantId: Int,
+        private var currentHumidityEntries: LiveData<List<HumidityEntry>>
+    ) :
+        Thread() {
+        override fun run() {
+            currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(plantId)
         }
     }
 
@@ -94,11 +104,11 @@ class PlantRepository(application: Application?) {
     private class InsertImagePathElement(
         private val pathElementDao: PathElementDao?,
         private val path: String,
-       private val parent: Int
+        private val parent: Int
     ) :
         Thread() {
         override fun run() {
-            pathElementDao?.insert(PathElement(path,parent))
+            pathElementDao?.insert(PathElement(path, parent))
         }
     }
 
@@ -113,6 +123,6 @@ class PlantRepository(application: Application?) {
         allPlants = plantDao!!.allPlants
         allGpioElements = gpioElementDao!!.allGpioElements
         allDevices = deviceDao!!.allDevices
-
+        currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(INVALID_DB_ID)
     }
 }

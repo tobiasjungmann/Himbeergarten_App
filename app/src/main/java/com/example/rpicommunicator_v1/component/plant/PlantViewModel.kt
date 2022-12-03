@@ -112,8 +112,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         currentGpioElement = gpioElement
     }
 
-    fun getHumidityEntries(): LiveData<List<HumidityEntry>> {
-        return plantRepository.getHumidityEntriesForSensorSlot(currentPlant)
+    fun getHumidityEntriesForCurrentPlant():LiveData<List<HumidityEntry>> {
+        plantRepository.getHumidityEntriesForSensorSlot(currentPlant)
+        return plantRepository.currentHumidityEntries
     }
 
     fun getGpioEntries(): LiveData<List<GpioElement>> {

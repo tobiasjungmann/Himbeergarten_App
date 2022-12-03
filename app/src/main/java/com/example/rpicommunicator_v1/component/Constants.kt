@@ -15,6 +15,8 @@ object Constants {
     const val ADD_REQUEST = "ADD"
     const val EDIT_REQUEST = "EDIT"
 
+    const val INVALID_DB_ID = -1
+
     const val GPIO_COLOR_3_3V= R.color.gpio_orange
     const val GPIO_COLOR_5V= R.color.gpio_red
     const val GPIO_COLOR_GND= R.color.gpio_brown

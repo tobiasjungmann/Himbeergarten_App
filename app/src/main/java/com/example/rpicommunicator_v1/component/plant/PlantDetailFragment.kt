@@ -75,7 +75,7 @@ class PlantDetailFragment : Fragment() {
 
 
     private fun initChart() {
-        plantViewModel.getHumidityEntries().observe(
+        plantViewModel.getHumidityEntriesForCurrentPlant().observe(
             viewLifecycleOwner
         ) { humidityEntries: List<HumidityEntry> ->
             val dataSets = ArrayList<ILineDataSet>()
