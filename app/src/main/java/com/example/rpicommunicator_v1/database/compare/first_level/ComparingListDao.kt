@@ -1,19 +1,12 @@
 package com.example.rpicommunicator_v1.database.compare.first_level
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import com.example.rpicommunicator_v1.database.plant.daos.DefaultDao
 
 @Dao
-interface ComparingListDao {
-    @Insert
-    fun insert(liste: ComparingList?)
-
-    @Update
-    fun update(liste: ComparingList?)
-
-    @Delete
-    fun delete(liste: ComparingList?)
-
+interface ComparingListDao: DefaultDao<ComparingList> {
     @Query("DELETE FROM comparing_list_table")
     fun deleteAllLists()
 

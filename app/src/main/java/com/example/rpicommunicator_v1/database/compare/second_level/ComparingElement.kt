@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.rpicommunicator_v1.component.Converters
 
-@Entity(tableName = "comparing_element_database")
+@Entity(tableName = "comparing_element_table")
 @TypeConverters(Converters::class)
 class ComparingElement(
     val title: String,
