@@ -127,9 +127,5 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         plantRepository = PlantRepository(application)
-
-        // todo replace by query and observer
-        plantRepository.allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
-            .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }
     }
 }

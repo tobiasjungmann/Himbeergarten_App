@@ -1,18 +1,12 @@
 package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
@@ -21,23 +15,19 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
-import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
 import com.example.rpicommunicator_v1.databinding.ActivityAddCompElemBinding
-import java.io.File
 
 class AddElementActivity : AppCompatActivity(), CameraContract.View {
     private var mode: String? = null
-
-    private var presenter: CameraContract.Presenter = CameraPresenter(this)
+    private lateinit var cameraUtils: CameraUtils
     private lateinit var binding: ActivityAddCompElemBinding
-    private lateinit var thumbnailsAdapter: CameraThumbnailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddCompElemBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        cameraUtils = CameraUtils(this)
 
-        presenter.attachView(this)
         binding.numberPickerPriority.minValue = 1
         binding.numberPickerPriority.maxValue = 10
 
@@ -47,10 +37,10 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
             binding.editTextCompElemDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
             binding.editTextCompElemTitle.setText(intent.getStringExtra(EXTRA_TITLE))
             binding.numberPickerPriority.value = intent.getIntExtra(EXTRA_PRIORITY, 1)
-            presenter.imageElement.addAll(
-                0,
+            cameraUtils.addAllImages(
                 intent.getStringArrayExtra(EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
             )
+
         } else {
             title = "AddNote"
         }
@@ -60,15 +50,8 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         binding.recyclerViewCompElemImages.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size).toInt()
-        thumbnailsAdapter =
-            CameraThumbnailsAdapter(
-                presenter.imageElement,
-                { onThumbnailRemoved(it) },
-                thumbnailSize
-            )
-        binding.recyclerViewCompElemImages.adapter = thumbnailsAdapter
-        binding.buttonCompElemAddImage.setOnClickListener { showImageOptionsDialog() }
+        binding.recyclerViewCompElemImages.adapter = cameraUtils.thumbnailsAdapter
+        binding.buttonCompElemAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
         binding.buttonSaveCompElem.setOnClickListener { saveNote() }
     }
 
@@ -84,7 +67,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         data.putExtra(EXTRA_TITLE, title)
         data.putExtra(EXTRA_DESCRIPTION, description)
         data.putExtra(EXTRA_PRIORITY, priority)
-        data.putExtra(EXTRA_IMAGE_PATH, presenter.imageElement.toTypedArray())
+        data.putExtra(EXTRA_IMAGE_PATH, cameraUtils.presenter.imageElement.toTypedArray())
 
         data.putExtra(MODE, mode)
         val id = intent.getIntExtra(EXTRA_ID, -1)
@@ -98,49 +81,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
     @Deprecated("remove later on")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-
-        when (requestCode) {
-            CameraPresenter.REQUEST_TAKE_PHOTO -> presenter.onNewImageTaken()
-            CameraPresenter.REQUEST_GALLERY -> {
-                val filePath = data?.data
-                presenter.onNewImageSelected(filePath)
-            }
-        }
-    }
-
-    private fun showImageOptionsDialog() {
-        val options = arrayOf("Take image", "gallery")
-        val alertDialog = AlertDialog.Builder(this)
-            .setTitle("Add picture")
-            .setItems(options) { _, index -> presenter.onImageOptionSelected(index) }
-            .setNegativeButton("cancel", null)
-            .create()
-        alertDialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
-        alertDialog.show()
-    }
-
-    private fun onThumbnailRemoved(path: String) {
-        val builder = AlertDialog.Builder(this)
-        val view = View.inflate(this, R.layout.picture_dialog, null)
-
-        val imageView = view.findViewById<ImageView>(R.id.image_view_picture_dialog)
-        imageView.setImageURI(Uri.fromFile(File(path)))
-
-        builder.setView(view)
-            .setNegativeButton("cancel", null)
-            .setPositiveButton("Remove image") { _, _ -> removeThumbnail(path) }
-
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
-        dialog.show()
-    }
-
-    private fun removeThumbnail(path: String) {
-        presenter.removeImage(path)
+        cameraUtils.processCameraResult(requestCode, resultCode, data)
     }
 
     override fun openCamera(intent: Intent) {
@@ -153,11 +94,11 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
 
 
     override fun onImageAdded(path: String) {
-        thumbnailsAdapter.addImage(path)
+        cameraUtils.onImageAdded(path)
     }
 
     override fun onImageRemoved(position: Int) {
-        thumbnailsAdapter.removeImage(position)
+        cameraUtils.onImageRemoved(position)
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

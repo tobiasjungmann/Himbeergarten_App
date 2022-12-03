@@ -124,5 +124,11 @@ class PlantRepository(application: Application?) {
         allGpioElements = gpioElementDao!!.allGpioElements
         allDevices = deviceDao!!.allDevices
         currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(INVALID_DB_ID)
+
+
+        // todo replace by query and observer
+       // allPlants.observe()
+       // plantRepository.allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
+       //     .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }
     }
 }
