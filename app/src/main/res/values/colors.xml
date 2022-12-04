@@ -34,5 +34,6 @@
     <color name="gpio_yellow">#FF5722</color>
     <color name="arduino_turquise">#2A9d8f</color>
     <color name="ardiuno_blue">#264653</color>
+    <color name="rpi_default_green">#7CB342</color>
 
 </resources>

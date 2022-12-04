@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
-import com.example.rpicommunicator_v1.databinding.ListItemGpioBinding
+import com.example.rpicommunicator_v1.databinding.ListItemGpioRpiBinding
 
 
 class GpioAdapter(
@@ -25,7 +25,7 @@ class GpioAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GpioHolder {
         val binding =
-            ListItemGpioBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListItemGpioRpiBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GpioHolder(binding)
     }
 
@@ -55,9 +55,8 @@ class GpioAdapter(
             label.setBackgroundColor(
                 ContextCompat.getColor(context, R.color.gpio_red)
             )
-            // todo update all other values - remove color from unselected element
-            // todo get view for previous, set color in it
-            plantViewModel.gpioSelectedForElement(gpioElement)
+            plantViewModel.gpioSelectedForElement(gpioElement, label)
+                ?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
     }
 
@@ -80,27 +79,27 @@ class GpioAdapter(
         return if (gpioInUse) {
             R.color.gpio_red
         } else {
-            R.color.white
+            R.color.transparent
         }
     }
 
     class GpioHolder(
-        val binding: ListItemGpioBinding
+        val binding: ListItemGpioRpiBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun getImageView(left: Boolean): ImageView {
             return if (left) {
-                binding.imageView1
+                binding.imageViewIconLeft
             } else {
-                binding.imageView2
+                binding.imageViewIconRight
             }
         }
 
         fun getLabel(left: Boolean): TextView {
             return if (left) {
-                binding.textView
+                binding.textViewLabelLeft
             } else {
-                binding.textView2
+                binding.textViewLabelRight
             }
         }
     }

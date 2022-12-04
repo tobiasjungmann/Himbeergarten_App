@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.R
@@ -29,6 +30,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private var currentPlant: Plant? = null
+    private var currentGpioTextView: TextView? = null
     private var currentGpioElement: GpioElement? = null
 
     fun update(plant: Plant) {
@@ -108,8 +110,11 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
     }
 
-    fun gpioSelectedForElement(gpioElement: GpioElement) {
+    fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView):TextView? {
+        val previousTextView=currentGpioTextView
+        currentGpioTextView=label
         currentGpioElement = gpioElement
+        return previousTextView
     }
 
     fun getHumidityEntriesForCurrentPlant():LiveData<List<HumidityEntry>> {

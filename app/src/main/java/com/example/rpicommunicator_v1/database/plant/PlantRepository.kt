@@ -99,7 +99,7 @@ class PlantRepository(application: Application?) {
     ) :
         Thread() {
         override fun run() {
-            database?.addNewDeviceWithPinout(deviceDao, gpioElementDao,device)
+            database?.addNewDeviceWithPinout(deviceDao, gpioElementDao,device,"usb0 example value")
         }
     }
 
