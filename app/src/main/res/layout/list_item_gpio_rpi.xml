@@ -9,7 +9,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_view_label_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -18,7 +18,7 @@
         android:textAlignment="gravity"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView1"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_icon_left"
         app:layout_constraintHorizontal_bias="0.5"
 
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -28,35 +28,35 @@
         android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/image_view_icon_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_icon_right"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/text_view_label_left"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/gpio_symbol"
         app:tint="@color/red" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/image_view_icon_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gpio_background"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_label_right"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView1"
+        app:layout_constraintStart_toEndOf="@+id/image_view_icon_left"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/gpio_symbol"
         app:tint="@color/red" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_view_label_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/image_view_icon_right"
         app:layout_constraintTop_toTopOf="parent"
         android:clickable="true"
         android:focusable="true" />

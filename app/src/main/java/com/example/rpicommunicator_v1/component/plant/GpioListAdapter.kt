@@ -1,4 +1,5 @@
 package com.example.rpicommunicator_v1.component.plant
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup

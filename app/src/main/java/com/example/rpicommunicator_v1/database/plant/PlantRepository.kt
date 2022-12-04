@@ -3,6 +3,7 @@ package com.example.rpicommunicator_v1.database.plant
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
@@ -42,8 +43,8 @@ class PlantRepository(application: Application?) {
         RemovePlantThread(plantDao, plant).start()
     }
 
-    fun addRPi() {
-        AddRPiThread(database, deviceDao, gpioElementDao).start()
+    fun addDevice(device: StorageServerOuterClass.DeviceTypes) {
+        AddRPiThread(database, deviceDao, gpioElementDao,device).start()
     }
 
     fun insertPath(pathElement: String, parentId: Int) {
@@ -93,11 +94,12 @@ class PlantRepository(application: Application?) {
     private class AddRPiThread(
         private val database: PlantDatabase?,
         private val deviceDao: DeviceDao?,
-        private val gpioElementDao: GpioElementDao?
+        private val gpioElementDao: GpioElementDao?,
+        private val device: StorageServerOuterClass.DeviceTypes
     ) :
         Thread() {
         override fun run() {
-            database?.addRPiPinoutForDevice(deviceDao, gpioElementDao)
+            database?.addNewDeviceWithPinout(deviceDao, gpioElementDao,device)
         }
     }
 

@@ -84,3 +84,9 @@ message GetAdditionalDataPlantReply{
   repeated HumidityMsg Humidity = 4;
   repeated bytes images = 5;
 }
+
+enum DeviceTypes{
+  DEVICE_UNDEFINED = 0;
+  DEVICE_RPI = 1;
+  DEVICE_ARDUINO_NANO = 2;
+}

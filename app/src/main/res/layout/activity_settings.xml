@@ -152,26 +152,65 @@
 
             </LinearLayout>
 
+
+            <TextView
+                style="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:maxLines="1"
+                android:text="Geräte"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                app:autoSizeTextType="uniform" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_custom">
+                <Spinner
+                    android:id="@+id/spinner_parent_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_custom">
+                <Spinner
+                    android:id="@+id/spinner_device_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_custom"
                 android:orientation="horizontal">
 
-
-                <Button
-                    android:id="@+id/connect_button"
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/edit_text_device_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".50"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:backgroundTint="@color/red"
-                    android:text="Übernehmen"
-                    android:textSize="@dimen/text_size"
-                    app:backgroundTint="@color/red" />
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@android:color/white"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="Arduino 1"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/text_size" />
+
             </LinearLayout>
-
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -222,5 +261,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/connect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/primary_green"
+        android:clickable="true"
+        android:contentDescription="Save"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_baseline_save_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

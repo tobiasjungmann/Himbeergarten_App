@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
@@ -30,12 +31,28 @@ abstract class PlantDatabase : RoomDatabase() {
     abstract fun pathDao(): PathElementDao?
 
 
-
-    fun addRPiPinoutForDevice(deviceDao: DeviceDao?, gpioElementDao: GpioElementDao?) {
-        val device = Device("Default")
+    // is only triggered by the backend if a new device connected to the existing system.
+    fun addNewDeviceWithPinout(
+        deviceDao: DeviceDao?,
+        gpioElementDao: GpioElementDao?,
+        deviceType: StorageServerOuterClass.DeviceTypes,
+        interfaceName: String
+    ) {
+        val device = Device(interfaceName, deviceType.number)
         deviceDao?.insert(device)
-        val parent=device.device
+        if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_RPI) {
+            addRPiPinout(gpioElementDao, device.device)
+        } else if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO) {
+            addArduinoNanoPinout(gpioElementDao, device.device)
+        }
+    }
 
+    fun addArduinoNanoPinout(gpioElementDao: GpioElementDao?, parent: Int) {
+        // Added from top to bottom, left to right
+        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V))
+    }
+
+    fun addRPiPinout(gpioElementDao: GpioElementDao?, parent: Int) {
         // Added from top to bottom, left to right
         gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V))
         gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V))
@@ -77,7 +94,6 @@ abstract class PlantDatabase : RoomDatabase() {
         gpioElementDao?.insert(GpioElement(parent, "GPIO 20", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 21", Constants.GPIO_COLOR_GPIO))
-
     }
 
 
@@ -94,15 +110,19 @@ abstract class PlantDatabase : RoomDatabase() {
                     "plant_database.db"
                 ).fallbackToDestructiveMigration().addCallback(object : Callback() {
                     private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
-                    fun ioThread(f : () -> Unit) {
+                    fun ioThread(f: () -> Unit) {
                         IO_EXECUTOR.execute(f)
                     }
+
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         ioThread {
-                        getInstance(context)?.addRPiPinoutForDevice(getInstance(context)?.deviceDao(),
-                            getInstance(context)?.gpioElementDao()
-                        )}
+                            getInstance(context)?.addNewDeviceWithPinout(
+                                getInstance(context)?.deviceDao(),
+                                getInstance(context)?.gpioElementDao(),
+                                StorageServerOuterClass.DeviceTypes.DEVICE_RPI, "Default"
+                            )
+                        }
                     }
                 }).build()
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
@@ -25,6 +26,13 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             this.application.resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
+
+        initAddressUi()
+        initDeviceSelection()
+
+    }
+
+    private fun initAddressUi() {
         binding.editTextServerAddress.setText(
             mPref.getString(
                 this.application.resources.getString(R.string.ADDRESS_SERVER_PREF),
@@ -50,6 +58,22 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
                 this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()
             )
         )
+    }
+
+    private fun initDeviceSelection() {
+        // todo load from repository
+        val deviceTypes = arrayOf("Nicht ausgewählt","Arduino Nano", "Raspberry Pi")
+        val deviceInterfaces = arrayOf("RPi 1 - usb0","RPi 1 - usb1", "RPi 1 - usb3")
+        val typeAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item, deviceTypes
+        )
+        val interfaceAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item, deviceInterfaces
+        )
+        binding.spinnerDeviceType.adapter = typeAdapter
+        binding.spinnerParentDevice.adapter = interfaceAdapter
     }
 
     override fun onClick(view: View?) {
