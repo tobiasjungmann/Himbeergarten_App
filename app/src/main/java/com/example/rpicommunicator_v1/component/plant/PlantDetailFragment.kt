@@ -45,22 +45,14 @@ class PlantDetailFragment : Fragment() {
     private fun initViewComponents() {
         val plant = plantViewModel.getCurrentPlant()!!
 
-        // todo add query with path element
-        /*if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
-            binding.imageViewPlantDetailHeader.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
-            val alpha = 1.toFloat()
-            binding.imageViewPlantDetailHeader.alpha = alpha
-        } else {
-      */
         plantViewModel.getImageForCurrentPlant().observe(
             viewLifecycleOwner
         ) { imagePath: List<PathElement> ->
            // todo show the image from the path
+            val alpha = 1.toFloat()
+            binding.imageViewPlantDetailHeader.alpha = alpha
         }
-        binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
-        val alpha = 0.1.toFloat()
-        binding.imageViewPlantDetailHeader.alpha = alpha
-        //}
+
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
         binding.textViewPlantDetailDescription.text = plant.info

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
-import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListActivity
+import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListHolder
 import com.example.rpicommunicator_v1.component.plant.PlantHolderActivity
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
 
@@ -213,7 +213,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun changeToCompareList() {
-        val intent = Intent(applicationContext, ComparingListActivity::class.java)
+        val intent = Intent(applicationContext, ComparingListHolder::class.java)
         startActivity(intent)
     }
 

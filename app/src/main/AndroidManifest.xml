@@ -24,7 +24,7 @@
             android:name=".component.comparing.secondlevel.ComparingElementActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.firstlevel.ComparingListActivity"
+            android:name=".component.comparing.firstlevel.ComparingListHolder"
             android:exported="false" />
         <activity
             android:name=".component.comparing.firstlevel.AddComparingListActivity"
