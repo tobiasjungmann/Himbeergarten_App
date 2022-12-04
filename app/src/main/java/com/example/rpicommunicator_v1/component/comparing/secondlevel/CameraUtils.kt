@@ -13,7 +13,7 @@ import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
 import java.io.File
 
-class CameraUtils(private val context: Context) {
+class CameraUtils(private val context: Context,) {
     var presenter: CameraContract.Presenter = CameraPresenter(context)
     var thumbnailsAdapter: CameraThumbnailsAdapter
 
@@ -25,6 +25,7 @@ class CameraUtils(private val context: Context) {
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
+        presenter.attachView(context as CameraContract.View)
     }
 
     fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {

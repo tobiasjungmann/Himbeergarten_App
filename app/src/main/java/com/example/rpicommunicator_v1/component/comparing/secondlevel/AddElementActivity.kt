@@ -19,6 +19,8 @@ import com.example.rpicommunicator_v1.databinding.ActivityAddCompElemBinding
 
 class AddElementActivity : AppCompatActivity(), CameraContract.View {
     private var mode: String? = null
+
+   // private var presenter: CameraContract.Presenter = CameraPresenter(this)
     private lateinit var cameraUtils: CameraUtils
     private lateinit var binding: ActivityAddCompElemBinding
 
