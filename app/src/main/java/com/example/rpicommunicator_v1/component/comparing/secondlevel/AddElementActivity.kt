@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_DESCRIPTION
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_ID
 import com.example.rpicommunicator_v1.component.Constants.EXTRA_IMAGE_PATH
@@ -15,12 +14,12 @@ import com.example.rpicommunicator_v1.component.Constants.EXTRA_TITLE
 import com.example.rpicommunicator_v1.component.Constants.MODE
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraPresenter
+import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.databinding.ActivityAddCompElemBinding
 
 class AddElementActivity : AppCompatActivity(), CameraContract.View {
     private var mode: String? = null
 
-   // private var presenter: CameraContract.Presenter = CameraPresenter(this)
     private lateinit var cameraUtils: CameraUtils
     private lateinit var binding: ActivityAddCompElemBinding
 
@@ -49,10 +48,8 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         if (intent.hasExtra(MODE)) {
             mode = intent.getStringExtra(MODE)
         }
-        binding.recyclerViewCompElemImages.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        cameraUtils.initRecyclerView(binding.recyclerViewCompElemImages)
 
-        binding.recyclerViewCompElemImages.adapter = cameraUtils.thumbnailsAdapter
         binding.buttonCompElemAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
         binding.buttonSaveCompElem.setOnClickListener { saveNote() }
     }
@@ -69,7 +66,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         data.putExtra(EXTRA_TITLE, title)
         data.putExtra(EXTRA_DESCRIPTION, description)
         data.putExtra(EXTRA_PRIORITY, priority)
-        data.putExtra(EXTRA_IMAGE_PATH, cameraUtils.presenter.imageElement.toTypedArray())
+        data.putExtra(EXTRA_IMAGE_PATH, cameraUtils.getImagesAsArray())
 
         data.putExtra(MODE, mode)
         val id = intent.getIntExtra(EXTRA_ID, -1)

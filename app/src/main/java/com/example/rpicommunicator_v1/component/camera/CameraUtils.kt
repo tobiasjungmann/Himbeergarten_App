@@ -1,4 +1,4 @@
-package com.example.rpicommunicator_v1.component.comparing.secondlevel
+package com.example.rpicommunicator_v1.component.camera
 
 import android.app.Activity
 import android.content.Context
@@ -7,15 +7,14 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.camera.CameraContract
-import com.example.rpicommunicator_v1.component.camera.CameraPresenter
-import com.example.rpicommunicator_v1.component.camera.CameraThumbnailsAdapter
 import java.io.File
 
 class CameraUtils(private val context: Context,) {
-    var presenter: CameraContract.Presenter = CameraPresenter(context)
-    var thumbnailsAdapter: CameraThumbnailsAdapter
+    private var presenter: CameraContract.Presenter = CameraPresenter(context)
+    private var thumbnailsAdapter: CameraThumbnailsAdapter
 
     init {
         val thumbnailSize = context.resources.getDimension(R.dimen.thumbnail_size).toInt()
@@ -85,5 +84,16 @@ class CameraUtils(private val context: Context,) {
 
     fun addAllImages(list: List<String>) {
         presenter.imageElement.addAll(0, list)
+    }
+
+    fun initRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        recyclerView.adapter = thumbnailsAdapter
+    }
+
+    fun getImagesAsArray(): Array<String> {
+        return presenter.imageElement.toTypedArray()
     }
 }
