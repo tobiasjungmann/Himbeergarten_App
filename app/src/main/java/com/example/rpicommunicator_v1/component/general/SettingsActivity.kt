@@ -15,6 +15,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mPref: SharedPreferences
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)

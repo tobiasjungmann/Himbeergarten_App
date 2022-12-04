@@ -6,7 +6,7 @@ import com.example.rpicommunicator_v1.CommunicatorGrpc
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import io.grpc.stub.StreamObserver
 
-class GrpcCommunicatorService(
+class GrpcStationService(
     private var grpcStub: CommunicatorGrpc.CommunicatorStub,
 ) {
 

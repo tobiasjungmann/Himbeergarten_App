@@ -7,7 +7,7 @@ import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import com.example.rpicommunicator_v1.database.plant.models.Plant
 import io.grpc.stub.StreamObserver
 
-class GrpcStorageServerService(
+class GrpcServerService(
     private var grpcStub: StorageServerGrpc.StorageServerStub,
 ) {
     fun setHumidityTest() {
@@ -50,6 +50,25 @@ class GrpcStorageServerService(
             })
     }
 
+    fun getConnectedDevicesFromServer(plantRepository: PlantRepository) {
+        grpcStub.getConnectedDevicesOverview(
+            StorageServerOuterClass.GetConnectedDevicesRequest.newBuilder().build(),
+            object : StreamObserver<StorageServerOuterClass.GetConnectedDevicesResponse> {
+                override fun onNext(response: StorageServerOuterClass.GetConnectedDevicesResponse) {
+                    // todo direkt hier die deviceobjekte anfragen
+                    //plantRepository.getDevic
+                    //plantRepository.updateConnectedDevices()
+                }
+
+                override fun onError(throwable: Throwable?) {
+                    Log.i("getDevices", "Loading connected deices failed.")
+                }
+
+                override fun onCompleted() {
+                }
+            })
+    }
+
     fun addUpdatePlant(plant: Plant, plantRepository: PlantRepository) {
         grpcStub.addNewPlant(
             StorageServerOuterClass.AddPlantRequest.newBuilder()
@@ -60,13 +79,13 @@ class GrpcStorageServerService(
                 }
 
                 override fun onError(throwable: Throwable?) {
-                     throwable?.stackTrace
+                    throwable?.stackTrace
                     Log.i("add Plant", "Plant not stored in server.")
                 }
 
                 override fun onCompleted() {
                     Log.i("add Plant", "Stored plant successfully in server.")
-                    plant.syncedWithServer=true
+                    plant.syncedWithServer = true
                     plantRepository.updatePlant(plant)
                 }
             })

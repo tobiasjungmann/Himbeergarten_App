@@ -30,6 +30,7 @@ class PlantRepository(application: Application?) {
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
     val currentHumidityEntries: LiveData<List<HumidityEntry>>
+    val currentPathElements: LiveData<List<PathElement>>
 
     fun insertPlant(plant: Plant) {
         InsertPlantThread(plantDao, plant).start()
@@ -53,6 +54,12 @@ class PlantRepository(application: Application?) {
 
     fun getHumidityEntriesForSensorSlot(currentPlant: Plant?) {
         QueryHumidityEntries(humidityEntryDao, currentPlant?.plant ?: -1, currentHumidityEntries)
+    }
+
+    fun getImageForCurrentPlant(plant: Int): LiveData<List<PathElement>> {
+        // todo start query and return th livedata wrapper
+        QueryImagePathsThread(pathDao,plant,currentPathElements)
+        return currentPathElements
     }
 
     private class InsertPlantThread(private val plantDao: PlantDao?, private val plant: Plant) :
@@ -81,6 +88,17 @@ class PlantRepository(application: Application?) {
         Thread() {
         override fun run() {
             currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(plantId)
+        }
+    }
+
+    private class QueryImagePathsThread(
+        private val humidityEntryDao: PathElementDao?,
+        private val plantId: Int,
+        private var currentPathElements: LiveData<List<PathElement>>
+    ) :
+        Thread() {
+        override fun run() {
+            currentPathElements = humidityEntryDao!!.getListPathElementsLiveData(plantId)
         }
     }
 
@@ -126,7 +144,7 @@ class PlantRepository(application: Application?) {
         allGpioElements = gpioElementDao!!.allGpioElements
         allDevices = deviceDao!!.allDevices
         currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(INVALID_DB_ID)
-
+        currentPathElements= pathDao!!.getListPathElementsLiveData(INVALID_DB_ID)
 
         // todo replace by query and observer
        // allPlants.observe()

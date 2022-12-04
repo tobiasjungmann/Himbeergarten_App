@@ -20,4 +20,7 @@ interface PathElementDao: DefaultDao<PathElement> {
 
     @Query("SELECT* FROM path_element_database WHERE pathElementID==:parent")
     fun getListPathElements(parent: Int): List<PathElement>
+
+    @Query("SELECT* FROM path_element_database WHERE pathElementID==:parent")
+    fun getListPathElementsLiveData(parent: Int): LiveData<List<PathElement>>
 }

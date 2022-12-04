@@ -11,11 +11,13 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
+import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.database.plant.models.Plant
-import com.example.rpicommunicator_v1.service.GrpcStorageServerService
+import com.example.rpicommunicator_v1.service.GrpcServerService
 import io.grpc.ManagedChannelBuilder
 import java.util.*
 
@@ -23,10 +25,9 @@ import java.util.*
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private var grpcStorageServerInterface: GrpcStorageServerService = initStorageGrpcStub()
+    private var grpcStorageServerInterface: GrpcServerService = initStorageGrpcStub()
 
     private val plantRepository: PlantRepository
-   // val allPlants: LiveData<List<Plant>>
 
 
     private var currentPlant: Plant? = null
@@ -80,7 +81,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun initStorageGrpcStub(): GrpcStorageServerService {
+    private fun initStorageGrpcStub(): GrpcServerService {
         val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(
             this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
@@ -107,7 +108,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                         )
                     )
                 ).build()
-        return GrpcStorageServerService(StorageServerGrpc.newStub(mChannel))
+        return GrpcServerService(StorageServerGrpc.newStub(mChannel))
     }
 
     fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView):TextView? {
@@ -128,6 +129,10 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getAllPlants(): LiveData<List<Plant>> {
         return plantRepository.allPlants
+    }
+
+    fun getImageForCurrentPlant(): LiveData<List<PathElement>> {
+        return plantRepository.getImageForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
     }
 
     init {

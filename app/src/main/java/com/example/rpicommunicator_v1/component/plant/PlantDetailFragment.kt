@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
@@ -37,29 +38,31 @@ class PlantDetailFragment : Fragment() {
 
         initViewComponents()
         initChart()
-        /*  if (plantViewModel.getCurrentPlant()!!.graphString != "") {
-              initChart(plantViewModel.getCurrentPlant()!!.graphString)
-          } else {
-              binding.chartPlantDetail.visibility = View.GONE
-          }*/
+
         return binding.root
     }
 
     private fun initViewComponents() {
         val plant = plantViewModel.getCurrentPlant()!!
+
         // todo add query with path element
         /*if (plantViewModel.getCurrentPlant()!!.imageID != -1) {
             binding.imageViewPlantDetailHeader.setImageResource(plantViewModel.getCurrentPlant()!!.imageID)
             val alpha = 1.toFloat()
             binding.imageViewPlantDetailHeader.alpha = alpha
         } else {
-      */      binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
+      */
+        plantViewModel.getImageForCurrentPlant().observe(
+            viewLifecycleOwner
+        ) { imagePath: List<PathElement> ->
+           // todo show the image from the path
+        }
+        binding.imageViewPlantDetailHeader.setImageResource(R.drawable.icon_plant)
         val alpha = 0.1.toFloat()
         binding.imageViewPlantDetailHeader.alpha = alpha
         //}
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
-       // binding.textViewLastWatered.text = plant.lastWatered
         binding.textViewPlantDetailDescription.text = plant.info
 
 
