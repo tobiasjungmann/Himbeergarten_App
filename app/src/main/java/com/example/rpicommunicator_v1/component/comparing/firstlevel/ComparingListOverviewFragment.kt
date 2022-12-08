@@ -1,6 +1,5 @@
 package com.example.rpicommunicator_v1.component.comparing.firstlevel
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.component.Constants
-import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementActivity
+import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementOverviewFragment
 import com.example.rpicommunicator_v1.database.compare.models.ComparingList
 import com.example.rpicommunicator_v1.databinding.FragmentComparingListOverviewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -50,12 +48,12 @@ class ComparingListOverviewFragment : Fragment() {
 
         val adapter = ComparingListAdapter()
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
-            val intent = Intent(requireContext(), ComparingElementActivity::class.java)
-            intent.putExtra(
-                Constants.EXTRA_ID,
-                listViewModel.getComparingListByPosition(position).comparingListId
-            )
-            startActivity(intent)
+            listViewModel.setCurrentList(listViewModel.getComparingListByPosition(position))
+            val nextFrag = ComparingElementOverviewFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view_comp_list, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
         }
         adapter.setOnItemClickListener(itemOnClick)
         binding.recyclerViewCompList.adapter = adapter

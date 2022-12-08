@@ -41,8 +41,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
-        binding.buttonComparingElementAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
-        binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
+       binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
 
         initGpioList()
         initCameraUI()
@@ -73,6 +72,8 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
     private fun initCameraUI() {
         cameraUtils = CameraUtils(requireContext(),this as CameraContract.View)
         cameraUtils.initRecyclerView(binding.recyclerViewComparingElementImages)
+        binding.buttonComparingElementAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
+
     }
 
 

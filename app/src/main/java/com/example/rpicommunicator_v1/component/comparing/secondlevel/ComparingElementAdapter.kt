@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListViewModel
 import com.example.rpicommunicator_v1.component.comparing.secondlevel.ComparingElementAdapter.ListHolder
 import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
 import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
@@ -12,7 +13,7 @@ import com.example.rpicommunicator_v1.databinding.ListItemImageBinding
 class ComparingElementAdapter internal constructor(
     private val thumbnailSize: Int
 ): RecyclerView.Adapter<ListHolder>() {
-    private lateinit var comparingElementViewModel: ComparingElementViewModel
+    private lateinit var comparingElementViewModel: ComparingListViewModel
     private var listener: ((View, Int, Int) -> Unit)? = null
     private var comparingElementList: List<ComparingElement> = ArrayList()
 
@@ -78,7 +79,7 @@ class ComparingElementAdapter internal constructor(
 
     fun setElementList(
         comparingElementList: List<ComparingElement>,
-        comparingElementViewModel: ComparingElementViewModel
+        comparingElementViewModel: ComparingListViewModel
     ) {
         this.comparingElementList = comparingElementList
         this.comparingElementViewModel = comparingElementViewModel
