@@ -27,7 +27,7 @@ class AddElementActivity : AppCompatActivity(), CameraContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityAddCompElemBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        cameraUtils = CameraUtils(this)
+        cameraUtils = CameraUtils(this, binding.root)
 
         binding.numberPickerPriority.minValue = 1
         binding.numberPickerPriority.maxValue = 10

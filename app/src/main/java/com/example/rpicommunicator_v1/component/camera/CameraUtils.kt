@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
 import java.io.File
 
-class CameraUtils(private val context: Context,) {
+class CameraUtils(private val context: Context, root: CameraContract.View) {
     private var presenter: CameraContract.Presenter = CameraPresenter(context)
     private var thumbnailsAdapter: CameraThumbnailsAdapter
 
@@ -24,7 +24,7 @@ class CameraUtils(private val context: Context,) {
                 { onThumbnailRemoved(it) },
                 thumbnailSize
             )
-        presenter.attachView(context as CameraContract.View)
+        presenter.attachView(root)
     }
 
     fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {

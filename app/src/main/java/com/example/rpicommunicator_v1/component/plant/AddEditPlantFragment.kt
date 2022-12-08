@@ -1,19 +1,23 @@
 package com.example.rpicommunicator_v1.component.plant
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rpicommunicator_v1.component.camera.CameraContract
+import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 
-class AddEditPlantFragment : Fragment(){
+class AddEditPlantFragment : Fragment(), CameraContract.View{
 
 
     private lateinit var plantViewModel: PlantViewModel
@@ -67,7 +71,7 @@ class AddEditPlantFragment : Fragment(){
     }
 
     private fun initCameraUI() {
-        cameraUtils = CameraUtils(requireContext())
+        cameraUtils = CameraUtils(requireContext(),this as CameraContract.View)
         cameraUtils.initRecyclerView(binding.recyclerViewComparingElementImages)
     }
 
@@ -92,5 +96,27 @@ class AddEditPlantFragment : Fragment(){
             return
         }
         plantViewModel.createUpdateCurrentPlant(name, info)
+    }
+
+    override fun openCamera(intent: Intent) {
+        startActivityForResult(intent, CameraPresenter.REQUEST_TAKE_PHOTO)
+    }
+
+    override fun openGallery(intent: Intent) {
+        startActivityForResult(intent, CameraPresenter.REQUEST_GALLERY)
+    }
+
+
+    override fun onImageAdded(path: String) {
+        cameraUtils.onImageAdded(path)
+    }
+
+    override fun onImageRemoved(position: Int) {
+        cameraUtils.onImageRemoved(position)
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
+        requestPermissions(arrayOf(permission), requestCode)
     }
 }

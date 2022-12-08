@@ -100,4 +100,6 @@ class ComparingListOverviewFragment : Fragment() {
         }).attachToRecyclerView(binding.recyclerViewCompList)
         return binding.root
     }
+
+    // todo add missing functions from history
 }
