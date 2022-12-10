@@ -1,8 +1,6 @@
 package com.example.rpicommunicator_v1.component.camera
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
@@ -27,7 +25,7 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
         presenter.attachView(root)
     }
 
-    fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {
+   /* fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK) {
             return
         }
@@ -39,6 +37,14 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
                 presenter.onNewImageSelected(filePath)
             }
         }
+    }*/
+
+    fun onNewImageTaken(){
+        presenter.onNewImageTaken()
+    }
+
+    fun onNewImageSelected(path: Uri?) {
+        presenter.onNewImageSelected(path)
     }
 
     fun showImageOptionsDialog() {

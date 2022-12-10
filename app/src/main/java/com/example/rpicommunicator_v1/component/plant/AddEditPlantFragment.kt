@@ -1,5 +1,6 @@
 package com.example.rpicommunicator_v1.component.plant
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.component.camera.CameraContract
-import com.example.rpicommunicator_v1.component.camera.CameraPresenter
 import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
@@ -66,7 +67,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         }
         binding.recyclerViewGpioSelect.adapter = adapter
         binding.recyclerViewGpioSelect.layoutManager = LinearLayoutManager(context)
-        //   binding.recyclerViewGpioSelect.isNestedScrollingEnabled = false
     }
 
     private fun initCameraUI() {
@@ -74,13 +74,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         cameraUtils.initRecyclerView(binding.recyclerViewComparingElementImages)
         binding.buttonComparingElementAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
 
-    }
-
-
-    @Deprecated("remove later on")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        cameraUtils.processCameraResult(requestCode, resultCode, data)
     }
 
     override fun onStop() {
@@ -99,12 +92,29 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         plantViewModel.createUpdateCurrentPlant(name, info)
     }
 
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        cameraUtils.onNewImageTaken()
+    }
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val filePath = result.data?.data
+        cameraUtils.onNewImageSelected(filePath)
+    }
+
     override fun openCamera(intent: Intent) {
-        startActivityForResult(intent, CameraPresenter.REQUEST_TAKE_PHOTO)
+        try {
+            cameraLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, "Bla", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun openGallery(intent: Intent) {
-        startActivityForResult(intent, CameraPresenter.REQUEST_GALLERY)
+        try {
+            galleryLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, "Bla", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
