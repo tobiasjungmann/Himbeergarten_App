@@ -3,9 +3,11 @@ package com.example.rpicommunicator_v1.component.general
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -231,5 +233,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun changeToPlantOverview() {
         val intent = Intent(applicationContext, PlantHolderActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        if (mainActivityViewModel!!.backPressed()) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+            System.exit(0)
+        }
+        Toast.makeText(
+            this,
+            "Um die App zu schließen Taste erneut drücken.",
+            Toast.LENGTH_SHORT
+        ).show()
+        Handler().postDelayed({ mainActivityViewModel?.resetBackPressed() }, 2000)
     }
 }

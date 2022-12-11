@@ -18,6 +18,7 @@ import java.util.*
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
 
+    private var backPressedInLastSecond: Boolean=false
     private val _gpioStates = MutableLiveData(listOf(false, false, false, false, false))
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
 
@@ -84,5 +85,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     )
                 ).build()
         return GrpcStationService(CommunicatorGrpc.newStub(mChannel))
+    }
+
+    fun resetBackPressed() {
+        this.backPressedInLastSecond=false
+    }
+
+    fun backPressed(): Boolean {
+        backPressedInLastSecond=!backPressedInLastSecond
+        return !backPressedInLastSecond
     }
 }
