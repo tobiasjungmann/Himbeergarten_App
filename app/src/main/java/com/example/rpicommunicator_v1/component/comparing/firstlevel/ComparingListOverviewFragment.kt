@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -30,28 +30,22 @@ class ComparingListOverviewFragment : Fragment() {
 
         binding.buttonAddCompList.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-         //   val view = View.inflate(context, R.layout.picture_dialog, null)
-            val view = View.inflate(requireContext(), R.layout.dialog_add_list, null)
-            builder.setMessage("Enter Your Message");
-            builder.setTitle("Enter Your Title");
+            //   val view = View.inflate(context, R.layout.picture_dialog, null)
+            val customEditText = View.inflate(requireContext(), R.layout.dialog_add_list, null)
+            builder.setTitle("New List");
+            builder.setMessage("Enter the name for the new List.");
 
 
-            builder.setView(view)
+            builder.setView(customEditText)
                 .setNegativeButton("cancel", null)
-                .setPositiveButton("save"){ dialog, which ->
-                    Toast.makeText(requireContext(),
-                        "bla", Toast.LENGTH_SHORT).show()
-                    listViewModel.insert(ComparingList("Default"))
-                }
+                .setPositiveButton("create", null)
             val dialog = builder.create()
             dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
             dialog.show()
-
-            /*val nextFrag = AddEditCompListFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view_comp_list, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit()*/
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                listViewModel.insert(ComparingList((customEditText as EditText).text.toString()))
+                dialog.dismiss()
+            }
         }
 
         val adapter = ComparingListAdapter()
@@ -97,7 +91,7 @@ class ComparingListOverviewFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     )
                     .setAction(
-                        "Rückgängig"
+                        "Revert"
                     ) {
                         listViewModel.insert(lastDeleted)
                     }
@@ -106,6 +100,4 @@ class ComparingListOverviewFragment : Fragment() {
         }).attachToRecyclerView(binding.recyclerViewCompList)
         return binding.root
     }
-
-    // todo add missing functions from history
 }

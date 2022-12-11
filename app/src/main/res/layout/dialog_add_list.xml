@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_view_add_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <EditText
-        android:id="@+id/text_view_add_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tometen"
-        android:imeOptions="actionGo"
-        android:inputType="textCapWords|textAutoComplete" />
-</LinearLayout>
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:hint="Tomaten"
+    android:imeOptions="actionGo"
+    android:inputType="textCapWords|textAutoComplete"
+    android:importantForAutofill="no" />
