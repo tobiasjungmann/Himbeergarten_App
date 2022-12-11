@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -29,12 +30,19 @@ class ComparingListOverviewFragment : Fragment() {
 
         binding.buttonAddCompList.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            val view = View.inflate(context, R.layout.picture_dialog, null)
+         //   val view = View.inflate(context, R.layout.picture_dialog, null)
+            val view = View.inflate(requireContext(), R.layout.dialog_add_list, null)
+            builder.setMessage("Enter Your Message");
+            builder.setTitle("Enter Your Title");
+
 
             builder.setView(view)
                 .setNegativeButton("cancel", null)
-                .setPositiveButton("Remove image", null)
-
+                .setPositiveButton("save"){ dialog, which ->
+                    Toast.makeText(requireContext(),
+                        "bla", Toast.LENGTH_SHORT).show()
+                    listViewModel.insert(ComparingList("Default"))
+                }
             val dialog = builder.create()
             dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
             dialog.show()
