@@ -24,11 +24,11 @@ import java.util.concurrent.Executors
     version = 2
 )
 abstract class PlantDatabase : RoomDatabase() {
-    abstract fun plantDao(): PlantDao?
-    abstract fun gpioElementDao(): GpioElementDao?
-    abstract fun deviceDao(): DeviceDao?
-    abstract fun humidityEntryDao(): HumidityEntryDao?
-    abstract fun pathDao(): PathElementDao?
+    abstract fun plantDao(): PlantDao
+    abstract fun gpioElementDao(): GpioElementDao
+    abstract fun deviceDao(): DeviceDao
+    abstract fun humidityEntryDao(): HumidityEntryDao
+    abstract fun pathDao(): PathElementDao
 
 
     // is only triggered by the backend if a new device connected to the existing system.
@@ -102,7 +102,7 @@ abstract class PlantDatabase : RoomDatabase() {
 
         @JvmStatic
         @Synchronized
-        fun getInstance(context: Context): PlantDatabase? {
+        fun getInstance(context: Context): PlantDatabase {
             if (instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext,
@@ -117,16 +117,16 @@ abstract class PlantDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         ioThread {
-                            getInstance(context)?.addNewDeviceWithPinout(
-                                getInstance(context)?.deviceDao(),
-                                getInstance(context)?.gpioElementDao(),
+                            getInstance(context).addNewDeviceWithPinout(
+                                getInstance(context).deviceDao(),
+                                getInstance(context).gpioElementDao(),
                                 StorageServerOuterClass.DeviceTypes.DEVICE_RPI, "Default"
                             )
                         }
                     }
                 }).build()
             }
-            return instance
+            return instance!!
         }
     }
 }

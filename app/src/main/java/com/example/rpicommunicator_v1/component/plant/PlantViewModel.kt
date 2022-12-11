@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.R
@@ -42,7 +43,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun remove(plant: Plant) {
         plantRepository.removePlant(plant)
-        grpcStorageServerInterface.removePlant(plant)
     }
 
     fun reloadFromServer() {
@@ -52,7 +52,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setCurrentPlant(position: Int) {
         currentPlant = plantRepository.allPlants.value!![position]
-        grpcStorageServerInterface.setHumidityTest()
+      //  grpcStorageServerInterface.setHumidityTest()
         update(currentPlant!!)// todo only while testing
     }
 
@@ -65,12 +65,18 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(name: String, info: String) {
-        if (name.isNotEmpty() || info.isNotEmpty() || currentGpioElement!=null) {
+    fun createUpdateCurrentPlant(name: String, info: String, context: Context?) {
+        if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
+            Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
+            return
+        }else
+        if(currentGpioElement==null){
+            Toast.makeText(context, "Select an empty GPIO", Toast.LENGTH_SHORT).show()
+        }else {
             if (currentPlant == null) {
                 currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
                 plantRepository.insertPlant(currentPlant!!)
-                grpcStorageServerInterface.addUpdatePlant(currentPlant!!, plantRepository)
+
             } else {
                 // todo check if changes have occurred
                 currentPlant!!.name = name
@@ -136,6 +142,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     init {
-        plantRepository = PlantRepository(application)
+        plantRepository = PlantRepository(application,grpcStorageServerInterface)
     }
 }

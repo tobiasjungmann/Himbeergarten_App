@@ -49,8 +49,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
     }
 
     private fun initGpioList() {
-        //  val list = ArrayList<GpioElementPair>()
-        //  plantViewModel.plantRepository.addRPi()
         val adapter = GpioAdapter(requireContext(), plantViewModel)
         plantViewModel.getGpioEntries().observe(
             viewLifecycleOwner
@@ -71,7 +69,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         cameraUtils = CameraUtils(requireContext(),this as CameraContract.View)
         cameraUtils.initRecyclerView(binding.recyclerViewComparingElementImages)
         binding.buttonComparingElementAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
-
     }
 
     override fun onStop() {
@@ -82,12 +79,13 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
     private fun savePlant() {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
+        plantViewModel.createUpdateCurrentPlant(name, info,context)
 
-        if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
-            Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
-            return
-        }
-        plantViewModel.createUpdateCurrentPlant(name, info)
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .remove(this)
+            .commit()
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
