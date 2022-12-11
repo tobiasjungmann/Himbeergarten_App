@@ -100,7 +100,7 @@ class CameraPresenter constructor(
                 else -> PERMISSION_CAMERA
             }
 
-            view?.showPermissionRequestDialog(permission, requestCode)
+            view?.showPermissionRequestDialog(permission)
             return false
         }
         return true

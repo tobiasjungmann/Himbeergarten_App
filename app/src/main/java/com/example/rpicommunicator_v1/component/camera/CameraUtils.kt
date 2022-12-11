@@ -1,7 +1,9 @@
 package com.example.rpicommunicator_v1.component.camera
 
+import android.Manifest
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -25,7 +27,7 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
         presenter.attachView(root)
     }
 
-   /* fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK) {
             return
         }
@@ -39,7 +41,7 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
         }
     }*/
 
-    fun onNewImageTaken(){
+    fun onNewImageTaken() {
         presenter.onNewImageTaken()
     }
 
@@ -101,5 +103,17 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
 
     fun getImagesAsArray(): Array<String> {
         return presenter.imageElement.toTypedArray()
+    }
+
+    fun processPermissionResult(permissions: Map<String, @JvmSuppressWildcards Boolean>) {
+        permissions.entries.forEach {
+            if (it.key == Manifest.permission.READ_EXTERNAL_STORAGE && it.value) {
+                presenter.openGallery()
+            } else if (it.key == Manifest.permission.CAMERA && it.value) {
+                presenter.takePicture()
+            } else {
+                Log.d("CameraUtils", "Permission Denied")
+            }
+        }
     }
 }

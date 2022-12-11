@@ -81,4 +81,8 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
     fun getAllPathsToElement(listId: Int): List<PathElement>{
         return repository.getPathElementsById(listId)
     }
+
+    fun createOrUpdateNote(title: String, description: String, rating: Int) {
+        repository.insertComparingElement(ComparingElement(title,description,rating,currentList!!.comparingListId))
+    }
 }

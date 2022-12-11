@@ -8,7 +8,7 @@ interface CameraContract {
     interface View {
         fun openCamera(intent: Intent)
         fun openGallery(intent: Intent)
-        fun showPermissionRequestDialog(permission: String, requestCode: Int)
+        fun showPermissionRequestDialog(permission: String)//, requestCode: Int)
         fun onImageAdded(path: String)
         fun onImageRemoved(position: Int)
     }
@@ -25,5 +25,6 @@ interface CameraContract {
         fun openGallery()
         fun onSaveInstanceState(outState: Bundle)
         fun detachView()
+      //  fun showPermissionRequestDialog(permission: String)
     }
 }

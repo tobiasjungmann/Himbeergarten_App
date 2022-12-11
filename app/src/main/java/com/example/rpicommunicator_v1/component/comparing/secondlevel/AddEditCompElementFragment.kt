@@ -2,15 +2,14 @@ package com.example.rpicommunicator_v1.component.comparing.secondlevel
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.component.camera.CameraContract
@@ -44,6 +43,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
         }
         binding.buttonCompElemAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
         binding.buttonSaveCompElem.setOnClickListener { saveNote() }
+
         initCameraUI()
         return binding.root
     }
@@ -56,13 +56,13 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
     private fun saveNote() {
         val title = binding.editTextCompElemTitle.text.toString()
         val description = binding.editTextCompElemDescription.text.toString()
-        val priority = binding.numberPickerPriority.value
+        val rating = binding.numberPickerPriority.value
         if (title.trim { it <= ' ' }.isEmpty() || description.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(requireContext(), "Insert Title and Description", Toast.LENGTH_SHORT)
                 .show()
             return
         }
-        // todo store via view model
+        listViewModel.createOrUpdateNote(title, description, rating)
     }
 
     private val cameraLauncher = registerForActivityResult(StartActivityForResult()) {
@@ -99,8 +99,13 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
         cameraUtils.onImageRemoved(position)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
-        requestPermissions(arrayOf(permission), requestCode)
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        cameraUtils.processPermissionResult(permissions)
+    }
+
+    override fun showPermissionRequestDialog(permission: String) {
+        requestPermissionLauncher.launch(arrayOf(permission))
     }
 }

@@ -2,14 +2,12 @@ package com.example.rpicommunicator_v1.component.plant
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -117,7 +115,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         }
     }
 
-
     override fun onImageAdded(path: String) {
         cameraUtils.onImageAdded(path)
     }
@@ -126,8 +123,13 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         cameraUtils.onImageRemoved(position)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    override fun showPermissionRequestDialog(permission: String, requestCode: Int) {
-        requestPermissions(arrayOf(permission), requestCode)
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        cameraUtils.processPermissionResult(permissions)
+    }
+
+    override fun showPermissionRequestDialog(permission: String) {
+        requestPermissionLauncher.launch(arrayOf(permission))
     }
 }
