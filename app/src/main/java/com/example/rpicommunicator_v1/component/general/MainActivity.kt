@@ -17,6 +17,7 @@ import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListHolder
 import com.example.rpicommunicator_v1.component.plant.PlantHolderActivity
 import com.example.rpicommunicator_v1.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var currentMatrixActivated: Int = R.integer.INVALID_LAYOUT_ID
@@ -184,21 +185,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getResIdForMatrixState(matrixState: Communication.MatrixState): Int {
-        if (matrixState == Communication.MatrixState.MATRIX_MVV) {
-            return R.id.imagetrain
-        } else if (matrixState == Communication.MatrixState.MATRIX_STANDBY) {
-            return R.id.imagestandby
-        } else if (matrixState == Communication.MatrixState.MATRIX_SPOTIFY) {
-            return R.id.imagespotify
-        } else if (matrixState == Communication.MatrixState.MATRIX_WEATHER) {
-            return R.id.imageweather
-        } else if (matrixState == Communication.MatrixState.MATRIX_TERMINATE) {
-            return R.id.imagequit
-        } else if (matrixState == Communication.MatrixState.MATRIX_TIME) {
-            return R.id.imagetime
+        when (matrixState) {
+            Communication.MatrixState.MATRIX_MVV -> {
+                return R.id.imagetrain
+            }
+            Communication.MatrixState.MATRIX_STANDBY -> {
+                return R.id.imagestandby
+            }
+            Communication.MatrixState.MATRIX_SPOTIFY -> {
+                return R.id.imagespotify
+            }
+            Communication.MatrixState.MATRIX_WEATHER -> {
+                return R.id.imageweather
+            }
+            Communication.MatrixState.MATRIX_TERMINATE -> {
+                return R.id.imagequit
+            }
+            Communication.MatrixState.MATRIX_TIME -> {
+                return R.id.imagetime
+            }
+            else -> return R.integer.INVALID_LAYOUT_ID
         }
-
-        return R.integer.INVALID_LAYOUT_ID
     }
 
     @SuppressLint("ResourceType")   // will either be an INVALID_LAYOUT_ID or a valid id
@@ -217,32 +224,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun changeToCompareList() {
         val intent = Intent(applicationContext, ComparingListHolder::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
 
     private fun changeToBike() {
        val intent = Intent(applicationContext, BikeTourActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     private fun changeToSettings() {
         val intent = Intent(applicationContext, SettingsActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_in_up)
     }
 
     private fun changeToPlantOverview() {
         val intent = Intent(applicationContext, PlantHolderActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     override fun onBackPressed() {
         if (mainActivityViewModel!!.backPressed()) {
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_HOME)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
-            System.exit(0)
+            exitProcess(0)
         }
         Toast.makeText(
             this,

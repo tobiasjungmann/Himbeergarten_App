@@ -56,7 +56,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         binding.editTextStationPort.setText(
             mPref.getString(
                 this.application.resources.getString(R.string.PORT_STATION_PREF),
-                this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()
+                String.format("%d", this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER) )
             )
         )
     }
