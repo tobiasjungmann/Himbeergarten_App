@@ -23,37 +23,37 @@ class PlantRepository(
     private val grpcStorageServerInterface: GrpcServerService
 ) {
     private lateinit var database: PlantDatabase
-    private lateinit var plantDao: PlantDao
     private lateinit var pathDao: PathElementDao
+    private lateinit var plantDao: PlantDao
+    private lateinit var gpioElementDao: GpioElementDao
+    private lateinit var deviceDao: DeviceDao
+
     val allPlants: LiveData<List<Plant>>
 
-    private val gpioElementDao: GpioElementDao?
     val allGpioElements: LiveData<List<GpioElement>>
-
-    private val deviceDao: DeviceDao?
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
     val currentHumidityEntries: LiveData<List<HumidityEntry>>
     val currentPathElements: LiveData<List<PathElement>>
 
 
-    fun insertPlant(plant: Plant) {
-        InsertPlantThread(plantDao, plant, grpcStorageServerInterface, this).start()
+    fun insert(plant: Plant, gpioElement: GpioElement) {
+        InsertPlantThread(plantDao, gpioElementDao, plant, gpioElement,grpcStorageServerInterface, this).start()
     }
 
-    fun updatePlant(plant: Plant) {
-        UpdatePlantThread(plantDao, plant).start()
+    fun update(plant: Plant) {
+        UpdatePlantThread(plantDao, plant, grpcStorageServerInterface, this).start()
     }
 
-    fun removePlant(plant: Plant) {
-        RemovePlantThread(plantDao, plant,grpcStorageServerInterface).start()
+    fun remove(plant: Plant) {
+        RemovePlantThread(plantDao, plant, grpcStorageServerInterface).start()
     }
 
-    fun addDevice(device: StorageServerOuterClass.DeviceTypes) {
+    fun insert(device: StorageServerOuterClass.DeviceTypes) {
         AddRPiThread(database, deviceDao, gpioElementDao, device).start()
     }
 
-    fun insertPath(pathElement: String, parentId: Int) {
+    fun insert(pathElement: String, parentId: Int) {
         InsertImagePathElement(pathDao, pathElement, parentId).start()
     }
 
@@ -62,12 +62,34 @@ class PlantRepository(
     }
 
     fun getImageForCurrentPlant(plant: Int): LiveData<List<PathElement>> {
-        // todo start query and return th livedata wrapper
+        // todo start query and return the livedata wrapper
         QueryImagePathsThread(pathDao, plant, currentPathElements)
         return currentPathElements
     }
 
     private class InsertPlantThread(
+        private val plantDao: PlantDao,
+        private val gpioElementDao: GpioElementDao,
+        private val plant: Plant,
+        private val gpioElement: GpioElement,
+        private val grpcStorageServerInterface: GrpcServerService,
+        private val plantRepository: PlantRepository
+    ) :
+        Thread() {
+        override fun run() {
+            try {
+                plantDao.insert(plant)
+                gpioElement.plant=plant.plant
+                gpioElementDao.update(gpioElement)
+
+                grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
+            } catch (e: SQLiteConstraintException) {
+                plantDao.update(plant)
+            }
+        }
+    }
+
+    private class UpdatePlantThread(
         private val plantDao: PlantDao?,
         private val plant: Plant,
         private val grpcStorageServerInterface: GrpcServerService,
@@ -75,19 +97,8 @@ class PlantRepository(
     ) :
         Thread() {
         override fun run() {
-            try {
-                plantDao!!.insert(plant)
-                grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
-            } catch (e: SQLiteConstraintException) {
-                plantDao!!.update(plant)
-            }
-        }
-    }
-
-    private class UpdatePlantThread(private val plantDao: PlantDao?, private val plant: Plant) :
-        Thread() {
-        override fun run() {
             plantDao!!.update(plant)
+            grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
         }
     }
 

@@ -13,7 +13,7 @@ class GrpcServerService(
     fun setHumidityTest() {
         grpcStub.storeHumidityEntry(
             StorageServerOuterClass.StoreHumidityRequest.newBuilder()
-                .setHumidity(123).setPlantId(1).build(),
+                .setHumidity(123).setRequestNumber(1).build(),
             object : StreamObserver<StorageServerOuterClass.StoreHumidityReply> {
                 override fun onNext(response: StorageServerOuterClass.StoreHumidityReply) {
                     Log.i("buttonClick", "On Next Humidity Request ")
@@ -72,7 +72,7 @@ class GrpcServerService(
     fun addUpdatePlant(plant: Plant, plantRepository: PlantRepository) {
         grpcStub.addNewPlant(
             StorageServerOuterClass.AddPlantRequest.newBuilder()
-                .setName(plant.name).setInfo(plant.info).build(),
+                .setName(plant.name).setInfo(plant.info).setPlantId(plant.plant).build(),
             object : StreamObserver<StorageServerOuterClass.PlantOverviewMsg> {
                 override fun onNext(response: StorageServerOuterClass.PlantOverviewMsg) {
                     Log.i("add plant", "On Next Humidity Request ")
@@ -86,7 +86,7 @@ class GrpcServerService(
                 override fun onCompleted() {
                     Log.i("add Plant", "Stored plant successfully in server.")
                     plant.syncedWithServer = true
-                    plantRepository.updatePlant(plant)
+                    plantRepository.update(plant)
                 }
             })
     }

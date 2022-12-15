@@ -37,12 +37,11 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun update(plant: Plant) {
         plant.syncedWithServer = false
-        plantRepository.updatePlant(plant)
-        grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
+        plantRepository.update(plant)
     }
 
     fun remove(plant: Plant) {
-        plantRepository.removePlant(plant)
+        plantRepository.remove(plant)
     }
 
     fun reloadFromServer() {
@@ -52,8 +51,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setCurrentPlant(position: Int) {
         currentPlant = plantRepository.allPlants.value!![position]
-      //  grpcStorageServerInterface.setHumidityTest()
-        update(currentPlant!!)// todo only while testing
     }
 
     fun getCurrentPlant(): Plant? {
@@ -75,7 +72,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         }else {
             if (currentPlant == null) {
                 currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
-                plantRepository.insertPlant(currentPlant!!)
+
+                plantRepository.insert(currentPlant!!,currentGpioElement!!)
 
             } else {
                 // todo check if changes have occurred
