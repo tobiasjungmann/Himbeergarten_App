@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpicommunicator_v1.R
@@ -53,10 +54,16 @@ class GpioAdapter(
     private fun gpioClicked(gpioElement: GpioElement, label: TextView) {
         if (gpioElement.plant == -1) {
             label.setBackgroundColor(
-                ContextCompat.getColor(context, R.color.gpio_red)
+                ContextCompat.getColor(context, R.color.primary_green)
             )
             plantViewModel.gpioSelectedForElement(gpioElement, label)
                 ?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        }else{
+            Toast.makeText(
+                context,
+                "Gpio ist bereits verwendet.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -77,7 +84,7 @@ class GpioAdapter(
 
     private fun getLabelColor(gpioInUse: Boolean): Int {
         return if (gpioInUse) {
-            R.color.gpio_red
+            R.color.transparent_light_grey
         } else {
             R.color.transparent
         }

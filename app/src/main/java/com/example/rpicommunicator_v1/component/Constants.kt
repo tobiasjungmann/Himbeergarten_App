@@ -16,9 +16,10 @@ object Constants {
     const val EDIT_REQUEST = "EDIT"
 
     const val INVALID_DB_ID = -1
+    const val GPIO_IN_USE_DEFAULT = 100
 
     const val GPIO_COLOR_3_3V= R.color.gpio_orange
     const val GPIO_COLOR_5V= R.color.gpio_red
     const val GPIO_COLOR_GND= R.color.gpio_brown
-    const val GPIO_COLOR_GPIO= R.color.arduino_turquise
+    const val GPIO_COLOR_GPIO= R.color.primary_green
 }

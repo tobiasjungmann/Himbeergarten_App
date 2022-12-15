@@ -16,10 +16,11 @@ import androidx.room.PrimaryKey
 class GpioElement(
     val device: Int,
     val label: String,
-    val accentColor: Int
+    val accentColor: Int,
+    var plant: Int = -1
 ) {
     @field:PrimaryKey(autoGenerate = true)
     var gpioElement: Int=0
-    var plant = -1
+
     var nameAtDevice="lorem ipsum"
 }

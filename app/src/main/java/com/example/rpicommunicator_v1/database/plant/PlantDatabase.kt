@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants
+import com.example.rpicommunicator_v1.component.Constants.GPIO_IN_USE_DEFAULT
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.daos.DeviceDao
@@ -54,45 +55,45 @@ abstract class PlantDatabase : RoomDatabase() {
 
     fun addRPiPinout(gpioElementDao: GpioElementDao?, parent: Int) {
         // Added from top to bottom, left to right
-        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V))
-        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V))
+        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 2", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V))
+        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 3", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 4", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 14", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 15", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 17", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 18", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 27", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "GND", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "GND", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 22", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 23", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V))
+        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 24", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 10", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 9", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 25", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 11", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 8", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 7", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 0", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 1", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 5", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 6", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 12", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 13", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 19", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 16", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 26", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 20", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND))
+        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 21", Constants.GPIO_COLOR_GPIO))
     }
 
