@@ -9,6 +9,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -21,16 +23,7 @@
             android:name=".component.plant.PlantHolderActivity"
             android:exported="false" />
         <activity
-            android:name=".component.comparing.secondlevel.ComparingElementActivity"
-            android:exported="false" />
-        <activity
             android:name=".component.comparing.firstlevel.ComparingListHolder"
-            android:exported="false" />
-        <activity
-            android:name=".component.comparing.firstlevel.AddComparingListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".component.comparing.secondlevel.AddElementActivity"
             android:exported="false" />
         <activity
             android:name=".component.general.SettingsActivity"
