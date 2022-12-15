@@ -43,7 +43,7 @@ class PlantAdapter (private val plantViewModel: PlantViewModel): RecyclerView.Ad
        // holder.binding.textViewDescription.text = currentItem.lastWatered
         holder.binding.buttonDeleteItem.setOnClickListener { v ->
             v.visibility = View.GONE
-            plantViewModel!!.remove(plants[position])
+            plantViewModel.remove(plants[position])
         }
     }
 

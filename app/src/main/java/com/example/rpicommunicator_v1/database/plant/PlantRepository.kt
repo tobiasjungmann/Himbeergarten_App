@@ -22,11 +22,11 @@ class PlantRepository(
     application: Application?,
     private val grpcStorageServerInterface: GrpcServerService
 ) {
-    private lateinit var database: PlantDatabase
-    private lateinit var pathDao: PathElementDao
-    private lateinit var plantDao: PlantDao
-    private lateinit var gpioElementDao: GpioElementDao
-    private lateinit var deviceDao: DeviceDao
+    private var database: PlantDatabase
+    private var pathDao: PathElementDao
+    private var plantDao: PlantDao
+    private var gpioElementDao: GpioElementDao
+    private var deviceDao: DeviceDao
 
     val allPlants: LiveData<List<Plant>>
 
@@ -36,6 +36,10 @@ class PlantRepository(
     val currentHumidityEntries: LiveData<List<HumidityEntry>>
     val currentPathElements: LiveData<List<PathElement>>
 
+
+    fun insert(plant: Plant) {
+        InsertPlantThread(plantDao, null, plant, null,grpcStorageServerInterface, this).start()
+    }
 
     fun insert(plant: Plant, gpioElement: GpioElement) {
         InsertPlantThread(plantDao, gpioElementDao, plant, gpioElement,grpcStorageServerInterface, this).start()
@@ -69,9 +73,9 @@ class PlantRepository(
 
     private class InsertPlantThread(
         private val plantDao: PlantDao,
-        private val gpioElementDao: GpioElementDao,
+        private val gpioElementDao: GpioElementDao?,
         private val plant: Plant,
-        private val gpioElement: GpioElement,
+        private val gpioElement: GpioElement?,
         private val grpcStorageServerInterface: GrpcServerService,
         private val plantRepository: PlantRepository
     ) :
@@ -79,9 +83,10 @@ class PlantRepository(
         override fun run() {
             try {
                 plantDao.insert(plant)
-                gpioElement.plant=plant.plant
-                gpioElementDao.update(gpioElement)
-
+                if (gpioElement!=null && gpioElementDao!=null) {
+                    gpioElement.plant = plant.plant
+                    gpioElementDao.update(gpioElement)
+                }
                 grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
             } catch (e: SQLiteConstraintException) {
                 plantDao.update(plant)

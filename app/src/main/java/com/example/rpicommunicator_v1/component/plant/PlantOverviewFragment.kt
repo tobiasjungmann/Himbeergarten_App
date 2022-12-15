@@ -57,7 +57,7 @@ class PlantOverviewFragment : Fragment() {
         plantViewModel.getAllPlants().observe(
             viewLifecycleOwner
         ) { plants: List<Plant> ->
-            adapter.setPlants(plants as List<Plant>)
+            adapter.setPlants(plants)
         }
         initSwipeToRefresh()
         binding.recyclerViewPlant.adapter = adapter

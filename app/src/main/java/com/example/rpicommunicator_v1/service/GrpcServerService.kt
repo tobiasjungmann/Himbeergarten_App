@@ -39,6 +39,14 @@ class GrpcServerService(
                 override fun onNext(response: StorageServerOuterClass.AllPlantsReply) {
                     Log.i("add plant", "On Next Humidity Request ")
                     // todo update with values
+
+                    plantRepository.insert(
+                        Plant(
+                            response.getPlants(0).name,
+                            response.getPlants(0).info,
+                            response.getPlants(0).gpio.deviceId
+                        )
+                    )
                 }
 
                 override fun onError(throwable: Throwable?) {

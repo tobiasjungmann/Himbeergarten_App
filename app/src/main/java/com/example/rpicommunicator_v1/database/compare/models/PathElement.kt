@@ -4,13 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.example.rpicommunicator_v1.component.Converters
 import java.io.File
 import java.io.FileOutputStream
 
 @Entity(tableName = "path_element_database")
-@TypeConverters(Converters::class)
 class PathElement(
     val path: String,
     val parentEntry: Int = 0

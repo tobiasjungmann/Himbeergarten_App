@@ -2,11 +2,8 @@ package com.example.rpicommunicator_v1.database.compare.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.example.rpicommunicator_v1.component.Converters
 
 @Entity(tableName = "comparing_element_table")
-@TypeConverters(Converters::class)
 class ComparingElement(
     val title: String,
     val description: String,

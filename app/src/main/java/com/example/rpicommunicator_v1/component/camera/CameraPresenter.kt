@@ -95,11 +95,6 @@ class CameraPresenter constructor(
         val permissionCheck = ContextCompat.checkSelfPermission(context, permission)
 
         if (permissionCheck == PackageManager.PERMISSION_DENIED) {
-            val requestCode = when (permission) {
-                Manifest.permission.READ_EXTERNAL_STORAGE -> PERMISSION_FILES
-                else -> PERMISSION_CAMERA
-            }
-
             view?.showPermissionRequestDialog(permission)
             return false
         }

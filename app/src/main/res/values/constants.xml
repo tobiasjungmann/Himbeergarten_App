@@ -2,7 +2,6 @@
 <resources>
     <integer name="INVALID_LAYOUT_ID">-1</integer>
 
-
     <string name="SHARED_PREF_KEY">shared_pref_key</string>
     <string name="ADDRESS_SERVER_PREF">address_server</string>
     <string name="PORT_SERVER_PREF">port_server</string>

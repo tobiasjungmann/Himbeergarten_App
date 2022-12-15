@@ -1,10 +1,4 @@
 <resources>
-    <string name="app_name">RPICommunicator_V1</string>
+    <string name="app_name">Himbeergarten</string>
     <string name="title_activity_plant_view">PlantView</string>
-    <!-- Strings used for fragments for navigation -->
-
-    <string name="doNotWater">Nicht Giessen</string>
-    <string name="doWater">Giessen</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
