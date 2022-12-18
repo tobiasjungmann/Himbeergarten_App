@@ -70,14 +70,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_gpio_list_view">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/button_comparing_element_add_image"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_outline_add_photo_alternate_24px" />
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="75dp">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/button_comparing_element_add_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_outline_add_photo_alternate_24px" />
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_comparing_element_images"
@@ -93,7 +99,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_gpio_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
@@ -108,7 +114,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_gpio_select"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/lb_browse_header_color"

@@ -66,23 +66,23 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return
-        }else
-        if(currentGpioElement==null){
-            Toast.makeText(context, "Select an empty GPIO", Toast.LENGTH_SHORT).show()
-        }else {
-            if (currentPlant == null) {
-                currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
-
-                plantRepository.insert(currentPlant!!,currentGpioElement!!)
-
+        } else
+            if (currentGpioElement == null) {
+                Toast.makeText(context, "Select an empty GPIO", Toast.LENGTH_SHORT).show()
             } else {
-                // todo check if changes have occurred
-                currentPlant!!.name = name
-                currentPlant!!.info = info
-                currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
-                update(currentPlant!!)
+                if (currentPlant == null) {
+                    currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
+
+                    plantRepository.insert(currentPlant!!, currentGpioElement!!)
+
+                } else {
+                    // todo check if changes have occurred
+                    currentPlant!!.name = name
+                    currentPlant!!.info = info
+                    currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
+                    update(currentPlant!!)
+                }
             }
-        }
     }
 
     private fun initStorageGrpcStub(): GrpcServerService {
@@ -115,14 +115,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return GrpcServerService(StorageServerGrpc.newStub(mChannel))
     }
 
-    fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView):TextView? {
-        val previousTextView=currentGpioTextView
-        currentGpioTextView=label
+    fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView): TextView? {
+        val previousTextView = currentGpioTextView
+        currentGpioTextView = label
         currentGpioElement = gpioElement
         return previousTextView
     }
 
-    fun getHumidityEntriesForCurrentPlant():LiveData<List<HumidityEntry>> {
+    fun getHumidityEntriesForCurrentPlant(): LiveData<List<HumidityEntry>> {
         plantRepository.getHumidityEntriesForSensorSlot(currentPlant)
         return plantRepository.currentHumidityEntries
     }
@@ -139,7 +139,11 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return plantRepository.getImageForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
     }
 
+    fun getCurrentGpioElementId(): Int {
+        return currentGpioElement?.gpioElement ?: -1
+    }
+
     init {
-        plantRepository = PlantRepository(application,grpcStorageServerInterface)
+        plantRepository = PlantRepository(application, grpcStorageServerInterface)
     }
 }

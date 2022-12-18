@@ -52,18 +52,20 @@ class GpioAdapter(
     }
 
     private fun gpioClicked(gpioElement: GpioElement, label: TextView) {
-        if (gpioElement.plant == -1) {
-            label.setBackgroundColor(
-                ContextCompat.getColor(context, R.color.primary_green)
-            )
-            plantViewModel.gpioSelectedForElement(gpioElement, label)
-                ?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-        }else{
-            Toast.makeText(
-                context,
-                "Gpio ist bereits verwendet.",
-                Toast.LENGTH_SHORT
-            ).show()
+        if (gpioElement.plant != plantViewModel.getCurrentGpioElementId()) {
+            if (gpioElement.plant == -1) {
+                label.setBackgroundColor(
+                    ContextCompat.getColor(context, R.color.primary_green)
+                )
+                plantViewModel.gpioSelectedForElement(gpioElement, label)
+                    ?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            } else {
+                Toast.makeText(
+                    context,
+                    "Gpio ist bereits verwendet.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
