@@ -40,31 +40,38 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
                 DEFAULT_SERVER_IP
             )
         )
-        binding.editTextServerPort.setText(
-            mPref.getString(
-                this.application.resources.getString(R.string.PORT_SERVER_PREF),
-                this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER).toString()
-            )
-        )
-
         binding.editTextStationAddress.setText(
             mPref.getString(
                 this.application.resources.getString(R.string.ADDRESS_STATION_PREF),
                 DEFAULT_SERVER_IP
             )
         )
+
+        binding.editTextServerPort.setText(
+            String.format(
+                "%d",
+                mPref.getInt(
+                    this.application.resources.getString(R.string.PORT_SERVER_PREF),
+                    R.integer.DEFAULT_PORT_STATION
+                )
+            )
+        )
+
         binding.editTextStationPort.setText(
-            mPref.getString(
-                this.application.resources.getString(R.string.PORT_STATION_PREF),
-                String.format("%d", this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER) )
+            String.format(
+                "%d",
+                mPref.getInt(
+                    this.application.resources.getString(R.string.PORT_STATION_PREF),
+                    R.integer.DEFAULT_PORT_SERVER
+                )
             )
         )
     }
 
     private fun initDeviceSelection() {
         // todo load from repository
-        val deviceTypes = arrayOf("Nicht ausgewählt","Arduino Nano", "Raspberry Pi")
-        val deviceInterfaces = arrayOf("RPi 1 - usb0","RPi 1 - usb1", "RPi 1 - usb3")
+        val deviceTypes = arrayOf("Nicht ausgewählt", "Arduino Nano", "Raspberry Pi")
+        val deviceInterfaces = arrayOf("RPi 1 - usb0", "RPi 1 - usb1", "RPi 1 - usb3")
         val typeAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item, deviceTypes
