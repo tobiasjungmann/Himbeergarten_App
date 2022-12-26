@@ -52,7 +52,7 @@ class GpioAdapter(
     }
 
     private fun gpioClicked(gpioElement: GpioElement, label: TextView) {
-        if (gpioElement.plant != plantViewModel.getCurrentGpioElementId()) {
+        if (gpioElement.plant != plantViewModel.getCurrentGpioElementId() || gpioElement.plant == -1) {
             if (gpioElement.plant == -1) {
                 label.setBackgroundColor(
                     ContextCompat.getColor(context, R.color.primary_green)

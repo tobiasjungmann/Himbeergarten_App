@@ -9,6 +9,7 @@ import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.Constants.GPIO_IN_USE_DEFAULT
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
+import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.daos.DeviceDao
 import com.example.rpicommunicator_v1.database.plant.daos.GpioElementDao
@@ -21,7 +22,7 @@ import com.example.rpicommunicator_v1.database.plant.models.Plant
 import java.util.concurrent.Executors
 
 @Database(
-    entities = [Plant::class, GpioElement::class, Device::class, HumidityEntry::class, PathElement::class],
+    entities = [Plant::class, GpioElement::class, Device::class, HumidityEntry::class, PathElement::class, ComparingElement::class],
     version = 2
 )
 abstract class PlantDatabase : RoomDatabase() {

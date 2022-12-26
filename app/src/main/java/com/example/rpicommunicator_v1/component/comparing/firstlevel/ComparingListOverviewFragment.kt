@@ -27,28 +27,17 @@ class ComparingListOverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentComparingListOverviewBinding.inflate(layoutInflater)
+        listViewModel = ViewModelProvider(requireActivity())[ComparingListViewModel::class.java]
+        binding.buttonAddCompList.setOnClickListener { addNewList()        }
 
-        binding.buttonAddCompList.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            //   val view = View.inflate(context, R.layout.picture_dialog, null)
-            val customEditText = View.inflate(requireContext(), R.layout.dialog_add_list, null)
-            builder.setTitle("New List");
-            builder.setMessage("Enter the name for the new List.");
+        initRecyclerView()
 
+        return binding.root
+    }
 
-            builder.setView(customEditText)
-                .setNegativeButton("cancel", null)
-                .setPositiveButton("create", null)
-            val dialog = builder.create()
-            dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
-            dialog.show()
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                listViewModel.insert(ComparingList((customEditText as EditText).text.toString()))
-                dialog.dismiss()
-            }
-        }
-
+    private fun initRecyclerView() {
         val adapter = ComparingListAdapter()
+
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             listViewModel.setCurrentList(listViewModel.getComparingListByPosition(position))
             val nextFrag = ComparingElementOverviewFragment()
@@ -58,9 +47,8 @@ class ComparingListOverviewFragment : Fragment() {
                 .commit()
         }
         adapter.setOnItemClickListener(itemOnClick)
-        binding.recyclerViewCompList.adapter = adapter
 
-        listViewModel = ViewModelProvider(this)[ComparingListViewModel::class.java]
+        binding.recyclerViewCompList.adapter = adapter
         listViewModel.getAllComparingLists().observe(
             viewLifecycleOwner
         ) { lists -> //update RecyclerView
@@ -68,6 +56,10 @@ class ComparingListOverviewFragment : Fragment() {
         }
         binding.recyclerViewCompList.layoutManager = LinearLayoutManager(requireContext())
 
+        initItemTouchHelper(adapter)
+    }
+
+    private fun initItemTouchHelper(adapter: ComparingListAdapter) {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -98,6 +90,24 @@ class ComparingListOverviewFragment : Fragment() {
                 snackbar.show()
             }
         }).attachToRecyclerView(binding.recyclerViewCompList)
-        return binding.root
+    }
+
+    private fun addNewList() {
+        val builder = AlertDialog.Builder(requireContext())
+        val customEditText = View.inflate(requireContext(), R.layout.dialog_add_list, null)
+        builder.setTitle("New List");
+        builder.setMessage("Enter the name for the new List.");
+
+
+        builder.setView(customEditText)
+            .setNegativeButton("cancel", null)
+            .setPositiveButton("create", null)
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            listViewModel.insert(ComparingList((customEditText as EditText).text.toString()))
+            dialog.dismiss()
+        }
     }
 }

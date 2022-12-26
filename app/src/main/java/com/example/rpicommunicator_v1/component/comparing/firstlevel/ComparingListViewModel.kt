@@ -12,8 +12,8 @@ import com.example.rpicommunicator_v1.database.compare.models.PathElement
 
 class ComparingListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var currentElement: ComparingElement?=null
-    private var currentList: ComparingList?=null
+    private var currentElement: ComparingElement? = null
+    private var currentList: ComparingList? = null
     private val repository: LocalRepository
     private val allLists: LiveData<List<ComparingList>>
 
@@ -52,37 +52,51 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
         return allLists.value!![position]
     }
 
-    fun setCurrentList(list: ComparingList){
-      this.currentList=list
+    fun setCurrentList(list: ComparingList) {
+        this.currentList = list
     }
+
     fun getCurrentList(): ComparingList? {
         return currentList
     }
 
-    fun setCurrentElement(element: ComparingElement){
-        this.currentElement=element
+    fun setCurrentElement(element: ComparingElement) {
+        this.currentElement = element
     }
+
     fun getCurrentElement(): ComparingElement? {
         return currentElement
     }
 
     fun resetCurrentElement() {
-        this.currentElement=null
+        this.currentElement = null
     }
 
     fun getComparingElementsForCurrentList(): LiveData<List<ComparingElement>> {
         return repository.getComparingElementsById(currentList?.comparingListId ?: INVALID_DB_ID)
     }
 
-    fun getComparingElementByID(listId: Int): LiveData<List<ComparingElement>> {
-        return repository.getComparingElementsById(listId)
-    }
-
-    fun getAllPathsToElement(listId: Int): List<PathElement>{
+    fun getAllPathsToElement(listId: Int): List<PathElement> {
         return repository.getPathElementsById(listId)
     }
 
-    fun createOrUpdateNote(title: String, description: String, rating: Int) {
-        repository.insertComparingElement(ComparingElement(title,description,rating,currentList!!.comparingListId))
+
+    fun createOrUpdateElement(title: String, description: String, rating: Int) {
+        repository.insertComparingElement(
+            ComparingElement(
+                title,
+                description,
+                rating,
+                currentList!!.comparingListId
+            )
+        )
+    }
+
+    fun queryAllThumbnailsForCurrentList() {
+        repository.queryAllThumbnailsForCurrentList(currentList?.comparingListId ?: INVALID_DB_ID)
+    }
+
+    fun getThumbnailsForList(): LiveData<List<PathElement>> {
+        return repository.getThumbnailsForList()
     }
 }

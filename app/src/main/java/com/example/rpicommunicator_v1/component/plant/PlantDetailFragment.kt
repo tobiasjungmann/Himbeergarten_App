@@ -30,7 +30,7 @@ class PlantDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPlantDetailBinding.inflate(layoutInflater)
-        plantViewModel = ViewModelProvider(requireActivity()).get(PlantViewModel::class.java)
+        plantViewModel = ViewModelProvider(requireActivity())[PlantViewModel::class.java]
 
         if (plantViewModel.getCurrentPlant() == null) {
             Log.d("Debug", "onCreateView: No plant specified for the detail view")

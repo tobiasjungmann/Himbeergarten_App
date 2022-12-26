@@ -28,7 +28,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
     ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentAddEditCompElementBinding.inflate(layoutInflater)
-        listViewModel = ViewModelProvider(this)[ComparingListViewModel::class.java]
+        listViewModel = ViewModelProvider(requireActivity())[ComparingListViewModel::class.java]
 
         binding.numberPickerPriority.minValue = 1
         binding.numberPickerPriority.maxValue = 10
@@ -42,7 +42,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
             )*/
         }
         binding.buttonCompElemAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
-        binding.buttonSaveCompElem.setOnClickListener { saveNote() }
+        binding.buttonSaveCompElem.setOnClickListener { saveElement() }
 
         initCameraUI()
         return binding.root
@@ -53,7 +53,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
         cameraUtils.initRecyclerView(binding.recyclerViewCompElemImages)
     }
 
-    private fun saveNote() {
+    private fun saveElement() {
         val title = binding.editTextCompElemTitle.text.toString()
         val description = binding.editTextCompElemDescription.text.toString()
         val rating = binding.numberPickerPriority.value
@@ -62,7 +62,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
                 .show()
             return
         }
-        listViewModel.createOrUpdateNote(title, description, rating)
+        listViewModel.createOrUpdateElement(title, description, rating)
     }
 
     private val cameraLauncher = registerForActivityResult(StartActivityForResult()) {

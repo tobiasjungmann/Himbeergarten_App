@@ -23,4 +23,7 @@ interface PathElementDao: DefaultDao<PathElement> {
 
     @Query("SELECT* FROM path_element_database WHERE pathElementID==:parent")
     fun getListPathElementsLiveData(parent: Int): LiveData<List<PathElement>>
+
+    @Query("SELECT* FROM path_element_database, comparing_element_table  WHERE comparing_element_table.idList==:comparingListId AND comparing_element_table.comparingElementId==path_element_database.parentEntry")
+    fun getAllThumbnailsForComparingList(comparingListId: Int): List<PathElement>
 }

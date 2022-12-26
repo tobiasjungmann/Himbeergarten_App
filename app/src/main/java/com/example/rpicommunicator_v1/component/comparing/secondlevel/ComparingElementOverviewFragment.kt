@@ -27,7 +27,7 @@ class ComparingElementOverviewFragment : Fragment() {
     ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentComparingElementOverviewBinding.inflate(layoutInflater)
-        listViewModel = ViewModelProvider(this)[ComparingListViewModel::class.java]
+        listViewModel = ViewModelProvider(requireActivity())[ComparingListViewModel::class.java]
 
         initRecyclerView()
 
@@ -43,8 +43,9 @@ class ComparingElementOverviewFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
+        listViewModel.queryAllThumbnailsForCurrentList()
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size_list).toInt()
-        val adapter = ComparingElementAdapter(thumbnailSize)
+        val adapter = ComparingElementAdapter(thumbnailSize,viewLifecycleOwner)
 
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
             listViewModel.setCurrentElement(adapter.getElementAt(position))

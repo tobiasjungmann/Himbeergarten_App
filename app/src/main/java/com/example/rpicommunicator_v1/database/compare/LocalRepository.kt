@@ -3,11 +3,12 @@ package com.example.rpicommunicator_v1.database.compare
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
-import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
+import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.database.compare.LocalDatabase.Companion.getInstance
 import com.example.rpicommunicator_v1.database.compare.daos.BikeTourDao
 import com.example.rpicommunicator_v1.database.compare.daos.ComparingElementDao
 import com.example.rpicommunicator_v1.database.compare.daos.ComparingListDao
+import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.BikeTour
 import com.example.rpicommunicator_v1.database.compare.models.ComparingElement
 import com.example.rpicommunicator_v1.database.compare.models.ComparingList
@@ -17,12 +18,15 @@ import com.example.rpicommunicator_v1.database.compare.models.PathElement
 class LocalRepository(application: Application?) {
     private val comparingElementDao: ComparingElementDao
     private val allComparingElements: LiveData<List<ComparingElement>>
-    private var listDao: ComparingListDao? = null
+    private var listDao: ComparingListDao?
     private var allComparingLists: LiveData<List<ComparingList>>
     private val bikeTourDao: BikeTourDao?
+
     val allBikeTours: LiveData<List<BikeTour>>
     private val pathElementDao: PathElementDao
     private val allPathElements: LiveData<List<PathElement>>
+    private val currentThumbnails: MutableLiveData<List<PathElement>>
+
 
     fun insertComparingElement(comparingElement: ComparingElement?) {
         InsertComparingElementThread(comparingElementDao, comparingElement).start()
@@ -94,6 +98,13 @@ class LocalRepository(application: Application?) {
         return pathElementDao.getListPathElements(idElement)
     }
 
+    fun queryAllThumbnailsForCurrentList(listID: Int) {
+        QueryAllThumbnailsForCurrentListThread(pathElementDao, listID, currentThumbnails).start()
+    }
+
+    fun getThumbnailsForList(): LiveData<List<PathElement>> {
+        return currentThumbnails
+    }
 
 
     private class InsertComparingElementThread(
@@ -219,6 +230,17 @@ class LocalRepository(application: Application?) {
         }
     }
 
+    // pathElementDao, listID, currentThumbnails)
+    private class QueryAllThumbnailsForCurrentListThread(
+        private val pathElementDao: PathElementDao,
+        private val listID: Int,
+        private val currentThumbnails: MutableLiveData<List<PathElement>>
+    ) : Thread() {
+        override fun run() {
+            currentThumbnails.postValue(pathElementDao.getAllThumbnailsForComparingList(listID))
+        }
+    }
+
 
     init {
         val database = getInstance(application!!)
@@ -231,5 +253,6 @@ class LocalRepository(application: Application?) {
         allComparingLists = listDao!!.getAllLists()
         allBikeTours = bikeTourDao.allTours
         allPathElements = pathElementDao.allPathElements
+        currentThumbnails = MutableLiveData()
     }
 }

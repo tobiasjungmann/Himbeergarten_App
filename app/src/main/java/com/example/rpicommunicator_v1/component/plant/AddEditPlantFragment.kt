@@ -39,7 +39,6 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         binding.recyclerViewComparingElementImages.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-
        binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
 
         initGpioList()
@@ -81,11 +80,11 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         val info = binding.editTextAddEditPlantInfo.text.toString()
         plantViewModel.createUpdateCurrentPlant(name, info,context)
 
-        requireActivity().supportFragmentManager
+/*        requireActivity().supportFragmentManager
             .beginTransaction()
             .remove(this)
-            .commit()
-        requireActivity().supportFragmentManager.popBackStack()
+            .commit().popBackStack()
+*/
     }
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

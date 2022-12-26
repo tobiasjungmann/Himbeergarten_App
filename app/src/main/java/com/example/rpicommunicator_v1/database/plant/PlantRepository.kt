@@ -34,7 +34,7 @@ class PlantRepository(
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
     val currentHumidityEntries: LiveData<List<HumidityEntry>>
-    val currentPathElements: LiveData<List<PathElement>>
+    private val currentPathElements: LiveData<List<PathElement>>
 
 
     fun insert(plant: Plant) {
