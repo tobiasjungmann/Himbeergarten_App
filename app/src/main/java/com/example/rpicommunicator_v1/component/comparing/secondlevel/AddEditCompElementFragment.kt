@@ -62,7 +62,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
                 .show()
             return
         }
-        listViewModel.createOrUpdateElement(title, description, rating)
+        listViewModel.createOrUpdateElement(title, description, rating, cameraUtils.getPaths())
     }
 
     private val cameraLauncher = registerForActivityResult(StartActivityForResult()) {

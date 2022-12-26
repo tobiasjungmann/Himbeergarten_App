@@ -28,8 +28,13 @@ class LocalRepository(application: Application?) {
     private val currentThumbnails: MutableLiveData<List<PathElement>>
 
 
-    fun insertComparingElement(comparingElement: ComparingElement?) {
-        InsertComparingElementThread(comparingElementDao, comparingElement).start()
+    fun insertComparingElement(comparingElement: ComparingElement, paths: List<String>) {
+        InsertComparingElementThread(
+            comparingElementDao,
+            pathElementDao,
+            comparingElement,
+            paths
+        ).start()
     }
 
     fun updateComparingElement(comparingElement: ComparingElement?) {
@@ -109,11 +114,18 @@ class LocalRepository(application: Application?) {
 
     private class InsertComparingElementThread(
         private val comparingElementDao: ComparingElementDao,
-        private val comparingElement: ComparingElement?
+        private val pathElementDao: PathElementDao,
+        private val comparingElement: ComparingElement,
+        private val paths: List<String>
     ) :
         Thread() {
         override fun run() {
-            comparingElementDao.insert(comparingElement)
+            val id = comparingElementDao.insert(comparingElement)
+            if (id.isNotEmpty()) {
+                for (s in paths) {
+                    pathElementDao.insert(PathElement(s, id.first().toInt()))
+                }
+            }
         }
     }
 
@@ -237,7 +249,8 @@ class LocalRepository(application: Application?) {
         private val currentThumbnails: MutableLiveData<List<PathElement>>
     ) : Thread() {
         override fun run() {
-            currentThumbnails.postValue(pathElementDao.getAllThumbnailsForComparingList(listID))
+            val res = pathElementDao.getAllThumbnailsForComparingList(listID)
+            currentThumbnails.postValue(res)
         }
     }
 

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.io.File
 import java.io.FileOutputStream
 
-@Entity(tableName = "path_element_database")
+@Entity(tableName = "path_element_table")
 class PathElement(
     val path: String,
     val parentEntry: Int = 0

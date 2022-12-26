@@ -27,20 +27,6 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
         presenter.attachView(root)
     }
 
-    /*fun processCameraResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-
-        when (requestCode) {
-            CameraPresenter.REQUEST_TAKE_PHOTO -> presenter.onNewImageTaken()
-            CameraPresenter.REQUEST_GALLERY -> {
-                val filePath = data?.data
-                presenter.onNewImageSelected(filePath)
-            }
-        }
-    }*/
-
     fun onNewImageTaken() {
         presenter.onNewImageTaken()
     }
@@ -115,5 +101,9 @@ class CameraUtils(private val context: Context, root: CameraContract.View) {
                 Log.d("CameraUtils", "Permission Denied")
             }
         }
+    }
+
+    fun getPaths(): List<String> {
+        return thumbnailsAdapter.getPaths()
     }
 }

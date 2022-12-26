@@ -15,7 +15,7 @@ import com.example.rpicommunicator_v1.database.compare.models.PathElement
 
 @Database(
     entities = [ComparingElement::class, ComparingList::class, BikeTour::class, PathElement::class],
-    version = 8
+    version = 9
 )
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun comparingElementDao(): ComparingElementDao

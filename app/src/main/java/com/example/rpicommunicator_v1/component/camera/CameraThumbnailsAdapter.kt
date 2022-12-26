@@ -74,6 +74,10 @@ class CameraThumbnailsAdapter internal constructor(
         return BitmapFactory.decodeFile(path, bmOptions)
     }
 
+    fun getPaths(): List<String>{
+        return paths
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val imageView = itemView as ImageView

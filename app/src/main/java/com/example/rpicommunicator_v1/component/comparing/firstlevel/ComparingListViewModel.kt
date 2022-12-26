@@ -30,9 +30,8 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
         repository.updateComparingList(list)
     }
 
-    fun insert(comparingElement: ComparingElement?, imagePaths: Array<String>?) {
-        repository.insertComparingElement(comparingElement)
-        repository.insertPathElements(imagePaths)
+    fun insert(comparingElement: ComparingElement, imagePaths: List<String>) {
+        repository.insertComparingElement(comparingElement, imagePaths)
     }
 
     fun delete(comparingElement: ComparingElement?) {
@@ -81,14 +80,14 @@ class ComparingListViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
-    fun createOrUpdateElement(title: String, description: String, rating: Int) {
+    fun createOrUpdateElement(title: String, description: String, rating: Int, paths: List<String>) {
         repository.insertComparingElement(
             ComparingElement(
                 title,
                 description,
                 rating,
                 currentList!!.comparingListId
-            )
+            ),paths
         )
     }
 

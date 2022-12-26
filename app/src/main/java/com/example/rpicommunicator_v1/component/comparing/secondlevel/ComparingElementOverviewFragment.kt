@@ -89,7 +89,7 @@ class ComparingElementOverviewFragment : Fragment() {
                     )
                     .setAction(
                         "Rückgängig"
-                    ) { listViewModel.insert(previouslyDeleted, arrayOf()) }
+                    ) { listViewModel.insert(previouslyDeleted!!, listOf()) }
                 snackbar.show()
             }
         }).attachToRecyclerView(binding.recyclerViewCompElem)
