@@ -242,7 +242,6 @@ class LocalRepository(application: Application?) {
         }
     }
 
-    // pathElementDao, listID, currentThumbnails)
     private class QueryAllThumbnailsForCurrentListThread(
         private val pathElementDao: PathElementDao,
         private val listID: Int,

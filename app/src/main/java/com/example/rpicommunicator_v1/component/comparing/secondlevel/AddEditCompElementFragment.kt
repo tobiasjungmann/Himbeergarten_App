@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListViewModel
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditCompElementBinding
 
 class AddEditCompElementFragment : Fragment(), CameraContract.View {
@@ -37,9 +38,12 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
             binding.editTextCompElemDescription.setText(listViewModel.getCurrentElement()?.description)
             binding.editTextCompElemTitle.setText(listViewModel.getCurrentElement()?.title)
             binding.numberPickerPriority.value = listViewModel.getCurrentElement()!!.rating
-            /* todo move to init of utils cameraUtils.addAllImages(
-                intent.getStringArrayExtra(Constants.EXTRA_IMAGE_PATH)?.toList() ?: mutableListOf()
-            )*/
+            listViewModel.getThumbnailsForList().observe(
+                viewLifecycleOwner
+            ) { pathList: List<PathElement> ->
+                cameraUtils.addAllImages(pathList.filter { it.parentEntry==listViewModel.getCurrentElement()!!.comparingElementId }.map { it.path })
+            }
+
         }
         binding.buttonCompElemAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
         binding.buttonSaveCompElem.setOnClickListener { saveElement() }

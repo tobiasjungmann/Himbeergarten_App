@@ -18,12 +18,6 @@ class CameraThumbnailsAdapter internal constructor(
 
     private val pathsToThumbnails = ArrayMap<String, Bitmap>()
 
-    init {
-        for (path in paths) {
-            pathsToThumbnails[path] = createThumbnail(path, thumbnailSize)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.camera_thumb, parent, false)
@@ -32,8 +26,10 @@ class CameraThumbnailsAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val path = paths[position]
-        val thumbnail = pathsToThumbnails[path]
-        holder.bind(path, thumbnail, onRemoveImage)
+        if (pathsToThumbnails[path]==null){
+            pathsToThumbnails[path] = createThumbnail(path, thumbnailSize)
+        }
+        holder.bind(path, pathsToThumbnails[path], onRemoveImage)
     }
 
     fun update(paths: List<String>) {
@@ -55,7 +51,7 @@ class CameraThumbnailsAdapter internal constructor(
 
     override fun getItemCount() = paths.size
 
-    private fun createThumbnail(path: String, thumbnailSize: Int): Bitmap {
+    private fun createThumbnail(path: String, thumbnailSize: Int): Bitmap {     // todo why not i the utils?
         // Get the dimensions of the bitmap
         val bmOptions = BitmapFactory.Options()
         bmOptions.inJustDecodeBounds = true
@@ -85,7 +81,7 @@ class CameraThumbnailsAdapter internal constructor(
         fun bind(path: String, thumbnail: Bitmap?, onRemoveImage: (path: String) -> Unit) {
             imageView.apply {
                 setImageBitmap(thumbnail)
-                tag = adapterPosition
+             //   tag = adapterPosition
                 setOnClickListener { onRemoveImage(path) }
             }
         }
