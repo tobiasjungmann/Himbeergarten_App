@@ -44,9 +44,7 @@ class ComparingElementAdapter internal constructor(
             if (firstThumbnailIndex>=0) {
                 holder.binding.listThumbnailImageView.visibility = View.VISIBLE
                 holder.binding.listThumbnailImageView.setImageBitmap(
-                    pathList[firstThumbnailIndex].loadThumbnail(
-                        thumbnailSize
-                    )
+                    pathList[firstThumbnailIndex].loadThumbnail(thumbnailSize)
                 )
             } else {
                 holder.binding.listThumbnailImageView.visibility = View.GONE

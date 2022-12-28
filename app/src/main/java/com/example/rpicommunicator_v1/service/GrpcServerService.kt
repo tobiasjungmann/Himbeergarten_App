@@ -65,7 +65,8 @@ class GrpcServerService(
                 override fun onNext(response: StorageServerOuterClass.GetConnectedDevicesResponse) {
                     // todo direkt hier die deviceobjekte anfragen
                     //plantRepository.getDevic
-                    //plantRepository.updateConnectedDevices()
+                    plantRepository.updateConnectedDevices()
+
                 }
 
                 override fun onError(throwable: Throwable?) {
@@ -94,7 +95,7 @@ class GrpcServerService(
                 override fun onCompleted() {
                     Log.i("add Plant", "Stored plant successfully in server.")
                     plant.syncedWithServer = true
-                    plantRepository.update(plant)
+                    plantRepository.update(plant, listOf())
                 }
             })
     }

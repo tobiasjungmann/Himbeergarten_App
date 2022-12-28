@@ -68,6 +68,7 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
             return
         }
         listViewModel.createOrUpdateElement(title, description, rating, cameraUtils.getPaths())
+
         val nextFrag = ComparingElementOverviewFragment()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view_comp_list, nextFrag, "findThisFragment")

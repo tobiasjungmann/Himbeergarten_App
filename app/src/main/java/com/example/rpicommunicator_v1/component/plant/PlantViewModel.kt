@@ -35,9 +35,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     private var currentGpioTextView: TextView? = null
     private var currentGpioElement: GpioElement? = null
 
-    fun update(plant: Plant) {
+    fun update(plant: Plant, paths: List<String>) {
         plant.syncedWithServer = false
-        plantRepository.update(plant)
+        plantRepository.update(plant,paths)
     }
 
     fun remove(plant: Plant) {
@@ -62,7 +62,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(name: String, info: String, context: Context?): Boolean {
+    fun createUpdateCurrentPlant(name: String, info: String, context: Context?, paths: List<String>): Boolean {
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return false
@@ -74,14 +74,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                 if (currentPlant == null) {
                     currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
 
-                    plantRepository.insert(currentPlant!!, currentGpioElement!!)
+                    plantRepository.insert(currentPlant!!, currentGpioElement!!,paths)
 
                 } else {
                     // todo check if changes have occurred
                     currentPlant!!.name = name
                     currentPlant!!.info = info
                     currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
-                    update(currentPlant!!)
+                    update(currentPlant!!,paths)
                 }
                 return true
             }
@@ -138,12 +138,20 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return plantRepository.allPlants
     }
 
-    fun getImageForCurrentPlant(): LiveData<List<PathElement>> {
+   /* fun getImageForCurrentPlant(): LiveData<List<PathElement>> {
         return plantRepository.getImageForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
-    }
+    }*/
 
     fun getCurrentGpioElementId(): Int {
         return currentGpioElement?.gpioElement ?: -1
+    }
+
+    fun getThumbnailsForList(): LiveData<List<PathElement>> {
+        return plantRepository.getThumbnailsForList()
+    }
+
+    fun queryAllThumbnailsForCurrentList() {// todo propbaly not used anymore
+        plantRepository.queryAllThumbnailsForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
     }
 
     init {

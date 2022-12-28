@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
@@ -45,13 +44,14 @@ class PlantDetailFragment : Fragment() {
     private fun initViewComponents() {
         val plant = plantViewModel.getCurrentPlant()!!
 
-        plantViewModel.getImageForCurrentPlant().observe(
+      /* todo show one specific image
+      plantViewModel.getImageForCurrentPlant().observe(
             viewLifecycleOwner
         ) { imagePath: List<PathElement> ->
            // todo show the image from the path
             val alpha = 1.toFloat()
             binding.imageViewPlantDetailHeader.alpha = alpha
-        }
+        }*/
 
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity

@@ -2,9 +2,10 @@ package com.example.rpicommunicator_v1.database.plant
 
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.StorageServerOuterClass
-import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
@@ -33,20 +34,30 @@ class PlantRepository(
     val allGpioElements: LiveData<List<GpioElement>>
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
-    val currentHumidityEntries: LiveData<List<HumidityEntry>>
-    private val currentPathElements: LiveData<List<PathElement>>
+    val currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
+    //private val currentThumbnails: MutableLiveData<List<PathElement>>
+    private val currentThumbnails: LiveData<List<PathElement>>
 
 
     fun insert(plant: Plant) {
-        InsertPlantThread(plantDao, null, plant, null,grpcStorageServerInterface, this).start()
+        InsertPlantThread(
+            plantDao,
+            null,
+            plant,
+            null,
+            grpcStorageServerInterface,
+            this,
+            listOf(),
+            pathDao
+        ).start()
     }
 
-    fun insert(plant: Plant, gpioElement: GpioElement) {
-        InsertPlantThread(plantDao, gpioElementDao, plant, gpioElement,grpcStorageServerInterface, this).start()
+    fun insert(plant: Plant, gpioElement: GpioElement, paths: List<String>) {
+        InsertPlantThread(plantDao, gpioElementDao, plant, gpioElement,grpcStorageServerInterface, this,paths,pathDao).start()
     }
 
-    fun update(plant: Plant) {
-        UpdatePlantThread(plantDao, plant, grpcStorageServerInterface, this).start()
+    fun update(plant: Plant, paths: List<String>) {
+        UpdatePlantThread(plantDao, plant, grpcStorageServerInterface, this,pathDao,paths).start()
     }
 
     fun remove(plant: Plant) {
@@ -65,10 +76,37 @@ class PlantRepository(
         QueryHumidityEntries(humidityEntryDao, currentPlant?.plant ?: -1, currentHumidityEntries)
     }
 
-    fun getImageForCurrentPlant(plant: Int): LiveData<List<PathElement>> {
-        // todo start query and return the livedata wrapper
+    /*fun getImageForCurrentPlant(plant: Int): LiveData<List<PathElement>> {
         QueryImagePathsThread(pathDao, plant, currentPathElements)
         return currentPathElements
+    }*/
+
+    fun queryAllThumbnailsForCurrentPlant(plantID: Int) {
+        /*QueryAllThumbnailsForCurrentPlantThread(
+            pathDao,
+            plantID,
+            currentThumbnails
+        ).start()*/
+    }
+
+    private class QueryAllThumbnailsForCurrentPlantThread(
+        private val pathElementDao: PathElementDao,
+        private val plantID: Int,
+        private val currentThumbnails: MutableLiveData<List<PathElement>>
+    ) : Thread() {
+        override fun run() {
+            val res = pathElementDao.getAllThumbnailsForComparingList(plantID)
+            //val res = pathElementDao.allPathElements()
+            currentThumbnails.postValue(res)
+        }
+    }
+
+    fun getThumbnailsForList(): LiveData<List<PathElement>> {
+        return currentThumbnails
+    }
+
+    fun updateConnectedDevices() {
+        Log.d("Repository", "updateConnectedDevices: called - not yet implemented")
     }
 
     private class InsertPlantThread(
@@ -77,17 +115,25 @@ class PlantRepository(
         private val plant: Plant,
         private val gpioElement: GpioElement?,
         private val grpcStorageServerInterface: GrpcServerService,
-        private val plantRepository: PlantRepository
+        private val plantRepository: PlantRepository,
+        private val paths: List<String>,
+        private val pathElementDao: PathElementDao,
     ) :
         Thread() {
         override fun run() {
             try {
                 val id=plantDao.insert(plant)
-                if (id.isNotEmpty() && gpioElement!=null && gpioElementDao!=null) {
-                    gpioElement.plant = id[0].toInt()
-                    gpioElementDao.update(gpioElement)
+                if (id.isNotEmpty()) {
+                    if (gpioElement != null && gpioElementDao != null) {
+                        gpioElement.plant = id[0].toInt()
+                        gpioElementDao.update(gpioElement)
+                    }
+                    grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
+
+                    for (s in paths) {
+                        pathElementDao.insert(PathElement(s, id.first().toInt()))
+                    }
                 }
-                grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
             } catch (e: SQLiteConstraintException) {
                 plantDao.update(plant)
             }
@@ -98,12 +144,18 @@ class PlantRepository(
         private val plantDao: PlantDao?,
         private val plant: Plant,
         private val grpcStorageServerInterface: GrpcServerService,
-        private val plantRepository: PlantRepository
+        private val plantRepository: PlantRepository,
+        private val pathDao: PathElementDao,
+        private val paths: List<String>
     ) :
         Thread() {
         override fun run() {
             plantDao!!.update(plant)
             grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)
+            // todo update only if necessary
+            for (s in paths) {
+                pathDao.insert(PathElement(s, plant.plant))
+            }
         }
     }
 
@@ -180,8 +232,8 @@ class PlantRepository(
         allPlants = plantDao.allPlants
         allGpioElements = gpioElementDao.allGpioElements
         allDevices = deviceDao.allDevices
-        currentHumidityEntries = humidityEntryDao.filteredHumidityEntries(INVALID_DB_ID)
-        currentPathElements = pathDao.getListPathElementsLiveData(INVALID_DB_ID)
+        currentHumidityEntries = MutableLiveData()
+        currentThumbnails = pathDao.allPathElements//MutableLiveData()
 
         // todo replace by query and observer
         // allPlants.observe()

@@ -79,13 +79,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
 
-
-/*        requireActivity().supportFragmentManager
-            .beginTransaction()
-            .remove(this)
-            .commit().popBackStack()
-*/
-        if (plantViewModel.createUpdateCurrentPlant(name, info, context) && calledFromButton) {
+        if (plantViewModel.createUpdateCurrentPlant(name, info, context, cameraUtils.getPaths()) && calledFromButton) {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .remove(this)
