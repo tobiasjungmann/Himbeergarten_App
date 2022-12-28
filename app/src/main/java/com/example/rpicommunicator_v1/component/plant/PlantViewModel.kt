@@ -62,13 +62,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(name: String, info: String, context: Context?) {
+    fun createUpdateCurrentPlant(name: String, info: String, context: Context?): Boolean {
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
-            return
+            return false
         } else
             if (currentGpioElement == null) {
                 Toast.makeText(context, "Select an empty GPIO", Toast.LENGTH_SHORT).show()
+
             } else {
                 if (currentPlant == null) {
                     currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
@@ -82,7 +83,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                     currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
                     update(currentPlant!!)
                 }
+                return true
             }
+        return false
     }
 
     private fun initStorageGrpcStub(): GrpcServerService {

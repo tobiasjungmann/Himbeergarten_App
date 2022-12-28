@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListViewModel
@@ -67,6 +68,11 @@ class AddEditCompElementFragment : Fragment(), CameraContract.View {
             return
         }
         listViewModel.createOrUpdateElement(title, description, rating, cameraUtils.getPaths())
+        val nextFrag = ComparingElementOverviewFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view_comp_list, nextFrag, "findThisFragment")
+            .addToBackStack(null)
+            .commit()
     }
 
     private val cameraLauncher = registerForActivityResult(StartActivityForResult()) {

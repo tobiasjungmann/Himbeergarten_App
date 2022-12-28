@@ -6,11 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
-
+        
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_comp_elem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         tools:listitem="@layout/list_item_image" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

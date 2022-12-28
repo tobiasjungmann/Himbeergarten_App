@@ -16,7 +16,7 @@ import com.example.rpicommunicator_v1.component.camera.CameraUtils
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 
-class AddEditPlantFragment : Fragment(), CameraContract.View{
+class AddEditPlantFragment : Fragment(), CameraContract.View {
 
 
     private lateinit var plantViewModel: PlantViewModel
@@ -39,7 +39,7 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
         binding.recyclerViewComparingElementImages.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-       binding.buttonSaveAddEditElement.setOnClickListener { savePlant() }
+        binding.buttonSaveAddEditElement.setOnClickListener { savePlant(true) }
 
         initGpioList()
         initCameraUI()
@@ -65,36 +65,45 @@ class AddEditPlantFragment : Fragment(), CameraContract.View{
     }
 
     private fun initCameraUI() {
-        cameraUtils = CameraUtils(requireContext(),this as CameraContract.View)
+        cameraUtils = CameraUtils(requireContext(), this as CameraContract.View)
         cameraUtils.initRecyclerView(binding.recyclerViewComparingElementImages)
         binding.buttonComparingElementAddImage.setOnClickListener { cameraUtils.showImageOptionsDialog() }
     }
 
     override fun onStop() {
-        savePlant()
+        savePlant(false)
         super.onStop()
     }
 
-    private fun savePlant() {
+    private fun savePlant(calledFromButton: Boolean) {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
-        plantViewModel.createUpdateCurrentPlant(name, info,context)
+
 
 /*        requireActivity().supportFragmentManager
             .beginTransaction()
             .remove(this)
             .commit().popBackStack()
 */
+        if (plantViewModel.createUpdateCurrentPlant(name, info, context) && calledFromButton) {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .remove(this)
+                .commit()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        cameraUtils.onNewImageTaken()
-    }
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            cameraUtils.onNewImageTaken()
+        }
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val filePath = result.data?.data
-        cameraUtils.onNewImageSelected(filePath)
-    }
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val filePath = result.data?.data
+            cameraUtils.onNewImageSelected(filePath)
+        }
 
     override fun openCamera(intent: Intent) {
         try {

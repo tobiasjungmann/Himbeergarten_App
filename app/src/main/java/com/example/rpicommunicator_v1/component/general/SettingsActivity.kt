@@ -1,6 +1,7 @@
 package com.example.rpicommunicator_v1.component.general
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -20,7 +21,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.connectButton.setOnClickListener(this)
+        binding.buttonSaveSettings.setOnClickListener(this)
         binding.textViewSources.setOnClickListener(this)
 
         mPref = this.application.getSharedPreferences(
@@ -30,7 +31,6 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
         initAddressUi()
         initDeviceSelection()
-
     }
 
     private fun initAddressUi() {
@@ -86,7 +86,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         if (view != null) {
-            if (view.id == R.id.connect_button) {
+            if (view.id == R.id.buttonSaveSettings) {
                 updateStationAddress()
             } else if (view.id == R.id.textViewSources) {
                 if (binding.sourcesContainer.visibility == View.GONE) {
@@ -115,6 +115,9 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             this.application.resources.getString(R.string.PORT_SERVER_PREF),
             this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER)
         )
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_out_up, R.anim.slide_in_up)
     }
 
     private fun updateAddresses(

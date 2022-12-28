@@ -23,7 +23,7 @@ import java.util.concurrent.Executors
 
 @Database(
     entities = [Plant::class, GpioElement::class, Device::class, HumidityEntry::class, PathElement::class, ComparingElement::class],
-    version = 2
+    version = 4
 )
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao

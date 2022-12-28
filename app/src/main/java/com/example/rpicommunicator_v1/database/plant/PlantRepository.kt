@@ -82,9 +82,9 @@ class PlantRepository(
         Thread() {
         override fun run() {
             try {
-                plantDao.insert(plant)
-                if (gpioElement!=null && gpioElementDao!=null) {
-                    gpioElement.plant = plant.plant
+                val id=plantDao.insert(plant)
+                if (id.isNotEmpty() && gpioElement!=null && gpioElementDao!=null) {
+                    gpioElement.plant = id[0].toInt()
                     gpioElementDao.update(gpioElement)
                 }
                 grpcStorageServerInterface.addUpdatePlant(plant, plantRepository)

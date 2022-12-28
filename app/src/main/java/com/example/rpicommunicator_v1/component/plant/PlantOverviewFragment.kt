@@ -35,7 +35,7 @@ class PlantOverviewFragment : Fragment() {
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
-                .addToBackStack(null)
+                .addToBackStack("overviewFragment")
                 .commit()
         }
         initRecyclerView()

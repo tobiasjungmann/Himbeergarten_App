@@ -63,7 +63,7 @@ class PlantDetailFragment : Fragment() {
             val nextFrag = AddEditPlantFragment()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
-                .addToBackStack(null)
+                .addToBackStack("addedit")
                 .commit()
         }
     }

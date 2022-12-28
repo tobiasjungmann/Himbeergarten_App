@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.Communication
 import com.example.rpicommunicator_v1.CommunicatorGrpc
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.component.Constants.DEFAULT_STATION_PORT
 import com.example.rpicommunicator_v1.service.GrpcStationService
 import io.grpc.ManagedChannelBuilder
 import java.util.*
@@ -18,7 +19,7 @@ import java.util.*
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private var backPressedInLastSecond: Boolean=false
+    private var backPressedInLastSecond: Boolean = false
     private val _gpioStates = MutableLiveData(listOf(false, false, false, false, false))
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
 
@@ -66,12 +67,21 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun initGrpcStub(): GrpcStationService {       // todo code dublicate -> use static fucntion
-        val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
+        val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(
+            this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
-        val ipStation = mPref.getString(this.getApplication<Application>().resources.getString(R.string.ADDRESS_STATION_PREF), "192.168.0.8")
-        val portStation = mPref.getInt(this.getApplication<Application>().resources.getString(R.string.PORT_STATION_PREF), 8010)
-
+        val ipStation = mPref.getString(
+            this.getApplication<Application>().resources.getString(R.string.ADDRESS_STATION_PREF),
+            "192.168.0.8"
+        )
+        var portStation = mPref.getInt(
+            this.getApplication<Application>().resources.getString(R.string.PORT_STATION_PREF),
+            DEFAULT_STATION_PORT
+        )
+        if (portStation > 65535 || portStation < 1000) {
+            portStation = DEFAULT_STATION_PORT
+        }
         val wildcardConfig: MutableMap<String, Any> = HashMap()
         wildcardConfig["name"] = listOf(emptyMap<Any, Any>())
         wildcardConfig["timeout"] = "7s"
@@ -88,11 +98,11 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun resetBackPressed() {
-        this.backPressedInLastSecond=false
+        this.backPressedInLastSecond = false
     }
 
     fun backPressed(): Boolean {
-        backPressedInLastSecond=!backPressedInLastSecond
+        backPressedInLastSecond = !backPressedInLastSecond
         return !backPressedInLastSecond
     }
 }

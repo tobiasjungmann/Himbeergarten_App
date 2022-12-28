@@ -4,6 +4,7 @@ import com.example.rpicommunicator_v1.R
 
 object Constants {
     const val DEFAULT_SERVER_PORT=12346
+    const val DEFAULT_STATION_PORT=8010
     const val DEFAULT_SERVER_IP="192.168.0.8"
 
     const val INVALID_DB_ID = -1
