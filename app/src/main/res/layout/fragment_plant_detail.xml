@@ -92,27 +92,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="4dp"
-                    android:text="Feuchtigkeitsstand:"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_view_humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="trocken"
-                    android:textColor="@color/light_grey"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="4dp"
                     android:text="Beschreibung:"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="24sp"
@@ -130,37 +109,41 @@
                     android:textColor="@color/light_grey"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="4dp"
-                    android:text="Letztes Mal gegossen:"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_view_last_watered"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Letztes Mal gegossen:"
-                    android:textColor="@color/light_grey"
-                    android:textSize="15sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="4dp"
+                        android:text="Feuchtigkeitsstand:"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/text_view_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="trocken"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        >
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/chart_plant_detail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="gone"/>
-
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 

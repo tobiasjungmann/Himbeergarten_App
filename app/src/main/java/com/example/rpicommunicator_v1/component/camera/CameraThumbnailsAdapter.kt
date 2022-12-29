@@ -65,7 +65,6 @@ class CameraThumbnailsAdapter internal constructor(
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false
         bmOptions.inSampleSize = scaleFactor
-        // todo save as thumbnail - test if it already exists - extand path with "tumbnail"
 
         return BitmapFactory.decodeFile(path, bmOptions)
     }
@@ -81,7 +80,6 @@ class CameraThumbnailsAdapter internal constructor(
         fun bind(path: String, thumbnail: Bitmap?, onRemoveImage: (path: String) -> Unit) {
             imageView.apply {
                 setImageBitmap(thumbnail)
-             //   tag = adapterPosition
                 setOnClickListener { onRemoveImage(path) }
             }
         }

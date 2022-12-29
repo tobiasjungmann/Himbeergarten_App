@@ -9,7 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
+import com.example.rpicommunicator_v1.database.plant.models.Plant
 import com.example.rpicommunicator_v1.databinding.FragmentPlantDetailBinding
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.LimitLine
@@ -43,15 +45,7 @@ class PlantDetailFragment : Fragment() {
 
     private fun initViewComponents() {
         val plant = plantViewModel.getCurrentPlant()!!
-
-      /* todo show one specific image
-      plantViewModel.getImageForCurrentPlant().observe(
-            viewLifecycleOwner
-        ) { imagePath: List<PathElement> ->
-           // todo show the image from the path
-            val alpha = 1.toFloat()
-            binding.imageViewPlantDetailHeader.alpha = alpha
-        }*/
+        initImage(plant)
 
         binding.textViewPlantName.text = plant.name
         binding.textViewHumidity.text = plant.humidity
@@ -65,6 +59,26 @@ class PlantDetailFragment : Fragment() {
                 .replace(R.id.fragment_container_view_plant, nextFrag, "findThisFragment")
                 .addToBackStack("addedit")
                 .commit()
+        }
+    }
+
+    private fun initImage(plant: Plant) {
+        plantViewModel.getThumbnailsForList().observe(
+            viewLifecycleOwner
+        ) { pathList: List<PathElement> ->
+            val firstThumbnailIndex = pathList.indexOfFirst { it.parentEntry == plant.plant }
+
+            if (firstThumbnailIndex >= 0) {
+                binding.imageViewPlantDetailHeader.visibility = View.VISIBLE
+                binding.imageViewPlantDetailHeader.setImageBitmap(
+                    pathList[firstThumbnailIndex].loadFullImage()
+                )
+                val alpha = 1.toFloat()
+                binding.imageViewPlantDetailHeader.alpha = alpha
+
+            } else {
+                binding.imageViewPlantDetailHeader.visibility = View.GONE
+            }
         }
     }
 

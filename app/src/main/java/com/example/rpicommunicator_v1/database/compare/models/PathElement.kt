@@ -18,10 +18,10 @@ class PathElement(
 
 
     fun loadThumbnail(thumbnailSize: Int): Bitmap {
-        val thumbnailPath=path.substring(0,path.length-5)+"_Thumbnail.jpg"
+        val thumbnailPath = path.substring(0, path.length - 5) + "_Thumbnail.jpg"
         val file = File(thumbnailPath)
         if (file.exists()) {
-            return BitmapFactory.decodeFile(file.getAbsolutePath())
+            return BitmapFactory.decodeFile(file.absolutePath)
         } else {
             file.createNewFile()
             val bmOptions = BitmapFactory.Options()
@@ -36,12 +36,16 @@ class PathElement(
             // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false
             bmOptions.inSampleSize = scaleFactor
-            val bitmap=BitmapFactory.decodeFile(path, bmOptions)
-            val os=FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG,85,os)
+            val bitmap = BitmapFactory.decodeFile(path, bmOptions)
+            val os = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, os)
             os.flush()
             os.close()
             return bitmap
         }
+    }
+
+    fun loadFullImage(): Bitmap {
+        return BitmapFactory.decodeFile(File(path).absolutePath)
     }
 }
