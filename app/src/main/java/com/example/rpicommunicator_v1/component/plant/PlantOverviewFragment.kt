@@ -48,7 +48,6 @@ class PlantOverviewFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        plantViewModel.queryAllThumbnailsForCurrentList()
         val thumbnailSize = resources.getDimension(R.dimen.thumbnail_size_list).toInt()
         val adapter = PlantAdapter(plantViewModel,viewLifecycleOwner, thumbnailSize)
         val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->

@@ -35,7 +35,6 @@ class PlantRepository(
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
     val currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
-    //private val currentThumbnails: MutableLiveData<List<PathElement>>
     private val currentThumbnails: LiveData<List<PathElement>>
 
 
@@ -53,11 +52,20 @@ class PlantRepository(
     }
 
     fun insert(plant: Plant, gpioElement: GpioElement, paths: List<String>) {
-        InsertPlantThread(plantDao, gpioElementDao, plant, gpioElement,grpcStorageServerInterface, this,paths,pathDao).start()
+        InsertPlantThread(
+            plantDao,
+            gpioElementDao,
+            plant,
+            gpioElement,
+            grpcStorageServerInterface,
+            this,
+            paths,
+            pathDao
+        ).start()
     }
 
     fun update(plant: Plant, paths: List<String>) {
-        UpdatePlantThread(plantDao, plant, grpcStorageServerInterface, this,pathDao,paths).start()
+        UpdatePlantThread(plantDao, plant, grpcStorageServerInterface, this, pathDao, paths).start()
     }
 
     fun remove(plant: Plant) {
@@ -74,31 +82,6 @@ class PlantRepository(
 
     fun getHumidityEntriesForSensorSlot(currentPlant: Plant?) {
         QueryHumidityEntries(humidityEntryDao, currentPlant?.plant ?: -1, currentHumidityEntries)
-    }
-
-    /*fun getImageForCurrentPlant(plant: Int): LiveData<List<PathElement>> {
-        QueryImagePathsThread(pathDao, plant, currentPathElements)
-        return currentPathElements
-    }*/
-
-    fun queryAllThumbnailsForCurrentPlant(plantID: Int) {
-        /*QueryAllThumbnailsForCurrentPlantThread(
-            pathDao,
-            plantID,
-            currentThumbnails
-        ).start()*/
-    }
-
-    private class QueryAllThumbnailsForCurrentPlantThread(
-        private val pathElementDao: PathElementDao,
-        private val plantID: Int,
-        private val currentThumbnails: MutableLiveData<List<PathElement>>
-    ) : Thread() {
-        override fun run() {
-            val res = pathElementDao.getAllThumbnailsForComparingList(plantID)
-            //val res = pathElementDao.allPathElements()
-            currentThumbnails.postValue(res)
-        }
     }
 
     fun getThumbnailsForList(): LiveData<List<PathElement>> {
@@ -122,7 +105,7 @@ class PlantRepository(
         Thread() {
         override fun run() {
             try {
-                val id=plantDao.insert(plant)
+                val id = plantDao.insert(plant)
                 if (id.isNotEmpty()) {
                     if (gpioElement != null && gpioElementDao != null) {
                         gpioElement.plant = id[0].toInt()
@@ -167,17 +150,6 @@ class PlantRepository(
         Thread() {
         override fun run() {
             currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(plantId)
-        }
-    }
-
-    private class QueryImagePathsThread(
-        private val humidityEntryDao: PathElementDao?,
-        private val plantId: Int,
-        private var currentPathElements: LiveData<List<PathElement>>
-    ) :
-        Thread() {
-        override fun run() {
-            currentPathElements = humidityEntryDao!!.getListPathElementsLiveData(plantId)
         }
     }
 
@@ -233,11 +205,11 @@ class PlantRepository(
         allGpioElements = gpioElementDao.allGpioElements
         allDevices = deviceDao.allDevices
         currentHumidityEntries = MutableLiveData()
-        currentThumbnails = pathDao.allPathElements//MutableLiveData()
+        currentThumbnails = pathDao.allPathElements
 
         // todo replace by query and observer
         // allPlants.observe()
-        // plantRepository.allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
+        // plantDao.allPlants.value.orEmpty().filter { v -> !v.syncedWithServer }
         //     .forEach { p -> grpcStorageServerInterface.addUpdatePlant(p, plantRepository) }
     }
 }

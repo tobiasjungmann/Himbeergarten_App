@@ -12,7 +12,6 @@ import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
-import com.example.rpicommunicator_v1.component.Constants.INVALID_DB_ID
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
@@ -25,19 +24,15 @@ import java.util.*
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
-
     private var grpcStorageServerInterface: GrpcServerService = initStorageGrpcStub()
-
     private val plantRepository: PlantRepository
-
-
     private var currentPlant: Plant? = null
     private var currentGpioTextView: TextView? = null
     private var currentGpioElement: GpioElement? = null
 
     fun update(plant: Plant, paths: List<String>) {
         plant.syncedWithServer = false
-        plantRepository.update(plant,paths)
+        plantRepository.update(plant, paths)
     }
 
     fun remove(plant: Plant) {
@@ -62,7 +57,12 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun createUpdateCurrentPlant(name: String, info: String, context: Context?, paths: List<String>): Boolean {
+    fun createUpdateCurrentPlant(
+        name: String,
+        info: String,
+        context: Context?,
+        paths: List<String>
+    ): Boolean {
         if (name.trim { it <= ' ' }.isEmpty() || info.trim { it <= ' ' }.isEmpty()) {
             Toast.makeText(context, "Insert Title and Description", Toast.LENGTH_SHORT).show()
             return false
@@ -73,15 +73,15 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
             } else {
                 if (currentPlant == null) {
                     currentPlant = Plant(name, info, currentGpioElement!!.gpioElement)
-
-                    plantRepository.insert(currentPlant!!, currentGpioElement!!,paths)
+                    plantRepository.insert(currentPlant!!, currentGpioElement!!, paths)
 
                 } else {
-                    // todo check if changes have occurred
-                    currentPlant!!.name = name
-                    currentPlant!!.info = info
-                    currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
-                    update(currentPlant!!,paths)
+                    if (currentPlant!!.info != info || currentPlant!!.name != name || currentPlant!!.gpioElement != currentGpioElement!!.gpioElement) {
+                        currentPlant!!.name = name
+                        currentPlant!!.info = info
+                        currentPlant!!.gpioElement = currentGpioElement!!.gpioElement
+                        update(currentPlant!!, paths)
+                    }
                 }
                 return true
             }
@@ -101,7 +101,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
             this.getApplication<Application>().resources.getString(R.string.PORT_SERVER_PREF),
             DEFAULT_SERVER_PORT
         )
-
 
         val wildcardConfig: MutableMap<String, Any> = HashMap()
         wildcardConfig["name"] = listOf(emptyMap<Any, Any>())
@@ -138,20 +137,12 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return plantRepository.allPlants
     }
 
-   /* fun getImageForCurrentPlant(): LiveData<List<PathElement>> {
-        return plantRepository.getImageForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
-    }*/
-
     fun getCurrentGpioElementId(): Int {
         return currentGpioElement?.gpioElement ?: -1
     }
 
     fun getThumbnailsForList(): LiveData<List<PathElement>> {
         return plantRepository.getThumbnailsForList()
-    }
-
-    fun queryAllThumbnailsForCurrentList() {// todo propbaly not used anymore
-        plantRepository.queryAllThumbnailsForCurrentPlant(currentPlant?.plant ?: INVALID_DB_ID)
     }
 
     init {
