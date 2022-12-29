@@ -2,13 +2,13 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context=".component.plant.PlantDetailFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".component.plant.PlantDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_plant_detail"
@@ -110,10 +110,13 @@
                     android:textSize="15sp" />
 
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/layout_humidity_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:visibility="gone">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -134,17 +137,17 @@
                         android:text="trocken"
                         android:textColor="@color/light_grey"
                         android:textSize="15sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        >
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart_plant_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
+                        android:layout_height="400dp">
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_plant_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

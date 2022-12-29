@@ -133,7 +133,6 @@
                 android:id="@+id/recycler_view_gpio_select"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/lb_browse_header_color"
                 tools:listitem="@layout/list_item_gpio_rpi" />

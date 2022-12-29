@@ -38,14 +38,17 @@ abstract class PlantDatabase : RoomDatabase() {
         deviceDao: DeviceDao?,
         gpioElementDao: GpioElementDao?,
         deviceType: StorageServerOuterClass.DeviceTypes,
-        interfaceName: String
+        interfaceName: String,
+        name: String
+
     ) {
-        val device = Device(interfaceName, deviceType.number, "Station Pi")     // todo cahnge to meaningful entry
-        deviceDao?.insert(device)
-        if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_RPI) {
-            addRPiPinout(gpioElementDao, device.device)
-        } else if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO) {
-            addArduinoNanoPinout(gpioElementDao, device.device)
+        val id = deviceDao?.insert(Device(interfaceName, deviceType.number, name))
+        if (id!!.isNotEmpty()) {
+            if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_RPI) {
+                addRPiPinout(gpioElementDao, id[0].toInt())
+            } else if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO) {
+                addArduinoNanoPinout(gpioElementDao, id[0].toInt())
+            }
         }
     }
 
@@ -56,45 +59,129 @@ abstract class PlantDatabase : RoomDatabase() {
 
     fun addRPiPinout(gpioElementDao: GpioElementDao?, parent: Int) {
         // Added from top to bottom, left to right
-        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V,GPIO_IN_USE_DEFAULT))
-        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "3.3V",
+                Constants.GPIO_COLOR_3_3V,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "5V",
+                Constants.GPIO_COLOR_5V,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 2", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "5V", Constants.GPIO_COLOR_5V,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "5V",
+                Constants.GPIO_COLOR_5V,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 3", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 4", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 14", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 15", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 17", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 18", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 27", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "GND", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "GND",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 22", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 23", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "3.3V", Constants.GPIO_COLOR_3_3V,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "3.3V",
+                Constants.GPIO_COLOR_3_3V,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 24", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 10", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 9", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 25", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 11", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 8", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 7", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 0", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 1", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 5", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 6", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 12", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 13", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 19", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 16", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 26", Constants.GPIO_COLOR_GPIO))
         gpioElementDao?.insert(GpioElement(parent, "GPIO 20", Constants.GPIO_COLOR_GPIO))
-        gpioElementDao?.insert(GpioElement(parent, "Ground", Constants.GPIO_COLOR_GND,GPIO_IN_USE_DEFAULT))
+        gpioElementDao?.insert(
+            GpioElement(
+                parent,
+                "Ground",
+                Constants.GPIO_COLOR_GND,
+                GPIO_IN_USE_DEFAULT
+            )
+        )
         gpioElementDao?.insert(GpioElement(parent, "GPIO 21", Constants.GPIO_COLOR_GPIO))
     }
 
@@ -119,16 +206,43 @@ abstract class PlantDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         ioThread {
+                            val devicedao = getInstance(context).deviceDao()
+                            val gpioDao = getInstance(context).gpioElementDao()
+                            val plantDao = getInstance(context).plantDao()
+                            val humidityEntryDao = getInstance(context).humidityEntryDao()
+
                             getInstance(context).addNewDeviceWithPinout(
-                                getInstance(context).deviceDao(),
-                                getInstance(context).gpioElementDao(),
-                                StorageServerOuterClass.DeviceTypes.DEVICE_RPI, "Default"
+                                devicedao,
+                                gpioDao,
+                                StorageServerOuterClass.DeviceTypes.DEVICE_RPI,
+                                "Default",
+                                "Pi Station"
                             )
+                            getInstance(context).addNewDeviceWithPinout(
+                                devicedao,
+                                gpioDao,
+                                StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO,
+                                "Default",
+                                "Arduino Test"
+                            )
+
+                            populateDB(plantDao, humidityEntryDao)
                         }
                     }
                 }).build()
             }
             return instance!!
+        }
+
+        private fun populateDB(plantDao: PlantDao, humidityEntryDao: HumidityEntryDao) {
+            val gpioId=3
+            val id = plantDao.insert(Plant("Default Plant", "info", gpioId))
+            if (id.isNotEmpty()) {
+                humidityEntryDao.insert(HumidityEntry(100.0F, -6000.0F, gpioId))
+                humidityEntryDao.insert(HumidityEntry(400.0F, 1.0F, gpioId))
+                humidityEntryDao.insert(HumidityEntry(200.0F, 2.0F, gpioId))
+                humidityEntryDao.insert(HumidityEntry(300.0F, 3000.0F, gpioId))
+            }
         }
     }
 }

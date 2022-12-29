@@ -34,7 +34,7 @@ class PlantRepository(
     val allGpioElements: LiveData<List<GpioElement>>
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
-    val currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
+    private val currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
     private val currentGPIOElements: MutableLiveData<List<GpioElement>>
     private val currentThumbnails: LiveData<List<PathElement>>
 
@@ -81,8 +81,8 @@ class PlantRepository(
         InsertImagePathElement(pathDao, pathElement, parentId).start()
     }
 
-    fun getHumidityEntriesForSensorSlot(currentPlant: Plant?) {
-        QueryHumidityEntries(humidityEntryDao, currentPlant?.plant ?: -1, currentHumidityEntries)
+    fun getValuesForSensorSlot(gpioElement: Int) {
+        QueryHumidityEntriesThread(humidityEntryDao, gpioElement, currentHumidityEntries).start()
     }
 
     fun getThumbnailsForList(): LiveData<List<PathElement>> {
@@ -103,6 +103,10 @@ class PlantRepository(
 
     fun getAllDevices(): LiveData<List<Device>>{
         return deviceDao.allDevices
+    }
+
+    fun getCurrentHumidityEntries(): LiveData<List<HumidityEntry>> {
+        return currentHumidityEntries
     }
 
     private class InsertPlantThread(
@@ -155,14 +159,14 @@ class PlantRepository(
         }
     }
 
-    private class QueryHumidityEntries(
+    private class QueryHumidityEntriesThread(
         private val humidityEntryDao: HumidityEntryDao?,
         private val plantId: Int,
-        private var currentHumidityEntries: LiveData<List<HumidityEntry>>
+        private var currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
     ) :
         Thread() {
         override fun run() {
-            currentHumidityEntries = humidityEntryDao!!.filteredHumidityEntries(plantId)
+            currentHumidityEntries.postValue(humidityEntryDao!!.filteredHumidityEntries(plantId))
         }
     }
 
@@ -201,7 +205,8 @@ class PlantRepository(
                 deviceDao,
                 gpioElementDao,
                 device,
-                "usb0 example value"
+                "usb0 example value",
+            "New Device"
             )
         }
     }

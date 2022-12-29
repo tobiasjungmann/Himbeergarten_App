@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "device_table")
 class Device(var serialComPort: String, var type: Int, var name: String) {
     @field:PrimaryKey(autoGenerate = true)
-    var device = -1
+    var device = 0
 }

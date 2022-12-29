@@ -84,18 +84,20 @@ class PlantDetailFragment : Fragment() {
 
 
     private fun initChart() {
-        plantViewModel.getHumidityEntriesForCurrentPlant().observe(
+        plantViewModel.queryHumidityEntriesForCurrentPlant().observe(
             viewLifecycleOwner
         ) { humidityEntries: List<HumidityEntry> ->
-            val dataSets = ArrayList<ILineDataSet>()
-            val lineDataSet1 = LineDataSet(getDataSet(humidityEntries), "Data 1")
-            styleDataset(lineDataSet1)
-            styleChart()
-            dataSets.add(lineDataSet1)
-            val data = LineData(dataSets)
-            binding.chartPlantDetail.data = data
-            binding.chartPlantDetail.invalidate()
-            binding.chartPlantDetail.visibility = View.VISIBLE
+            if (humidityEntries.isNotEmpty()) {
+                val dataSets = ArrayList<ILineDataSet>()
+                val lineDataSet1 = LineDataSet(getDataSet(humidityEntries), "Data 1")
+                styleDataset(lineDataSet1)
+                styleChart()
+                dataSets.add(lineDataSet1)
+                val data = LineData(dataSets)
+                binding.chartPlantDetail.data = data
+                binding.chartPlantDetail.invalidate()
+                binding.layoutHumidityContainer.visibility = View.VISIBLE
+            }
         }
     }
 
