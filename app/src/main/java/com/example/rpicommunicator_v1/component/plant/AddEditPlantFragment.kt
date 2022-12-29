@@ -1,11 +1,15 @@
 package com.example.rpicommunicator_v1.component.plant
 
+import android.R
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -13,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rpicommunicator_v1.component.camera.CameraContract
 import com.example.rpicommunicator_v1.component.camera.CameraUtils
+import com.example.rpicommunicator_v1.database.plant.models.Device
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.databinding.FragmentAddEditPlantBinding
 
@@ -48,8 +53,37 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
     }
 
     private fun initGpioList() {
+
+        // todo init spinner list with db
+        val deviceTypes = arrayListOf<String>()
+        val typeAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_dropdown_item, deviceTypes
+        )
+        plantViewModel.loadAllDevices().observe(
+            viewLifecycleOwner
+        ) { devices: List<Device> ->
+            if (devices.isNotEmpty()) {
+                binding.cardViewGpioListView.visibility=View.VISIBLE
+                typeAdapter.clear()
+                typeAdapter.addAll(devices.map { it.name })
+                plantViewModel.queryMutableGpioEntries(devices[0].name)
+            }
+        }
+        binding.spinnerDevice.adapter = typeAdapter
+        binding.spinnerDevice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //parent.toString()
+               // todo plantViewModel.queryMutableGpioEntries(devices.get(0).name)
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("onselected", "onItemSelected: "+view.toString())
+            }
+        }
+
         val adapter = GpioAdapter(requireContext(), plantViewModel)
-        plantViewModel.getGpioEntries().observe(
+        plantViewModel.getMutableGpioEntries().observe(
             viewLifecycleOwner
         ) { gpioElements: List<GpioElement> ->
             val pairs = ArrayList<GpioElementPair>()
@@ -79,7 +113,13 @@ class AddEditPlantFragment : Fragment(), CameraContract.View {
         val name = binding.editTextAddEditPlantName.text.toString()
         val info = binding.editTextAddEditPlantInfo.text.toString()
 
-        if (plantViewModel.createUpdateCurrentPlant(name, info, context, cameraUtils.getPaths()) && calledFromButton) {
+        if (plantViewModel.createUpdateCurrentPlant(
+                name,
+                info,
+                context,
+                cameraUtils.getPaths()
+            ) && calledFromButton
+        ) {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .remove(this)

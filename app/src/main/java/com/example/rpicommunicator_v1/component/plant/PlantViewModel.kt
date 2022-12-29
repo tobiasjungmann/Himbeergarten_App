@@ -14,6 +14,7 @@ import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantRepository
+import com.example.rpicommunicator_v1.database.plant.models.Device
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.database.plant.models.Plant
@@ -29,6 +30,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     private var currentPlant: Plant? = null
     private var currentGpioTextView: TextView? = null
     private var currentGpioElement: GpioElement? = null
+    //private var currentDevice: Device? = null       // todo set as the default value?
 
     fun update(plant: Plant, paths: List<String>) {
         plant.syncedWithServer = false
@@ -129,8 +131,8 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return plantRepository.currentHumidityEntries
     }
 
-    fun getGpioEntries(): LiveData<List<GpioElement>> {
-        return plantRepository.allGpioElements
+    fun getMutableGpioEntries(): LiveData<List<GpioElement>> {
+        return plantRepository.getMutableGpioEntries()
     }
 
     fun getAllPlants(): LiveData<List<Plant>> {
@@ -143,6 +145,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getThumbnailsForList(): LiveData<List<PathElement>> {
         return plantRepository.getThumbnailsForList()
+    }
+
+    fun queryMutableGpioEntries(deviceName: String) {
+        plantRepository.queryMutableGpioEntries(deviceName)
+    }
+
+    fun loadAllDevices():LiveData<List<Device>> {
+        return plantRepository.getAllDevices()
     }
 
     init {

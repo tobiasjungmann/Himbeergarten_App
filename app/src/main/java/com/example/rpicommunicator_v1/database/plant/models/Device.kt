@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "device_table")
-class Device(var serialComPort: String, var type: Int) {
+class Device(var serialComPort: String, var type: Int, var name: String) {
     @field:PrimaryKey(autoGenerate = true)
     var device = -1
 }

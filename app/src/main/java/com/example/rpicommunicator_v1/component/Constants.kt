@@ -7,6 +7,8 @@ object Constants {
     const val DEFAULT_STATION_PORT=8010
     const val DEFAULT_SERVER_IP="192.168.0.8"
 
+    const val DEFAULT_DEVICE_NAME="INVALID"
+
     const val INVALID_DB_ID = -1
     const val GPIO_IN_USE_DEFAULT = 100
 

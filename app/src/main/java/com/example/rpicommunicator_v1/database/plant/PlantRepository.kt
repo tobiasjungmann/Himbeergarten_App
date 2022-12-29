@@ -35,6 +35,7 @@ class PlantRepository(
     private val allDevices: LiveData<List<Device>>
     private val humidityEntryDao: HumidityEntryDao?
     val currentHumidityEntries: MutableLiveData<List<HumidityEntry>>
+    private val currentGPIOElements: MutableLiveData<List<GpioElement>>
     private val currentThumbnails: LiveData<List<PathElement>>
 
 
@@ -90,6 +91,18 @@ class PlantRepository(
 
     fun updateConnectedDevices() {
         Log.d("Repository", "updateConnectedDevices: called - not yet implemented")
+    }
+
+    fun queryMutableGpioEntries(device: String) {
+        QueryGpioElementsThread(gpioElementDao, device, currentGPIOElements).start()
+    }
+
+    fun getMutableGpioEntries(): LiveData<List<GpioElement>> {
+        return currentGPIOElements
+    }
+
+    fun getAllDevices(): LiveData<List<Device>>{
+        return deviceDao.allDevices
     }
 
     private class InsertPlantThread(
@@ -153,6 +166,17 @@ class PlantRepository(
         }
     }
 
+    private class QueryGpioElementsThread(
+        private val gpioElementDao: GpioElementDao?,
+        private val device: String,
+        private var currentGpioElements: MutableLiveData<List<GpioElement>>
+    ) :
+        Thread() {
+        override fun run() {
+            currentGpioElements.postValue(gpioElementDao!!.queryEntriesForDeviceByName(device))
+        }
+    }
+
     private class RemovePlantThread(
         private val plantDao: PlantDao?,
         private val plant: Plant,
@@ -205,6 +229,7 @@ class PlantRepository(
         allGpioElements = gpioElementDao.allGpioElements
         allDevices = deviceDao.allDevices
         currentHumidityEntries = MutableLiveData()
+        currentGPIOElements = MutableLiveData()
         currentThumbnails = pathDao.allPathElements
 
         // todo replace by query and observer

@@ -23,7 +23,7 @@ import java.util.concurrent.Executors
 
 @Database(
     entities = [Plant::class, GpioElement::class, Device::class, HumidityEntry::class, PathElement::class, ComparingElement::class],
-    version = 4
+    version = 1
 )
 abstract class PlantDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao
@@ -40,7 +40,7 @@ abstract class PlantDatabase : RoomDatabase() {
         deviceType: StorageServerOuterClass.DeviceTypes,
         interfaceName: String
     ) {
-        val device = Device(interfaceName, deviceType.number)
+        val device = Device(interfaceName, deviceType.number, "Station Pi")     // todo cahnge to meaningful entry
         deviceDao?.insert(device)
         if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_RPI) {
             addRPiPinout(gpioElementDao, device.device)
