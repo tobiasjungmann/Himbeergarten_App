@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
+    android:background="@color/background_color"
     tools:context=".component.plant.AddEditPlantFragment">
 
 
@@ -16,7 +16,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:backgroundTint="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +103,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5sp"
         android:visibility="gone"
@@ -134,7 +132,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/lb_browse_header_color"
                 tools:listitem="@layout/list_item_gpio_rpi" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

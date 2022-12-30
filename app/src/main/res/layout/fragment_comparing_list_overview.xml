@@ -2,15 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".component.comparing.firstlevel.ComparingListOverviewFragment">
+    android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout_comparing_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        tools:context=".component.comparing.firstlevel.ComparingListActivity">
+        android:background="@android:color/darker_gray">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_comp_list"

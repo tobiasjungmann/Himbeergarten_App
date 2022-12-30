@@ -86,7 +86,7 @@ class GpioAdapter(
 
     private fun getLabelColor(gpioInUse: Boolean): Int {
         return if (gpioInUse) {
-            R.color.transparent_light_grey
+            R.color.gpio_label_light_grey      // todo potentially reuse color
         } else {
             R.color.transparent
         }

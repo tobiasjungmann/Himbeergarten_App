@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/background_color"
     android:fitsSystemWindows="true">
 
 
@@ -27,7 +27,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:backgroundTint="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="5sp">
 
@@ -53,7 +52,6 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
-                            android:backgroundTint="@android:color/white"
                             android:ems="10"
                             android:hint="Ausgangspunkt"
                             android:inputType="textPersonName"
@@ -79,7 +77,6 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
-                            android:backgroundTint="@android:color/white"
                             android:ems="10"
                             android:hint="Ziel"
                             android:inputType="textPersonName"
@@ -317,7 +314,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:backgroundTint="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="5sp">
 
@@ -403,7 +399,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:backgroundTint="@color/white"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="5sp">
 
@@ -487,7 +482,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:backgroundTint="@color/primary_green"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.RPICommunicator_V1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -10,9 +10,10 @@
         <item name="colorSecondaryVariant">@color/primary_green</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/darker_gray</item>
+        <item name="android:statusBarColor">@color/background_color</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorHint">@color/red</item>
+
     </style>
 
     <style name="Theme.RPICommunicator_V1.NoActionBar">
@@ -23,7 +24,6 @@
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="windowActionBar">false</item>
         <item name="elevation">0dp</item>
-
     </style>
 
 </resources>

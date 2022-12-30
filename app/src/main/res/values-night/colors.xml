@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="light_grey">#676666</color>
-    <color name="background_color">#B38C8C8C</color>
+    <color name="background_color">#676666</color>
 
     <color name="gpio_label_light_grey">#B3C4C4C4</color>
 
