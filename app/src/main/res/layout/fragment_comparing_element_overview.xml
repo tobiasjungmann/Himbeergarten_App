@@ -17,16 +17,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_comp_elem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/primary_green"
-        android:clickable="true"
+        style="@style/greenFAB"
         android:layout_gravity="bottom|end"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:focusable="true"
-        android:contentDescription="Settings" />
+        android:contentDescription="Add element" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

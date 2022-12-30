@@ -28,12 +28,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                app:cardCornerRadius="8dp"
-                card_view:cardElevation="5sp">
+                style="@style/white_card_view">
 
                 <ImageView
                     android:id="@+id/image_view_plant_detail_header"
@@ -59,14 +54,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            card_view:cardElevation="5sp">
+            style="@style/white_card_view"
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,21 +138,12 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_edit_plant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/primary_green"
-        android:clickable="true"
         android:contentDescription="Edit plant"
-        android:focusable="true"
+        style="@style/greenFAB"
         app:srcCompat="@drawable/ic_baseline_edit_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

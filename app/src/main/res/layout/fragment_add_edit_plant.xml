@@ -8,20 +8,12 @@
     android:background="@color/background_color"
     tools:context=".component.plant.AddEditPlantFragment">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/edit_text_list_item_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5sp"
+        style="@style/white_card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,13 +21,11 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_custom"
                 android:orientation="vertical">
-
 
                 <EditText
                     android:id="@+id/edit_text_add_edit_plant_name"
@@ -138,15 +128,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_save_add_edit_element"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/primary_green"
-        android:clickable="true"
+        style="@style/greenFAB"
         android:contentDescription="Save"
-        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_baseline_save_24" />

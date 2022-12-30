@@ -7,15 +7,11 @@
     android:background="@color/background_color"
     tools:context=".component.general.SettingsActivity">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5sp"
+        style="@style/white_card_view"
         app:layout_constraintBottom_toTopOf="@+id/textViewSources"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -257,15 +253,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonSaveSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/primary_green"
-        android:clickable="true"
+        style="@style/greenFAB"
         android:contentDescription="Save"
-        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_baseline_save_24" />

@@ -6,316 +6,79 @@
     android:background="@color/background_color"
     android:fitsSystemWindows="true">
 
-
     <LinearLayout
         android:id="@+id/scroll_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@+id/button_settingsActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_matrix"
+            style="@style/white_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_matrix"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5sp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edit_text_custom"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/inputStart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginRight="8dp"
-                        android:background="@drawable/edit_text_custom"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/inputStart"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:ems="10"
-                            android:hint="Ausgangspunkt"
-                            android:inputType="textPersonName"
-                            android:text="Josef Wirt Weg"
-                            android:textColor="@color/light_grey"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/edit_text_custom"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/inputDest"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:ems="10"
-                            android:hint="Ziel"
-                            android:inputType="textPersonName"
-                            android:text="Studentenstadt"
-                            android:textColor="@color/light_grey"
-                            android:textSize="@dimen/text_size" />
-                    </LinearLayout>
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="8dp">
-                        <LinearLayout
-                            android:id="@+id/imagetime"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagetrain"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="time"
-                                android:src="@drawable/icon_time" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/imagetrain"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageweather"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagetime"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="train"
-                                android:src="@drawable/icon_train" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/imageweather"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagespotify"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagetrain"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="weather"
-                                android:src="@drawable/icon_weather" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/imagespotify"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imageweather"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="spotify"
-                                android:src="@drawable/icon_playlist" />
-                        </LinearLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutmatrixmoreoptions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="8dp"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:id="@+id/imagearduino1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagestandby"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagearduino2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="arduino1"
-                                android:src="@drawable/icon_chip" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/imagearduino2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagearduino1"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="arduino2"
-                                android:src="@drawable/icon_chip" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/imagequit"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagestandby"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="quit"
-                                android:src="@drawable/icon_power" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/imagestandby"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_rectangle_rounded_corners"
-                            android:orientation="horizontal"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imagequit"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/imagearduino1"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.23">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:adjustViewBounds="true"
-                                android:contentDescription="standby"
-                                android:src="@drawable/icon_standby" />
-                        </LinearLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <SeekBar
-                        android:id="@+id/seekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:backgroundTint="@color/primary_green"
-                        android:progress="100"
-                        android:thumbTint="@color/primary_green" />
-
-                    <TextView
-                        android:id="@+id/textViewMoreMatrixOptions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:text="More Options"
-                        android:textColor="@color/primary_green_lighter" />
+                        android:layout_marginBottom="4dp"
+                        android:ems="10"
+                        android:hint="Ausgangspunkt"
+                        android:inputType="textPersonName"
+                        android:text="Josef Wirt Weg"
+                        android:textColor="@color/light_grey"
+                        android:textSize="@dimen/text_size" />
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edit_text_custom"
+                    android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_other_activities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5sp">
+                    <EditText
+                        android:id="@+id/inputDest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:ems="10"
+                        android:hint="Ziel"
+                        android:inputType="textPersonName"
+                        android:text="Studentenstadt"
+                        android:textColor="@color/light_grey"
+                        android:textSize="@dimen/text_size" />
+                </LinearLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -325,29 +88,75 @@
                     android:paddingBottom="8dp">
 
                     <LinearLayout
-                        android:id="@+id/imagebike"
+                        android:id="@+id/imagetime"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
                         android:orientation="horizontal"
                         android:padding="2dp"
-
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageplant"
+                        app:layout_constraintEnd_toStartOf="@+id/imagetrain"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.3">
+                        app:layout_constraintWidth_percent="0.23">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:contentDescription="bikeactivity"
-                            android:src="@drawable/icon_bicycle" />
+                            android:contentDescription="time"
+                            android:src="@drawable/icon_time" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imageplant"
+                        android:id="@+id/imagetrain"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageweather"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imagetime"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.23">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="train"
+                            android:src="@drawable/icon_train" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/imageweather"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imagespotify"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imagetrain"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.23">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="weather"
+                            android:src="@drawable/icon_weather" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/imagespotify"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
@@ -355,83 +164,78 @@
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageweather"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.3">
+                        app:layout_constraintWidth_percent="0.23">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:contentDescription="plantactivity"
-                            android:src="@drawable/icon_potted_plant" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/imagelistactivity"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageplant"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.28">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:contentDescription="listactivity"
-                            android:src="@drawable/icon_list" />
+                            android:contentDescription="spotify"
+                            android:src="@drawable/icon_playlist" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
 
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_outlets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5sp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutmatrixmoreoptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:visibility="gone">
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet0"
+                        android:id="@+id/imagearduino1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_rectangle_rounded_corners"
+                        android:orientation="horizontal"
+                        android:padding="2dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imagestandby"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imagearduino2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.23">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="arduino1"
+                            android:src="@drawable/icon_chip" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/imagearduino2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
                         android:orientation="horizontal"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageoutlet1"
+                        app:layout_constraintEnd_toStartOf="@+id/imagearduino1"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.3">
+                        app:layout_constraintWidth_percent="0.23">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:contentDescription="outlet1"
-                            android:src="@drawable/icon_outlet" />
+                            android:contentDescription="arduino2"
+                            android:src="@drawable/icon_chip" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet1"
+                        android:id="@+id/imagequit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
@@ -439,67 +243,240 @@
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imagestandby"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.3">
+                        app:layout_constraintWidth_percent="0.23">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:contentDescription="outlet2"
-                            android:src="@drawable/icon_outlet" />
+                            android:contentDescription="quit"
+                            android:src="@drawable/icon_power" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imageoutlet2"
+                        android:id="@+id/imagestandby"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_rectangle_rounded_corners"
                         android:orientation="horizontal"
                         android:padding="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageoutlet1"
+                        app:layout_constraintEnd_toStartOf="@+id/imagequit"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imagearduino1"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.3">
+                        app:layout_constraintWidth_percent="0.23">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:contentDescription="outlet3"
-                            android:src="@drawable/icon_outlet" />
+                            android:contentDescription="standby"
+                            android:src="@drawable/icon_standby" />
                     </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@color/primary_green"
+                    android:progress="100"
+                    android:thumbTint="@color/primary_green" />
+
+                <TextView
+                    android:id="@+id/textViewMoreMatrixOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="More Options"
+                    android:textColor="@color/primary_green_lighter" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_other_activities"
+            style="@style/white_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:id="@+id/imagebike"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageplant"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="bikeactivity"
+                        android:src="@drawable/icon_bicycle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/imageplant"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="plantactivity"
+                        android:src="@drawable/icon_potted_plant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/imagelistactivity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageplant"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.28">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="listactivity"
+                        android:src="@drawable/icon_list" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_outlets"
+            style="@style/white_card_view"
+>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:id="@+id/imageoutlet0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageoutlet1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="outlet1"
+                        android:src="@drawable/icon_outlet" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/imageoutlet1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="outlet2"
+                        android:src="@drawable/icon_outlet" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/imageoutlet2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_rectangle_rounded_corners"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageoutlet1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="outlet3"
+                        android:src="@drawable/icon_outlet" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_settingsActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:clickable="true"
+        style="@style/greenFAB"
+        android:contentDescription="Settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_baseline_gear_24"
-        android:focusable="true"
-        android:contentDescription="Settings" />
+        app:srcCompat="@drawable/ic_baseline_gear_24" />
 
     <TextView
         android:id="@+id/textViewConnectionStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Server Not Available"
         android:textColor="@color/red"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
