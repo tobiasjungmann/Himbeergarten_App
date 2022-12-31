@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout_element"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color">
-        
+    android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_comp_elem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="@color/background_color"
         tools:listitem="@layout/list_item_image" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_comp_elem"
         style="@style/greenFAB"
         android:layout_gravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:contentDescription="Add element" />
+        android:contentDescription="Add element"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -58,7 +58,7 @@ class GpioAdapter(
                     ContextCompat.getColor(context, R.color.primary_green)
                 )
                 plantViewModel.gpioSelectedForElement(gpioElement, label)
-                    ?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    ?.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
             } else {
                 Toast.makeText(
                     context,

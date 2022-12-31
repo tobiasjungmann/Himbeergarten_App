@@ -40,18 +40,10 @@
 
                     <EditText
                         android:id="@+id/inputStart"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="4dp"
-                        android:ems="10"
+                        style="@style/edit_text_border"
                         android:hint="Ausgangspunkt"
                         android:inputType="textPersonName"
-                        android:text="Josef Wirt Weg"
-                        android:textColor="@color/light_grey"
-                        android:textSize="@dimen/text_size" />
+                        android:text="Josef Wirt Weg" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -65,18 +57,10 @@
 
                     <EditText
                         android:id="@+id/inputDest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="4dp"
-                        android:ems="10"
+                        style="@style/edit_text_border"
                         android:hint="Ziel"
                         android:inputType="textPersonName"
-                        android:text="Studentenstadt"
-                        android:textColor="@color/light_grey"
-                        android:textSize="@dimen/text_size" />
+                        android:text="Studentenstadt" />
                 </LinearLayout>
 
 
@@ -89,11 +73,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagetime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imagetrain"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -111,11 +91,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagetrain"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageweather"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -134,11 +110,7 @@
 
                     <LinearLayout
                         android:id="@+id/imageweather"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imagespotify"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -157,11 +129,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagespotify"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -191,12 +159,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagearduino1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
-
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imagestandby"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -214,11 +177,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagearduino2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imagearduino1"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -236,11 +195,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagequit"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -258,11 +213,7 @@
 
                     <LinearLayout
                         android:id="@+id/imagestandby"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_rectangle_rounded_corners"
-                        android:orientation="horizontal"
-                        android:padding="2dp"
+                        style="@style/image_view_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imagequit"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -316,12 +267,7 @@
 
                 <LinearLayout
                     android:id="@+id/imagebike"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
-
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imageplant"
                     app:layout_constraintStart_toStartOf="parent"
@@ -338,11 +284,7 @@
 
                 <LinearLayout
                     android:id="@+id/imageplant"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -359,11 +301,7 @@
 
                 <LinearLayout
                     android:id="@+id/imagelistactivity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageplant"
@@ -384,8 +322,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_outlets"
-            style="@style/white_card_view"
->
+            style="@style/white_card_view">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -396,11 +333,7 @@
 
                 <LinearLayout
                     android:id="@+id/imageoutlet0"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imageoutlet1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -417,11 +350,7 @@
 
                 <LinearLayout
                     android:id="@+id/imageoutlet1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -438,11 +367,7 @@
 
                 <LinearLayout
                     android:id="@+id/imageoutlet2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_rectangle_rounded_corners"
-                    android:orientation="horizontal"
-                    android:padding="2dp"
+                    style="@style/image_view_container"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageoutlet1"
