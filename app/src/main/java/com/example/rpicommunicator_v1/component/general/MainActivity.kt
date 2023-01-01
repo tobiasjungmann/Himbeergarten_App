@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun changeToSettings() {
         val intent = Intent(applicationContext, SettingsActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_out_up, R.anim.slide_in_up)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     private fun changeToPlantOverview() {

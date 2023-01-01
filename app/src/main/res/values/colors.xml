@@ -2,8 +2,8 @@
 <resources>
     <color name="transparent">#00FFFFFF</color>
     <color name="light_grey">#676666</color>
-    <color name="text_color">#E4E4E4</color>
-    <color name="background_color">#B38C8C8C</color>
+    <color name="text_color">#676767</color>
+    <color name="background_color">#8C8C8C</color>
     <color name="background_color_card_view">#FFFFFF</color>
     <color name="gpio_label_light_grey">#B3C4C4C4</color>
 
