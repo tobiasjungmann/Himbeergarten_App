@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_color"
     tools:context=".component.plant.AddEditPlantFragment">
 
     <androidx.cardview.widget.CardView
@@ -29,8 +28,7 @@
 
                 <EditText
                     android:id="@+id/edit_text_add_edit_plant_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/edit_text_border"
                     android:hint="Name"
                     android:inputType="text" />
             </LinearLayout>
@@ -45,8 +43,7 @@
 
                 <EditText
                     android:id="@+id/edit_text_add_edit_plant_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/edit_text_border"
                     android:hint="Info"
                     android:inputType="textMultiLine" />
             </LinearLayout>
@@ -87,14 +84,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_gpio_list_view"
+        style="@style/white_card_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

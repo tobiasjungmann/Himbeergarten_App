@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="text_color">#E4E4E4</color>
+    <color name="text_color">#000000</color>
     <color name="background_color">#282828</color>
     <color name="background_color_card_view">#646464</color>
-
     <color name="gpio_label_light_grey">#808080</color>
 
-    <color name="primary_green">#677061</color>
+    <color name="primary_green">#829460</color>
     <color name="primary_green_transparent">#888F9779</color>
-    <color name="primary_green_darker">#78866b</color> <!--color variant-->
-    <color name="primary_green_lighter">#738276</color> <!--color icon buttons-->
-    <color name="medium_green_palette">#738678</color> <!--secondary color-->
+    <color name="variant_green">#78866b</color> <!--color variant-->
+    <color name="secondary_green">#738678</color> <!--secondary color-->
 
 
     <color name="red">#DF3500</color>
-    <color name="text_primary">#F2000000</color> <!--F2 for 95% opacity-->
-    <color name="text_secondary">#8A000000</color> <!--8A for 54% opacity-->
-    <color name="text_primary_dark">#F2FFFFFF</color>
-    <color name="text_secondary_dark">#8AFFFFFF</color>
-
     <!-- GPIOs -->
     <color name="gpio_background">#353535</color>
     <color name="gpio_orange">#F77F00</color>

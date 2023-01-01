@@ -107,12 +107,12 @@ class PlantDetailFragment : Fragment() {
         lineDataSet1.circleHoleRadius = 3f
         lineDataSet1.color = ContextCompat.getColor(
             requireContext().applicationContext,
-            R.color.primary_green_lighter
+            R.color.primary_green
         )
         lineDataSet1.setCircleColor(
             ContextCompat.getColor(
                 requireContext().applicationContext,
-                R.color.primary_green_lighter
+                R.color.primary_green
             )
         )
         lineDataSet1.setDrawValues(false)
@@ -150,7 +150,7 @@ class PlantDetailFragment : Fragment() {
         val limitLine = LimitLine(200f) // set where the line should be drawn
         limitLine.lineColor = ContextCompat.getColor(
             requireContext().applicationContext,
-            R.color.primary_green_lighter
+            R.color.primary_green
         )
         limitLine.lineWidth = 2f
         binding.chartPlantDetail.axisLeft.addLimitLine(limitLine)
