@@ -7,10 +7,8 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:507555266376:android:61677e2edc747a22617d7d",
-        "android_client_info": {
-          "package_name": "com.example.rpicommunicator_v1"
-        }
+        "mobilesdk_app_id": "1:507555266376:android:61677e2edc747a22617d7d"
+
       },
       "oauth_client": [
         {

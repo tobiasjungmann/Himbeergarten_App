@@ -12,6 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.rpicommunicator_v1"
+        //   testNamespace "com.example.rpicommunicator_v1_test"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
@@ -24,12 +25,32 @@ android {
             }
         }
     }
+    flavorDimensions += "version"
+    productFlavors {
+        create("demo") {
+            dimension = "version"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+        }
+        create("full") {
+            dimension = "version"
+            applicationIdSuffix = ".full"
+            versionNameSuffix = "-full"
+        }
+    }
+
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        /*debug {
+            applicationIdSuffix = ".test"
+//            isDebuggable = true
+        }*/
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

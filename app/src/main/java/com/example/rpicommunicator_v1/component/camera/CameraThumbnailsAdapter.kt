@@ -18,6 +18,12 @@ class CameraThumbnailsAdapter internal constructor(
 
     private val pathsToThumbnails = ArrayMap<String, Bitmap>()
 
+    init {
+        for (path in paths) {
+            pathsToThumbnails[path] = createThumbnail(path, thumbnailSize)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.camera_thumb, parent, false)

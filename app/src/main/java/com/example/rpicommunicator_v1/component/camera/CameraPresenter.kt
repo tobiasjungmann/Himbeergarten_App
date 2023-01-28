@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.rpicommunicator_v1.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -61,7 +62,7 @@ class CameraPresenter constructor(
             return
         }
 
-        val authority = "com.example.rpicommunicator_v1.fileprovider"
+        val authority = BuildConfig.APPLICATION_ID+".fileprovider"
         val photoURI = FileProvider.getUriForFile(context, authority, photoFile)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         try {
