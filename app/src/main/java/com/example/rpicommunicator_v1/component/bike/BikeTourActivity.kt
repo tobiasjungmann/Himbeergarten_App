@@ -31,6 +31,8 @@ class BikeTourActivity : AppCompatActivity() {
         bikeViewModel = ViewModelProvider(this)[BikeTourViewModel::class.java]
 
         initUIElements()
+        initRecyclerView()
+
         bikeViewModel!!.allBikeTours.observe(this) { bikeTours ->
             if (bikeTours.isNotEmpty()) {
                 binding.directionCardViewDiagram.visibility = View.VISIBLE
@@ -42,9 +44,13 @@ class BikeTourActivity : AppCompatActivity() {
                 binding.directionCardViewDiagram.visibility = View.GONE
                 binding.directionCardViewStatistics.visibility = View.GONE
             }
+
+            /*adapter.setBikeTours(
+                bikeTours
+            )*/
         }
 
-        initRecyclerView()
+
     }
 
 
@@ -60,9 +66,7 @@ class BikeTourActivity : AppCompatActivity() {
         bikeViewModel?.allBikeTours?.observe(
             this
         ) { bikeTours: List<BikeTour> ->
-            adapter.setBikeTours(
-                bikeTours
-            )
+
         }
     }
 

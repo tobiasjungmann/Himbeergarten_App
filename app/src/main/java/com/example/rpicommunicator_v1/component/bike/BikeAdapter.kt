@@ -19,15 +19,16 @@ class BikeAdapter : RecyclerView.Adapter<BikeAdapter.BikeTourHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BikeTourHolder {
-        val binding = ListItemTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ListItemTextBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BikeTourHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BikeTourHolder, position: Int) {
         val currentItem = bikeTours[position]
 
-        holder.binding.textViewTitle.text = "Gefahrene Kilometer: "+currentItem.km.toString()
-        holder.binding.textViewInfo.text = currentItem.from+" - "+currentItem.to
+        holder.binding.textViewTitle.text = "Gefahrene Kilometer: " + currentItem.km.toString()
+        holder.binding.textViewInfo.text = currentItem.from + " - " + currentItem.to
         holder.binding.textViewDescription.text = currentItem.time
         holder.binding.buttonDeleteItem.setOnClickListener { v ->
             v.visibility = View.GONE
@@ -41,13 +42,13 @@ class BikeAdapter : RecyclerView.Adapter<BikeAdapter.BikeTourHolder>() {
 
     fun setBikeTours(bikeTours: List<BikeTour>) {
         this.bikeTours = bikeTours
-        notifyItemRangeInserted(0,bikeTours.size)
+        notifyItemRangeInserted(0, bikeTours.size)
     }
 
     class BikeTourHolder(
-       val binding: ListItemTextBinding
+        val binding: ListItemTextBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-                init {
+        init {
             itemView.setOnLongClickListener(View.OnLongClickListener {
 
                 val position = bindingAdapterPosition

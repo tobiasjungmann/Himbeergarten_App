@@ -1,7 +1,9 @@
 package com.example.rpicommunicator_v1.database.compare
 
 import android.app.Application
+import android.content.ContentValues.TAG
 import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.database.compare.LocalDatabase.Companion.getInstance
@@ -185,7 +187,11 @@ class LocalRepository(application: Application?) {
         override fun run() {
             try {
                 //  bikeTourRepository.update(bikeTour);
-                bikeTourDao!!.insert(bikeTour)
+//                bikeTourDao!!.insert(bikeTour)
+                val id = bikeTourDao?.insert(bikeTour)
+                if (id?.isNotEmpty()?:false) {
+                    Log.i(TAG, "run: ahh")
+                }
             } catch (e: SQLiteConstraintException) {
                 bikeTourDao!!.update(bikeTour)
             }
