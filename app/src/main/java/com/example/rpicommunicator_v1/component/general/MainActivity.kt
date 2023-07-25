@@ -246,6 +246,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (mainActivityViewModel!!.backPressed()) {
             exitProcess(0)

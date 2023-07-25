@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.StorageServerGrpc
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
@@ -116,7 +115,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                         )
                     )
                 ).build()
-        return GrpcServerService(StorageServerGrpc.newStub(mChannel))
+        return GrpcServerService(GrpcServerService(mChannel))
     }
 
     fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView): TextView? {

@@ -8,8 +8,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.Communication
-import com.example.rpicommunicator_v1.CommunicatorGrpc
 import com.example.rpicommunicator_v1.R
+import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_STATION_PORT
 import com.example.rpicommunicator_v1.service.GrpcStationService
 import io.grpc.ManagedChannelBuilder
@@ -94,7 +94,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         )
                     )
                 ).build()
-        return GrpcStationService(CommunicatorGrpc.newStub(mChannel))
+        return GrpcStationService(GrpcStationService(mChannel))
     }
 
     fun resetBackPressed() {
