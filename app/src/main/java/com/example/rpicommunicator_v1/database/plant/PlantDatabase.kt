@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.rpicommunicator_v1.StorageServerOuterClass
+import com.example.rpicommunicator_v1.PlantStorageOuterClass
 import com.example.rpicommunicator_v1.component.Constants
 import com.example.rpicommunicator_v1.component.Constants.GPIO_IN_USE_DEFAULT
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
@@ -37,16 +37,16 @@ abstract class PlantDatabase : RoomDatabase() {
     fun addNewDeviceWithPinout(
         deviceDao: DeviceDao?,
         gpioElementDao: GpioElementDao?,
-        deviceType: StorageServerOuterClass.DeviceTypes,
+        deviceType: PlantStorageOuterClass.DeviceTypes,
         interfaceName: String,
         name: String
 
     ) {
         val id = deviceDao?.insert(Device(interfaceName, deviceType.number, name))
         if (id!!.isNotEmpty()) {
-            if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_RPI) {
+            if (deviceType == PlantStorageOuterClass.DeviceTypes.DEVICE_RPI) {
                 addRPiPinout(gpioElementDao, id[0].toInt())
-            } else if (deviceType == StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO) {
+            } else if (deviceType == PlantStorageOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO) {
                 addArduinoNanoPinout(gpioElementDao, id[0].toInt())
             }
         }
@@ -214,14 +214,14 @@ abstract class PlantDatabase : RoomDatabase() {
                             getInstance(context).addNewDeviceWithPinout(
                                 devicedao,
                                 gpioDao,
-                                StorageServerOuterClass.DeviceTypes.DEVICE_RPI,
+                                PlantStorageOuterClass.DeviceTypes.DEVICE_RPI,
                                 "Default",
                                 "Pi Station"
                             )
                             getInstance(context).addNewDeviceWithPinout(
                                 devicedao,
                                 gpioDao,
-                                StorageServerOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO,
+                                PlantStorageOuterClass.DeviceTypes.DEVICE_ARDUINO_NANO,
                                 "Default",
                                 "Arduino Test"
                             )

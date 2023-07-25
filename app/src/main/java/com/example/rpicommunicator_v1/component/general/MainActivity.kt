@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.rpicommunicator_v1.Communication
+import com.example.rpicommunicator_v1.MatrixOuterClass
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.bike.BikeTourActivity
 import com.example.rpicommunicator_v1.component.comparing.firstlevel.ComparingListHolder
@@ -113,25 +113,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.inputDest.text.toString()
             )
         } else if (v.id == R.id.imagespotify) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_SPOTIFY)
+            mainActivityViewModel!!.matrixChangeMode(MatrixOuterClass.MatrixState.MATRIX_SPOTIFY)
         } else if (v.id == R.id.imagetime) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TIME)
+            mainActivityViewModel!!.matrixChangeMode(MatrixOuterClass.MatrixState.MATRIX_TIME)
         } else if (v.id == R.id.imageweather) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_WEATHER)
+            mainActivityViewModel!!.matrixChangeMode(MatrixOuterClass.MatrixState.MATRIX_WEATHER)
         } else if (v.id == R.id.imagequit) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_TERMINATE)
+            mainActivityViewModel!!.matrixChangeMode(MatrixOuterClass.MatrixState.MATRIX_TERMINATE)
         } else if (v.id == R.id.imagestandby) {
-            mainActivityViewModel!!.matrixChangeMode(Communication.MatrixState.MATRIX_STANDBY)
+            mainActivityViewModel!!.matrixChangeMode(MatrixOuterClass.MatrixState.MATRIX_STANDBY)
         } else if (v.id == R.id.imagearduino1) {
-            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_ARDUINO_1)
+            mainActivityViewModel!!.gpioButtonClicked(MatrixOuterClass.GPIOInstances.GPIO_ARDUINO_1)
         } else if (v.id == R.id.imagearduino2) {
-            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_ARDUINO_2)
+            mainActivityViewModel!!.gpioButtonClicked(MatrixOuterClass.GPIOInstances.GPIO_ARDUINO_2)
         } else if (v.id == R.id.imageoutlet0) {
-            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_1)
+            mainActivityViewModel!!.gpioButtonClicked(MatrixOuterClass.GPIOInstances.GPIO_OUTLET_1)
         } else if (v.id == R.id.imageoutlet1) {
-            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_2)
+            mainActivityViewModel!!.gpioButtonClicked(MatrixOuterClass.GPIOInstances.GPIO_OUTLET_2)
         } else if (v.id == R.id.imageoutlet2) {
-            mainActivityViewModel!!.gpioButtonClicked(Communication.GPIOInstances.GPIO_OUTLET_3)
+            mainActivityViewModel!!.gpioButtonClicked(MatrixOuterClass.GPIOInstances.GPIO_OUTLET_3)
         } else if (v.id == R.id.imagebike) {
             changeToBike()
         } else if (v.id == R.id.imageplant) {
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun toggleMatrixUi(matrixId: Communication.MatrixState) {
+    private fun toggleMatrixUi(matrixId: MatrixOuterClass.MatrixState) {
         val id = getResIdForMatrixState(matrixId)
 
         switchOffCurrent()
@@ -184,24 +184,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         currentMatrixActivated = id
     }
 
-    private fun getResIdForMatrixState(matrixState: Communication.MatrixState): Int {
+    private fun getResIdForMatrixState(matrixState: MatrixOuterClass.MatrixState): Int {
         when (matrixState) {
-            Communication.MatrixState.MATRIX_MVV -> {
+            MatrixOuterClass.MatrixState.MATRIX_MVV -> {
                 return R.id.imagetrain
             }
-            Communication.MatrixState.MATRIX_STANDBY -> {
+            MatrixOuterClass.MatrixState.MATRIX_STANDBY -> {
                 return R.id.imagestandby
             }
-            Communication.MatrixState.MATRIX_SPOTIFY -> {
+            MatrixOuterClass.MatrixState.MATRIX_SPOTIFY -> {
                 return R.id.imagespotify
             }
-            Communication.MatrixState.MATRIX_WEATHER -> {
+            MatrixOuterClass.MatrixState.MATRIX_WEATHER -> {
                 return R.id.imageweather
             }
-            Communication.MatrixState.MATRIX_TERMINATE -> {
+            MatrixOuterClass.MatrixState.MATRIX_TERMINATE -> {
                 return R.id.imagequit
             }
-            Communication.MatrixState.MATRIX_TIME -> {
+            MatrixOuterClass.MatrixState.MATRIX_TIME -> {
                 return R.id.imagetime
             }
             else -> return R.integer.INVALID_LAYOUT_ID

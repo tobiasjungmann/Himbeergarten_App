@@ -1,25 +1,25 @@
 package com.example.rpicommunicator_v1.service
 
 import android.util.Log
-import com.example.rpicommunicator_v1.Communication
-import com.example.rpicommunicator_v1.CommunicatorGrpc
+import com.example.rpicommunicator_v1.MatrixGrpc
+import com.example.rpicommunicator_v1.MatrixOuterClass
 import com.example.rpicommunicator_v1.component.general.MainActivityViewModel
 import io.grpc.stub.StreamObserver
 
-class GrpcStationService(
-    private var grpcStub: CommunicatorGrpc.CommunicatorStub,
+class MatrixGrpcService(
+    private var grpcStub: MatrixGrpc.MatrixStub,
 ) {
 
 
     fun setOutletState(
-        id: Communication.GPIOInstances,
+        id: MatrixOuterClass.GPIOInstances,
         state: Boolean,
         mainActivityViewModel: MainActivityViewModel
     ) {
         grpcStub.outletOn(
-            Communication.GPIORequest.newBuilder().setOn(state).setId(id).build(),
-            object : StreamObserver<Communication.GPIOReply> {
-                override fun onNext(response: Communication.GPIOReply?) {
+            MatrixOuterClass.GPIORequest.newBuilder().setOn(state).setId(id).build(),
+            object : StreamObserver<MatrixOuterClass.GPIOReply> {
+                override fun onNext(response: MatrixOuterClass.GPIOReply?) {
                     //consume response
                     if (response != null) {
                         mainActivityViewModel.setGpioStates(response.statusListList)
@@ -39,9 +39,9 @@ class GrpcStationService(
     }
 
     fun getStatus(mainActivityViewModel: MainActivityViewModel) {
-        grpcStub.getStatus(Communication.EmptyMsg.newBuilder().build(),
-            object : StreamObserver<Communication.StatusReply> {
-                override fun onNext(response: Communication.StatusReply?) {
+        grpcStub.getStatus(MatrixOuterClass.EmptyMsg.newBuilder().build(),
+            object : StreamObserver<MatrixOuterClass.StatusReply> {
+                override fun onNext(response: MatrixOuterClass.StatusReply?) {
                     mainActivityViewModel.setGpioStates(
                         response?.gpiosList ?: listOf(
                             false,
@@ -50,7 +50,7 @@ class GrpcStationService(
                         )
                     )
                     mainActivityViewModel.setCurrentMatrixMode(
-                        response?.matrixState ?: Communication.MatrixState.MATRIX_NONE
+                        response?.matrixState ?: MatrixOuterClass.MatrixState.MATRIX_NONE
                     )
                     mainActivityViewModel.setServerAvailable(true);
                 }
@@ -67,11 +67,11 @@ class GrpcStationService(
     }
 
     fun matrixChangeMode(
-        matrixMode: Communication.MatrixState,
+        matrixMode: MatrixOuterClass.MatrixState,
         mainActivityViewModel: MainActivityViewModel
     ) {
         executeMatrixChangeMode(
-            Communication.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),
+            MatrixOuterClass.MatrixChangeModeRequest.newBuilder().setState(matrixMode).build(),
             mainActivityViewModel
         )
     }
@@ -82,20 +82,20 @@ class GrpcStationService(
         mainActivityViewModel: MainActivityViewModel
     ) {
         executeMatrixChangeMode(
-            Communication.MatrixChangeModeRequest.newBuilder()
-                .setState(Communication.MatrixState.MATRIX_MVV).setStart(start)
+            MatrixOuterClass.MatrixChangeModeRequest.newBuilder()
+                .setState(MatrixOuterClass.MatrixState.MATRIX_MVV).setStart(start)
                 .setDestination(destination).build(), mainActivityViewModel
         )
     }
 
     private fun executeMatrixChangeMode(
-        build: Communication.MatrixChangeModeRequest,
+        build: MatrixOuterClass.MatrixChangeModeRequest,
         mainActivityViewModel: MainActivityViewModel
     ) {
         grpcStub.matrixSetMode(
             build,
-            object : StreamObserver<Communication.MatrixChangeModeReply> {
-                override fun onNext(response: Communication.MatrixChangeModeReply?) {
+            object : StreamObserver<MatrixOuterClass.MatrixChangeModeReply> {
+                override fun onNext(response: MatrixOuterClass.MatrixChangeModeReply?) {
                     response?.let { mainActivityViewModel.setCurrentMatrixMode(it.state) }
                     mainActivityViewModel.setServerAvailable(true);
                 }
@@ -114,10 +114,10 @@ class GrpcStationService(
     fun setMatrixBrightness(currentProgress: Int, mainActivityViewModel: MainActivityViewModel) {
 
         grpcStub.matrixSetBrightness(
-            Communication.MatrixBrightnessRequest.newBuilder()
+            MatrixOuterClass.MatrixBrightnessRequest.newBuilder()
                 .setBrightness(currentProgress).build(),
-            object : StreamObserver<Communication.EmptyMsg> {
-                override fun onNext(response: Communication.EmptyMsg?) {
+            object : StreamObserver<MatrixOuterClass.EmptyMsg> {
+                override fun onNext(response: MatrixOuterClass.EmptyMsg?) {
                     mainActivityViewModel.setServerAvailable(true);
                 }
 

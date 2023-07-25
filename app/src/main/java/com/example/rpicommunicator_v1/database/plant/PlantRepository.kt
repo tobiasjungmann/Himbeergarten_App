@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.rpicommunicator_v1.StorageServerOuterClass
+import com.example.rpicommunicator_v1.PlantStorageOuterClass
 import com.example.rpicommunicator_v1.database.compare.daos.PathElementDao
 import com.example.rpicommunicator_v1.database.compare.models.PathElement
 import com.example.rpicommunicator_v1.database.plant.PlantDatabase.Companion.getInstance
@@ -17,11 +17,11 @@ import com.example.rpicommunicator_v1.database.plant.models.Device
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.database.plant.models.Plant
-import com.example.rpicommunicator_v1.service.GrpcServerService
+import com.example.rpicommunicator_v1.service.PlantGrpcServer
 
 class PlantRepository(
     application: Application?,
-    private val grpcStorageServerInterface: GrpcServerService
+    private val grpcStorageServerInterface: PlantGrpcServer
 ) {
     private var database: PlantDatabase
     private var pathDao: PathElementDao
@@ -73,7 +73,7 @@ class PlantRepository(
         RemovePlantThread(plantDao, plant, grpcStorageServerInterface).start()
     }
 
-    fun insert(device: StorageServerOuterClass.DeviceTypes) {
+    fun insert(device: PlantStorageOuterClass.DeviceTypes) {
         AddRPiThread(database, deviceDao, gpioElementDao, device).start()
     }
 
@@ -114,7 +114,7 @@ class PlantRepository(
         private val gpioElementDao: GpioElementDao?,
         private val plant: Plant,
         private val gpioElement: GpioElement?,
-        private val grpcStorageServerInterface: GrpcServerService,
+        private val grpcStorageServerInterface: PlantGrpcServer,
         private val plantRepository: PlantRepository,
         private val paths: List<String>,
         private val pathElementDao: PathElementDao,
@@ -143,7 +143,7 @@ class PlantRepository(
     private class UpdatePlantThread(
         private val plantDao: PlantDao?,
         private val plant: Plant,
-        private val grpcStorageServerInterface: GrpcServerService,
+        private val grpcStorageServerInterface: PlantGrpcServer,
         private val plantRepository: PlantRepository,
         private val pathDao: PathElementDao,
         private val paths: List<String>
@@ -184,7 +184,7 @@ class PlantRepository(
     private class RemovePlantThread(
         private val plantDao: PlantDao?,
         private val plant: Plant,
-        private val grpcStorageServerInterface: GrpcServerService
+        private val grpcStorageServerInterface: PlantGrpcServer
     ) :
         Thread() {
         override fun run() {
@@ -197,7 +197,7 @@ class PlantRepository(
         private val database: PlantDatabase?,
         private val deviceDao: DeviceDao?,
         private val gpioElementDao: GpioElementDao?,
-        private val device: StorageServerOuterClass.DeviceTypes
+        private val device: PlantStorageOuterClass.DeviceTypes
     ) :
         Thread() {
         override fun run() {

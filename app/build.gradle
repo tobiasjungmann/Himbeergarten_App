@@ -109,12 +109,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     implementation 'com.google.code.gson:gson:2.9.0'
 
-    // GRPC Libraries
-    implementation 'com.google.protobuf:protobuf-javalite:3.20.1'
-    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.20.1'
-    //implementation 'io.grpc:grpc-okhttp:1.49.0'
-    //implementation 'io.grpc:grpc-protobuf-lite:1.49.0'
-    //implementation 'io.grpc:grpc-stub:1.49.0'
+    implementation 'io.grpc:grpc-okhttp:1.49.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.49.0'
+    implementation 'io.grpc:grpc-stub:1.49.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 }
 kapt {
@@ -124,79 +121,21 @@ kapt {
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.20.1'
-    }
-    plugins {
-        javalite {
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-               remove java
-            }
-            task.builtins {
-                java {
-                option 'lite'}
-            }
-        }
-    }
-    /*protoc {
-        artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'//'com.google.protobuf:protoc:3.13.0'
-    }*/
-//    generatedFilesBaseDir = "$projectDir/src/main/java/"
-    /*generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                remove java
-            }
-            task.builtins {
-                java {
-                    option "lite"
-                   // outputSubDir = '../../../../../src/main/java/'
-                }
-            }
-        }
-    }*/
-    /*protoc {
-        artifact = "com.google.protobuf:protoc:3.0.0"
-    }
-    plugins {
-        lite {
-            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                remove java
-            }
-            task.plugins {
-                lite {
-                    outputSubDir = ''
-                }
-            }
-        }
-    }*/
-   // generatedFilesBaseDir = "$projectDir/src/main/java/"
-   /* protoc {
         artifact = "com.google.protobuf:protoc:3.21.1"
     }
     plugins {
-        lite {
+        grpc {
             artifact = 'io.grpc:protoc-gen-grpc-java:1.49.0'
         }
     }
     generateProtoTasks {
         all().each { task ->
             task.builtins {
-               // java { option 'lite' }
-                remove java
+                java { option 'lite' }
             }
             task.plugins {
                 grpc { option 'lite' }
             }
         }
-    }*/
+    }
 }

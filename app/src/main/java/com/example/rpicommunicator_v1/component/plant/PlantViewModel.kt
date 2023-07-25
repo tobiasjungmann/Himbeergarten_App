@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.example.rpicommunicator_v1.PlantStorageGrpc
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_PORT
@@ -17,14 +18,14 @@ import com.example.rpicommunicator_v1.database.plant.models.Device
 import com.example.rpicommunicator_v1.database.plant.models.GpioElement
 import com.example.rpicommunicator_v1.database.plant.models.HumidityEntry
 import com.example.rpicommunicator_v1.database.plant.models.Plant
-import com.example.rpicommunicator_v1.service.GrpcServerService
+import com.example.rpicommunicator_v1.service.PlantGrpcServer
 import io.grpc.ManagedChannelBuilder
-import java.util.*
+import java.util.Collections
 
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var grpcStorageServerInterface: GrpcServerService = initStorageGrpcStub()
+    private var grpcStorageServerInterface: PlantGrpcServer = initStorageGrpcStub()
     private val plantRepository: PlantRepository
     private var currentPlant: Plant? = null
     private var currentGpioTextView: TextView? = null
@@ -89,7 +90,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         return false
     }
 
-    private fun initStorageGrpcStub(): GrpcServerService {
+    private fun initStorageGrpcStub(): PlantGrpcServer {
         val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(
             this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
@@ -115,7 +116,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
                         )
                     )
                 ).build()
-        return GrpcServerService(GrpcServerService(mChannel))
+        return PlantGrpcServer(PlantStorageGrpc.newStub(mChannel))
     }
 
     fun gpioSelectedForElement(gpioElement: GpioElement, label: TextView): TextView? {

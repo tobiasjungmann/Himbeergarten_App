@@ -7,13 +7,13 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.rpicommunicator_v1.Communication
+import com.example.rpicommunicator_v1.MatrixGrpc
+import com.example.rpicommunicator_v1.MatrixOuterClass
 import com.example.rpicommunicator_v1.R
-import com.example.rpicommunicator_v1.StorageServerOuterClass
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_STATION_PORT
-import com.example.rpicommunicator_v1.service.GrpcStationService
+import com.example.rpicommunicator_v1.service.MatrixGrpcService
 import io.grpc.ManagedChannelBuilder
-import java.util.*
+import java.util.Collections
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,15 +23,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _gpioStates = MutableLiveData(listOf(false, false, false, false, false))
     val gpioStates: LiveData<List<Boolean>> get() = _gpioStates
 
-    private var grpcCommunicationInterface: GrpcStationService = initGrpcStub()
+    private var grpcCommunicationInterface: MatrixGrpcService = initGrpcStub()
 
-    private val _currentMatrixMode = MutableLiveData(Communication.MatrixState.MATRIX_NONE)
-    val currentMatrixMode: LiveData<Communication.MatrixState> get() = _currentMatrixMode
+    private val _currentMatrixMode = MutableLiveData(MatrixOuterClass.MatrixState.MATRIX_NONE)
+    val currentMatrixMode: LiveData<MatrixOuterClass.MatrixState> get() = _currentMatrixMode
 
     private val _serverAvailable = MutableLiveData(true)
     val serverAvailable: LiveData<Boolean> get() = _serverAvailable
 
-    fun gpioButtonClicked(outletId: Communication.GPIOInstances) {
+    fun gpioButtonClicked(outletId: MatrixOuterClass.GPIOInstances) {
         Log.i("TAG", "outletClicked: reached")
         gpioStates.value?.let {
             grpcCommunicationInterface.setOutletState(outletId, !it[outletId.number], this)
@@ -42,7 +42,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         grpcCommunicationInterface.getStatus(this)
     }
 
-    fun matrixChangeMode(matrixMode: Communication.MatrixState) {
+    fun matrixChangeMode(matrixMode: MatrixOuterClass.MatrixState) {
         grpcCommunicationInterface.matrixChangeMode(matrixMode, this)
     }
 
@@ -54,7 +54,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         _gpioStates.postValue(list)
     }
 
-    fun setCurrentMatrixMode(matrixMode: Communication.MatrixState) {
+    fun setCurrentMatrixMode(matrixMode: MatrixOuterClass.MatrixState) {
         _currentMatrixMode.postValue(matrixMode)
     }
 
@@ -66,7 +66,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         grpcCommunicationInterface.setMatrixBrightness(currentProgress, this)
     }
 
-    private fun initGrpcStub(): GrpcStationService {       // todo code dublicate -> use static fucntion
+    private fun initGrpcStub(): MatrixGrpcService {       // todo code dublicate -> use static fucntion
         val mPref: SharedPreferences = this.getApplication<Application>().getSharedPreferences(
             this.getApplication<Application>().resources.getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
@@ -94,7 +94,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         )
                     )
                 ).build()
-        return GrpcStationService(GrpcStationService(mChannel))
+        return MatrixGrpcService(MatrixGrpc.newStub(mChannel))
     }
 
     fun resetBackPressed() {
