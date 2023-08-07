@@ -10,43 +10,41 @@ import io.grpc.stub.StreamObserver
 class PlantGrpcServer(
     private var grpcStub: PlantStorageGrpc.PlantStorageStub,
 ) {
-    fun setHumidityTest() {
-        grpcStub.storeHumidityEntry(
-            PlantStorageOuterClass.StoreHumidityRequest.newBuilder()
-                .setHumidity(123).setRequestNumber(1).build(),
-            object : StreamObserver<PlantStorageOuterClass.StoreHumidityReply> {
-                override fun onNext(response: PlantStorageOuterClass.StoreHumidityReply) {
-                    Log.i("buttonClick", "On Next Humidity Request ")
-                }
-
-                override fun onError(throwable: Throwable?) {
-                    //handle error
-                    Log.i("buttonClick", "On Error humidity request")
-                }
-
-                override fun onCompleted() {
-                    Log.i("buttonClick", "on completed Humidity")
-                    //on complete
-                }
-            })
-    }
-
-
     fun reloadPlantsFromServer(plantRepository: PlantRepository) {
         grpcStub.getOverviewAllPlants(
             PlantStorageOuterClass.GetAllPlantsRequest.newBuilder().build(),
             object : StreamObserver<PlantStorageOuterClass.AllPlantsReply> {
                 override fun onNext(response: PlantStorageOuterClass.AllPlantsReply) {
                     Log.i("add plant", "On Next Humidity Request ")
-                    // todo update with values
 
-                    plantRepository.insert(
-                        Plant(
-                            response.getPlants(0).name,
-                            response.getPlants(0).info,
-                            response.getPlants(0).gpio.deviceId
+                    for (plant: PlantStorageOuterClass.PlantOverviewMsg in response.plantsList) {
+                        // todo check if plant exists and update if necessary
+                        plantRepository.insert(
+                            Plant(
+                                plant.name, plant.info, plant.gpio.sensorId
+                            )
                         )
-                    )
+                    }
+
+                }
+
+                override fun onError(throwable: Throwable?) {
+                    Log.i("add Plant", "Plant not stored in server.")
+                }
+
+                override fun onCompleted() {
+                }
+            })
+    }
+
+    fun getAdditionalPlantData(plantRepository: PlantRepository, plantId: Int) {
+        grpcStub.getAdditionalDataPlant(
+            PlantStorageOuterClass.GetAdditionalDataPlantRequest.newBuilder().setPlantId(plantId).build(),
+            object : StreamObserver<PlantStorageOuterClass.GetAdditionalDataPlantReply> {
+                override fun onNext(response: PlantStorageOuterClass.GetAdditionalDataPlantReply) {
+                    Log.i("GetAdditionalPlantData", "On Next Humidity Request ")
+                    // todo update with values + store images with image utils if they do not yet exist
+
                 }
 
                 override fun onError(throwable: Throwable?) {
@@ -59,10 +57,10 @@ class PlantGrpcServer(
     }
 
     fun getConnectedDevicesFromServer(plantRepository: PlantRepository) {
-        grpcStub.getConnectedDevicesOverview(
-            PlantStorageOuterClass.GetConnectedDevicesRequest.newBuilder().build(),
-            object : StreamObserver<PlantStorageOuterClass.GetConnectedDevicesResponse> {
-                override fun onNext(response: PlantStorageOuterClass.GetConnectedDevicesResponse) {
+        grpcStub.getConnectedSensorOverview(
+            PlantStorageOuterClass.GetSensorOverviewRequest.newBuilder().build(),
+            object : StreamObserver<PlantStorageOuterClass.GetSensorOverviewResponse> {
+                override fun onNext(response: PlantStorageOuterClass.GetSensorOverviewResponse) {
                     // todo direkt hier die deviceobjekte anfragen
                     //plantRepository.getDevic
                     plantRepository.updateConnectedDevices()

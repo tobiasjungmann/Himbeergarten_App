@@ -7,35 +7,29 @@ option java_package = "com.example.rpicommunicator_v1";
 import "google/protobuf/timestamp.proto";
 
 service PlantStorage {
-  rpc getOverviewAllPlants(GetAllPlantsRequest) returns (AllPlantsReply) {}
-  rpc getAdditionalDataPlant(GetAdditionalDataPlantRequest) returns (GetAdditionalDataPlantReply) {}
+  rpc getOverviewAllPlants(GetAllPlantsRequest) returns (AllPlantsReply);
+  rpc getAdditionalDataPlant(GetAdditionalDataPlantRequest) returns (GetAdditionalDataPlantReply);
 
   // Also used to update a plant with the same id if it already exists
-  rpc addNewPlant(AddPlantRequest) returns (PlantOverviewMsg) {}
-  rpc deletePlant(PlantRequest) returns (DeletePlantReply) {}
+  rpc addNewPlant(AddPlantRequest) returns (PlantOverviewMsg);
+  rpc deletePlant(PlantRequest) returns (DeletePlantReply) ;
 
-  rpc getRequestedSensorStates(GetRequestedSensorStatesRequest) returns (GetRequestedSensorStatesResponse) {}
-  rpc storeHumidityEntry(StoreHumidityRequest) returns (StoreHumidityReply) {}
-
-  rpc getConnectedDevicesOverview(GetConnectedDevicesRequest) returns (GetConnectedDevicesResponse){}
+  rpc getConnectedSensorOverview(GetSensorOverviewRequest) returns (GetSensorOverviewResponse);
 }
 
-message GetRequestedSensorStatesRequest{
-  int32 deviceId = 1;
+message GetSensorOverviewRequest{
 }
 
-message GetRequestedSensorStatesResponse{
-  repeated RequestedSensorMsg sensors = 1;
+message GetSensorOverviewResponse{
+  repeated SensorMsg sensors = 1;
 }
 
-message RequestedSensorMsg{
-  int32 requestId = 1;
+message SensorMsg{
+  string deviceMAC = 1;
   int32 sensorId = 2;
-}
-
-message StoreHumidityRequest{
-  int32 requestNumber = 1;
-  int32 humidity = 2;
+  int32 sensorSlot =3;
+  bool inUse = 4;
+  int32 connectedPlant=5;
 }
 
 message GetAllPlantsRequest{
@@ -56,9 +50,6 @@ message  PlantRequest{
 message DeletePlantReply{
 }
 
-message StoreHumidityReply{
-}
-
 message AllPlantsReply{
   repeated PlantOverviewMsg plants = 1;
 }
@@ -67,8 +58,13 @@ message AddPlantRequest {
   int32 plantId = 1;
   string Name = 2;
   string Info = 3;
-  int32 gpioSensorSlot = 4;
-  repeated bytes images = 5;
+  int32 sensorId = 4;
+  repeated ImageMsg images = 5;
+}
+
+message ImageMsg {
+  int32 imageId=1;
+  bytes imageBytes=2;
 }
 
 message PlantOverviewMsg{
@@ -85,11 +81,11 @@ message GetAdditionalDataPlantRequest{
 
 message HumidityMsg{
   int32 humidity = 1;
-  float timestamp = 2;
+  google.protobuf.Timestamp timestamp = 2;
 }
 
 message GpioIdentifierMsg{
-  int32 deviceId = 1;
+  int32 sensorId = 1;
   string deviceSerialInterfaceName = 2;
   string gpioName = 3;
 }
@@ -97,24 +93,17 @@ message GpioIdentifierMsg{
 message GetAdditionalDataPlantReply{
   int32 plant = 1;
   GpioIdentifierMsg gpio = 2;
-  repeated HumidityMsg Humidity = 4;
-  repeated bytes images = 5;
+  repeated HumidityMsg humidity = 4;
+  repeated ImageMsg images = 5;
 }
 
-message GetConnectedDevicesRequest{
-
+message GetDataForSensorRequest{
+  int32 sensorId = 1;
+  optional int64 limit = 2;
 }
 
-message GetConnectedDevicesResponse{
-  repeated DeviceOverviewMsg devices = 1;
-}
-
-message DeviceOverviewMsg{
-  int32 deviceId = 1;
-  DeviceTypes type = 2;
-  string interface = 3;
-  string name = 4;
-  string userId = 5;
+message GetDataForSensorReply{
+  repeated HumidityMsg data = 1;
 }
 
 enum GpioUser{

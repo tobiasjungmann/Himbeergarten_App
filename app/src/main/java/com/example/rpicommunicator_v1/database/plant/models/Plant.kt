@@ -6,11 +6,10 @@ import androidx.room.PrimaryKey
 import com.example.rpicommunicator_v1.R
 
 @Entity(tableName = "plant_table",
-    foreignKeys = arrayOf(
-        ForeignKey(entity = GpioElement::class,
-            parentColumns = arrayOf("gpioElement"),
-            childColumns = arrayOf("gpioElement"))
-    ))
+    foreignKeys = [ForeignKey(entity = GpioElement::class,
+        parentColumns = arrayOf("gpioElement"),
+        childColumns = arrayOf("gpioElement"))]
+)
 class Plant(
     var name: String,
     var info: String,
