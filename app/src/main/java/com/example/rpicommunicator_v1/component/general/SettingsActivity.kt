@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -31,6 +30,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mPref: SharedPreferences
     private val allSensors: MutableLiveData<List<String>> = MutableLiveData()
+    private val selectedSensors = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +73,9 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
                 for (i in 0 until jsonResponseArray.length()) {
                     val jsonObject = jsonResponseArray.getJSONObject(i)
                     if (jsonObject.has("entity_id")) {
-                        // Log.d("tag",jsonObject.getString("entity_id"))
-                        entityIds.add(jsonObject.getString("entity_id"))
+                        val s = jsonObject.getString("entity_id")
+                        if (s.startsWith("sensor."))
+                            entityIds.add(s)
                     }
                 }
                 allSensors.postValue(entityIds)
@@ -88,8 +89,15 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
                 binding.chipGroup.addView(chip)
             }
         }
+    }
 
-
+    private fun loadColor(input: Int): ColorStateList {
+        return ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                input
+            )
+        )
     }
 
     private fun createChip(title: String): Chip {
@@ -97,41 +105,25 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         val chipDrawable = ChipDrawable.createFromAttributes(
             this,
             null,
-            0,R.style.Widget_Material3_Chip_Filter
+            0, R.style.Widget_Material3_Chip_Filter
         )
 
         chip.setChipDrawable(chipDrawable)
-        chip.chipStrokeColor = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                this,
-                R.color.primary_green
-            )
-        )
-        chip.setTextColor(ColorStateList.valueOf(
-            ContextCompat.getColor(
-                this,
-                R.color.text_color
-            )
-        ))
-        chip.chipBackgroundColor = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                this,
-                R.color.cardview_light_background
-            )
-        )
+        chip.chipStrokeColor = loadColor(R.color.primary_green)
+        chip.setTextColor(loadColor(R.color.text_color))
+        chip.chipBackgroundColor = loadColor(R.color.cardview_light_background)
 
         chip.text = title
 
         chip.setOnClickListener {
-            Toast.makeText(applicationContext, "Rating: " + title, Toast.LENGTH_SHORT).show()
-            chip.chipBackgroundColor = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this,
-                    R.color.primary_green
-                )
-            )
+            if (chip.isChecked) {
+                chip.chipBackgroundColor = loadColor(R.color.primary_green)
+                selectedSensors.add(chip.text.toString())
+            } else {
+                chip.chipBackgroundColor = loadColor(R.color.cardview_light_background)
+                selectedSensors.removeAll { it == chip.text.toString() }
+            }
         }
-
         return chip
     }
 
@@ -217,6 +209,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             this.application.resources.getString(R.string.PORT_SERVER_PREF),
             this.application.resources.getInteger(R.integer.DEFAULT_PORT_SERVER)
         )
+        // todo store and forward list of sensors
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_out_up, R.anim.slide_in_up)
