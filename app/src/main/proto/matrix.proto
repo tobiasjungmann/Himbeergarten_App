@@ -10,6 +10,7 @@ service Matrix {
   rpc matrixSetMode(MatrixChangeModeRequest) returns (MatrixChangeModeReply) {}
   rpc matrixSetActivated(MatrixActivationRequest) returns (EmptyMsg) {}
   rpc matrixSetBrightness(MatrixBrightnessRequest) returns (EmptyMsg) {}
+  rpc matrixSetSensorNames(SetSensorNamesRequest) returns (EmptyMsg) {}
 
 }
 
@@ -47,6 +48,10 @@ message MatrixChangeModeRequest{
 
 message MatrixChangeModeReply{
   MatrixState state = 1;
+}
+
+message SetSensorNamesRequest{
+  repeated string sensors = 1;
 }
 
 enum GPIOInstances{

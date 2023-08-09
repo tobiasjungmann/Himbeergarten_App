@@ -18,7 +18,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/lightbulbround"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RPICommunicator_V1">
+        android:theme="@style/Theme.RPICommunicator_V1"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".component.plant.PlantHolderActivity"
             android:exported="false" />

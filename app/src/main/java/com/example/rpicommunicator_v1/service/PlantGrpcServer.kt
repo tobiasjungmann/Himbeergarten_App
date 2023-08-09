@@ -16,14 +16,31 @@ class PlantGrpcServer(
             object : StreamObserver<PlantStorageOuterClass.AllPlantsReply> {
                 override fun onNext(response: PlantStorageOuterClass.AllPlantsReply) {
                     Log.i("add plant", "On Next Humidity Request ")
+                    val liveDataValue = plantRepository.allPlants.value ?: return
 
                     for (plant: PlantStorageOuterClass.PlantOverviewMsg in response.plantsList) {
-                        // todo check if plant exists and update if necessary
-                        plantRepository.insert(
-                            Plant(
-                                plant.name, plant.info, plant.gpio.sensorId
+                        var updated = false
+                        for (v: Plant in liveDataValue) {
+                            if (v.plant == plant.plantId) {
+                                v.info=plant.info
+                                v.name=plant.name
+                                /*
+                                TODO update the gpio data accordingly - not in the first version
+                                 */
+                                v.gpioElement=plant.gpio.sensorId
+                                plantRepository.update(
+                                    v, emptyList()
+                                )
+                                updated = true;
+                            }
+                        }
+                        if (!updated) {
+                            plantRepository.insert(
+                                Plant(
+                                    plant.name, plant.info, plant.gpio.sensorId
+                                )
                             )
-                        )
+                        }
                     }
 
                 }
@@ -39,7 +56,8 @@ class PlantGrpcServer(
 
     fun getAdditionalPlantData(plantRepository: PlantRepository, plantId: Int) {
         grpcStub.getAdditionalDataPlant(
-            PlantStorageOuterClass.GetAdditionalDataPlantRequest.newBuilder().setPlantId(plantId).build(),
+            PlantStorageOuterClass.GetAdditionalDataPlantRequest.newBuilder().setPlantId(plantId)
+                .build(),
             object : StreamObserver<PlantStorageOuterClass.GetAdditionalDataPlantReply> {
                 override fun onNext(response: PlantStorageOuterClass.GetAdditionalDataPlantReply) {
                     Log.i("GetAdditionalPlantData", "On Next Humidity Request ")

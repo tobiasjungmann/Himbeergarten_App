@@ -66,7 +66,25 @@
                     android:text="15439" />
 
             </LinearLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacing="0dp"
+                app:chipSpacingVertical="0dp"
+                app:chipSpacingHorizontal="8dp">
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Filter" />
 
+            </com.google.android.material.chip.ChipGroup>
+            </ScrollView>
             <TextView
                 style="bold"
                 android:layout_width="match_parent"
@@ -94,6 +112,7 @@
          />
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,6 +221,7 @@
                 android:text="Pump icons created by Smashicons - Flaticon: https://www.flaticon.com/free-icons/pump\n\nPlant icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/plant\n\nOutlet icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/outlet\n\nWater drop icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/water-drop\n\nClouds and sun icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/clouds-and-sun\n\n Train icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/train\n\nPlaylist icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/playlist\n\nHour icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/hour\n\nPower off icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/power-off\n\nMoon icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/moon\n\nData storage icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/data-storage\n\nEmbedded icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/embedded\n\nBike icons created by DinosoftLabs - Flaticon: https://www.flaticon.com/free-icons/bike\n"
                 android:textColor="@color/light_grey" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <TextView

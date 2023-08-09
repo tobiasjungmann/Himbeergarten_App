@@ -3,19 +3,34 @@ package com.example.rpicommunicator_v1.component.general
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.example.rpicommunicator_v1.R
 import com.example.rpicommunicator_v1.component.Constants.DEFAULT_SERVER_IP
 import com.example.rpicommunicator_v1.databinding.ActivitySettingsBinding
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
+import java.io.IOException
+
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var mPref: SharedPreferences
-
+    private val allSensors: MutableLiveData<List<String>> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +46,93 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
         initAddressUi()
         initDeviceSelection()
+        setupChip()
+    }
+
+    private fun setupChip() {
+        val url = "http://192.168.0.6:8123/api/states"
+        val token =
+
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+            .url(url)
+            .header("Authorization", "Bearer $token")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("tag", "request not successfull")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body?.string()
+                Log.d("body", responseBody!!)
+                val entityIds = mutableListOf<String>()
+                val jsonResponseArray = JSONArray(responseBody)
+                for (i in 0 until jsonResponseArray.length()) {
+                    val jsonObject = jsonResponseArray.getJSONObject(i)
+                    if (jsonObject.has("entity_id")) {
+                        // Log.d("tag",jsonObject.getString("entity_id"))
+                        entityIds.add(jsonObject.getString("entity_id"))
+                    }
+                }
+                allSensors.postValue(entityIds)
+
+            }
+        })
+
+        allSensors.observe(this) { ratingTagsResults ->
+            for (tag in ratingTagsResults) {
+                val chip = createChip(tag)
+                binding.chipGroup.addView(chip)
+            }
+        }
+
+
+    }
+
+    private fun createChip(title: String): Chip {
+        val chip = Chip(this)
+        val chipDrawable = ChipDrawable.createFromAttributes(
+            this,
+            null,
+            0,R.style.Widget_Material3_Chip_Filter
+        )
+
+        chip.setChipDrawable(chipDrawable)
+        chip.chipStrokeColor = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                R.color.primary_green
+            )
+        )
+        chip.setTextColor(ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                R.color.text_color
+            )
+        ))
+        chip.chipBackgroundColor = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                R.color.cardview_light_background
+            )
+        )
+
+        chip.text = title
+
+        chip.setOnClickListener {
+            Toast.makeText(applicationContext, "Rating: " + title, Toast.LENGTH_SHORT).show()
+            chip.chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this,
+                    R.color.primary_green
+                )
+            )
+        }
+
+        return chip
     }
 
     private fun initAddressUi() {
